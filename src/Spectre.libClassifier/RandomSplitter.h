@@ -18,21 +18,37 @@ limitations under the License.
 */
 
 #pragma once
-#include <random>
 #include "Spectre.libClassifier/OpenCvDataset.h"
 #include "Spectre.libClassifier/SplittedOpevCvDataset.h"
-#include "Spectre.libGenetic/DataTypes.h"
+#include "Spectre.libClassifier/Types.h"
 
-namespace Spectre::libClassifier {
-
+namespace Spectre::libClassifier
+{
+/// <summary>
+/// Splits an input dataset randomly into two, proportionally sized subsets.
+///
+/// Split ratio is constant, as the seed. Therefore, repeated splits for the
+/// same dataset are consistent: there will be exactly the same output.
+/// To obtain a different split a re-creation of this object with another seed
+/// is needed.
+/// </summary>
 class RandomSplitter
 {
 public:
-    RandomSplitter(const RandomSplitter&) = delete;
-    RandomSplitter::RandomSplitter(double trainingPercent, libGenetic::Seed rngSeed = 0);
-    SplittedOpenCvDataset RandomSplitter::split(const Spectre::libClassifier::OpenCvDataset& data);
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RandomSplitter"/> class.
+    /// </summary>
+    /// <param name="trainingPercent">The percent of observations included in training set.</param>
+    /// <param name="rngSeed">The RNG seed.</param>
+    explicit RandomSplitter(double trainingPercent, Seed rngSeed = 0);
+    /// <summary>
+    /// Splits the specified data.
+    /// </summary>
+    /// <param name="data">The data.</param>
+    /// <returns>Dataset splitted into training and validation subsets.</returns>
+    SplittedOpenCvDataset RandomSplitter::split(const OpenCvDataset& data) const;
 private:
-    double m_trainingRate;
-    libGenetic::RandomNumberGenerator m_randomNumberGenerator;
+    const double m_trainingRate;
+    const Seed m_Seed;
 };
 }
