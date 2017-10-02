@@ -60,6 +60,7 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\PropertySheets\NativeProject.props" />
+    <Import Project="..\PropertySheets\OpenCvDependencies.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -68,6 +69,7 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\PropertySheets\NativeProject.props" />
+    <Import Project="..\PropertySheets\OpenCvDependencies.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -140,15 +142,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EmptyOpenCvDatasetException.cpp" />
+    <ClCompile Include="ExcessiveTrainingRateException.cpp" />
+    <ClCompile Include="NegativeTrainingRateException.cpp" />
+    <ClCompile Include="NotABinaryLabelException.cpp" />
     <ClCompile Include="ObservationExtractor.cpp" />
     <ClCompile Include="OpenCvDataset.cpp" />
+    <ClCompile Include="ConfusionMatrix.cpp" />
     <ClCompile Include="RandomSplitter.cpp" />
     <ClCompile Include="SplittedOpenCvDataset.cpp" />
     <ClCompile Include="Svm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConfusionMatrix.h" />
     <ClInclude Include="EmptyOpenCvDatasetException.h" />
+    <ClInclude Include="ExcessiveTrainingRateException.h" />
     <ClInclude Include="IClassifier.h" />
+    <ClInclude Include="NegativeTrainingRateException.h" />
+    <ClInclude Include="NotABinaryLabelException.h" />
     <ClInclude Include="ObservationExtractor.h" />
     <ClInclude Include="OpenCvDataset.h" />
     <ClInclude Include="RandomSplitter.h" />

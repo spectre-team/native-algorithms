@@ -25,61 +25,62 @@ limitations under the License.
 
 namespace
 {
-    using namespace spectre::supervised;
+using namespace spectre::supervised;
+using namespace spectre::supervised::exception;
 
-    class SvmTest : public ::testing::Test
-    {
-    protected:
-        const std::vector<Label> m_Labels = { 1, 1, 0, 0, 1 };
-        const std::vector<DataType> m_Features = {
-            1., 1.,
-            2., 2.,
-            -1., -1.,
-            -2., -2.,
-            3., 3.
-        };
-        OpenCvDataset m_Data = std::move(OpenCvDataset(m_Features, m_Labels));
+class SvmTest : public ::testing::Test
+{
+protected:
+    const std::vector<Label> m_Labels = { 1, 1, 0, 0, 1 };
+    const std::vector<DataType> m_Features = {
+        1., 1.,
+        2., 2.,
+        -1., -1.,
+        -2., -2.,
+        3., 3.
     };
+    OpenCvDataset m_Data = std::move(OpenCvDataset(m_Features, m_Labels));
+};
 
-    TEST_F(SvmTest, initializes)
-    {
-        EXPECT_NO_THROW(Svm());
-    }
+TEST_F(SvmTest, initializes)
+{
+    EXPECT_NO_THROW(Svm());
+}
 
-    TEST_F(SvmTest, fits_with_no_exception)
-    {
-        Svm svm;
-        EXPECT_NO_THROW(svm.Fit(m_Data));
-    }
+TEST_F(SvmTest, fits_with_no_exception)
+{
+    Svm svm;
+    EXPECT_NO_THROW(svm.Fit(m_Data));
+}
 
-    TEST_F(SvmTest, predicts_with_no_throw)
-    {
-        Svm svm;
-        svm.Fit(m_Data);
-        EXPECT_NO_THROW(svm.Predict(m_Data));
-    }
+TEST_F(SvmTest, predicts_with_no_throw)
+{
+    Svm svm;
+    svm.Fit(m_Data);
+    EXPECT_NO_THROW(svm.Predict(m_Data));
+}
 
-    TEST_F(SvmTest, predicts_sign)
+TEST_F(SvmTest, predicts_sign)
+{
+    Svm svm;
+    svm.Fit(m_Data);
+    const auto prediction = svm.Predict(m_Data);
+    for (auto i = 0u; i < m_Labels.size(); ++i)
     {
-        Svm svm;
-        svm.Fit(m_Data);
-        const auto prediction = svm.Predict(m_Data);
-        for (auto i = 0u; i < m_Labels.size(); ++i)
-        {
-            EXPECT_EQ(m_Labels[i], prediction[i]);
-        }
+        EXPECT_EQ(m_Labels[i], prediction[i]);
     }
+}
 
-    TEST_F(SvmTest, get_support_vector_number_test)
-    {
-        Svm svm;
-        svm.Fit(m_Data);
-        EXPECT_EQ(svm.GetNumberOfSupportVectors(), 1);
-    }
+TEST_F(SvmTest, get_support_vector_number_test)
+{
+    Svm svm;
+    svm.Fit(m_Data);
+    EXPECT_EQ(svm.GetNumberOfSupportVectors(), 1);
+}
 
-    TEST_F(SvmTest, predict_throws_without_train)
-    {
-        Svm svm;
-        EXPECT_THROW(svm.Predict(m_Data), UntrainedClassifierException);
-    }
+TEST_F(SvmTest, predict_throws_without_train)
+{
+    Svm svm;
+    EXPECT_THROW(svm.Predict(m_Data), UntrainedClassifierException);
+}
 }

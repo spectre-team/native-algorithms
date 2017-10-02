@@ -22,9 +22,16 @@ limitations under the License.
 
 namespace spectre::algorithm::genetic
 {
+/// <summary>
+/// Thrown when preservation rate is excessive.
+/// </summary>
 class ExcessivePreservationRateException: public spectre::core::exception::ArgumentOutOfRangeException<double>
 {
 public:
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ExcessivePreservationRateException"/> class.
+    /// </summary>
+    /// <param name="actual">The value of preservation rate.</param>
     explicit ExcessivePreservationRateException(double actual);
 };
 }

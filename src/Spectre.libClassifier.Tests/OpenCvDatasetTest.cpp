@@ -22,9 +22,9 @@ limitations under the License.
 #include <memory>
 #include <span.h>
 #include <opencv2/core/mat.hpp>
-#include "Spectre.libClassifier/OpenCvDataset.h"
 #include "Spectre.libException/InconsistentArgumentSizesException.h"
 #include "Spectre.libException/OutOfRangeException.h"
+#include "Spectre.libClassifier/OpenCvDataset.h"
 #include "Spectre.libClassifier/EmptyOpenCvDatasetException.h"
 
 namespace

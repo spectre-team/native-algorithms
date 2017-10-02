@@ -36,7 +36,6 @@
     <ClInclude Include="ReachedUnreachableCodeException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EmptyArgumentException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

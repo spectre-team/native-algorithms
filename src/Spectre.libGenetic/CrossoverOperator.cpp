@@ -17,14 +17,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+#include <random>
+#include "Spectre.libStatistics/Statistics.h"
 #include "CrossoverOperator.h"
 #include "InconsistentChromosomeLengthException.h"
+#include "InconsistentMinimalAndMaximalFillupException.h"
 #include "Individual.h"
 
 namespace spectre::algorithm::genetic
 {
-CrossoverOperator::CrossoverOperator(Seed rngSeed):
-    m_RandomNumberGenerator(rngSeed) {}
+CrossoverOperator::CrossoverOperator(Seed rngSeed, size_t minimalFillup, size_t maximalFillup):
+    m_RandomNumberGenerator(rngSeed),
+    m_MinimalFillup(minimalFillup),
+    m_MaximalFillup(maximalFillup)
+{
+    if (m_MinimalFillup > m_MaximalFillup)
+    {
+        throw InconsistentMinimalAndMaximalFillupException(m_MinimalFillup, m_MaximalFillup);
+    }
+}
 
 Individual CrossoverOperator::operator()(const Individual &first, const Individual &second)
 {
@@ -44,7 +55,23 @@ Individual CrossoverOperator::operator()(const Individual &first, const Individu
     phenotype.reserve(first.size());
     phenotype.insert(phenotype.end(), first.begin(), endOfFirst);
     phenotype.insert(phenotype.end(), beginningOfSecond, second.end());
-    Individual individual(std::move(phenotype));
-    return std::move(individual);
+
+    auto fillup = 0u;
+    for(auto bit: phenotype)
+    {
+        if(bit)
+        {
+            ++fillup;
+        }
+    }
+
+    if (fillup >= m_MinimalFillup && fillup <= m_MaximalFillup)
+    {
+        return Individual(std::move(phenotype));
+    }
+    else
+    {
+        return first;
+    }
 }
 }

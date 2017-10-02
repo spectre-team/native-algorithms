@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArgumentEqualZeroException.h" />
     <ClInclude Include="ArgumentOutOfRangeException.h" />
     <ClInclude Include="EmptyArgumentException.h">
       <SubType>Header Files</SubType>
