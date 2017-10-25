@@ -29,7 +29,7 @@ namespace Spectre.GaSvmScenarioRunner
             }
             else
             {
-                Console.WriteLine(options.GetUsage());
+                options.GetUsage();
             }
         }
     }
