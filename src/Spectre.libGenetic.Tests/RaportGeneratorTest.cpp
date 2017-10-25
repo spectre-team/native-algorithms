@@ -1,8 +1,8 @@
 /*
-* StopCondition.cpp
-* General stop condition with fixed number of iterations.
+* RaportGeneratorTest.cpp
+* Tests RaportGenerator.
 *
-Copyright 2017 Grzegorz Mrukwa
+Copyright 2017 Grzegorz Mrukwa, Wojciech Wilgierz
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,23 +17,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "StopCondition.h"
+#include <gtest/gtest.h>
+#include "Spectre.libGenetic/Individual.h"
+#include "Spectre.libGenetic/RaportGenerator.h"
 
-namespace Spectre::libGenetic
+namespace
 {
-StopCondition::StopCondition(unsigned int numberOfIterations):
-    m_RemainingIterations(numberOfIterations),
-    m_IterationsNumber(numberOfIterations) { }
+using namespace Spectre::libGenetic;
 
-
-bool StopCondition::operator()()
+TEST(RaportGeneratorInitialization, initializes)
 {
-    if (m_RemainingIterations == 0)
-    {
-        m_RemainingIterations = m_IterationsNumber;
-        return true;
-    }
-    --m_RemainingIterations;
-    return false;
+    EXPECT_NO_THROW(RaportGenerator("raportGeneratorTest"));
 }
+
 }

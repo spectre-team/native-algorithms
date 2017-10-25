@@ -1,8 +1,8 @@
-/*
-* StopCondition.cpp
-* General stop condition with fixed number of iterations.
+﻿/*
+* InconsistentIndividualSizeAndTrueAmountException.h
+* Thrown when generation and its scores diverge in length.
 *
-Copyright 2017 Grzegorz Mrukwa
+Copyright 2017 Grzegorz Mrukwa, Wojciech Wilgierz
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,23 +17,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "StopCondition.h"
+#include "InconsistentIndividualSizeAndTrueAmountException.h"
+#include "Spectre.libGenetic/InconsistentGenerationAndScoresLengthException.h"
 
 namespace Spectre::libGenetic
 {
-StopCondition::StopCondition(unsigned int numberOfIterations):
-    m_RemainingIterations(numberOfIterations),
-    m_IterationsNumber(numberOfIterations) { }
-
-
-bool StopCondition::operator()()
-{
-    if (m_RemainingIterations == 0)
-    {
-        m_RemainingIterations = m_IterationsNumber;
-        return true;
-    }
-    --m_RemainingIterations;
-    return false;
-}
+    InconsistentIndividualSizeAndTrueAmountException::InconsistentIndividualSizeAndTrueAmountException(size_t first, size_t second) :
+        InconsistentArgumentSizesException("size", first, "true_amount", second) { }
 }

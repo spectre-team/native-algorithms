@@ -1,6 +1,6 @@
-/*
-* StopCondition.cpp
-* General stop condition with fixed number of iterations.
+﻿/*
+* EmptyArgumentException.cpp
+* Thrown when argument is empty.
 *
 Copyright 2017 Grzegorz Mrukwa
 
@@ -17,23 +17,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "StopCondition.h"
 
-namespace Spectre::libGenetic
+#include "Spectre.libException/EmptyArgumentException.h"
+
+namespace Spectre::libException
 {
-StopCondition::StopCondition(unsigned int numberOfIterations):
-    m_RemainingIterations(numberOfIterations),
-    m_IterationsNumber(numberOfIterations) { }
 
+EmptyArgumentException::EmptyArgumentException(const std::string &variableName) :
+    ExceptionBase(variableName + " is empty.") { }
 
-bool StopCondition::operator()()
-{
-    if (m_RemainingIterations == 0)
-    {
-        m_RemainingIterations = m_IterationsNumber;
-        return true;
-    }
-    --m_RemainingIterations;
-    return false;
-}
 }

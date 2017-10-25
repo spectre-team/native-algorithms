@@ -1,8 +1,8 @@
 /*
-* StopCondition.cpp
-* General stop condition with fixed number of iterations.
+* Types.h
+* Types used in classifiers.
 *
-Copyright 2017 Grzegorz Mrukwa
+Copyright 2017 Spectre Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,23 +17,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "StopCondition.h"
+#pragma once
+#include <opencv2/core/mat.hpp>
+#include <span.h>
+#include "Empty.h"
 
-namespace Spectre::libGenetic
+namespace Spectre::libClassifier
 {
-StopCondition::StopCondition(unsigned int numberOfIterations):
-    m_RemainingIterations(numberOfIterations),
-    m_IterationsNumber(numberOfIterations) { }
-
-
-bool StopCondition::operator()()
-{
-    if (m_RemainingIterations == 0)
-    {
-        m_RemainingIterations = m_IterationsNumber;
-        return true;
-    }
-    --m_RemainingIterations;
-    return false;
-}
+    using DataType = float;
+    using Observation = gsl::span<const DataType>;
+    using Label = signed;
+    const auto CV_TYPE = CV_32FC1;
+    const auto CV_LABEL_TYPE = CV_32SC1;
 }

@@ -1,8 +1,8 @@
 /*
-* StopCondition.cpp
-* General stop condition with fixed number of iterations.
+* IClassifier.h
+* Common interface for all classifiers
 *
-Copyright 2017 Grzegorz Mrukwa
+Copyright 2017 Spectre Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,23 +17,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "StopCondition.h"
+#pragma once
+#include <vector>
+#include "Spectre.libDataset/IReadOnlyDataset.h"
+#include "Types.h"
 
-namespace Spectre::libGenetic
+namespace Spectre::libClassifier
 {
-StopCondition::StopCondition(unsigned int numberOfIterations):
-    m_RemainingIterations(numberOfIterations),
-    m_IterationsNumber(numberOfIterations) { }
-
-
-bool StopCondition::operator()()
+class IClassifier
 {
-    if (m_RemainingIterations == 0)
-    {
-        m_RemainingIterations = m_IterationsNumber;
-        return true;
-    }
-    --m_RemainingIterations;
-    return false;
-}
+public:
+    using LabeledDataset = const libDataset::IReadOnlyDataset<Observation, Label, Empty>&;
+    virtual void Fit(LabeledDataset dataset) = 0;
+    virtual std::vector<Label> Predict(LabeledDataset dataset) const = 0;
+    virtual ~IClassifier() = default;
+};
 }

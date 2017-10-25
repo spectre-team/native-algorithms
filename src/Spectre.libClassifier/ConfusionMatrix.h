@@ -1,8 +1,8 @@
 /*
-* MockScorer.h
-* Mocks Scorer.
+* ConfusionMatrix.h
+* It contains knowledge about true positive, true negative etc. prediction of SVM
 *
-Copyright 2017 Grzegorz Mrukwa
+Copyright 2017 Grzegorz Mrukwa, Wojciech Wilgierz
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,21 +18,21 @@ limitations under the License.
 */
 
 #pragma once
-#include <gmock/gmock.h>
-#include "Spectre.libGenetic/Scorer.h"
 
-namespace Spectre::libGenetic::Tests
-{
-class DummyFitnessFunction: public FitnessFunction
+namespace Spectre::libClassifier {
+
+class ConfusionMatrix
 {
 public:
-    ScoreType fit(const Individual &) override { throw std::logic_error("DummyFitnessFunction"); }
+    const int TruePositive;
+    const int TrueNegative;
+    const int FalsePositive;
+    const int FalseNegative;
+    const double DiceIndex;
+    ConfusionMatrix(int truePositivesNumber,
+                    int trueNegativesNumber,
+                    int falsePositivesNumber,
+                    int falseNegativesNumber);
 };
 
-class MockScorer: public Scorer
-{
-public:
-    MockScorer(): Scorer(std::make_unique<DummyFitnessFunction>()) {}
-    MOCK_METHOD1(Score, std::vector<ScoreType>(const Generation&));
-};
 }

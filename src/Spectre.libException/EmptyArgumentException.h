@@ -1,6 +1,6 @@
-/*
-* FitnessFunction.h
-* Interface of fitness function to be used in genetic algorithm.
+﻿/*
+* EmptyArgumentException.h
+* Thrown when argument is empty.
 *
 Copyright 2017 Grzegorz Mrukwa
 
@@ -18,22 +18,20 @@ limitations under the License.
 */
 
 #pragma once
-#include "DataTypes.h"
+#include "ExceptionBase.h"
 
-namespace Spectre::libGenetic
+namespace Spectre::libException
 {
 /// <summary>
-/// General-purpose interface of a fitness function, scoring the individuals.
+/// Thrown when function argument is empty.
 /// </summary>
-class FitnessFunction
+class EmptyArgumentException : public ExceptionBase
 {
 public:
     /// <summary>
-    /// Scores the specified individual.
+    /// Initializes a new instance of the <see cref="ArgumentOutOfRangeException"/> class.
     /// </summary>
-    /// <param name="individual">The individual.</param>
-    /// <returns>Non-negative score, which is greater for more optimal individuals.</returns>
-    virtual ScoreType fit(const Individual &individual) = 0;
-    virtual ~FitnessFunction() = default;
+    /// <param name="variableName">Name of the variable.</param>
+    EmptyArgumentException(const std::string &variableName);
 };
 }

@@ -1,6 +1,6 @@
 /*
-* StopCondition.cpp
-* General stop condition with fixed number of iterations.
+* ExcessiveTrainingRateException.h
+* Thrown when training rate is greater than one.
 *
 Copyright 2017 Grzegorz Mrukwa
 
@@ -17,23 +17,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "StopCondition.h"
+#pragma once
+#include "Spectre.libException/ArgumentOutOfRangeException.h"
 
-namespace Spectre::libGenetic
+namespace Spectre::libClassifier
 {
-StopCondition::StopCondition(unsigned int numberOfIterations):
-    m_RemainingIterations(numberOfIterations),
-    m_IterationsNumber(numberOfIterations) { }
-
-
-bool StopCondition::operator()()
-{
-    if (m_RemainingIterations == 0)
+    class ExcessiveTrainingRateException : public libException::ArgumentOutOfRangeException<double>
     {
-        m_RemainingIterations = m_IterationsNumber;
-        return true;
-    }
-    --m_RemainingIterations;
-    return false;
-}
+    public:
+        explicit ExcessiveTrainingRateException(double actual);
+    };
 }

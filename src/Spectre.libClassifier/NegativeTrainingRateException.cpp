@@ -1,6 +1,6 @@
 /*
-* StopCondition.cpp
-* General stop condition with fixed number of iterations.
+* NegativeTrainingRateException.cpp
+* Thrown when training rate is negative.
 *
 Copyright 2017 Grzegorz Mrukwa
 
@@ -17,23 +17,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "StopCondition.h"
+#include "NegativeTrainingRateException.h"
 
-namespace Spectre::libGenetic
+namespace Spectre::libClassifier
 {
-StopCondition::StopCondition(unsigned int numberOfIterations):
-    m_RemainingIterations(numberOfIterations),
-    m_IterationsNumber(numberOfIterations) { }
-
-
-bool StopCondition::operator()()
-{
-    if (m_RemainingIterations == 0)
-    {
-        m_RemainingIterations = m_IterationsNumber;
-        return true;
-    }
-    --m_RemainingIterations;
-    return false;
-}
+    NegativeTrainingRateException::NegativeTrainingRateException(double actual) :
+        ArgumentOutOfRangeException<double>("trainingRate", 0, 1, actual) { }
 }

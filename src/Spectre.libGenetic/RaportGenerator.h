@@ -1,8 +1,8 @@
-/*
-* MockScorer.h
-* Mocks Scorer.
+﻿/*
+* RaportGenerator.h
+* Class that has static functions to create raport during for example genetic algorithm execution.
 *
-Copyright 2017 Grzegorz Mrukwa
+Copyright 2017 Spectre Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,21 +18,18 @@ limitations under the License.
 */
 
 #pragma once
-#include <gmock/gmock.h>
-#include "Spectre.libGenetic/Scorer.h"
+#include <fstream>
+#include "Spectre.libClassifier/ConfusionMatrix.h"
+#include "Spectre.libClassifier/OpenCvDataset.h"
 
-namespace Spectre::libGenetic::Tests
-{
-class DummyFitnessFunction: public FitnessFunction
+class RaportGenerator
 {
 public:
-    ScoreType fit(const Individual &) override { throw std::logic_error("DummyFitnessFunction"); }
+    RaportGenerator(std::string filename);
+    void close();
+    void write(std::string text);
+    void write(Spectre::libClassifier::ConfusionMatrix matrix);
+    void write(Spectre::libClassifier::OpenCvDataset* dataset);
+private:
+    std::ofstream mFile;
 };
-
-class MockScorer: public Scorer
-{
-public:
-    MockScorer(): Scorer(std::make_unique<DummyFitnessFunction>()) {}
-    MOCK_METHOD1(Score, std::vector<ScoreType>(const Generation&));
-};
-}

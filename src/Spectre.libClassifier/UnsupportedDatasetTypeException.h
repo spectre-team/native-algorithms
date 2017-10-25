@@ -1,8 +1,8 @@
 /*
-* StopCondition.cpp
-* General stop condition with fixed number of iterations.
+* UnsupportedDatasetTypeExceotion.h
+* Thrown when a data set type is not supported by the classifier.
 *
-Copyright 2017 Grzegorz Mrukwa
+Copyright 2017 Spectre Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,23 +17,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "StopCondition.h"
+#pragma once
+#include "Spectre.libException/ExceptionBase.h"
 
-namespace Spectre::libGenetic
+namespace Spectre::libClassifier
 {
-StopCondition::StopCondition(unsigned int numberOfIterations):
-    m_RemainingIterations(numberOfIterations),
-    m_IterationsNumber(numberOfIterations) { }
-
-
-bool StopCondition::operator()()
+class UnsupportedDatasetTypeException final: public libException::ExceptionBase
 {
-    if (m_RemainingIterations == 0)
+public:
+    template <class TDatasetType>
+    explicit UnsupportedDatasetTypeException(const TDatasetType& /*dataset*/): ExceptionBase(typeid(TDatasetType).name())
     {
-        m_RemainingIterations = m_IterationsNumber;
-        return true;
+        
     }
-    --m_RemainingIterations;
-    return false;
-}
+};
 }
