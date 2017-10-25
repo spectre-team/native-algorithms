@@ -38,7 +38,7 @@ namespace Spectre::libGenetic
                                                                              const std::vector<unsigned int>& trueAmount,
                                                                              const std::string& filename,
                                                                              unsigned int runAmount,
-                                                                             Seed seed):
+                                                                             Seed seed) :
         m_GenerationSizes(generationSize.begin(), generationSize.end()),
         m_InitialIndividualFillups(trueAmount.begin(), trueAmount.end()),
         m_TrainingDatasetSizeRate(trainingRate),
