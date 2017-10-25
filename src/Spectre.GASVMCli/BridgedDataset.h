@@ -28,9 +28,16 @@ using namespace Spectre::libClassifier;
 
 namespace Spectre::SpectreGASVMCli {
 
+    /// <summary>
+    /// Bridges BasicTextDataset to OpenCvDataset.
+    /// </summary>
 	public ref class BridgedDataset
 	{
     public:
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BridgedDataset"/> class.
+        /// </summary>
+        /// <param name="managedDataset">Dataset coming from managed code.</param>
 	    BridgedDataset(BasicTextDataset^ managedDataset)
 		{
             auto datasetLength = managedDataset->SpectrumCount *
@@ -45,15 +52,38 @@ namespace Spectre::SpectreGASVMCli {
                     data[index] = static_cast<float>(intensities[j]);
                 }
             }
-            //auto labels = managedDataset.Labels;
-            m_openCvDataset = new OpenCvDataset(data, nullptr);
+            
+            std::vector<signed> labels(managedDataset->SpectrumCount);
+            auto enumerator = managedDataset->Labels->GetEnumerator();
+            for(int i = 0; i < managedDataset->SpectrumCount; ++i)
+            {
+                labels[i] = enumerator->Current;
+                if(!enumerator->MoveNext())
+                    break;
+            }
+            m_openCvDataset = new OpenCvDataset(gsl::as_span(data), gsl::as_span(labels));
 		}
 
-        ~BridgedDataset()
+        /// <summary>
+        /// Default finalizer.
+        /// </summary>
+        !BridgedDataset()
 	    {
-            delete m_openCvDataset;
+           delete m_openCvDataset;
+            m_openCvDataset = nullptr;
 	    }
 
+        /// <summary>
+        /// Default destructor.
+        /// </summary>
+        ~BridgedDataset()
+	    {
+            this->!BridgedDataset();
+	    }
+
+        /// <summary>
+        /// Returns native dataset.
+        /// </summary>
         OpenCvDataset *GetNative()
 	    {
             return m_openCvDataset;
