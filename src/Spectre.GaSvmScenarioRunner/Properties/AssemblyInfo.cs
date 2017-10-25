@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Spectre.GaSvmScenarioRunner")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Spectre Team")]
 [assembly: AssemblyProduct("Spectre.GaSvmScenarioRunner")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyCopyright("Copyright ©  2017 Spectre Team")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
