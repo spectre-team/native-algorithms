@@ -58,6 +58,7 @@ namespace Spectre::libGenetic
                 {
                     auto begin = clock();
                     RaportGenerator raportGenerator(m_Filename + "_" + std::to_string(popSize) + "_" + std::to_string(trueAmount));
+                    raportGenerator.write("Genetic algorithm " + std::to_string(i) + " run with " + std::to_string(popSize) + " population size and " + std::to_string(trueAmount) + "for true amount in individuals in initial generation.");
                     //raportGenerator.write("Data:");
                     //raportGenerator.write(&data);
 
@@ -71,7 +72,8 @@ namespace Spectre::libGenetic
 
                     auto end = clock();
                     auto elapsed_secs = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
-                    raportGenerator.write("Time needed for Genetic algorithm: " + std::to_string(elapsed_secs) + " seconds.");
+                    raportGenerator.write("Time needed for Genetic algorithm - " + std::to_string(runNumber) + " number of execution for parameters " + std::to_string(popSize) + " population size and " +
+                        std::to_string(trueAmount) + "for true amount in individuals in initial generation is: " + std::to_string(elapsed_secs) + " seconds.");
                     raportGenerator.close();
                 }
             }
