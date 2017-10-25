@@ -10,6 +10,15 @@ namespace Spectre.GaSvmScenarioRunner
     {
         public static void Main(string[] args)
         {
+            var options = new CommandLineOptions();
+            if (CommandLine.Parser.Default.ParseArguments(args, options))
+            {
+                // @gmrukwa: TODO logic here.
+            }
+            else
+            {
+                Console.WriteLine(options.GetUsage());
+            }
         }
     }
 }
