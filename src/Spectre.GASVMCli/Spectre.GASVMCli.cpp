@@ -3,4 +3,5 @@
 #include "stdafx.h"
 
 #include "BridgedDataset.h"
+#include "GaSvmScenario.h"
 

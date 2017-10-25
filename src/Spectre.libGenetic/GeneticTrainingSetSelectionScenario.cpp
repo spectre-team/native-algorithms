@@ -48,7 +48,7 @@ namespace Spectre::libGenetic
         m_GaFactory(mutationRate, bitSwapRate, preservationRate, generationAmount)
     {}
 
-    void GeneticTrainingSetSelectionScenario::execute(libClassifier::OpenCvDataset data) const
+    void GeneticTrainingSetSelectionScenario::execute(const libClassifier::OpenCvDataset& data) const
     {
         for (auto runNumber = 0u; runNumber < m_RestartsNumber; runNumber++)
         {

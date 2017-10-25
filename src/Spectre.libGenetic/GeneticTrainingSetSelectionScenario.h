@@ -38,7 +38,7 @@ public:
                                         const std::string& reportFilename,
                                         unsigned int numberOfRestarts,
                                         Seed seed = 0);
-    void execute(libClassifier::OpenCvDataset data) const;
+    void execute(const libClassifier::OpenCvDataset& data) const;
 private:
     const std::vector<unsigned int> m_GenerationSizes;
     const std::vector<unsigned int> m_InitialIndividualFillups;

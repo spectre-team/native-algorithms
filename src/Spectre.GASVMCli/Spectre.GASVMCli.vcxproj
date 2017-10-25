@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\opencv3.3.0.0.1\build\native\opencv3.props" Condition="Exists('..\packages\opencv3.3.0.0.1\build\native\opencv3.props')" />
   <ItemGroup Label="ProjectConfigurations">
@@ -70,7 +70,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(SolutionDir)$(Platform)\$(Configuration)\Spectre.libClassifier.lib;$(SolutionDir)$(Platform)\$(Configuration)\Spectre.libDataset.lib;$(SolutionDir)$(Platform)\$(Configuration)\Spectre.libException.lib;$(SolutionDir)$(Platform)\$(Configuration)\Spectre.libPlatform.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Spectre.libClassifier.lib;Spectre.libDataset.lib;Spectre.libException.lib;Spectre.libGenetic.lib;Spectre.libPlatform.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(TargetDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -86,7 +86,7 @@
       <CompileAsManaged>true</CompileAsManaged>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(SolutionDir)$(Platform)\$(Configuration)\Spectre.libClassifier.lib;$(SolutionDir)$(Platform)\$(Configuration)\Spectre.libDataset.lib;$(SolutionDir)$(Platform)\$(Configuration)\Spectre.libException.lib;$(SolutionDir)$(Platform)\$(Configuration)\Spectre.libPlatform.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Spectre.libClassifier.lib;Spectre.libDataset.lib;Spectre.libException.lib;Spectre.libGenetic.lib;Spectre.libPlatform.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(TargetDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -96,6 +96,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GaSvmScenario.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="BridgedDataset.h" />
     <ClInclude Include="Stdafx.h" />
