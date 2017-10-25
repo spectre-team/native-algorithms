@@ -24,19 +24,19 @@ namespace Spectre.GaSvmScenarioRunner
         [Option(DefaultValue = 0.3f, HelpText = "percentage of individuals treated as elite")]
         public double PreservationRate { get; set; }
 
-        [Option(DefaultValue = 50, HelpText = "number of generations")]
+        [Option(DefaultValue = 50u, HelpText = "number of generations")]
         public uint GenerationsNumber { get; set; }
 
-        [Option(DefaultValue = 30, HelpText = "number of time the experiment is repeated")]
+        [Option(DefaultValue = 30u, HelpText = "number of time the experiment is repeated")]
         public uint NumberOfRestarts { get; set; }
 
         [Option(DefaultValue = 0, HelpText = "seed for the RNG")]
         public ulong Seed { get; set; }
 
-        [Option(DefaultValue = new uint[] { 10 }, HelpText = "population sizes used in the experiment")]
+        [Option(DefaultValue = new uint[] { 10u }, HelpText = "population sizes used in the experiment")]
         public IEnumerable<uint> PopulationSizes { get; set; }
 
-        [Option(DefaultValue = new uint[] { 4 }, HelpText = "number of observations considered at the beginning of the experiment")]
+        [Option(DefaultValue = new uint[] { 4u }, HelpText = "number of observations considered at the beginning of the experiment")]
         public IEnumerable<uint> InitialFillups { get; set; }
 
         [HelpOption]
