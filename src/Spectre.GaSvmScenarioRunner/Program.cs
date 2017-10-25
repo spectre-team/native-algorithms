@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Spectre.GASVMCli;
+using Spectre.Data.Datasets;
 
 namespace Spectre.GaSvmScenarioRunner
 {
@@ -13,7 +12,20 @@ namespace Spectre.GaSvmScenarioRunner
             var options = new CommandLineOptions();
             if (CommandLine.Parser.Default.ParseArguments(args, options))
             {
-                // @gmrukwa: TODO logic here.
+                var scenario = new GaSvmScenario(
+                    options.TrainingSetSplitRate,
+                    options.MutationRate,
+                    options.BitSwapRate,
+                    options.PreservationRate,
+                    options.GenerationsNumber,
+                    options.PopulationSizes.ToArray(),
+                    options.InitialFillups.ToArray(),
+                    options.Destination,
+                    options.NumberOfRestarts,
+                    options.Seed
+                    );
+                var data = new BasicTextDataset(options.Source);
+                scenario.execute(data);
             }
             else
             {

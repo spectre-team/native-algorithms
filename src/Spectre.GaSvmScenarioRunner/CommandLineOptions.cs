@@ -9,6 +9,9 @@ namespace Spectre.GaSvmScenarioRunner
         [Option(Required = true, HelpText = "destination of the report")]
         public string Destination { get; set; }
 
+        [Option(Required = true, HelpText = "location of the input dataset")]
+        public string Source { get; set; }
+
         [Option(DefaultValue=0.7f, HelpText = "training set split rate")]
         public double TrainingSetSplitRate { get; set; }
 
@@ -17,6 +20,12 @@ namespace Spectre.GaSvmScenarioRunner
 
         [Option(DefaultValue = 0.1f, HelpText = "rate of bit swaps")]
         public double BitSwapRate { get; set; }
+
+        [Option(DefaultValue = 0.3f, HelpText = "percentage of individuals treated as elite")]
+        public double PreservationRate { get; set; }
+
+        [Option(DefaultValue = 50, HelpText = "number of generations")]
+        public uint GenerationsNumber { get; set; }
 
         [Option(DefaultValue = 30, HelpText = "number of time the experiment is repeated")]
         public uint NumberOfRestarts { get; set; }

@@ -8,9 +8,10 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Spectre.GaSvmScenarioRunner</RootNamespace>
     <AssemblyName>Spectre.GaSvmScenarioRunner</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -53,6 +54,16 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Spectre.Data\Spectre.Data.csproj">
+      <Project>{70c87af7-3189-4f6c-ac85-93309cf7cfdc}</Project>
+      <Name>Spectre.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spectre.GASVMCli\Spectre.GASVMCli.vcxproj">
+      <Project>{f1d5f735-3ef3-47e9-acdc-5b782725679f}</Project>
+      <Name>Spectre.GASVMCli</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
