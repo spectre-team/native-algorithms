@@ -18,29 +18,32 @@ limitations under the License.
 */
 
 #include <gtest/gtest.h>
-#include "Spectre.libClassifier/SVMFitnessFunction.h"
 #include "Spectre.libException/InconsistentArgumentSizesException.h"
 #include "Spectre.libPlatform/Filter.h"
+#include "Spectre.GaSvmNative/SVMFitnessFunction.h"
 
 namespace
 {
 using namespace Spectre::libClassifier;
+using namespace Spectre::GaSvmNative;
 
 class SVMFitnessFunctionTest : public ::testing::Test
 {
 public:
-    SVMFitnessFunctionTest() {};
+    SVMFitnessFunctionTest():
+        m_ReportGenerator("SVMFitnessFunctionTest", 2)
+    {};
 
 protected:
     const std::vector<DataType> training_data{ 0.5f, 0.4f, 0.6f, 1.1f, 1.6f, 0.7f, 2.1f, 1.0f, 0.6f,
                                                0.4f, 1.6f, 0.9f, 1.2f, 2.2f, 0.7f, 1.3f, 2.0f, 1.4f, 0.7f, 0.7f, 0.9f};
     const std::vector<DataType> test_data{ 0.8f, 0.3f, 1.2f, 0.7f, 1.9f, 0.2f, 1.2f, 1.3f, 1.2f };
-    const std::vector<Label> training_labels{ 1, 1, -1, 1, -1, -1, 1 };
-    const std::vector<Label> test_labels{ 1, -1, -1 };
+    const std::vector<Label> training_labels{ 1, 1, 0, 1, 0, 0, 1 };
+    const std::vector<Label> test_labels{ 1, 0, 0 };
     OpenCvDataset trainingSet = OpenCvDataset(training_data, training_labels);
     OpenCvDataset testSet = OpenCvDataset(test_data, test_labels);
     SplittedOpenCvDataset data = SplittedOpenCvDataset(std::move(trainingSet), std::move(testSet));
-    RaportGenerator raportGenerator = RaportGenerator("SVMFitnessFunctionTest");
+    RaportGenerator m_ReportGenerator;
 
     void SetUp() override
     {
@@ -48,27 +51,26 @@ protected:
 
     void TearDown() override
     {
-        raportGenerator.close();
     }
 };
 
 TEST_F(SVMFitnessFunctionTest, correct_svm_initialization)
 {
-    EXPECT_NO_THROW(SVMFitnessFunction::SVMFitnessFunction(std::move(data), raportGenerator));
+    EXPECT_NO_THROW(SVMFitnessFunction::SVMFitnessFunction(std::move(data), m_ReportGenerator));
 }
 
 TEST_F(SVMFitnessFunctionTest, svm_fit)
 {
-    SVMFitnessFunction svm(std::move(data), raportGenerator);
+    SVMFitnessFunction svm(std::move(data), m_ReportGenerator);
     Spectre::libGenetic::Individual individual(std::vector<bool> { true, false, true, true, false, false, true });
-    EXPECT_NO_THROW(svm.fit(individual));
+    EXPECT_NO_THROW(svm.computeFitness(individual));
 }
 
 TEST_F(SVMFitnessFunctionTest, throws_when_fitting_svm_on_inconsistent_size_individual)
 {
-    SVMFitnessFunction svm(std::move(data), raportGenerator);
+    SVMFitnessFunction svm(std::move(data), m_ReportGenerator);
     Spectre::libGenetic::Individual too_short_individual({ true, false, true, true, false, true });
-    EXPECT_THROW(svm.fit(too_short_individual), Spectre::libException::InconsistentArgumentSizesException);
+    EXPECT_THROW(svm.computeFitness(too_short_individual), Spectre::libException::InconsistentArgumentSizesException);
 }
 
 }

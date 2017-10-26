@@ -22,23 +22,22 @@ limitations under the License.
 #include "Spectre.libClassifier/SplittedOpevCvDataset.h"
 #include "Spectre.libClassifier/Svm.h"
 #include "Spectre.libGenetic/FitnessFunction.h"
-#include "Spectre.libGenetic/RaportGenerator.h"
+#include "RaportGenerator.h"
 
-namespace Spectre::libClassifier
+namespace Spectre::GaSvmNative
 {
-
-class SVMFitnessFunction : public Spectre::libGenetic::FitnessFunction
+class SVMFitnessFunction : public libGenetic::FitnessFunction
 {
 public:
-    SVMFitnessFunction(SplittedOpenCvDataset&& data, RaportGenerator& raportGenerator);
-    libGenetic::ScoreType fit(const libGenetic::Individual &individual) override;
+    SVMFitnessFunction(libClassifier::SplittedOpenCvDataset&& data, RaportGenerator& raportGenerator, uint svmIterations=100u, double svmTolerance=1e-6);
+    libGenetic::ScoreType computeFitness(const libGenetic::Individual &individual) override;
     virtual ~SVMFitnessFunction() = default;
 private:
-    SplittedOpenCvDataset m_Dataset;
-    RaportGenerator* mRaportGenerator;
+    libClassifier::SplittedOpenCvDataset m_Dataset;
+    RaportGenerator& m_RaportGenerator;
+    const uint m_SvmIterations;
+    const double m_SvmTolerance;
 
-    ConfusionMatrix getResultMatrix(const OpenCvDataset& data) const;
-    ConfusionMatrix predict(const Svm& svm) const;
+    libClassifier::ConfusionMatrix getResultMatrix(const libClassifier::OpenCvDataset& data, const libGenetic::Individual& individual) const;
 };
-
 }

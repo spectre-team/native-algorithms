@@ -26,7 +26,7 @@ using namespace System;
 using namespace Spectre::Data::Datasets;
 using namespace Spectre::libClassifier;
 
-namespace Spectre::SpectreGASVMCli {
+namespace Spectre::GaSvmCli {
 
     /// <summary>
     /// Bridges BasicTextDataset to OpenCvDataset.

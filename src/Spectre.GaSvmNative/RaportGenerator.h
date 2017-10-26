@@ -21,15 +21,25 @@ limitations under the License.
 #include <fstream>
 #include "Spectre.libClassifier/ConfusionMatrix.h"
 #include "Spectre.libClassifier/OpenCvDataset.h"
+#include "Spectre.libGenetic/Individual.h"
 
-class RaportGenerator
+namespace Spectre::GaSvmNative
+{
+class RaportGenerator final
 {
 public:
-    RaportGenerator(std::string filename);
-    void close();
-    void write(std::string text);
-    void write(Spectre::libClassifier::ConfusionMatrix matrix);
-    void write(Spectre::libClassifier::OpenCvDataset* dataset);
+    explicit RaportGenerator(std::string filename,
+                             uint populationSize,
+                             const std::string& separator=",");
+    void Write(const libClassifier::ConfusionMatrix& matrix,
+               const libGenetic::Individual& individual,
+               double trainingTime,
+               double meanClassificationTime);
+    ~RaportGenerator();
 private:
-    std::ofstream mFile;
+    std::ofstream m_File;
+    const std::string m_Separator;
+    uint m_IndividualsProcessed;
+    const uint m_PopulationSize;
 };
+}
