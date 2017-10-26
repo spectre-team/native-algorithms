@@ -119,6 +119,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.GaSvmNative.Tests",
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.GaSvmCli", "Spectre.GaSvmCli\Spectre.GaSvmCli.vcxproj", "{F1D5F735-3EF3-47E9-ACDC-5B782725679F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ACC9B0E5-4106-4392-A7B6-A8A050759AFB} = {ACC9B0E5-4106-4392-A7B6-A8A050759AFB}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spectre.GaSvmScenarioRunner", "Spectre.GaSvmScenarioRunner\Spectre.GaSvmScenarioRunner.csproj", "{65884B3B-FBDC-4E87-BB80-AC1EAC03DF18}"
 	ProjectSection(ProjectDependencies) = postProject
