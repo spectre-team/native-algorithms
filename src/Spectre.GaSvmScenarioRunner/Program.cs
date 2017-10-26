@@ -27,10 +27,6 @@ namespace Spectre.GaSvmScenarioRunner
                 var data = new BasicTextDataset(options.Source);
                 scenario.execute(data);
             }
-            else
-            {
-                options.GetUsage();
-            }
         }
     }
 }
