@@ -42,7 +42,7 @@ public:
                                         size_t maximalFillup=std::numeric_limits<size_t>::max(),
                                         uint svmIterations=100u,
                                         double svmTolerance=1e-6);
-    void execute(libClassifier::OpenCvDataset data) const;
+    void execute(const libClassifier::OpenCvDataset& data) const;
 private:
     const std::vector<unsigned int> m_PopulationSizes;
     const std::vector<unsigned int> m_InitialIndividualFillups;

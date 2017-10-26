@@ -71,7 +71,7 @@ GeneticTrainingSetSelectionScenario::GeneticTrainingSetSelectionScenario(double 
     }
 }
 
-void GeneticTrainingSetSelectionScenario::execute(libClassifier::OpenCvDataset data) const
+void GeneticTrainingSetSelectionScenario::execute(const libClassifier::OpenCvDataset& data) const
 {
     const auto optimalChunksNumber = 1;
     omp_set_nested(1);
