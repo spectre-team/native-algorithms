@@ -6,10 +6,10 @@ namespace Spectre.GaSvmScenarioRunner
 {
     public class CommandLineOptions
     {
-        [Option(Required = true, HelpText = "destination of the report")]
+        [Option("Destination", Required = true, HelpText = "destination of the report")]
         public string Destination { get; set; }
 
-        [Option(Required = true, HelpText = "location of the input dataset")]
+        [Option("Source", Required = true, HelpText = "location of the input dataset")]
         public string Source { get; set; }
 
         [Option("TrainingSetSplitRate", DefaultValue=0.7f, HelpText = "training set split rate")]

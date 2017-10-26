@@ -77,8 +77,8 @@ This section is under construction.
 
 # Parameters
 
-1. **Destination path** - prefix of the experiment result files.
-2. **Input path** - location of the input dataset.
+1. **--Destination** - prefix of the experiment result files.
+2. **--Source** - location of the input dataset.
 3. **--TrainingSetSplitRate** - (Default: 0.7) training set split rate
 4. **--MutationRate** - (Default: 0.1) mutation rate
 5. **--BitSwapRate** - (Default: 0.1) rate of bit swaps

@@ -15,6 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spectre.Algorithms.Tests", 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spectre.Data", "Spectre.Data\Spectre.Data.csproj", "{70C87AF7-3189-4F6C-AC85-93309CF7CFDC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2B9F4DFD-C222-477A-9107-1A3C356002A4} = {2B9F4DFD-C222-477A-9107-1A3C356002A4}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spectre.Data.Tests", "Spectre.Data.Tests\Spectre.Data.Tests.csproj", "{01391E76-3D20-4B4B-B727-2A133B35A144}"
 EndProject
