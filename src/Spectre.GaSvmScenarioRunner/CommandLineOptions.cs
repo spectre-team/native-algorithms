@@ -36,6 +36,18 @@ namespace Spectre.GaSvmScenarioRunner
         [Option("NumberOfCores", DefaultValue = 1u, HelpText = "Number of cores used for calculations")]
         public uint NumberOfCores { get; set; }
 
+        [Option("MinimalFillup", DefaultValue = 1ul, HelpText = "minimal number of observations taken into account")]
+        public ulong MinimalFillup { get; set; }
+
+        [Option("MaximalFillup", DefaultValue = ulong.MaxValue, HelpText = "maximal number of observations taken into account")]
+        public ulong MaximalFillup { get; set; }
+
+        [Option("SvmIterations", DefaultValue = 100u, HelpText = "Number of SVM iterations")]
+        public uint SvmIterations { get; set; }
+
+        [Option("SvmTolerance", DefaultValue = 1e-6, HelpText = "Tolerance of SVM")]
+        public double SvmTolerance { get; set; }
+
         [Option("PopulationSizes", DefaultValue = new [] { 10u }, HelpText = "population sizes used in the experiment. Default: 10.")]
         public IEnumerable<uint> PopulationSizes { get; set; }
 

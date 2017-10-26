@@ -63,9 +63,9 @@
       <Project>{70c87af7-3189-4f6c-ac85-93309cf7cfdc}</Project>
       <Name>Spectre.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Spectre.GASVMCli\Spectre.GASVMCli.vcxproj">
+    <ProjectReference Include="..\Spectre.GaSvmCli\Spectre.GaSvmCli.vcxproj">
       <Project>{f1d5f735-3ef3-47e9-acdc-5b782725679f}</Project>
-      <Name>Spectre.GASVMCli</Name>
+      <Name>Spectre.GaSvmCli</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

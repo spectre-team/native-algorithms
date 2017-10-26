@@ -22,7 +22,11 @@ namespace Spectre.GaSvmScenarioRunner
                     options.Destination,
                     options.NumberOfRestarts,
                     options.NumberOfCores,
-                    options.Seed
+                    options.Seed,
+                    options.MinimalFillup,
+                    options.MaximalFillup,
+                    options.SvmIterations,
+                    options.SvmTolerance
                     );
                 var data = new BasicTextDataset(options.Source);
                 scenario.execute(data);
