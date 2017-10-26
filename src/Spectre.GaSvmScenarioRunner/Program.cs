@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Spectre.GASVMCli;
 using Spectre.Data.Datasets;
 
@@ -22,6 +21,7 @@ namespace Spectre.GaSvmScenarioRunner
                     options.InitialFillups.ToArray(),
                     options.Destination,
                     options.NumberOfRestarts,
+                    options.NumberOfCores,
                     options.Seed
                     );
                 var data = new BasicTextDataset(options.Source);

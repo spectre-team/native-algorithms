@@ -33,6 +33,9 @@ namespace Spectre.GaSvmScenarioRunner
         [Option("Seed", DefaultValue = 0ul, HelpText = "seed for the RNG")]
         public ulong Seed { get; set; }
 
+        [Option("NumberOfCores", DefaultValue = 1u, HelpText = "Number of cores used for calculations")]
+        public uint NumberOfCores { get; set; }
+
         [Option("PopulationSizes", DefaultValue = new [] { 10u }, HelpText = "population sizes used in the experiment. Default: 10.")]
         public IEnumerable<uint> PopulationSizes { get; set; }
 
