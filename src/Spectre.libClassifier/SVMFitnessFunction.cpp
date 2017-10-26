@@ -50,24 +50,24 @@ libGenetic::ScoreType SVMFitnessFunction::fit(const libGenetic::Individual &indi
     }
     if (onlyFalse)
     {
-        libGenetic::Individual tmp(individual.getData());
-        tmp[0] = true;
-        const_cast<libGenetic::Individual&>(individual) = tmp;
+        const_cast<libGenetic::Individual&>(individual)[0] = true;
     }
     //KONIEC BRZYDKIEGO ROZWIAZANIA PROBLEMU
-    gsl::span<const Observation> dataToFilter = m_Dataset.trainingSet.GetData();
-    std::vector<Observation> twoDimentionalFilteredData = libPlatform::Functional::filter(dataToFilter, individual.getData());
-    std::vector<DataType> oneDimentionalFilteredData;
-    for (Observation observation: twoDimentionalFilteredData)
+    const auto& dataToFilter = m_Dataset.trainingSet.GetData();
+    const auto twoDimensionalFilteredData = libPlatform::Functional::filter(dataToFilter, individual.getData());
+    // @gmrukwa: TODO: Reserve space.
+    std::vector<DataType> oneDimensionalFilteredData;
+    oneDimensionalFilteredData.reserve(twoDimensionalFilteredData.size() * twoDimensionalFilteredData[0].size());
+    for (const auto& observation: twoDimensionalFilteredData)
     {
         for (float number: observation)
         {
-            oneDimentionalFilteredData.push_back(number);
+            oneDimensionalFilteredData.push_back(number);
         }
     }
     std::vector<Label> filteredLabels = libPlatform::Functional::filter(m_Dataset.trainingSet.GetSampleMetadata(), individual.getData());
-    OpenCvDataset individualDataset(oneDimentionalFilteredData, filteredLabels);
-    ConfusionMatrix result = getResultMatrix(std::move(individualDataset));
+    OpenCvDataset individualDataset(oneDimensionalFilteredData, filteredLabels);
+    const auto result = getResultMatrix(std::move(individualDataset));
     mRaportGenerator->write(result);
     mRaportGenerator->write(std::to_string(result.DiceIndex));
     return result.DiceIndex;
@@ -80,51 +80,10 @@ ConfusionMatrix SVMFitnessFunction::getResultMatrix(const OpenCvDataset& data) c
     svm.Fit(data);
     const auto end = clock();
     const auto elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
-    std::string time_difference = std::to_string(elapsed_secs);
+    const auto time_difference = std::to_string(elapsed_secs);
     mRaportGenerator->write("Time needed to teach this individual: " + time_difference + " seconds.");
 
-    ConfusionMatrix goodNr = predict(svm);
-    return goodNr;
+    const auto predictions = svm.Predict((m_Dataset.testSet));
+    return ConfusionMatrix(predictions, m_Dataset.testSet.GetSampleMetadata());
 }
-
-// @gmrukwa: TODO: Move ConfusionMatrix calculations to libClassifier
-// @gmrukwa: TODO: Loosen dependencies
-ConfusionMatrix SVMFitnessFunction::predict(const Svm& svm) const
-{
-    auto truePositives = 0u;
-    auto trueNegatives = 0u;
-    auto falsePositives = 0u;
-    auto falseNegatives = 0u;
-    auto predictions = svm.Predict(m_Dataset.testSet);
-    for (auto i = 0; i < m_Dataset.testSet.getMatData().rows; i++)
-    {
-        auto tmp = m_Dataset.testSet.getMatData().row(i).data;
-        if (*tmp == 1)
-        {
-            if (predictions[i] == 1)
-            {
-                truePositives++;
-            }
-            else
-            {
-                trueNegatives++;
-            }
-        }
-        else
-        {
-            if (predictions[i] == 1)
-            {
-                falsePositives++;
-            }
-            else
-            {
-                falseNegatives++;
-            }
-        }
-    }
-    return ConfusionMatrix(truePositives, trueNegatives, falsePositives, falseNegatives);
-}
-
-SVMFitnessFunction::~SVMFitnessFunction() {}
-
 }
