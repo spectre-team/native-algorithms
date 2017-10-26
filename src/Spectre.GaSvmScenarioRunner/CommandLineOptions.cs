@@ -41,13 +41,5 @@ namespace Spectre.GaSvmScenarioRunner
 
         [Option("InitialFillups", DefaultValue = new [] { 4u }, HelpText = "number of observations considered at the beginning of the experiment. Default: 4.")]
         public IEnumerable<uint> InitialFillups { get; set; }
-
-        [HelpOption]
-        public string GetUsage()
-        {
-            return HelpText.AutoBuild(options: this,
-                onError: current => HelpText.DefaultParsingErrorsHandler(options: this,
-                                                                         current: current));
-        }
     }
 }
