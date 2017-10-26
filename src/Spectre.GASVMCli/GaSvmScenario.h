@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 #pragma once
-#include "Spectre.libGenetic/GeneticTrainingSetSelectionScenario.h"
+#include "Spectre.GaSvmNative/GeneticTrainingSetSelectionScenario.h"
 #include "BridgedDataset.h"
 
 using namespace System;
@@ -40,8 +40,12 @@ public:
                   String^ reportFilename,
                   unsigned int numberOfRestarts,
                   unsigned int numberOfCores,
-                  unsigned long long seed):
-        m_GaSvmNative(new libGenetic::GeneticTrainingSetSelectionScenario(trainingSetSplitRate,
+                  unsigned long long seed,
+                  unsigned long long minimalFillup,
+                  unsigned long long maximalFillup,
+                  unsigned int svmIterations,
+                  double svmTolerance):
+        m_GaSvmNative(new GaSvmNative::GeneticTrainingSetSelectionScenario(trainingSetSplitRate,
                                                                           mutationRate,
                                                                           bitSwapRate,
                                                                           preservationRate,
@@ -51,7 +55,11 @@ public:
                                                                           toNative(reportFilename),
                                                                           numberOfRestarts,
                                                                           numberOfCores,
-                                                                          seed))
+                                                                          seed,
+                                                                          minimalFillup,
+                                                                          maximalFillup,
+                                                                          svmIterations,
+                                                                          svmTolerance))
     {
         
     }
@@ -74,7 +82,7 @@ public:
     }
 
 private:
-    const libGenetic::GeneticTrainingSetSelectionScenario* m_GaSvmNative;
+    const GaSvmNative::GeneticTrainingSetSelectionScenario* m_GaSvmNative;
 
     template <typename T>
     static std::vector<T> toNative(array<T>^ managedCollection)

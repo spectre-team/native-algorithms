@@ -70,7 +70,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Spectre.libClassifier.lib;Spectre.libDataset.lib;Spectre.libException.lib;Spectre.libGenetic.lib;Spectre.libPlatform.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Spectre.GaSvmNative.lib;Spectre.libClassifier.lib;Spectre.libDataset.lib;Spectre.libException.lib;Spectre.libGenetic.lib;Spectre.libPlatform.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(TargetDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -86,7 +86,7 @@
       <CompileAsManaged>true</CompileAsManaged>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Spectre.libClassifier.lib;Spectre.libDataset.lib;Spectre.libException.lib;Spectre.libGenetic.lib;Spectre.libPlatform.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Spectre.GaSvmNative.lib;Spectre.libClassifier.lib;Spectre.libDataset.lib;Spectre.libException.lib;Spectre.libGenetic.lib;Spectre.libPlatform.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(TargetDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
