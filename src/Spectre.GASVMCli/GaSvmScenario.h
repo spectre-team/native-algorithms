@@ -23,7 +23,7 @@ limitations under the License.
 
 using namespace System;
 using namespace System::Collections::Generic;
-using namespace Spectre::SpectreGASVMCli;
+using namespace Spectre::GaSvmCli;
 
 namespace Spectre::GASVMCli
 {
@@ -89,7 +89,7 @@ private:
     {
         std::vector<T> native;
         native.reserve(managedCollection->Length);
-        for (auto i=0u; i < managedCollection->Length; ++i)
+        for (auto i=0; i < managedCollection->Length; ++i)
         {
             native.push_back(managedCollection[i]);
         }
@@ -102,7 +102,7 @@ private:
         std::string native(length, '\0');
         for(auto i=0u; i<length; ++i)
         {
-            native[i] = managedString[i];
+            native[i] = static_cast<char>(managedString[i]);
         }
         return native;
     }
