@@ -15,25 +15,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Common\Main.cpp">
+    <ClInclude Include="GeneticTrainingSetSelectionScenario.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RaportGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SVMFitnessFunction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneticTrainingSetSelectionScenario.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OpenCvDatasetTest.cpp">
+    <ClCompile Include="RaportGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ObservationExtractorTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RandomSplitterTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SplittedOpenCVDatasetTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="C:\Users\Grzegorz\Source\Repos\MSI-dev\spectre\src\Spectre.libClassifier.Tests\..\..\lib\native\src\gtest\gtest-all.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="C:\Users\Grzegorz\Source\Repos\MSI-dev\spectre\src\Spectre.libClassifier.Tests\..\..\lib\native\src\gmock\gmock-all.cc">
+    <ClCompile Include="SVMFitnessFunction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

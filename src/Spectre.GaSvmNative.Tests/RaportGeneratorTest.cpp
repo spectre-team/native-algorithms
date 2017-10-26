@@ -18,16 +18,14 @@ limitations under the License.
 */
 
 #include <gtest/gtest.h>
-#include "Spectre.libGenetic/Individual.h"
-#include "Spectre.libGenetic/RaportGenerator.h"
+#include "Spectre.GaSvmNative/RaportGenerator.h"
 
 namespace
 {
-using namespace Spectre::libGenetic;
+using namespace Spectre::GaSvmNative;
 
 TEST(RaportGeneratorInitialization, initializes)
 {
-    EXPECT_NO_THROW(RaportGenerator("raportGeneratorTest"));
+    EXPECT_NO_THROW(RaportGenerator("raportGeneratorTest", 2));
 }
-
 }

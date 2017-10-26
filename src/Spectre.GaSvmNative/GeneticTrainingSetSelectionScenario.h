@@ -22,9 +22,8 @@ limitations under the License.
 #include "Spectre.libGenetic/DataTypes.h"
 #include "Spectre.libGenetic/GeneticAlgorithmFactory.h"
 
-namespace Spectre::libGenetic
+namespace Spectre::GaSvmNative
 {
-
 class GeneticTrainingSetSelectionScenario
 {
 public:
@@ -38,17 +37,22 @@ public:
                                         const std::string& reportFilename,
                                         unsigned int numberOfRestarts,
                                         unsigned int numberOfCores=1u,
-                                        Seed seed = 0);
-    void execute(const libClassifier::OpenCvDataset& data) const;
+                                        libGenetic::Seed seed = 0,
+                                        size_t minimalFillup=1ul,
+                                        size_t maximalFillup=std::numeric_limits<size_t>::max(),
+                                        uint svmIterations=100u,
+                                        double svmTolerance=1e-6);
+    void execute(libClassifier::OpenCvDataset data) const;
 private:
-    const std::vector<unsigned int> m_GenerationSizes;
+    const std::vector<unsigned int> m_PopulationSizes;
     const std::vector<unsigned int> m_InitialIndividualFillups;
     const double m_TrainingDatasetSizeRate;
     const std::string m_Filename;
     const unsigned int m_RestartsNumber;
     const unsigned int m_NumberOfCores;
-    const Seed m_Seed;
-    const GeneticAlgorithmFactory m_GaFactory;
+    const libGenetic::Seed m_Seed;
+    const libGenetic::GeneticAlgorithmFactory m_GaFactory;
+    const uint m_SvmIterations;
+    const double m_SvmTolerance;
 };
-
 }
