@@ -39,6 +39,7 @@ public:
                   array<unsigned int>^ initialFillups,
                   String^ reportFilename,
                   unsigned int numberOfRestarts,
+                  unsigned int numberOfCores,
                   unsigned long long seed):
         m_GaSvmNative(new libGenetic::GeneticTrainingSetSelectionScenario(trainingSetSplitRate,
                                                                           mutationRate,
@@ -49,6 +50,7 @@ public:
                                                                           toNative(initialFillups),
                                                                           toNative(reportFilename),
                                                                           numberOfRestarts,
+                                                                          numberOfCores,
                                                                           seed))
     {
         
