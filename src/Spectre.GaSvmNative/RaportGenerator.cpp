@@ -41,6 +41,7 @@ RaportGenerator::RaportGenerator(std::string filename, uint populationSize, cons
     m_File << "mean training time [ms]" << m_Separator;
     m_File << "mean classification time [ms]\n";
     m_File.flush();
+    omp_init_lock(&m_WriteLock);
 }
 
 void RaportGenerator::Write(const libClassifier::ConfusionMatrix& matrix,
@@ -54,24 +55,25 @@ void RaportGenerator::Write(const libClassifier::ConfusionMatrix& matrix,
         count += bit;
     }
 
-    #pragma omp critical ("report-" + m_Filename)
-    {
-        m_File << m_IndividualsProcessed++ / m_PopulationSize << m_Separator;
-        m_File << matrix.TruePositive << m_Separator;
-        m_File << matrix.TrueNegative << m_Separator;
-        m_File << matrix.FalsePositive << m_Separator;
-        m_File << matrix.FalseNegative << m_Separator;
-        m_File << matrix.DiceIndex << m_Separator;
-        m_File << count << m_Separator;
-        m_File << static_cast<double>(count) / individual.size() << m_Separator;
-        m_File << 1000 * trainingTime << m_Separator;
-        m_File << 1000 * meanClassificationTime << "\n";
-    }
+    omp_set_lock(&m_WriteLock);
+    m_File << m_IndividualsProcessed++ / m_PopulationSize << m_Separator;
+    m_File << matrix.TruePositive << m_Separator;
+    m_File << matrix.TrueNegative << m_Separator;
+    m_File << matrix.FalsePositive << m_Separator;
+    m_File << matrix.FalseNegative << m_Separator;
+    m_File << matrix.DiceIndex << m_Separator;
+    m_File << count << m_Separator;
+    m_File << static_cast<double>(count) / individual.size() << m_Separator;
+    m_File << 1000 * trainingTime << m_Separator;
+    m_File << 1000 * meanClassificationTime << "\n";
+    m_File.flush();
+    omp_unset_lock(&m_WriteLock);
 }
 
 
 RaportGenerator::~RaportGenerator()
 {
     m_File.close();
+    omp_destroy_lock(&m_WriteLock);
 }
 }
