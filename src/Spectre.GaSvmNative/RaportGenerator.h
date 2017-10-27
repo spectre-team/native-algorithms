@@ -41,5 +41,6 @@ private:
     const std::string m_Separator;
     uint m_IndividualsProcessed;
     const uint m_PopulationSize;
+    const std::string m_Filenane;
 };
 }
