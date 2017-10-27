@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CommandLine;
 using CommandLine.Text;
 
@@ -12,7 +13,7 @@ namespace Spectre.GaSvmScenarioRunner
         [Option("Source", Required = true, HelpText = "location of the input dataset")]
         public string Source { get; set; }
 
-        [Option("TrainingSetSplitRate", DefaultValue=0.7f, HelpText = "training set split rate")]
+        [Option("TrainingSetSplitRate", DefaultValue = 0.7f, HelpText = "training set split rate")]
         public double TrainingSetSplitRate { get; set; }
 
         [Option("MutationRate", DefaultValue = 0.1f, HelpText = "mutation rate")]
@@ -48,10 +49,34 @@ namespace Spectre.GaSvmScenarioRunner
         [Option("SvmTolerance", DefaultValue = 1e-6, HelpText = "Tolerance of SVM")]
         public double SvmTolerance { get; set; }
 
-        [Option("PopulationSizes", DefaultValue = new [] { 10u }, HelpText = "population sizes used in the experiment. Default: 10.")]
-        public IEnumerable<uint> PopulationSizes { get; set; }
+        [OptionArray("PopulationSizes", HelpText = "population sizes used in the experiment. Default: 10.")]
+        public string[] OptionPopulationSizes
+        {
+            get
+            {
+                return PopulationSizes.Select(v => v.ToString()).ToArray();
+            }
+            set
+            {
+                PopulationSizes = value.Select(v => uint.Parse(v)).ToArray();
+            }
+        }
 
-        [Option("InitialFillups", DefaultValue = new [] { 4u }, HelpText = "number of observations considered at the beginning of the experiment. Default: 4.")]
-        public IEnumerable<uint> InitialFillups { get; set; }
+        public IEnumerable<uint> PopulationSizes { get; set; } = new[] { 10u };
+
+        [OptionArray("InitialFillups", HelpText = "number of observations considered at the beginning of the experiment. Default: 4.")]
+        public string[] OptionInitialFillups
+        {
+            get
+            {
+                return InitialFillups.Select(v => v.ToString()).ToArray();
+            }
+            set
+            {
+                InitialFillups = value.Select(v => uint.Parse(v)).ToArray();
+            }
+        }
+        
+        public IEnumerable<uint> InitialFillups { get; set; } = new[] { 4u };
     }
 }
