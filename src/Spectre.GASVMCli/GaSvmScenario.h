@@ -64,11 +64,19 @@ public:
         
     }
 
-    void execute(BasicTextDataset^ data)
+    void execute(BasicTextDataset^ data, BasicTextDataset^ independentValidation)
     {
         BridgedDataset^ dataBridge = gcnew BridgedDataset(data);
         const auto nativeData = dataBridge->GetNative();
-        m_GaSvmNative->execute(*nativeData);
+        BridgedDataset^ validationBridge;
+        libClassifier::OpenCvDataset* independentNative = nullptr;
+        if(independentValidation != nullptr)
+        {
+            validationBridge = gcnew BridgedDataset(independentValidation);
+            independentNative = validationBridge->GetNative();
+        }
+        
+        m_GaSvmNative->execute(*nativeData, independentNative);
     }
 
     !GaSvmScenario()
