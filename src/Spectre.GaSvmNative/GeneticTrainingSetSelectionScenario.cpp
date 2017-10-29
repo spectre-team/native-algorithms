@@ -98,7 +98,7 @@ void GeneticTrainingSetSelectionScenario::execute(const libClassifier::OpenCvDat
                                                                             m_SvmTolerance);
                 auto algorithm = m_GaFactory.BuildDefault(std::move(fitnessFunction), m_Seed + runNumber);
 
-                libGenetic::Generation initialGeneration(popSize, trainingSetSize, initialFillup);
+                libGenetic::Generation initialGeneration(popSize, trainingSetSize, initialFillup, m_Seed + runNumber);
                 auto finalGeneration = algorithm->evolve(std::move(initialGeneration));
             }
         }
