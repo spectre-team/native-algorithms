@@ -29,7 +29,8 @@ namespace Spectre.GaSvmScenarioRunner
                     options.SvmTolerance
                     );
                 var data = new BasicTextDataset(options.Source);
-                scenario.execute(data);
+                var validation = options.Validation == null ? null : new BasicTextDataset(options.Validation);
+                scenario.execute(data, validation);
             }
         }
     }

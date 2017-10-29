@@ -13,6 +13,9 @@ namespace Spectre.GaSvmScenarioRunner
         [Option("Source", Required = true, HelpText = "location of the input dataset")]
         public string Source { get; set; }
 
+        [Option("Validation", HelpText = "location of the validation dataset")]
+        public string Validation { get; set; }
+
         [Option("TrainingSetSplitRate", DefaultValue = 0.7f, HelpText = "training set split rate")]
         public double TrainingSetSplitRate { get; set; }
 
