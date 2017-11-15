@@ -19,6 +19,7 @@ limitations under the License.
 
 #pragma once
 
+#include <omp.h>
 #include <gsl.h>
 #include "OpenCvDataset.h"
 
@@ -46,6 +47,7 @@ namespace Spectre::GaSvmCli {
             for(int i = 0; i < managedDataset->SpectrumCount; ++i)
             {
                 auto intensities = managedDataset->GetRawIntensityArray(i);
+                #pragma omp parallel for schedule(static, 1) num_threads(omp_get_num_procs())
                 for(int j = 0; j < managedDataset->SpectrumLength; ++j)
                 {
                     auto index = i * managedDataset->SpectrumLength + j;
