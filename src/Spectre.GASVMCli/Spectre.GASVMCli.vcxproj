@@ -68,6 +68,7 @@
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>false</TreatWarningAsError>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(SolutionDir)$(Platform)\$(Configuration)\Spectre.libClassifier.lib;$(SolutionDir)$(Platform)\$(Configuration)\Spectre.libDataset.lib;$(SolutionDir)$(Platform)\$(Configuration)\Spectre.libException.lib;$(SolutionDir)$(Platform)\$(Configuration)\Spectre.libPlatform.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -84,6 +85,7 @@
       <TreatWarningAsError>false</TreatWarningAsError>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <CompileAsManaged>true</CompileAsManaged>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(SolutionDir)$(Platform)\$(Configuration)\Spectre.libClassifier.lib;$(SolutionDir)$(Platform)\$(Configuration)\Spectre.libDataset.lib;$(SolutionDir)$(Platform)\$(Configuration)\Spectre.libException.lib;$(SolutionDir)$(Platform)\$(Configuration)\Spectre.libPlatform.lib;%(AdditionalDependencies)</AdditionalDependencies>
