@@ -69,6 +69,7 @@
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>false</TreatWarningAsError>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Spectre.GaSvmNative.lib;Spectre.libClassifier.lib;Spectre.libDataset.lib;Spectre.libException.lib;Spectre.libGenetic.lib;Spectre.libPlatform.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -85,6 +86,7 @@
       <TreatWarningAsError>false</TreatWarningAsError>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <CompileAsManaged>true</CompileAsManaged>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Spectre.GaSvmNative.lib;Spectre.libClassifier.lib;Spectre.libDataset.lib;Spectre.libException.lib;Spectre.libGenetic.lib;Spectre.libPlatform.lib;%(AdditionalDependencies)</AdditionalDependencies>
