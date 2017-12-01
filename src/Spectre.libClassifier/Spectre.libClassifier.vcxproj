@@ -80,6 +80,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DownsampledOpenCVDataset.cpp" />
     <ClCompile Include="EmptyOpenCvDatasetException.cpp" />
     <ClCompile Include="ExcessiveTrainingRateException.cpp" />
     <ClCompile Include="NegativeTrainingRateException.cpp" />
@@ -93,6 +94,7 @@
     <ClCompile Include="Svm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DownsampledOpenCVDataset.h" />
     <ClInclude Include="EmptyOpenCvDatasetException.h" />
     <ClInclude Include="ExcessiveTrainingRateException.h" />
     <ClInclude Include="IClassifier.h" />

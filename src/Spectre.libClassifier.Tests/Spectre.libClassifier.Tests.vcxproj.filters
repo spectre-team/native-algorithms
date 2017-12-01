@@ -36,6 +36,9 @@
     <ClCompile Include="SvmTest.cpp">
       <Filter>Source Files\Classifiers</Filter>
     </ClCompile>
+    <ClCompile Include="DownsampledOpenCVDatasetTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
