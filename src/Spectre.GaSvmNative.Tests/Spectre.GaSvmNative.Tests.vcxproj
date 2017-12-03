@@ -93,6 +93,7 @@
   <ItemGroup>
     <ClCompile Include="..\Common\Main.cpp" />
     <ClCompile Include="GeneticTrainingSetSelectionScenarioTest.cpp" />
+    <ClCompile Include="RandomMultipleValidationSelectionScenarioTest.cpp" />
     <ClCompile Include="RaportGeneratorTest.cpp" />
     <ClCompile Include="SVMFitnessFunctionTest.cpp" />
   </ItemGroup>

@@ -27,12 +27,12 @@ namespace Spectre::GaSvmNative
 using namespace libClassifier;
 using namespace libGenetic;
 
-SVMFitnessFunction::SVMFitnessFunction(SplittedOpenCvDataset&& data,
+SVMFitnessFunction::SVMFitnessFunction(SplittedOpenCvDataset& data,
                                        RaportGenerator& raportGenerator,
                                        const libClassifier::OpenCvDataset* independentValidation,
                                        unsigned int svmIterations,
                                        double svmTolerance)
-    : m_Dataset(std::move(data)),
+    : m_Dataset(data),
       m_IndependentValidation(independentValidation),
       m_RaportGenerator(raportGenerator),
       m_SvmIterations(svmIterations),

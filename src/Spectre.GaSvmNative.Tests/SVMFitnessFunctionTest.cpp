@@ -51,19 +51,19 @@ protected:
 
 TEST_F(SVMFitnessFunctionTest, correct_svm_initialization)
 {
-    EXPECT_NO_THROW(SVMFitnessFunction::SVMFitnessFunction(std::move(data), m_ReportGenerator));
+    EXPECT_NO_THROW(SVMFitnessFunction::SVMFitnessFunction(data, m_ReportGenerator));
 }
 
 TEST_F(SVMFitnessFunctionTest, svm_fit)
 {
-    SVMFitnessFunction svm(std::move(data), m_ReportGenerator);
+    SVMFitnessFunction svm(data, m_ReportGenerator);
     Spectre::libGenetic::Individual individual(std::vector<bool> { true, false, true, true, false, false, true });
     EXPECT_NO_THROW(svm.computeFitness(individual));
 }
 
 TEST_F(SVMFitnessFunctionTest, throws_when_fitting_svm_on_inconsistent_size_individual)
 {
-    SVMFitnessFunction svm(std::move(data), m_ReportGenerator);
+    SVMFitnessFunction svm(data, m_ReportGenerator);
     Spectre::libGenetic::Individual too_short_individual({ true, false, true, true, false, true });
     EXPECT_THROW(svm.computeFitness(too_short_individual), Spectre::libException::InconsistentArgumentSizesException);
 }

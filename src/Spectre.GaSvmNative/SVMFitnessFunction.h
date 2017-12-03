@@ -40,7 +40,7 @@ public:
     /// <param name="independentValidation">The independent validation.</param>
     /// <param name="svmIterations">The number of SVM iterations.</param>
     /// <param name="svmTolerance">The SVM tolerance.</param>
-    SVMFitnessFunction(libClassifier::SplittedOpenCvDataset&& data,
+    SVMFitnessFunction(libClassifier::SplittedOpenCvDataset& data,
                        RaportGenerator& raportGenerator,
                        const libClassifier::OpenCvDataset* independentValidation = nullptr,
                        unsigned int svmIterations=100u,
@@ -56,7 +56,7 @@ private:
     /// <summary>
     /// The dataset.
     /// </summary>
-    libClassifier::SplittedOpenCvDataset m_Dataset;
+    libClassifier::SplittedOpenCvDataset& m_Dataset;
     /// <summary>
     /// The independent validation.
     /// </summary>

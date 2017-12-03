@@ -95,7 +95,7 @@ void RandomMultipleValidationSelectionScenario::execute(libClassifier::OpenCvDat
         auto splittedDataset = splitter.split(splitterCancerNonCancerDataset.trainingSet);
         auto trainingSetSize = splittedDataset.trainingSet.size();
 
-        auto fitnessFunction = std::make_unique<SVMFitnessFunction>(std::move(splittedDataset),
+        auto fitnessFunction = std::make_unique<SVMFitnessFunction>(splittedDataset,
             raportGenerator,
             independentValidation,
             m_SvmIterations,
@@ -111,17 +111,18 @@ void RandomMultipleValidationSelectionScenario::execute(libClassifier::OpenCvDat
             + "-popsize-" + std::to_string(m_PopulationSize)
             + "-fillup-" + std::to_string(m_InitialIndividualFillup),
             m_PopulationSize);
-        auto GAFitnessFunction = std::make_unique<SVMFitnessFunction>(std::move(splitterCancerNonCancerDataset),
+        auto GAFitnessFunction = std::make_unique<SVMFitnessFunction>(splitterCancerNonCancerDataset,
             raportGenerator,
             nullptr,
             m_SvmIterations,
             m_SvmTolerance);
 
-        libGenetic::Individual finalGAIndividual = finalGeneration[0];
-        for (auto i = finalGAIndividual.size(); i < splitterCancerNonCancerDataset.trainingSet.size(); i++)
+        std::vector<bool> finalBinaryData = finalGeneration[0].getData();
+        for (auto i = finalBinaryData.size(); i < splitterCancerNonCancerDataset.trainingSet.size(); i++)
         {
-            finalGAIndividual.getData().push_back(false);
+            finalBinaryData.push_back(false);
         }
+        libGenetic::Individual finalGAIndividual(std::move(finalBinaryData));
         GAFitnessFunction->computeFitness(finalGAIndividual);
 
         //train and predict SVM on all downsampled data
@@ -130,7 +131,7 @@ void RandomMultipleValidationSelectionScenario::execute(libClassifier::OpenCvDat
             + "-popsize-" + std::to_string(m_PopulationSize)
             + "-fillup-" + std::to_string(m_InitialIndividualFillup),
             m_PopulationSize);
-        auto nonGAFitnessFunction = std::make_unique<SVMFitnessFunction>(std::move(splitterCancerNonCancerDataset),
+        auto nonGAFitnessFunction = std::make_unique<SVMFitnessFunction>(splitterCancerNonCancerDataset,
             raportGenerator,
             nullptr,
             m_SvmIterations,
