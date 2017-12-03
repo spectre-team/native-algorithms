@@ -36,7 +36,8 @@ public:
     /// <summary>
     /// Initializes a new instance of the <see cref="Svm"/> class.
     /// </summary>
-    /// <param name="data">The data.</param>
+    /// <param name="iterationsLimit">The iterations limit.</param>
+    /// <param name="tolerance">The tolerance.</param>
     explicit Svm(unsigned int iterationsLimit=100, double tolerance=1e-6);
     /// <summary>
     /// Try to fit dataset in fitness function.

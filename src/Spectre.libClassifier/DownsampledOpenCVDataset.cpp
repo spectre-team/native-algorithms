@@ -26,9 +26,8 @@ limitations under the License.
 
 namespace Spectre::libClassifier {
 
-    DownsampledOpenCVDataset::DownsampledOpenCVDataset(OpenCvDataset data, size_t maximumSubsetSize, double trainingRate, Seed seed)
-    : m_Seed(seed),
-    m_TrainingRate(trainingRate)
+    DownsampledOpenCVDataset::DownsampledOpenCVDataset(OpenCvDataset data, size_t maximumSubsetSize, double trainingRate)
+    : m_TrainingRate(trainingRate)
 {
     if (data.empty())
     {
@@ -68,7 +67,7 @@ namespace Spectre::libClassifier {
     m_MaximumSubsetSize = maximumSubsetSize;
 }
 
-SplittedOpenCvDataset DownsampledOpenCVDataset::getDownsizedOpenCVDataset()
+SplittedOpenCvDataset DownsampledOpenCVDataset::getDownsizedOpenCVDataset(Seed seed)
 {
     std::vector<bool> cancerIndividualData = getIndividualData(m_CancerCells->size());
     std::vector<bool> nonCancerIndividualData = getIndividualData(m_NonCancerCells->size());

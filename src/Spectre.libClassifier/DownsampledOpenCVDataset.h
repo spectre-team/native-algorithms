@@ -34,13 +34,13 @@ public:
     /// </summary>
     /// <param name="data">The dataset.</param>
     /// <param name="maximumSubsetSize">The maximum subset size.</param>
-    DownsampledOpenCVDataset::DownsampledOpenCVDataset(OpenCvDataset data, size_t maximumSubsetSize, double trainingRate, Seed seed = 0);
+    DownsampledOpenCVDataset::DownsampledOpenCVDataset(OpenCvDataset data, size_t maximumSubsetSize, double trainingRate);
     /// <summary>
     /// Gets Splitted training and test dataset having the same amount cancer and noncancer cells.
     /// </summary>
-    /// <param name="maximumSubsetSize">The maximum subset size (cancer or noncancer cells).</param>
+    /// <param name="seed">The seed.</param>
     /// <returns>SplittedOpenCvDataset</returns>
-    SplittedOpenCvDataset DownsampledOpenCVDataset::getDownsizedOpenCVDataset();
+    SplittedOpenCvDataset DownsampledOpenCVDataset::getDownsizedOpenCVDataset(Seed seed = 0);
 private:
     /// <summary>
     /// The cancer cells.
