@@ -92,7 +92,7 @@ protected:
     }
 };
 
-TEST_F(RandomMultipleValidationSelectionScenarioInitializationTest, few_data_scenario)
+TEST_F(RandomMultipleValidationSelectionScenarioInitializationTest, random_multiple_validation_execution_test)
 {
     RandomMultipleValidationSelectionScenario scenario(TRAINING_SET_SPLIT_RATE,
         TRAINING_DOWNSAMPLE_RATE,
