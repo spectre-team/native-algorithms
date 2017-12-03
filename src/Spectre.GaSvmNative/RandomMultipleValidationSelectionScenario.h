@@ -70,8 +70,8 @@ public:
     /// <param name="data">The data.</param>
     /// <param name="independentValidation">The independent validation.</param>
     /// <returns>void</returns>
-    void execute(const libClassifier::OpenCvDataset& data,
-        const libClassifier::OpenCvDataset* independentValidation = nullptr) const;
+    void execute(libClassifier::OpenCvDataset &data,
+                 const libClassifier::OpenCvDataset *independentValidation = nullptr) const;
 private:
     /// <summary>
     /// The population sizes.
@@ -92,7 +92,7 @@ private:
     /// <summary>
     /// The maximum subset size.
     /// </summary>
-    const double m_MaximumSubsetSize;
+    const size_t m_MaximumSubsetSize;
     /// <summary>
     /// The filename.
     /// </summary>

@@ -55,10 +55,6 @@ private:
     /// </summary>
     size_t m_MaximumSubsetSize;
     /// <summary>
-    /// The cancer cells.
-    /// </summary>
-    Seed m_Seed;
-    /// <summary>
     /// The training rate.
     /// </summary>
     double m_TrainingRate;
@@ -67,7 +63,7 @@ private:
     /// </summary>
     /// <param name="datasetSize">The dataset size.</param>
     /// <returns>vector of bool</returns>
-    std::vector<bool> DownsampledOpenCVDataset::getIndividualData(size_t datasetSize);
+    std::vector<bool> DownsampledOpenCVDataset::getIndividualData(size_t datasetSize, Seed seed);
 };
 
 }

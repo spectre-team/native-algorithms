@@ -69,15 +69,15 @@ namespace Spectre::libClassifier {
 
 SplittedOpenCvDataset DownsampledOpenCVDataset::getDownsizedOpenCVDataset(Seed seed)
 {
-    std::vector<bool> cancerIndividualData = getIndividualData(m_CancerCells->size());
-    std::vector<bool> nonCancerIndividualData = getIndividualData(m_NonCancerCells->size());
+    std::vector<bool> cancerIndividualData = getIndividualData(m_CancerCells->size(), seed);
+    std::vector<bool> nonCancerIndividualData = getIndividualData(m_NonCancerCells->size(), seed);
 
     ObservationExtractor cancerExtractor(m_CancerCells.get());
     OpenCvDataset cancerDataset = cancerExtractor.getOpenCvDatasetFromIndividual(cancerIndividualData);
     ObservationExtractor nonCancerExtractor(m_NonCancerCells.get());
     OpenCvDataset nonCancerDataset = nonCancerExtractor.getOpenCvDatasetFromIndividual(nonCancerIndividualData);
 
-    RandomSplitter randomSplitter(m_TrainingRate, m_Seed);
+    RandomSplitter randomSplitter(m_TrainingRate, seed);
     SplittedOpenCvDataset cancerSplitted = randomSplitter.split(cancerDataset);
     SplittedOpenCvDataset nonCancerSplitted = randomSplitter.split(nonCancerDataset);
 
@@ -87,7 +87,7 @@ SplittedOpenCvDataset DownsampledOpenCVDataset::getDownsizedOpenCVDataset(Seed s
     return result;
 }
 
-std::vector<bool> DownsampledOpenCVDataset::getIndividualData(size_t datasetSize)
+std::vector<bool> DownsampledOpenCVDataset::getIndividualData(size_t datasetSize, Seed seed)
 {
     std::vector<bool> trainingData;
     trainingData.reserve(datasetSize);
@@ -99,7 +99,7 @@ std::vector<bool> DownsampledOpenCVDataset::getIndividualData(size_t datasetSize
     {
         trainingData.push_back(false);
     }
-    libGenetic::RandomNumberGenerator rng(m_Seed);
+    libGenetic::RandomNumberGenerator rng(seed);
     std::shuffle(trainingData.begin(), trainingData.end(), rng);
     return trainingData;
 }

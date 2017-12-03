@@ -73,9 +73,9 @@ namespace Spectre::GaSvmNative
     }
 }
 
-void RandomMultipleValidationSelectionScenario::execute(const libClassifier::OpenCvDataset &data, const libClassifier::OpenCvDataset *independentValidation) const
+void RandomMultipleValidationSelectionScenario::execute(libClassifier::OpenCvDataset &data, const libClassifier::OpenCvDataset *independentValidation) const
 {
-    libClassifier::DownsampledOpenCVDataset downsampledOpenCvDataset(data, m_MaximumSubsetSize, m_DownsampleTrainingRate);
+    libClassifier::DownsampledOpenCVDataset downsampledOpenCvDataset(std::move(data), m_MaximumSubsetSize, m_DownsampleTrainingRate);
 
     const auto optimalChunksNumber = 1;
     omp_set_nested(1);
@@ -105,26 +105,39 @@ void RandomMultipleValidationSelectionScenario::execute(const libClassifier::Ope
         libGenetic::Generation initialGeneration(m_PopulationSize, trainingSetSize, m_InitialIndividualFillup, m_Seed + runNumber);
         auto finalGeneration = algorithm->evolve(std::move(initialGeneration));
 
-
-        auto mainFitnessFunction = std::make_unique<SVMFitnessFunction>(std::move(splitterCancerNonCancerDataset),
-            raportGenerator,
-            nullptr,
-            m_SvmIterations,
-            m_SvmTolerance);
         //train and predict SVM on GA data
         RaportGenerator raportGeneratorGA("GA_" + m_Filename
             + "-run-" + std::to_string(runNumber)
             + "-popsize-" + std::to_string(m_PopulationSize)
             + "-fillup-" + std::to_string(m_InitialIndividualFillup),
             m_PopulationSize);
+        auto GAFitnessFunction = std::make_unique<SVMFitnessFunction>(std::move(splitterCancerNonCancerDataset),
+            raportGenerator,
+            nullptr,
+            m_SvmIterations,
+            m_SvmTolerance);
 
+        libGenetic::Individual finalGAIndividual = finalGeneration[0];
+        for (auto i = finalGAIndividual.size(); i < splitterCancerNonCancerDataset.trainingSet.size(); i++)
+        {
+            finalGAIndividual.getData().push_back(false);
+        }
+        GAFitnessFunction->computeFitness(finalGAIndividual);
 
-        //traing and predict SVM on all downsampled data
+        //train and predict SVM on all downsampled data
         RaportGenerator raportGeneratorNonGA("NonGA_" + m_Filename
             + "-run-" + std::to_string(runNumber)
             + "-popsize-" + std::to_string(m_PopulationSize)
             + "-fillup-" + std::to_string(m_InitialIndividualFillup),
             m_PopulationSize);
+        auto nonGAFitnessFunction = std::make_unique<SVMFitnessFunction>(std::move(splitterCancerNonCancerDataset),
+            raportGenerator,
+            nullptr,
+            m_SvmIterations,
+            m_SvmTolerance);
+
+        libGenetic::Individual nonGAIndividual(splitterCancerNonCancerDataset.trainingSet.size(), splitterCancerNonCancerDataset.trainingSet.size(), 0);
+        nonGAFitnessFunction->computeFitness(nonGAIndividual);
     }
 }
 
