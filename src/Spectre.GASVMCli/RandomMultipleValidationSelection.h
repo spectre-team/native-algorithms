@@ -20,6 +20,7 @@ limitations under the License.
 #pragma once
 #include "Spectre.GaSvmNative\RandomMultipleValidationSelectionScenario.h"
 #include "BridgedDataset.h"
+#include "Utilities.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
@@ -94,30 +95,6 @@ namespace Spectre::GASVMCli
         
     private:
         const GaSvmNative::RandomMultipleValidationSelectionScenario* m_GaSvmNative;
-
-        template <typename T>
-        static std::vector<T> toNative(array<T>^ managedCollection)
-        {
-            std::vector<T> native;
-            native.reserve(managedCollection->Length);
-            for (auto i = 0; i < managedCollection->Length; ++i)
-            {
-                native.push_back(managedCollection[i]);
-            }
-            return native;
-        }
-
-        std::string toNative(String^ managedString)
-        {
-            size_t length = managedString->Length;
-            std::string native(length, '\0');
-            for (auto i = 0u; i<length; ++i)
-            {
-                // @gmrukwa: TODO: Migrate to something more up-to-date.
-                native[i] = static_cast<char>(managedString[i]);
-            }
-            return native;
-        }
     };
 
 }
