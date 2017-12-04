@@ -113,7 +113,7 @@ void RandomMultipleValidationSelectionScenario::execute(libClassifier::OpenCvDat
             m_PopulationSize);
         auto GAFitnessFunction = std::make_unique<SVMFitnessFunction>(splitterCancerNonCancerDataset,
             raportGeneratorGA,
-            nullptr,
+            independentValidation,
             m_SvmIterations,
             m_SvmTolerance);
 
@@ -133,7 +133,7 @@ void RandomMultipleValidationSelectionScenario::execute(libClassifier::OpenCvDat
             m_PopulationSize);
         auto nonGAFitnessFunction = std::make_unique<SVMFitnessFunction>(splitterCancerNonCancerDataset,
             raportGeneratorNonGA,
-            nullptr,
+            independentValidation,
             m_SvmIterations,
             m_SvmTolerance);
 
