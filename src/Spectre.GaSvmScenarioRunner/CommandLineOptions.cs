@@ -7,6 +7,9 @@ namespace Spectre.GaSvmScenarioRunner
 {
     public class CommandLineOptions
     {
+        [Option("Scenario", Required = true, HelpText = "type of scenario to run")]
+        public string Scenario { get; set; }
+
         [Option("Destination", Required = true, HelpText = "destination of the report")]
         public string Destination { get; set; }
 
@@ -51,6 +54,13 @@ namespace Spectre.GaSvmScenarioRunner
 
         [Option("SvmTolerance", DefaultValue = 1e-6, HelpText = "Tolerance of SVM")]
         public double SvmTolerance { get; set; }
+
+        //TODO(@dkuchta): Fill defaults with proper values!!!
+        [Option("DownsampleTrainingRate", DefaultValue = 0, HelpText = "Downsample training rate")]
+        public double DownsampleTrainingRate { get; set; }
+
+        [Option("MaximumSubsetSize", DefaultValue = 0, HelpText = "Maximum subset size")]
+        public ulong MaximumSubsetSize { get; set; }
 
         [OptionArray("PopulationSizes", HelpText = "population sizes used in the experiment. Default: 10.")]
         public string[] OptionPopulationSizes

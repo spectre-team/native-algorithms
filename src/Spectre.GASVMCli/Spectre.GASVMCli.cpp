@@ -4,4 +4,5 @@
 
 #include "BridgedDataset.h"
 #include "TrainingSetSelection.h"
+#include "RandomMultipleValidationSelection.h"
 
