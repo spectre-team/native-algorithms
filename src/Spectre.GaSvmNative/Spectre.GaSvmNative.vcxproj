@@ -75,11 +75,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="RandomMultipleValidationSelectionScenario.h" />
     <ClInclude Include="GeneticTrainingSetSelectionScenario.h" />
     <ClInclude Include="RaportGenerator.h" />
     <ClInclude Include="SVMFitnessFunction.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="RandomMultipleValidationSelectionScenario.cpp" />
     <ClCompile Include="GeneticTrainingSetSelectionScenario.cpp" />
     <ClCompile Include="RaportGenerator.cpp" />
     <ClCompile Include="SVMFitnessFunction.cpp" />

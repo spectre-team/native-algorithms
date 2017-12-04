@@ -42,6 +42,9 @@
     <ClInclude Include="ZeroStepException.h">
       <Filter>Header Files\Functional</Filter>
     </ClInclude>
+    <ClInclude Include="Limit.h">
+      <Filter>Header Files\Functional</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

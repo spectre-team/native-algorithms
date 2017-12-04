@@ -22,9 +22,16 @@ limitations under the License.
 
 namespace Spectre::libClassifier
 {
+/// <summary>
+/// Thrown, when training rate would be negative.
+/// </summary>
 class NegativeTrainingRateException final : public libException::ArgumentOutOfRangeException<double>
 {
 public:
+    /// <summary>
+    /// Initializes a new instance of the <see cref="NegativeTrainingRateException"/> class.
+    /// </summary>
+    /// <param name="actual">The value of training rate.</param>
     explicit NegativeTrainingRateException(double actual);
 };
 }

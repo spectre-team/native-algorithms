@@ -24,6 +24,9 @@
     <ClInclude Include="SVMFitnessFunction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RandomMultipleValidationSelectionScenario.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GeneticTrainingSetSelectionScenario.cpp">
@@ -33,6 +36,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SVMFitnessFunction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomMultipleValidationSelectionScenario.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

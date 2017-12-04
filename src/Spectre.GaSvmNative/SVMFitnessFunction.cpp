@@ -27,12 +27,12 @@ namespace Spectre::GaSvmNative
 using namespace libClassifier;
 using namespace libGenetic;
 
-SVMFitnessFunction::SVMFitnessFunction(SplittedOpenCvDataset&& data,
+SVMFitnessFunction::SVMFitnessFunction(SplittedOpenCvDataset& data,
                                        RaportGenerator& raportGenerator,
                                        const libClassifier::OpenCvDataset* independentValidation,
-                                       uint svmIterations,
+                                       unsigned int svmIterations,
                                        double svmTolerance)
-    : m_Dataset(std::move(data)),
+    : m_Dataset(data),
       m_IndependentValidation(independentValidation),
       m_RaportGenerator(raportGenerator),
       m_SvmIterations(svmIterations),
@@ -45,7 +45,7 @@ ScoreType SVMFitnessFunction::computeFitness(const Individual &individual)
     if (m_Dataset.trainingSet.size() != individual.size())
     {
         throw libException::InconsistentArgumentSizesException("data", m_Dataset.trainingSet.size(), "individual", individual.size());
-    }    
+    }
 
     const auto& dataToFilter = m_Dataset.trainingSet.GetData();
     const auto twoDimensionalFilteredData = libPlatform::Functional::filter(dataToFilter, individual.getData());
@@ -57,7 +57,7 @@ ScoreType SVMFitnessFunction::computeFitness(const Individual &individual)
     }
     const auto filteredLabels = libPlatform::Functional::filter(m_Dataset.trainingSet.GetSampleMetadata(), individual.getData());
     OpenCvDataset individualDataset(oneDimensionalFilteredData, filteredLabels);
-    
+
     const auto result = getResultMatrix(std::move(individualDataset), individual);
 
     return result.DiceIndex;
