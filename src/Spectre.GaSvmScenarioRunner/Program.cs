@@ -11,7 +11,7 @@ namespace Spectre.GaSvmScenarioRunner
             var options = new CommandLineOptions();
             if (CommandLine.Parser.Default.ParseArguments(args, options))
             {
-                var scenario = new GaSvmScenario(
+                var scenario = new TrainingSetSelection(
                     options.TrainingSetSplitRate,
                     options.MutationRate,
                     options.BitSwapRate,

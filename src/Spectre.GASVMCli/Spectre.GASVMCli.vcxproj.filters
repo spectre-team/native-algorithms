@@ -24,7 +24,10 @@
     <ClInclude Include="BridgedDataset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GaSvmScenario.h">
+    <ClInclude Include="TrainingSetSelection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomMultipleValidationSelection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

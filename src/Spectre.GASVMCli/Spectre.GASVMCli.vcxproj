@@ -99,7 +99,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GaSvmScenario.h" />
+    <ClInclude Include="RandomMultipleValidationSelection.h" />
+    <ClInclude Include="TrainingSetSelection.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="BridgedDataset.h" />
     <ClInclude Include="Stdafx.h" />

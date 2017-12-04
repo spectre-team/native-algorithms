@@ -1,5 +1,5 @@
 /*
-* GaSvmScenario.h
+* TrainingSetSelection.h
 * Handle to native scenario running GaSvm algorithm.
 *
 Copyright 2017 Spectre Team
@@ -27,10 +27,10 @@ using namespace Spectre::GaSvmCli;
 
 namespace Spectre::GASVMCli
 {
-public ref class GaSvmScenario
+public ref class TrainingSetSelection
 {
 public:
-    GaSvmScenario(double trainingSetSplitRate,
+    TrainingSetSelection(double trainingSetSplitRate,
                   double mutationRate,
                   double bitSwapRate,
                   double preservationRate,
@@ -79,14 +79,14 @@ public:
         m_GaSvmNative->execute(*nativeData, independentNative);
     }
 
-    !GaSvmScenario()
+    !TrainingSetSelection()
     {
         delete m_GaSvmNative;
     }
 
-    ~GaSvmScenario()
+    ~TrainingSetSelection()
     {
-        this->!GaSvmScenario();
+        this->!TrainingSetSelection();
     }
 
 private:
