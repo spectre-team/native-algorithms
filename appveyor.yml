@@ -82,11 +82,13 @@ deploy:
   release: Spectre-v$(appveyor_build_version)
   auth_token:
     secure: dQadz+smqtuxpigZ/LmrUKyA0uVZ5kgljKntyoHEdobTycbeMywbfmiJtZPNcOQ2
-<<<<<<< HEAD
   artifact: GaSvmExecutables
-=======
+  draft: true
+- provider: GitHub
+  release: Spectre-v$(appveyor_build_version)
+  auth_token:
+    secure: dQadz+smqtuxpigZ/LmrUKyA0uVZ5kgljKntyoHEdobTycbeMywbfmiJtZPNcOQ2
   artifact: DataValidatorExecutables
->>>>>>> feature/random_multiple_validation
   draft: true
 - provider: GitHub
   release: Spectre-v$(appveyor_build_version)
