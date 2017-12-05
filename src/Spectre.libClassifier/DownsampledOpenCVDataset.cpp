@@ -87,7 +87,7 @@ SplittedOpenCvDataset DownsampledOpenCVDataset::getDownsizedOpenCVDataset(Seed s
     return result;
 }
 
-std::vector<bool> DownsampledOpenCVDataset::getIndividualData(size_t datasetSize, Seed seed)
+std::vector<bool> DownsampledOpenCVDataset::getIndividualData(size_t datasetSize, Seed seed) const
 {
     std::vector<bool> trainingData;
     trainingData.reserve(datasetSize);

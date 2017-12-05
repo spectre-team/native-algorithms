@@ -63,7 +63,7 @@ private:
     /// </summary>
     /// <param name="datasetSize">The dataset size.</param>
     /// <returns>vector of bool</returns>
-    std::vector<bool> DownsampledOpenCVDataset::getIndividualData(size_t datasetSize, Seed seed);
+    std::vector<bool> DownsampledOpenCVDataset::getIndividualData(size_t datasetSize, Seed seed) const;
 };
 
 }

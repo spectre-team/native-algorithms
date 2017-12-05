@@ -35,7 +35,8 @@ const double PRESERVATION_RATE = 0.5;
 const unsigned int GENERATIONS_NUMBER = 5u;
 const unsigned int POPULATION_SIZE = 20u;
 const unsigned int INITIAL_FILLUP = 3u;
-const unsigned int NUMBER_OF_RESTARTS = 2u;
+const unsigned int NUMBER_OF_RESTARTS = 4u;
+const unsigned int NUMBER_OF_CORES = 4u;
 const Seed SEED = 1;
 
 TEST(RandomMultipleValidationSelectionScenarioInitialization, initializes)
@@ -105,6 +106,7 @@ TEST_F(RandomMultipleValidationSelectionScenarioInitializationTest, random_multi
         INITIAL_FILLUP,
         "random_multiple_validation_test_scenario",
         NUMBER_OF_RESTARTS,
+        NUMBER_OF_CORES,
         SEED);
     EXPECT_NO_THROW(scenario.execute(*dataSet));
 }
