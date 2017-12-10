@@ -49,25 +49,25 @@ protected:
 TEST_F(DownscaledOpenCVDatasetInitializationTest, returns_dataset_of_expected_size_with_greater_maximum_subset_size)
 {
     DownsampledOpenCVDataset downscaledOpenCvDataset(std::move(dataset), maximumSubsetSizeGreater, trainingRate);
-    SplittedOpenCvDataset splittedOpenCvDataset = downscaledOpenCvDataset.getDownsizedOpenCVDataset();
-    EXPECT_EQ(splittedOpenCvDataset.trainingSet.size(), 4);
-    EXPECT_EQ(splittedOpenCvDataset.testSet.size(), 4);
+    SplittedOpenCvDataset splittedOpenCvDataset = downscaledOpenCvDataset.getLimitedDownSampledOpenCVDataset();
+    EXPECT_EQ(splittedOpenCvDataset.m_TrainingSet.size(), 4);
+    EXPECT_EQ(splittedOpenCvDataset.m_TestSet.size(), 4);
 }
 
 TEST_F(DownscaledOpenCVDatasetInitializationTest, returns_dataset_of_expected_size_with_greater_maximum_subset_size_with_more_training)
 {
     DownsampledOpenCVDataset downscaledOpenCvDataset(std::move(dataset), maximumSubsetSizeGreater, trainingRateWithMoreTraining);
-    SplittedOpenCvDataset splittedOpenCvDataset = downscaledOpenCvDataset.getDownsizedOpenCVDataset();
-    EXPECT_EQ(splittedOpenCvDataset.trainingSet.size(), 6);
-    EXPECT_EQ(splittedOpenCvDataset.testSet.size(), 2);
+    SplittedOpenCvDataset splittedOpenCvDataset = downscaledOpenCvDataset.getLimitedDownSampledOpenCVDataset();
+    EXPECT_EQ(splittedOpenCvDataset.m_TrainingSet.size(), 6);
+    EXPECT_EQ(splittedOpenCvDataset.m_TestSet.size(), 2);
 }
 
 TEST_F(DownscaledOpenCVDatasetInitializationTest, returns_dataset_of_expected_size_with_lower_maximum_subset_size)
 {
     DownsampledOpenCVDataset downscaledOpenCvDataset(std::move(dataset), maximumSubsetSizeLower, trainingRate);
-    SplittedOpenCvDataset splittedOpenCvDataset = downscaledOpenCvDataset.getDownsizedOpenCVDataset();
-    EXPECT_EQ(splittedOpenCvDataset.trainingSet.size(), 2);
-    EXPECT_EQ(splittedOpenCvDataset.testSet.size(), 2);
+    SplittedOpenCvDataset splittedOpenCvDataset = downscaledOpenCvDataset.getLimitedDownSampledOpenCVDataset();
+    EXPECT_EQ(splittedOpenCvDataset.m_TrainingSet.size(), 2);
+    EXPECT_EQ(splittedOpenCvDataset.m_TestSet.size(), 2);
 }
 
 }

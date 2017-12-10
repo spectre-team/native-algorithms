@@ -40,7 +40,7 @@ public:
     /// </summary>
     /// <param name="seed">The seed.</param>
     /// <returns>SplittedOpenCvDataset</returns>
-    SplittedOpenCvDataset DownsampledOpenCVDataset::getDownsizedOpenCVDataset(Seed seed = 0);
+    SplittedOpenCvDataset DownsampledOpenCVDataset::getLimitedDownSampledOpenCVDataset(Seed seed = 0) const;
 private:
     /// <summary>
     /// The cancer cells.
@@ -63,7 +63,7 @@ private:
     /// </summary>
     /// <param name="datasetSize">The dataset size.</param>
     /// <returns>vector of bool</returns>
-    std::vector<bool> DownsampledOpenCVDataset::getIndividualData(size_t datasetSize, Seed seed) const;
+    std::vector<bool> DownsampledOpenCVDataset::getBinaryDataWithGivenTrueValueAmount(size_t datasetSize, Seed seed) const;
 };
 
 }

@@ -34,13 +34,30 @@ public:
     /// <param name="test">The test dataset.</param>
     SplittedOpenCvDataset::SplittedOpenCvDataset(OpenCvDataset&& training, OpenCvDataset&& test);
     /// <summary>
+    /// Initializes a new instance of the <see cref="SplittedOpenCvDataset"/> class.
+    /// </summary>
+    /// <param name="training">The training dataset.</param>
+    /// <param name="test">The test dataset.</param>
+    /// <param name="test">The indexes.</param>
+    SplittedOpenCvDataset::SplittedOpenCvDataset(OpenCvDataset&& training, OpenCvDataset&& test, std::vector<int> indexes);
+    /// <summary>
+    /// Gets vector of bool with size of training + test size and with true values from parameter placed in right positions.
+    /// </summary>
+    /// <param name="data">The data.</param>
+    /// <returns>Dataset splitted into training and validation subsets.</returns>
+    std::vector<bool> getWholeDatasetBinaryDataFromTrainingDatasetBinaryData(const std::vector<bool> trainingBinaryData) const;
+    /// <summary>
     /// The training set.
     /// </summary>
-    OpenCvDataset trainingSet;
+    OpenCvDataset m_TrainingSet;
     /// <summary>
     /// The test set.
     /// </summary>
-    OpenCvDataset testSet;
+    OpenCvDataset m_TestSet;
+    /// <summary>
+    /// The shuffled indexes from which the data was split.
+    /// </summary>
+    std::vector<int> m_Indexes;
 private:
 };
 }

@@ -42,12 +42,12 @@ SVMFitnessFunction::SVMFitnessFunction(SplittedOpenCvDataset& data,
 
 ScoreType SVMFitnessFunction::computeFitness(const Individual &individual)
 {
-    if (m_Dataset.trainingSet.size() != individual.size())
+    if (m_Dataset.m_TrainingSet.size() != individual.size())
     {
-        throw libException::InconsistentArgumentSizesException("data", m_Dataset.trainingSet.size(), "individual", individual.size());
+        throw libException::InconsistentArgumentSizesException("data", m_Dataset.m_TrainingSet.size(), "individual", individual.size());
     }
 
-    const auto& dataToFilter = m_Dataset.trainingSet.GetData();
+    const auto& dataToFilter = m_Dataset.m_TrainingSet.GetData();
     const auto twoDimensionalFilteredData = libPlatform::Functional::filter(dataToFilter, individual.getData());
     std::vector<DataType> oneDimensionalFilteredData;
     oneDimensionalFilteredData.reserve(twoDimensionalFilteredData.size() * twoDimensionalFilteredData[0].size());
@@ -55,7 +55,7 @@ ScoreType SVMFitnessFunction::computeFitness(const Individual &individual)
     {
         oneDimensionalFilteredData.insert(oneDimensionalFilteredData.end(), observation.begin(), observation.end());
     }
-    const auto filteredLabels = libPlatform::Functional::filter(m_Dataset.trainingSet.GetSampleMetadata(), individual.getData());
+    const auto filteredLabels = libPlatform::Functional::filter(m_Dataset.m_TrainingSet.GetSampleMetadata(), individual.getData());
     OpenCvDataset individualDataset(oneDimensionalFilteredData, filteredLabels);
 
     const auto result = getResultMatrix(std::move(individualDataset), individual);
@@ -72,10 +72,10 @@ ConfusionMatrix SVMFitnessFunction::getResultMatrix(const OpenCvDataset& data, c
     const auto trainingTime = double(trainingEnd - trainingBegin) / CLOCKS_PER_SEC;
 
     const auto classificationBegin = clock();
-    const auto predictions = svm.Predict((m_Dataset.testSet));
+    const auto predictions = svm.Predict((m_Dataset.m_TestSet));
     const auto classificationEnd = clock();
     const auto classificationTime = double(classificationEnd - classificationBegin) / CLOCKS_PER_SEC;
-    ConfusionMatrix confusions(predictions, m_Dataset.testSet.GetSampleMetadata());
+    ConfusionMatrix confusions(predictions, m_Dataset.m_TestSet.GetSampleMetadata());
 
     std::unique_ptr<ConfusionMatrix> validationConfusions;
     if (m_IndependentValidation != nullptr)
@@ -87,7 +87,7 @@ ConfusionMatrix SVMFitnessFunction::getResultMatrix(const OpenCvDataset& data, c
     m_RaportGenerator.Write(confusions,
                             individual,
                             trainingTime,
-                            classificationTime / m_Dataset.testSet.size(),
+                            classificationTime / m_Dataset.m_TestSet.size(),
                             svm.GetNumberOfSupportVectors(),
                             validationConfusions.get());
 

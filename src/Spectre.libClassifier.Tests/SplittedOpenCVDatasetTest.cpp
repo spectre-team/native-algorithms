@@ -21,6 +21,7 @@ limitations under the License.
 #include "Spectre.libClassifier/Types.h"
 #include "Spectre.libClassifier/OpenCvDataset.h"
 #include "Spectre.libClassifier/SplittedOpevCvDataset.h"
+#include "Spectre.libException/InconsistentArgumentSizesException.h"
 
 namespace
 {
@@ -39,6 +40,8 @@ protected:
     const std::vector<DataType> test_data{ 0.8f, 0.3f, 1.2f, 0.7f, 1.9f, 0.2f, 1.2f, 1.3f, 1.2f };
     const std::vector<Label> training_labels{ 2, 7, 5, 9, 13, 4, 10 };
     const std::vector<Label> test_labels{ 8, 11, 5 };
+    const std::vector<int> indexes{ 3, 5, 4, 9, 0, 2, 8, 6, 7, 1 };
+    const std::vector<int> indexes_shorter{ 3, 5, 4, 9, 0, 1 };
     OpenCvDataset trainingSet;
     OpenCvDataset testSet;
 };
@@ -48,19 +51,30 @@ TEST_F(SplittedOpenCVDatasetTest, correct_splitted_opencv_dataset_initialization
     EXPECT_NO_THROW(SplittedOpenCvDataset(std::move(trainingSet), std::move(testSet)));
 }
 
+TEST_F(SplittedOpenCVDatasetTest, correct_splitted_opencv_dataset_initialization_with_indexes)
+{
+    EXPECT_NO_THROW(SplittedOpenCvDataset(std::move(trainingSet), std::move(testSet), indexes));
+}
+
+TEST_F(SplittedOpenCVDatasetTest, throw_error_while_initialization_with_shorter_indexes)
+{
+    EXPECT_THROW(SplittedOpenCvDataset(std::move(trainingSet), std::move(testSet), indexes_shorter), Spectre::libException::InconsistentArgumentSizesException);
+}
+
 TEST_F(SplittedOpenCVDatasetTest, test_splitted_opencvdataset_data)
 {
     const auto trainingSetLength = 7;
     const auto testSetLength = 3;
-    SplittedOpenCvDataset splittedData = SplittedOpenCvDataset(std::move(trainingSet), std::move(testSet));
-    EXPECT_EQ(splittedData.trainingSet.size(), trainingSetLength);
-    EXPECT_EQ(splittedData.trainingSet.GetData().size(), trainingSetLength);
-    EXPECT_EQ(splittedData.trainingSet.getMatData().rows, trainingSetLength);
-    EXPECT_EQ(splittedData.trainingSet.getMatLabels().rows, trainingSetLength);
-    EXPECT_EQ(splittedData.testSet.size(), testSetLength);
-    EXPECT_EQ(splittedData.testSet.GetData().size(), testSetLength);
-    EXPECT_EQ(splittedData.testSet.getMatData().rows, testSetLength);
-    EXPECT_EQ(splittedData.testSet.getMatLabels().rows, testSetLength);
+    SplittedOpenCvDataset splittedData = SplittedOpenCvDataset(std::move(trainingSet), std::move(testSet), indexes);
+    EXPECT_EQ(splittedData.m_TrainingSet.size(), trainingSetLength);
+    EXPECT_EQ(splittedData.m_TrainingSet.GetData().size(), trainingSetLength);
+    EXPECT_EQ(splittedData.m_TrainingSet.getMatData().rows, trainingSetLength);
+    EXPECT_EQ(splittedData.m_TrainingSet.getMatLabels().rows, trainingSetLength);
+    EXPECT_EQ(splittedData.m_TestSet.size(), testSetLength);
+    EXPECT_EQ(splittedData.m_TestSet.GetData().size(), testSetLength);
+    EXPECT_EQ(splittedData.m_TestSet.getMatData().rows, testSetLength);
+    EXPECT_EQ(splittedData.m_TestSet.getMatLabels().rows, testSetLength);
+    EXPECT_EQ(splittedData.m_TrainingSet.size() + splittedData.m_TestSet.size(), splittedData.m_Indexes.size());
 }
 
 TEST_F(SplittedOpenCVDatasetTest, check_correctness_of_structure_data)
@@ -72,16 +86,44 @@ TEST_F(SplittedOpenCVDatasetTest, check_correctness_of_structure_data)
     {
         for (auto j = 0; j < verifyTrainingSet[i].size(); j++)
         {
-            EXPECT_EQ(data.trainingSet[i][j], verifyTrainingSet[i][j]);
+            EXPECT_EQ(data.m_TrainingSet[i][j], verifyTrainingSet[i][j]);
         }
     }
     for (auto i = 0; i < verifyTestSet.size(); i++)
     {
         for (auto j = 0; j < verifyTestSet[i].size(); j++)
         {
-            EXPECT_EQ(data.testSet[i][j], verifyTestSet[i][j]);
+            EXPECT_EQ(data.m_TestSet[i][j], verifyTestSet[i][j]);
         }
     }
+}
+
+TEST_F(SplittedOpenCVDatasetTest, check_getWholeDatasetBinaryDataFromTrainingDatasetBinaryData_function)
+{
+    SplittedOpenCvDataset data = SplittedOpenCvDataset(std::move(trainingSet), std::move(testSet), indexes);
+    const std::vector<bool> trainingData{ true, false, false, true, true, false, false };
+    const int expectedTrueCount = 3;
+    std::vector<bool> wholeData = data.getWholeDatasetBinaryDataFromTrainingDatasetBinaryData(trainingData);
+    EXPECT_EQ(wholeData.size(), indexes.size());
+    int trueCount = 0;
+    for (auto i = 0; i < indexes.size(); i++)
+    {
+        if (wholeData[i])
+        {
+            trueCount++;
+        }
+    }
+    EXPECT_EQ(expectedTrueCount, trueCount);
+    EXPECT_EQ(wholeData[0], true);
+    EXPECT_EQ(wholeData[1], false);
+    EXPECT_EQ(wholeData[2], false);
+    EXPECT_EQ(wholeData[3], true);
+    EXPECT_EQ(wholeData[4], false);
+    EXPECT_EQ(wholeData[5], false);
+    EXPECT_EQ(wholeData[6], false);
+    EXPECT_EQ(wholeData[7], false);
+    EXPECT_EQ(wholeData[8], false);
+    EXPECT_EQ(wholeData[9], true);
 }
 
 

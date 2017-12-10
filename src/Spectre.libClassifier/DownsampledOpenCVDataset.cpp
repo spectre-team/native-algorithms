@@ -25,9 +25,8 @@ limitations under the License.
 #include "Spectre.libGenetic/DataTypes.h"
 
 namespace Spectre::libClassifier {
-
-    DownsampledOpenCVDataset::DownsampledOpenCVDataset(OpenCvDataset data, size_t maximumSubsetSize, double trainingRate)
-    : m_TrainingRate(trainingRate)
+DownsampledOpenCVDataset::DownsampledOpenCVDataset(OpenCvDataset data, size_t maximumSubsetSize, double trainingRate)
+: m_TrainingRate(trainingRate)
 {
     if (data.empty())
     {
@@ -67,10 +66,10 @@ namespace Spectre::libClassifier {
     m_MaximumSubsetSize = maximumSubsetSize;
 }
 
-SplittedOpenCvDataset DownsampledOpenCVDataset::getDownsizedOpenCVDataset(Seed seed)
+SplittedOpenCvDataset DownsampledOpenCVDataset::getLimitedDownSampledOpenCVDataset(Seed seed) const
 {
-    std::vector<bool> cancerIndividualData = getIndividualData(m_CancerCells->size(), seed);
-    std::vector<bool> nonCancerIndividualData = getIndividualData(m_NonCancerCells->size(), seed);
+    std::vector<bool> cancerIndividualData = getBinaryDataWithGivenTrueValueAmount(m_CancerCells->size(), seed);
+    std::vector<bool> nonCancerIndividualData = getBinaryDataWithGivenTrueValueAmount(m_NonCancerCells->size(), seed);
 
     ObservationExtractor cancerExtractor(m_CancerCells.get());
     OpenCvDataset cancerDataset = cancerExtractor.getOpenCvDatasetFromIndividual(cancerIndividualData);
@@ -81,13 +80,13 @@ SplittedOpenCvDataset DownsampledOpenCVDataset::getDownsizedOpenCVDataset(Seed s
     SplittedOpenCvDataset cancerSplitted = randomSplitter.split(cancerDataset);
     SplittedOpenCvDataset nonCancerSplitted = randomSplitter.split(nonCancerDataset);
 
-    OpenCvDataset trainingDataset(std::move(cancerSplitted.trainingSet), std::move(nonCancerSplitted.trainingSet));
-    OpenCvDataset testDataset(std::move(cancerSplitted.testSet), std::move(nonCancerSplitted.testSet));
+    OpenCvDataset trainingDataset(std::move(cancerSplitted.m_TrainingSet), std::move(nonCancerSplitted.m_TrainingSet));
+    OpenCvDataset testDataset(std::move(cancerSplitted.m_TestSet), std::move(nonCancerSplitted.m_TestSet));
     SplittedOpenCvDataset result(std::move(trainingDataset), std::move(testDataset));
     return result;
 }
 
-std::vector<bool> DownsampledOpenCVDataset::getIndividualData(size_t datasetSize, Seed seed) const
+std::vector<bool> DownsampledOpenCVDataset::getBinaryDataWithGivenTrueValueAmount(size_t datasetSize, Seed seed) const
 {
     std::vector<bool> trainingData;
     trainingData.reserve(datasetSize);

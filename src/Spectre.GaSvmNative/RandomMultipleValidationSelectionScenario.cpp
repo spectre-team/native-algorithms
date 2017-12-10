@@ -82,18 +82,19 @@ void RandomMultipleValidationSelectionScenario::execute(libClassifier::OpenCvDat
     #pragma omp parallel for schedule(dynamic, optimalChunksNumber) num_threads (m_NumberOfCores)
     for (auto runNumber = 0; runNumber < static_cast<int>(m_RestartsNumber); runNumber++)
     {
+        //get data for current execution of algorithms
         RaportGenerator raportGenerator(m_Filename
             + "-run-" + std::to_string(runNumber)
             + "-popsize-" + std::to_string(m_PopulationSize)
             + "-fillup-" + std::to_string(m_InitialIndividualFillup),
             m_PopulationSize);
 
-        libClassifier::SplittedOpenCvDataset splitterCancerNonCancerDataset = downsampledOpenCvDataset.getDownsizedOpenCVDataset(m_Seed + runNumber);
+        libClassifier::SplittedOpenCvDataset splitterCancerNonCancerDataset = downsampledOpenCvDataset.getLimitedDownSampledOpenCVDataset(m_Seed + runNumber);
 
         //GA training
         libClassifier::RandomSplitter splitter(m_TrainingDatasetSizeRate, m_Seed + runNumber);
-        auto splittedDataset = splitter.split(splitterCancerNonCancerDataset.trainingSet);
-        auto trainingSetSize = splittedDataset.trainingSet.size();
+        auto splittedDataset = splitter.split(splitterCancerNonCancerDataset.m_TrainingSet);
+        auto trainingSetSize = splittedDataset.m_TrainingSet.size();
 
         auto fitnessFunction = std::make_unique<SVMFitnessFunction>(splittedDataset,
             raportGenerator,
@@ -117,12 +118,9 @@ void RandomMultipleValidationSelectionScenario::execute(libClassifier::OpenCvDat
             m_SvmIterations,
             m_SvmTolerance);
 
-        std::vector<bool> finalBinaryData = finalGeneration[0].getData();
-        for (auto i = finalBinaryData.size(); i < splitterCancerNonCancerDataset.trainingSet.size(); i++)
-        {
-            finalBinaryData.push_back(false);
-        }
-        libGenetic::Individual finalGAIndividual(std::move(finalBinaryData));
+        std::vector<bool> finalTrainingBinaryData = finalGeneration[0].getData();
+        std::vector<bool> finalWholeBinaryData = splittedDataset.getWholeDatasetBinaryDataFromTrainingDatasetBinaryData(finalTrainingBinaryData);
+        libGenetic::Individual finalGAIndividual(std::move(finalWholeBinaryData));
         GAFitnessFunction->computeFitness(finalGAIndividual);
 
         //train and predict SVM on all downsampled data
@@ -137,7 +135,7 @@ void RandomMultipleValidationSelectionScenario::execute(libClassifier::OpenCvDat
             m_SvmIterations,
             m_SvmTolerance);
 
-        libGenetic::Individual nonGAIndividual(splitterCancerNonCancerDataset.trainingSet.size(), splitterCancerNonCancerDataset.trainingSet.size(), 0);
+        libGenetic::Individual nonGAIndividual(splitterCancerNonCancerDataset.m_TrainingSet.size(), splitterCancerNonCancerDataset.m_TrainingSet.size(), 0);
         nonGAFitnessFunction->computeFitness(nonGAIndividual);
     }
 }

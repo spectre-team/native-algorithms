@@ -91,7 +91,7 @@ void GeneticTrainingSetSelectionScenario::execute(const libClassifier::OpenCvDat
 
                 libClassifier::RandomSplitter splitter(m_TrainingDatasetSizeRate, m_Seed + runNumber);
                 auto splittedDataset = splitter.split(data);
-                auto trainingSetSize = splittedDataset.trainingSet.size();
+                auto trainingSetSize = splittedDataset.m_TrainingSet.size();
 
                 auto fitnessFunction = std::make_unique<SVMFitnessFunction>(std::move(splittedDataset),
                                                                             raportGenerator,

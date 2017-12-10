@@ -18,12 +18,47 @@ limitations under the License.
 */
 
 #include "Spectre.libClassifier/SplittedOpevCvDataset.h"
+#include "Spectre.libException/InconsistentArgumentSizesException.h"
 
 namespace Spectre::libClassifier {
 SplittedOpenCvDataset::SplittedOpenCvDataset(OpenCvDataset&& training, OpenCvDataset&& test)
-    : trainingSet(std::move(training)),
-      testSet(std::move(test))
+    : m_TrainingSet(std::move(training)),
+      m_TestSet(std::move(test)),
+      m_Indexes({})
 {
     
 }
+
+SplittedOpenCvDataset::SplittedOpenCvDataset(OpenCvDataset &&training, OpenCvDataset &&test, std::vector<int> indexes)
+    : m_TrainingSet(std::move(training)),
+      m_TestSet(std::move(test)),
+      m_Indexes(std::move(indexes))
+{
+    if (m_TrainingSet.size() + m_TestSet.size() != m_Indexes.size())
+    {
+        throw libException::InconsistentArgumentSizesException("training + test", m_TrainingSet.size() + m_TestSet.size(), "indexes", m_Indexes.size());
+    }
+}
+
+std::vector<bool> SplittedOpenCvDataset::getWholeDatasetBinaryDataFromTrainingDatasetBinaryData(const std::vector<bool> trainingBinaryData) const
+{
+    if (trainingBinaryData.size() != m_TrainingSet.size())
+    {
+        throw libException::InconsistentArgumentSizesException("training binary data", trainingBinaryData.size(), "training set", m_TrainingSet.size());
+    }
+
+    std::vector<bool> wholeDatasetData{};
+    wholeDatasetData.reserve(m_Indexes.size());
+    for (auto i = 0; i < m_Indexes.size(); i++)
+    {
+        wholeDatasetData.push_back(false);
+    }
+    for (auto i = 0; i <  m_TrainingSet.size(); i++)
+    {
+        wholeDatasetData[m_Indexes[i]] = trainingBinaryData[i];
+    }
+    return wholeDatasetData;
+}
+
+
 }

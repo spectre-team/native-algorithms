@@ -84,7 +84,7 @@ SplittedOpenCvDataset RandomSplitter::split(const OpenCvDataset& data) const
     }
     OpenCvDataset dataset1(trainingData, trainingLabels);
     OpenCvDataset dataset2(validationData, validationLabels);
-    auto result = SplittedOpenCvDataset(std::move(dataset1), std::move(dataset2));
+    auto result = SplittedOpenCvDataset(std::move(dataset1), std::move(dataset2), indexes);
     return result;
 }
 

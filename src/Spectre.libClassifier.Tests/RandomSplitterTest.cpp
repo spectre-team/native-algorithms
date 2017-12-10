@@ -64,14 +64,15 @@ protected:
 TEST_F(RandomSplitterTest, split_dataset)
 {
     const auto result = randomSplitter.split(dataset);
-    EXPECT_EQ(result.trainingSet.size() + result.testSet.size(), labels.size());
+    EXPECT_EQ(result.m_TrainingSet.size() + result.m_TestSet.size(), labels.size());
 }
 
 TEST_F(RandomSplitterTest, check_size_of_splitted_vectors)
 {
     const auto result = randomSplitter.split(dataset);
-    EXPECT_EQ(result.trainingSet.size(), data.size()*training);
-    EXPECT_EQ(result.testSet.size(), data.size()- data.size()*training);
+    EXPECT_EQ(result.m_TrainingSet.size(), data.size() * training);
+    EXPECT_EQ(result.m_TestSet.size(), data.size() - data.size() * training);
+    EXPECT_EQ(result.m_TrainingSet.size() + result.m_TestSet.size(), result.m_Indexes.size());
 }
 
 TEST_F(RandomSplitterTest, splits_differently_for_different_seeds)
@@ -81,9 +82,9 @@ TEST_F(RandomSplitterTest, splits_differently_for_different_seeds)
     RandomSplitter secondSplitter(training, seed + 1);
     const auto second = secondSplitter.split(dataset);
     bool differs = false;
-    for (auto i = 0u; i < first.trainingSet.size(); ++i)
+    for (auto i = 0u; i < first.m_TrainingSet.size(); ++i)
     {
-        if(first.trainingSet.GetSampleMetadata(i) != second.trainingSet.GetSampleMetadata(i))
+        if(first.m_TrainingSet.GetSampleMetadata(i) != second.m_TrainingSet.GetSampleMetadata(i))
         {
             differs = true;
             break;
@@ -98,9 +99,9 @@ TEST_F(RandomSplitterTest, splits_consistently_for_the_same_seed_with_different_
     const auto first = firstSplitter.split(dataset);
     RandomSplitter secondSplitter(training, seed);
     const auto second = secondSplitter.split(dataset);
-    for (auto i = 0u; i < first.trainingSet.size(); ++i)
+    for (auto i = 0u; i < first.m_TrainingSet.size(); ++i)
     {
-        if (first.trainingSet.GetSampleMetadata(i) != second.trainingSet.GetSampleMetadata(i))
+        if (first.m_TrainingSet.GetSampleMetadata(i) != second.m_TrainingSet.GetSampleMetadata(i))
         {
             FAIL() << "Outputs for the same seeds differ.";
         }
@@ -111,9 +112,9 @@ TEST_F(RandomSplitterTest, splits_consistently_for_the_same_seed_with_the_same_s
 {
     const auto first = randomSplitter.split(dataset);
     const auto second = randomSplitter.split(dataset);
-    for (auto i = 0u; i < first.trainingSet.size(); ++i)
+    for (auto i = 0u; i < first.m_TrainingSet.size(); ++i)
     {
-        if (first.trainingSet.GetSampleMetadata(i) != second.trainingSet.GetSampleMetadata(i))
+        if (first.m_TrainingSet.GetSampleMetadata(i) != second.m_TrainingSet.GetSampleMetadata(i))
         {
             FAIL() << "Outputs for the same seeds differ.";
         }
