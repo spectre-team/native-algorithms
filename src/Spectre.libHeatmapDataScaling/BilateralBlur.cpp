@@ -19,68 +19,68 @@ limitations under the License.
 namespace Spectre::libHeatmapDataScaling
 {
 
-	BilateralBlur::BilateralBlur(const int _numberOfRows, const int _numberOfColumns, const int _window)
-		: numberOfRows(_numberOfRows), numberOfColumns(_numberOfColumns), window(_window) { }
+    BilateralBlur::BilateralBlur(const int _numberOfRows, const int _numberOfColumns, const int _window)
+        : numberOfRows(_numberOfRows), numberOfColumns(_numberOfColumns), window(_window) { }
 
-	std::vector<double> BilateralBlur::scaleData(const gsl::span<double> intensities)
-	{
-		int r = (int)floor(window / 2);
-		double sd = window / 4;
-		auto beta = calculateWeightsForBilateralBlur(intensities, r);
-		return gaussianFilter.filterDataWithGaussianFunction(intensities, numberOfRows, numberOfColumns, sd, r, beta);
-	}
+    std::vector<double> BilateralBlur::scaleData(const gsl::span<double> intensities)
+    {
+        int r = (int)floor(window / 2);
+        double sd = window / 4.0;
+        auto beta = calculateWeightsForBilateralBlur(intensities, r);
+        return gaussianFilter.filterDataWithGaussianFunction(intensities, numberOfRows, numberOfColumns, sd, r, beta);
+    }
 
-	std::vector<double> BilateralBlur::calculateWeightsForBilateralBlur(const gsl::span<double> intensities, const int r) const
-	{
+    std::vector<double> BilateralBlur::calculateWeightsForBilateralBlur(const gsl::span<double> intensities, const int r) const
+    {
         int nrow = (int)pow((2 * (r)) + 1, 2);
         size_t ncol = intensities.size();
         std::vector<double> beta(nrow * ncol, 1);
 
         int gaussianKernel = (int)pow((2 * (r)) + 1, 2);
-		int ix = 0;
-		for (int i = 0; i < numberOfRows; ++i) {
-			for (int j = 0; j < numberOfColumns; ++j) {
-				int k = 0;
-				for (int ii = -(r); ii <= r; ++ii) {
-					for (int jj = -(r); jj <= r; ++jj) {
-						int temp_i = i + ii;
-						int temp_j = j + jj;
-						if (temp_i < 0 || temp_i > numberOfRows - 1) {
-							temp_i = i;
-						}
-						if (temp_j < 0 || temp_j > numberOfColumns - 1) {
-							temp_j = j;
-						}
-						if (intensities[(temp_j * (numberOfRows)) + temp_i] < 0) {
-							temp_i = i;
-							temp_j = j;
-						}
-						beta[ix * gaussianKernel + k] = fabs(intensities[(j * (numberOfRows)) + i]
-							- intensities[(temp_j * (numberOfRows)) + temp_i]);
-						++k;
-					}
-				}
-				double max_beta = 0;
-				double min_beta = beta[ix * gaussianKernel];
-				for (int l = 0; l < gaussianKernel; ++l) {
-					if (beta[ix * gaussianKernel + l] > max_beta)
-						max_beta = beta[ix * gaussianKernel + l];
-					if (beta[ix * gaussianKernel + l] < min_beta)
-						min_beta = beta[ix * gaussianKernel + l];
-				}
-				double lambda = (max_beta - min_beta) / 2.0;
-				if (lambda < 1e-9) {
-					lambda = 1.0;
-				}
-				lambda = lambda * lambda;
-				for (int l = 0; l < gaussianKernel; ++l) {
-					beta[ix * gaussianKernel + l] = exp(-pow(beta[ix * gaussianKernel + l], 2) / (2.0 * lambda));
-				}
-				++ix;
-			}
-		}
-		return beta;
-	}
+        int ix = 0;
+        for (int i = 0; i < numberOfRows; ++i) {
+            for (int j = 0; j < numberOfColumns; ++j) {
+                int k = 0;
+                for (int ii = -(r); ii <= r; ++ii) {
+                    for (int jj = -(r); jj <= r; ++jj) {
+                        int temp_i = i + ii;
+                        int temp_j = j + jj;
+                        if (temp_i < 0 || temp_i > numberOfRows - 1) {
+                            temp_i = i;
+                        }
+                        if (temp_j < 0 || temp_j > numberOfColumns - 1) {
+                            temp_j = j;
+                        }
+                        if (intensities[(temp_j * (numberOfRows)) + temp_i] < 0) {
+                            temp_i = i;
+                            temp_j = j;
+                        }
+                        beta[ix * gaussianKernel + k] = fabs(intensities[(j * (numberOfRows)) + i]
+                            - intensities[(temp_j * (numberOfRows)) + temp_i]);
+                        ++k;
+                    }
+                }
+                double max_beta = 0;
+                double min_beta = beta[ix * gaussianKernel];
+                for (int l = 0; l < gaussianKernel; ++l) {
+                    if (beta[ix * gaussianKernel + l] > max_beta)
+                        max_beta = beta[ix * gaussianKernel + l];
+                    if (beta[ix * gaussianKernel + l] < min_beta)
+                        min_beta = beta[ix * gaussianKernel + l];
+                }
+                double lambda = (max_beta - min_beta) / 2.0;
+                if (lambda < 1e-9) {
+                    lambda = 1.0;
+                }
+                lambda = lambda * lambda;
+                for (int l = 0; l < gaussianKernel; ++l) {
+                    beta[ix * gaussianKernel + l] = exp(-pow(beta[ix * gaussianKernel + l], 2) / (2.0 * lambda));
+                }
+                ++ix;
+            }
+        }
+        return beta;
+    }
 }
 
 
