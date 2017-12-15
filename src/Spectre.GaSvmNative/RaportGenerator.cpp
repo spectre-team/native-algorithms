@@ -21,6 +21,10 @@ limitations under the License.
 #include "Spectre.libClassifier/ConfusionMatrix.h"
 #include "RaportGenerator.h"
 #include "Spectre.libException/ArgumentEqualZeroException.h"
+#include "Spectre.libException/OpenFileException.h"
+#include "Spectre.GaSvmNative/NegativeTrainingTimeException.h"
+#include "Spectre.GaSvmNative/InconsistentIndividualSizeAndNumberOfSupportVectorsException.h"
+#include "Spectre.GaSvmNative/NegativeMeanClassificationTimeException.h"
 
 namespace Spectre::GaSvmNative
 {
@@ -32,9 +36,13 @@ RaportGenerator::RaportGenerator(std::string filename, unsigned int populationSi
 {
     if (m_PopulationSize == 0)
     {
-        throw libException::ArgumentEqualZeroException(populationSize);
+        throw libException::ArgumentEqualZeroException("population size");
     }
     m_File.open(filename + ".csv");
+    if (!m_File.is_open())
+    {
+        throw libException::OpenFileException(m_Filename);
+    }
     m_File << "generation" << m_Separator;
     m_File << "true positives" << m_Separator;
     m_File << "true negatives" << m_Separator;
@@ -62,6 +70,18 @@ void RaportGenerator::Write(const libClassifier::ConfusionMatrix& matrix,
                             unsigned int numberOfSupportVectors,
                             const libClassifier::ConfusionMatrix* validationResults)
 {
+    if (trainingTime < 0)
+    {
+        throw libClassifier::NegativeTrainingTimeException(trainingTime);
+    }
+    if (meanClassificationTime < 0)
+    {
+        throw libClassifier::NegativeMeanClassificationTimeException(meanClassificationTime);
+    }
+    if (numberOfSupportVectors > individual.size())
+    {
+        throw libGenetic::InconsistentIndividualSizeAndNumberOfSupportVectorsException(individual.size(), numberOfSupportVectors);
+    }
     auto count = 0u;
     for(auto bit: individual)
     {

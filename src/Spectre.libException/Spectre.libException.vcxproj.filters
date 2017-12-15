@@ -36,6 +36,12 @@
     <ClInclude Include="ArgumentEqualZeroException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OpenFileException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UnexpectedException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ExceptionBase.cpp">
@@ -54,6 +60,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ArgumentEqualZeroException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenFileException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UnexpectedException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

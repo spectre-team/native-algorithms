@@ -21,6 +21,8 @@ limitations under the License.
 #include "Spectre.libClassifier/ConfusionMatrix.h"
 #include "Spectre.libPlatform/Filter.h"
 #include "SVMFitnessFunction.h"
+#include "Spectre.libClassifier/NegativeTrainingRateException.h"
+#include "Spectre.libException/UnexpectedException.h"
 
 namespace Spectre::GaSvmNative
 {
@@ -49,6 +51,18 @@ ScoreType SVMFitnessFunction::computeFitness(const Individual &individual)
 
     const auto& dataToFilter = m_Dataset.m_TrainingSet.GetData();
     const auto twoDimensionalFilteredData = libPlatform::Functional::filter(dataToFilter, individual.getData());
+    //if individual contains only false values
+    if (twoDimensionalFilteredData.size() == 0)
+    {
+        if (individual.getData()[0])
+        {
+            throw libException::UnexpectedException();
+        }
+        std::vector<bool> newBinaryData = individual.getData();
+        newBinaryData[0] = true;
+        Individual newIndividual(std::move(newBinaryData));
+        return computeFitness(newIndividual);
+    }
     std::vector<DataType> oneDimensionalFilteredData;
     oneDimensionalFilteredData.reserve(twoDimensionalFilteredData.size() * twoDimensionalFilteredData[0].size());
     for (const auto& observation: twoDimensionalFilteredData)
@@ -59,7 +73,6 @@ ScoreType SVMFitnessFunction::computeFitness(const Individual &individual)
     OpenCvDataset individualDataset(oneDimensionalFilteredData, filteredLabels);
 
     const auto result = getResultMatrix(std::move(individualDataset), individual);
-
     return result.DiceIndex;
 }
 

@@ -75,12 +75,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="InconsistentIndividualSizeAndNumberOfSupportVectorsException.h" />
+    <ClInclude Include="NegativeMeanClassificationTimeException.h" />
+    <ClInclude Include="NegativeTrainingTimeException.h" />
     <ClInclude Include="RandomMultipleValidationSelectionScenario.h" />
     <ClInclude Include="GeneticTrainingSetSelectionScenario.h" />
     <ClInclude Include="RaportGenerator.h" />
     <ClInclude Include="SVMFitnessFunction.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="InconsistentIndividualSizeAndNumberOfSupportVectorsException.cpp" />
+    <ClCompile Include="NegativeMeanClassificationTimeException.cpp" />
+    <ClCompile Include="NegativeTrainingTimeException.cpp" />
     <ClCompile Include="RandomMultipleValidationSelectionScenario.cpp" />
     <ClCompile Include="GeneticTrainingSetSelectionScenario.cpp" />
     <ClCompile Include="RaportGenerator.cpp" />

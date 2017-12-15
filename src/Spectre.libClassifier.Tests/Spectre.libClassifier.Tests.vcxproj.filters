@@ -39,6 +39,15 @@
     <ClCompile Include="DownsampledOpenCVDatasetTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\regis\Documents\GitHub\spectre\src\Spectre.libClassifier.Tests\..\..\lib\native\src\gtest\gtest-all.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\regis\Documents\GitHub\spectre\src\Spectre.libClassifier.Tests\..\..\lib\native\src\gmock\gmock-all.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConfusionMatrixTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

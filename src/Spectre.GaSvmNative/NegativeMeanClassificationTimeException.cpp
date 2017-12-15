@@ -1,6 +1,6 @@
-﻿/*
-* ArgumentEqualZeroException.cpp
-* Thrown when argument is equal zero.
+/*
+* NegativeMeanClassificationTimeException.cpp
+* Thrown when training time is negative.
 *
 Copyright 2017 Spectre Team
 
@@ -17,13 +17,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+#include "Spectre.GaSvmNative/NegativeMeanClassificationTimeException.h"
 
-#include "Spectre.libException/ArgumentEqualZeroException.h"
-
-namespace Spectre::libException
+namespace Spectre::libClassifier
 {
-
-    ArgumentEqualZeroException::ArgumentEqualZeroException(const std::string &variableName) :
-        ExceptionBase(variableName + " is equal zero when it shouldn't be.") { }
-
+    NegativeMeanClassificationTimeException::NegativeMeanClassificationTimeException(double meanClassificationTime) :
+        ExceptionBase("meanClassificationTime value is negative: " + std::to_string(meanClassificationTime)) { }
 }

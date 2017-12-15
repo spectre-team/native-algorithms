@@ -1,6 +1,6 @@
-﻿/*
-* ArgumentEqualZeroException.cpp
-* Thrown when argument is equal zero.
+/*
+* UnexpectedException.cpp
+* Thrown when there is an unexpected error.
 *
 Copyright 2017 Spectre Team
 
@@ -18,12 +18,12 @@ limitations under the License.
 */
 
 
-#include "Spectre.libException/ArgumentEqualZeroException.h"
+#include "Spectre.libException/UnexpectedException.h"
 
 namespace Spectre::libException
 {
 
-    ArgumentEqualZeroException::ArgumentEqualZeroException(const std::string &variableName) :
-        ExceptionBase(variableName + " is equal zero when it shouldn't be.") { }
+    UnexpectedException::UnexpectedException() :
+        ExceptionBase("Unexpected error occured!") { }
 
 }

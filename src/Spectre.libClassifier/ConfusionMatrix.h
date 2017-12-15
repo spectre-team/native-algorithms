@@ -20,6 +20,7 @@ limitations under the License.
 #pragma once
 #include <span.h>
 #include "Types.h"
+#include "Spectre.libGenetic/DataTypes.h"
 
 namespace Spectre::libClassifier {
 
@@ -66,7 +67,7 @@ public:
     /// <summary>
     /// The dice index.
     /// </summary>
-    const double DiceIndex;
+    const libGenetic::ScoreType DiceIndex;
 };
 
 }

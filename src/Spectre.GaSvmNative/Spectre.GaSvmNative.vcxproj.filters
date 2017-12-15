@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Exceptions">
+      <UniqueIdentifier>{d8f0d195-e7d8-4a82-bcf7-0f65bde2a261}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Exceptions">
+      <UniqueIdentifier>{d50250af-1395-4b75-9a15-a7fa8deef72a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneticTrainingSetSelectionScenario.h">
@@ -27,6 +33,15 @@
     <ClInclude Include="RandomMultipleValidationSelectionScenario.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="NegativeTrainingTimeException.h">
+      <Filter>Header Files\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="NegativeMeanClassificationTimeException.h">
+      <Filter>Header Files\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="InconsistentIndividualSizeAndNumberOfSupportVectorsException.h">
+      <Filter>Header Files\Exceptions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GeneticTrainingSetSelectionScenario.cpp">
@@ -40,6 +55,15 @@
     </ClCompile>
     <ClCompile Include="RandomMultipleValidationSelectionScenario.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NegativeTrainingTimeException.cpp">
+      <Filter>Source Files\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="NegativeMeanClassificationTimeException.cpp">
+      <Filter>Source Files\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="InconsistentIndividualSizeAndNumberOfSupportVectorsException.cpp">
+      <Filter>Source Files\Exceptions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

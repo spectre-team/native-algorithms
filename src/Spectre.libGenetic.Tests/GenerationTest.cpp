@@ -21,6 +21,7 @@ limitations under the License.
 #include "Spectre.libException/OutOfRangeException.h"
 #include "Spectre.libGenetic/Generation.h"
 #include "Spectre.libGenetic/InconsistentChromosomeLengthException.h"
+#include "Spectre.libException/ArgumentEqualZeroException.h"
 
 namespace
 {
@@ -43,6 +44,22 @@ TEST(GenerationInitialization, throws_when_required_number_of_active_is_bigger_t
     const auto individualSize = 4u;
     const auto excessiveInitialFillup = 6u;
     EXPECT_THROW(Generation(generationSize, individualSize, excessiveInitialFillup, seed), ArgumentOutOfRangeException<size_t>);
+}
+
+TEST(GenerationInitialization, throws_when_generation_size_is_eq_zero)
+{
+    const auto generationSize = 0u;
+    const auto individualSize = 6u;
+    const auto initialFillup = 4u;
+    EXPECT_THROW(Generation(generationSize, individualSize, initialFillup, seed), ArgumentEqualZeroException);
+}
+
+TEST(GenerationInitialization, throws_when_individual_size_is_eq_zero)
+{
+    const auto generationSize = 5u;
+    const auto individualSize = 0u;
+    const auto initialFillup = 0u;
+    EXPECT_THROW(Generation(generationSize, individualSize, initialFillup, seed), ArgumentEqualZeroException);
 }
 
 TEST(GenerationInitialization, initializes_with_proper_size)

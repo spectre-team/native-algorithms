@@ -1,5 +1,5 @@
 /*
-* DownsampledOpenCVDataset.cpp
+* DownsampledOpenCVDatasetTest.cpp
 * Tests DownsampledOpenCVDataset
 *
 Copyright 2017 Wojciech Wilgierz

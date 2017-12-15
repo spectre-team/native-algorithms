@@ -17,7 +17,9 @@
     <ClInclude Include="ExceptionBase.h" />
     <ClInclude Include="InconsistentArgumentSizesException.h" />
     <ClInclude Include="NullPointerException.h" />
+    <ClInclude Include="OpenFileException.h" />
     <ClInclude Include="OutOfRangeException.h" />
+    <ClInclude Include="UnexpectedException.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArgumentEqualZeroException.cpp" />
@@ -25,7 +27,9 @@
     <ClCompile Include="ExceptionBase.cpp" />
     <ClCompile Include="InconsistentArgumentSizesException.cpp" />
     <ClCompile Include="NullPointerException.cpp" />
+    <ClCompile Include="OpenFileException.cpp" />
     <ClCompile Include="OutOfRangeException.cpp" />
+    <ClCompile Include="UnexpectedException.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

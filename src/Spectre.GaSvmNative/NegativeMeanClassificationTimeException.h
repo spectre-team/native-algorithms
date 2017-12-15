@@ -1,6 +1,6 @@
-﻿/*
-* ArgumentEqualZeroException.h
-* Thrown when argument is equal zero.
+/*
+* NegativeMeanClassificationTimeException.h
+* Thrown when training time is negative.
 *
 Copyright 2017 Spectre Team
 
@@ -18,20 +18,20 @@ limitations under the License.
 */
 
 #pragma once
-#include "ExceptionBase.h"
+#include "Spectre.libException/ArgumentOutOfRangeException.h"
 
-namespace Spectre::libException
+namespace Spectre::libClassifier
 {
     /// <summary>
-    /// Thrown when function argument is empty.
+    /// Thrown, when training rate would be negative.
     /// </summary>
-    class ArgumentEqualZeroException : public ExceptionBase
+    class NegativeMeanClassificationTimeException final : public libException::ExceptionBase
     {
     public:
         /// <summary>
-        /// Initializes a new instance of the <see cref="ArgumentEqualZeroException"/> class.
+        /// Initializes a new instance of the <see cref="NegativeMeanClassificationTimeException"/> class.
         /// </summary>
-        /// <param name="variableName">Name of the variable.</param>
-        explicit ArgumentEqualZeroException(const std::string &variableName);
+        /// <param name="meanClassificationTime">The value of mean classification time.</param>
+        explicit NegativeMeanClassificationTimeException(double meanClassificationTime);
     };
 }

@@ -1,6 +1,6 @@
-﻿/*
-* ArgumentEqualZeroException.cpp
-* Thrown when argument is equal zero.
+/*
+* OpenFileException.cpp
+* Thrown when filed to open a file.
 *
 Copyright 2017 Spectre Team
 
@@ -18,12 +18,12 @@ limitations under the License.
 */
 
 
-#include "Spectre.libException/ArgumentEqualZeroException.h"
+#include "Spectre.libException/OpenFileException.h"
 
 namespace Spectre::libException
 {
 
-    ArgumentEqualZeroException::ArgumentEqualZeroException(const std::string &variableName) :
-        ExceptionBase(variableName + " is equal zero when it shouldn't be.") { }
+    OpenFileException::OpenFileException(const std::string &fileName) :
+        ExceptionBase(fileName + " file cannot be opened.") { }
 
 }
