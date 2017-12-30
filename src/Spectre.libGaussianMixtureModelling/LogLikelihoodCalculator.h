@@ -29,7 +29,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 #pragma once
-#include "Spectre.libGaussianMixtureModelling/ArgumentNullException.h"
+#include "Spectre.libException/NullPointerException.h"
 #include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
 #include "Spectre.libGaussianMixtureModelling/GaussianDistribution.h"
 #include "Spectre.libGaussianMixtureModelling/DataType.h"
@@ -60,12 +60,12 @@ public:
     {
         if (mzArray == nullptr)
         {
-            throw ArgumentNullException("mzArray");
+            throw spectre::core::exception::NullPointerException("mzArray");
         }
 
         if (intensities == nullptr)
         {
-            throw ArgumentNullException("intensities");
+            throw spectre::core::exception::NullPointerException("intensities");
         }
     }
 

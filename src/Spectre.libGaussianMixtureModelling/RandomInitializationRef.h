@@ -63,7 +63,7 @@ public:
     {
         if (mzArray == nullptr)
         {
-            throw ArgumentNullException("mzArray");
+            throw spectre::core::exception::NullPointerException("mzArray");
         }
     }
 

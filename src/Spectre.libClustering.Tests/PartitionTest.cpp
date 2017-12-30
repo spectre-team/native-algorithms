@@ -24,7 +24,7 @@ limitations under the License.
 #include <vector>
 #include <algorithm>
 #include "Partition.h"
-#include "ArgumentNullException.h"
+#include "Spectre.libException/NullPointerException.h"
 
 
 namespace spectre::unsupervised::Tests
@@ -45,7 +45,7 @@ TEST_F(PartitionTest, fails_on_null)
 {
     ASSERT_THROW({
 			Partition test(nullptr);
-		                                                   }, ArgumentNullException)
+		                                                   }, spectre::core::exception::NullPointerException)
         << "Creation from null data did not throw exception.";
 }
 
