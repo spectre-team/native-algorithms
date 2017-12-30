@@ -37,7 +37,7 @@ std::vector<bool>::reference Individual::operator[](size_t index)
     }
     else
     {
-        throw libException::OutOfRangeException(index, m_BinaryData.size());
+        throw spectre::core::exception::OutOfRangeException(index, m_BinaryData.size());
     }
 }
 
@@ -49,7 +49,7 @@ std::vector<bool>::const_reference Individual::operator[](size_t index) const
     }
     else
     {
-        throw libException::OutOfRangeException(index, m_BinaryData.size());
+        throw spectre::core::exception::OutOfRangeException(index, m_BinaryData.size());
     }
 }
 

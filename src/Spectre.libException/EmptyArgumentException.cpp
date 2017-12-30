@@ -19,7 +19,7 @@ limitations under the License.
 
 #include "EmptyArgumentException.h"
 
-namespace Spectre::libException
+namespace spectre::core::exception
 {
 EmptyArgumentException::EmptyArgumentException(const std::string &argumentName) :
     ExceptionBase(argumentName + " cannot be empty.") { }

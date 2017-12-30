@@ -25,7 +25,7 @@ namespace Spectre::libStatistics
 /// <summary>
 /// Thrown when number of features in compared datasets differ.
 /// </summary>
-class InconsistentNumberOfFeaturesException final : public libException::InconsistentArgumentSizesException
+class InconsistentNumberOfFeaturesException final : public spectre::core::exception::InconsistentArgumentSizesException
 {
 public:
     /// <summary>

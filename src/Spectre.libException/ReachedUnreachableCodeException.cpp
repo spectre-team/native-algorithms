@@ -19,7 +19,7 @@ limitations under the License.
 
 #include "ReachedUnreachableCodeException.h"
 
-namespace Spectre::libException
+namespace spectre::core::exception
 {
 ReachedUnreachableCodeException::ReachedUnreachableCodeException() :
     ExceptionBase("Code assumed to be unreachable was reached.") {}

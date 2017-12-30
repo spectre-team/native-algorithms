@@ -20,7 +20,7 @@ limitations under the License.
 #pragma once
 #include "ExceptionBase.h"
 
-namespace Spectre::libException
+namespace spectre::core::exception
 {
 /// <summary>
 /// Thrown when coupled arguments length differ.

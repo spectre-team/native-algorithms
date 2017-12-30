@@ -22,7 +22,7 @@ limitations under the License.
 
 namespace Spectre::libGenetic
 {
-class ExcessivePreservationRateException: public libException::ArgumentOutOfRangeException<double>
+class ExcessivePreservationRateException: public spectre::core::exception::ArgumentOutOfRangeException<double>
 {
 public:
     explicit ExcessivePreservationRateException(double actual);

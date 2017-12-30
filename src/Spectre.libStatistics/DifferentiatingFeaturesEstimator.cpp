@@ -33,11 +33,11 @@ std::vector<statistical_testing::StatisticalIndex> DifferentiatingFeaturesEstima
 {
     if (first.empty())
     {
-        throw libException::EmptyDatasetException("first");
+        throw spectre::core::exception::EmptyDatasetException("first");
     }
     if (second.empty())
     {
-        throw libException::EmptyDatasetException("second");
+        throw spectre::core::exception::EmptyDatasetException("second");
     }
     if (first[0].size() != second[0].size())
     {

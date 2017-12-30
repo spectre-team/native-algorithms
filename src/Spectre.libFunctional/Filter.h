@@ -46,7 +46,7 @@ std::vector<DataType> filter(gsl::span<const DataType> collection, gsl::span<con
             }
             else
             {
-                throw libException::OutOfRangeException(index, collection.size());
+                throw spectre::core::exception::OutOfRangeException(index, collection.size());
             }
         },
         static_cast<DataType*>(nullptr));
@@ -68,7 +68,7 @@ std::vector<DataType> filter(gsl::span<const DataType> collection, std::vector<b
     }
     else
     {
-        throw libException::InconsistentArgumentSizesException(
+        throw spectre::core::exception::InconsistentArgumentSizesException(
             "collection",
             static_cast<size_t>(collection.size()),
             "isIncluded",

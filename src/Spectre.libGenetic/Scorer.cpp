@@ -32,7 +32,7 @@ Scorer::Scorer(std::unique_ptr<FitnessFunction> fitnessFunction):
     }
     else
     {
-        throw libException::NullPointerException("fitnessFunction");
+        throw spectre::core::exception::NullPointerException("fitnessFunction");
     }
 }
 

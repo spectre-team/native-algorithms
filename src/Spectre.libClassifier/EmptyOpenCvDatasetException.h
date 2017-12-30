@@ -20,7 +20,7 @@ limitations under the License.
 #pragma once
 #include "Spectre.libException/ExceptionBase.h"
 
-namespace Spectre::libException
+namespace spectre::core::exception
 {
     /// <summary>
     /// Thrown, when we would create empty OpenCvDataset.

@@ -26,7 +26,7 @@ limitations under the License.
 namespace
 {
 using namespace Spectre::libGenetic;
-using namespace Spectre::libException;
+using namespace spectre::core::exception;
 
 TEST(ParentSelectionStrategyInitialization, initializes)
 {

@@ -29,7 +29,7 @@ const int ColumnMatrixWidth = 1;
 constexpr size_t throwOnEmpty(size_t size)
 {
     return size == 0
-        ? throw libException::EmptyOpenCvDatasetException("Empty argument")
+        ? throw spectre::core::exception::EmptyOpenCvDatasetException("Empty argument")
         : size;
 }
 
@@ -57,7 +57,7 @@ OpenCvDataset::OpenCvDataset(OpenCvDataset &&other) noexcept
     m_MatLabels = cv::Mat(static_cast<int>(labels.size()), ColumnMatrixWidth, CV_LABEL_TYPE, m_labels.data());
     if (data.size() % labels.size() != 0 || m_Mat.rows != static_cast<int>(m_labels.size()))
     {
-        throw libException::InconsistentArgumentSizesException("data", m_Mat.rows, "labels", static_cast<int>(m_labels.size()));
+        throw spectre::core::exception::InconsistentArgumentSizesException("data", m_Mat.rows, "labels", static_cast<int>(m_labels.size()));
     }
     const auto numberOfColumns = data.size() / labels.size();
     auto rowBegin = m_Data.data();
@@ -78,7 +78,7 @@ OpenCvDataset::OpenCvDataset(cv::Mat data, cv::Mat labels):
     m_MatLabels = cv::Mat(static_cast<int>(m_labels.size()), 1, CV_LABEL_TYPE, m_labels.data());
     if (m_Mat.rows != static_cast<int>(m_labels.size()))
     {
-        throw libException::InconsistentArgumentSizesException("data", m_Mat.rows,"labels", static_cast<int>(m_labels.size()));
+        throw spectre::core::exception::InconsistentArgumentSizesException("data", m_Mat.rows,"labels", static_cast<int>(m_labels.size()));
     }
     auto rowBegin = m_Data.data();
     for (auto i = 0; i < data.rows; ++i)
@@ -92,7 +92,7 @@ const Observation& OpenCvDataset::operator[](size_t idx) const
 {
     if (idx >= m_Mat.rows)
     {
-        throw libException::OutOfRangeException(idx, m_Mat.rows);
+        throw spectre::core::exception::OutOfRangeException(idx, m_Mat.rows);
     }
     return m_observations[idx];
 }
@@ -101,7 +101,7 @@ const Label& OpenCvDataset::GetSampleMetadata(size_t idx) const
 {
     if (idx >= m_MatLabels.rows)
     {
-        throw libException::OutOfRangeException(idx, m_MatLabels.rows);
+        throw spectre::core::exception::OutOfRangeException(idx, m_MatLabels.rows);
     }
     return m_labels[idx];
 }

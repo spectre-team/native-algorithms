@@ -95,7 +95,7 @@ TEST_F(IndividualsBuilderTest, initialization_throws_for_nullptr_crossover)
     auto crossover = nullptr;
     auto mutation = std::make_unique<::Tests::MockMutationOperator>();
     auto parentSelectionStrategy = std::make_unique<::Tests::MockParentSelectionStrategy>();
-    EXPECT_THROW(IndividualsBuilderStrategy(std::move(crossover), std::move(mutation), std::move(parentSelectionStrategy)), Spectre::libException::NullPointerException);
+    EXPECT_THROW(IndividualsBuilderStrategy(std::move(crossover), std::move(mutation), std::move(parentSelectionStrategy)), spectre::core::exception::NullPointerException);
 }
 
 TEST_F(IndividualsBuilderTest, initialization_throws_for_nullptr_mutation)
@@ -103,7 +103,7 @@ TEST_F(IndividualsBuilderTest, initialization_throws_for_nullptr_mutation)
     auto crossover = std::make_unique<::Tests::MockCrossoverOperator>();
     auto mutation = nullptr;
     auto parentSelectionStrategy = std::make_unique<::Tests::MockParentSelectionStrategy>();
-    EXPECT_THROW(IndividualsBuilderStrategy(std::move(crossover), std::move(mutation), std::move(parentSelectionStrategy)), Spectre::libException::NullPointerException);
+    EXPECT_THROW(IndividualsBuilderStrategy(std::move(crossover), std::move(mutation), std::move(parentSelectionStrategy)), spectre::core::exception::NullPointerException);
 }
 
 TEST_F(IndividualsBuilderTest, initialization_throws_for_nullptr_parent_selection)
@@ -111,7 +111,7 @@ TEST_F(IndividualsBuilderTest, initialization_throws_for_nullptr_parent_selectio
     auto crossover = std::make_unique<::Tests::MockCrossoverOperator>();
     auto mutation = std::make_unique<::Tests::MockMutationOperator>();
     auto parentSelectionStrategy = nullptr;
-    EXPECT_THROW(IndividualsBuilderStrategy(std::move(crossover), std::move(mutation), std::move(parentSelectionStrategy)), Spectre::libException::NullPointerException);
+    EXPECT_THROW(IndividualsBuilderStrategy(std::move(crossover), std::move(mutation), std::move(parentSelectionStrategy)), spectre::core::exception::NullPointerException);
 }
 
 TEST_F(IndividualsBuilderTest, throws_for_inconsistent_generation_and_scores_size)

@@ -21,7 +21,7 @@ limitations under the License.
 
 #include <string>
 
-namespace Spectre::libException
+namespace spectre::core::exception
 {
 /// <summary>
 /// Common base for all our exceptions, which should be further migrated

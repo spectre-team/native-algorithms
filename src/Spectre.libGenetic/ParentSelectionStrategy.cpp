@@ -45,7 +45,7 @@ reference_pair<Individual> ParentSelectionStrategy::next(Generation &generation,
     }
     else
     {
-        throw libException::ArgumentOutOfRangeException<ScoreType>("scores", 0, std::numeric_limits<ScoreType>::max(), minWeight);
+        throw spectre::core::exception::ArgumentOutOfRangeException<ScoreType>("scores", 0, std::numeric_limits<ScoreType>::max(), minWeight);
     }
     std::vector<ScoreType> defaultScores(scores.size(), 1);
     if (maxWeight > 0)

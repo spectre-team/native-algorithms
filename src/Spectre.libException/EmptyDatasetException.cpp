@@ -19,7 +19,7 @@ limitations under the License.
 
 #include "EmptyDatasetException.h"
 
-namespace Spectre::libException
+namespace spectre::core::exception
 {
 EmptyDatasetException::EmptyDatasetException(const std::string &name) :
     EmptyArgumentException(name) { }

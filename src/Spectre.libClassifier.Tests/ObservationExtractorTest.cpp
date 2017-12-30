@@ -28,7 +28,7 @@ namespace
 {
 using namespace Spectre::libClassifier;
 using namespace Spectre::libGenetic;
-using namespace Spectre::libException;
+using namespace spectre::core::exception;
 
 class ObservationExtractorInitializationTest : public ::testing::Test
 {

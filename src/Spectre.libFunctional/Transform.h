@@ -79,7 +79,7 @@ std::vector<OutputType> transform(gsl::span<const InputType1> first, gsl::span<c
     }
     else
     {
-        throw libException::InconsistentArgumentSizesException("first", first.size(), "second", second.size());
+        throw spectre::core::exception::InconsistentArgumentSizesException("first", first.size(), "second", second.size());
     }
 }
 

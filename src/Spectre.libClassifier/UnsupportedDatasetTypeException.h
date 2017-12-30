@@ -25,7 +25,7 @@ namespace Spectre::libClassifier
     /// <summary>
     /// Thrown, when dataset type is unsupported.
     /// </summary>
-    class UnsupportedDatasetTypeException final : public libException::ExceptionBase
+    class UnsupportedDatasetTypeException final : public spectre::core::exception::ExceptionBase
     {
     public:
         template <class TDatasetType>

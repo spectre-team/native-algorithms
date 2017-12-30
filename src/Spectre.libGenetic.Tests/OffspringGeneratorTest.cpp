@@ -27,7 +27,7 @@ limitations under the License.
 namespace
 {
 using namespace Spectre::libGenetic;
-using namespace Spectre::libException;
+using namespace spectre::core::exception;
 using namespace ::testing;
 
 class OffspringGeneratorTest : public Test

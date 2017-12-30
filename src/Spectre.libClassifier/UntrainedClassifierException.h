@@ -25,7 +25,7 @@ namespace Spectre::libClassifier
     /// <summary>
     /// Thrown when a executing predict function on untrained classifier.
     /// </summary>
-    class UntrainedClassifierException final : public libException::ExceptionBase
+    class UntrainedClassifierException final : public spectre::core::exception::ExceptionBase
     {
     public:
         /// <summary>

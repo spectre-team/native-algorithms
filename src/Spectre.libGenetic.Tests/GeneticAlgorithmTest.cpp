@@ -28,7 +28,7 @@ namespace
 {
 using namespace ::testing;
 using namespace Spectre::libGenetic;
-using namespace Spectre::libException;
+using namespace spectre::core::exception;
 
 class GeneticAlgorithmTest: public Test
 {

@@ -19,7 +19,7 @@ limitations under the License.
 
 #include "EmptyOpenCvDatasetException.h"
 
-namespace Spectre::libException
+namespace spectre::core::exception
 {
     EmptyOpenCvDatasetException::EmptyOpenCvDatasetException(const std::string &variableName) :
         ExceptionBase(variableName) { }

@@ -30,7 +30,7 @@ ObservationExtractor::ObservationExtractor(const DataPointer data): m_Data(data)
     }
     else
     {
-        throw libException::NullPointerException("data");
+        throw spectre::core::exception::NullPointerException("data");
     }
 }
 

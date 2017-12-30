@@ -48,11 +48,11 @@ StatisticalIndex CohenEffectSize::Compare(Values first, Values second) const
 {
     if (first.empty())
     {
-        throw libException::EmptyArgumentException("first");
+        throw spectre::core::exception::EmptyArgumentException("first");
     }
     if (second.empty())
     {
-        throw libException::EmptyArgumentException("second");
+        throw spectre::core::exception::EmptyArgumentException("second");
     }
     if (first.size() + second.size() == 2)
     {
@@ -69,6 +69,6 @@ StatisticalIndex CohenEffectSize::Compare(Values first, Values second) const
             return StatisticalIndex(DCohen, static_cast<unsigned>(thresholdNumber), interpretations[thresholdNumber]);
         }
     }
-    throw libException::ReachedUnreachableCodeException();
+    throw spectre::core::exception::ReachedUnreachableCodeException();
 }
 }

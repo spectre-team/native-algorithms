@@ -31,7 +31,7 @@ namespace
 {
 using namespace testing;
 using namespace spectre::core::dataset;
-using namespace Spectre::libException;
+using namespace spectre::core::exception;
 using namespace Spectre::libStatistics::Tests;
 using namespace Spectre::libStatistics;
 using namespace statistical_learning;

@@ -36,7 +36,7 @@ TEST(Scorer, initializes)
 
 TEST(Scorer, throws_for_null_fitness_function)
 {
-    EXPECT_THROW(Scorer(nullptr), Spectre::libException::NullPointerException);
+    EXPECT_THROW(Scorer(nullptr), spectre::core::exception::NullPointerException);
 }
 
 TEST(Scorer, calls_fitness_function_for_each_individual_exactly_once)

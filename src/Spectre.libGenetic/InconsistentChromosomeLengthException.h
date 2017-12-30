@@ -24,7 +24,7 @@ limitations under the License.
 namespace Spectre::libGenetic
 {
 class InconsistentChromosomeLengthException:
-    public Spectre::libException::InconsistentArgumentSizesException
+    public spectre::core::exception::InconsistentArgumentSizesException
 {
 public:
     InconsistentChromosomeLengthException(size_t first, size_t second);

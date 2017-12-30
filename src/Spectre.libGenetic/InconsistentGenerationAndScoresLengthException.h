@@ -23,7 +23,7 @@ limitations under the License.
 namespace Spectre::libGenetic
 {
 class InconsistentGenerationAndScoresLengthException :
-    public libException::InconsistentArgumentSizesException
+    public spectre::core::exception::InconsistentArgumentSizesException
 {
 public:
     InconsistentGenerationAndScoresLengthException(size_t first, size_t second);

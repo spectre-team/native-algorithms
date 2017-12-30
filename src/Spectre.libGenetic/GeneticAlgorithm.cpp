@@ -34,7 +34,7 @@ GeneticAlgorithm::GeneticAlgorithm(std::unique_ptr<OffspringGenerator> offspring
     }
     else
     {
-        throw libException::NullPointerException("offspringGenerator");
+        throw spectre::core::exception::NullPointerException("offspringGenerator");
     }
     if (m_Scorer != nullptr)
     {
@@ -42,7 +42,7 @@ GeneticAlgorithm::GeneticAlgorithm(std::unique_ptr<OffspringGenerator> offspring
     }
     else
     {
-        throw libException::NullPointerException("scorer");
+        throw spectre::core::exception::NullPointerException("scorer");
     }
     if (m_StopCondition != nullptr)
     {
@@ -50,7 +50,7 @@ GeneticAlgorithm::GeneticAlgorithm(std::unique_ptr<OffspringGenerator> offspring
     }
     else
     {
-        throw libException::NullPointerException("stopCondition");
+        throw spectre::core::exception::NullPointerException("stopCondition");
     }
 }
 

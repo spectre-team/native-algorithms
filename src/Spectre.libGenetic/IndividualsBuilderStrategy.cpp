@@ -37,7 +37,7 @@ IndividualsBuilderStrategy::IndividualsBuilderStrategy(std::unique_ptr<Crossover
     }
     else
     {
-        throw libException::NullPointerException("crossover");
+        throw spectre::core::exception::NullPointerException("crossover");
     }
     if (m_Mutation != nullptr)
     {
@@ -45,7 +45,7 @@ IndividualsBuilderStrategy::IndividualsBuilderStrategy(std::unique_ptr<Crossover
     }
     else
     {
-        throw libException::NullPointerException("mutation");
+        throw spectre::core::exception::NullPointerException("mutation");
     }
     if (m_ParentSelectionStrategy != nullptr)
     {
@@ -53,7 +53,7 @@ IndividualsBuilderStrategy::IndividualsBuilderStrategy(std::unique_ptr<Crossover
     }
     else
     {
-        throw libException::NullPointerException("parentSelectionStrategy");
+        throw spectre::core::exception::NullPointerException("parentSelectionStrategy");
     }
 }
 

@@ -63,12 +63,12 @@ TEST_F(PreservationStrategyTest, initializes)
 
 TEST_F(PreservationStrategyTest, throws_for_negative_preservation_rate)
 {
-    EXPECT_THROW(PreservationStrategy(-0.1), Spectre::libException::ArgumentOutOfRangeException<double>);
+    EXPECT_THROW(PreservationStrategy(-0.1), spectre::core::exception::ArgumentOutOfRangeException<double>);
 }
 
 TEST_F(PreservationStrategyTest, throws_for_excessive_preservation_rate)
 {
-    EXPECT_THROW(PreservationStrategy(1.1), Spectre::libException::ArgumentOutOfRangeException<double>);
+    EXPECT_THROW(PreservationStrategy(1.1), spectre::core::exception::ArgumentOutOfRangeException<double>);
 }
 
 TEST_F(PreservationStrategyTest, throws_for_mismatching_generation_and_scores_size)

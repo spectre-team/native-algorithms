@@ -68,7 +68,7 @@ public:
         }
         else
         {
-            throw Spectre::libException::OutOfRangeException(idx, m_Data.size());
+            throw spectre::core::exception::OutOfRangeException(idx, m_Data.size());
         }
     }
 
@@ -85,7 +85,7 @@ public:
         }
         else
         {
-            throw Spectre::libException::OutOfRangeException(idx, m_SampleMetadata.size());
+            throw spectre::core::exception::OutOfRangeException(idx, m_SampleMetadata.size());
         }
     }
 
@@ -111,7 +111,7 @@ public:
         }
         else
         {
-            throw Spectre::libException::OutOfRangeException(idx, m_Data.size());
+            throw spectre::core::exception::OutOfRangeException(idx, m_Data.size());
         }
     }
 
@@ -128,7 +128,7 @@ public:
         }
         else
         {
-            throw Spectre::libException::OutOfRangeException(idx, m_SampleMetadata.size());
+            throw spectre::core::exception::OutOfRangeException(idx, m_SampleMetadata.size());
         }
     }
 
