@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Spectre.NativeAlgorithms</id>
+    <version>3.0.0.1-alpha</version>
+    <authors>The Spectre Team</authors>
+    <owners>The Spectre Team</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Native algorithms implemented by Spectre project.</description>
+    <releaseNotes>
+	v. 3.0.0.x
+	Genetic algorithm + GMM.
+	</releaseNotes>
+    <tags>genetic DiviK GMM native exROI</tags>
+    <packageTypes>
+	  <packageType name="Dependency" />
+	</packageTypes>
+    <copyright>Copyright © 2017 Spectre</copyright>
+    <dependencies>
+      <dependency id="Microsoft.Gsl" version="0.1.2.1" />
+      <dependency id="opencv3" version="3.0.0.1" />
+      <dependency id="opencv3.redist" version="3.0.0.1" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="**/*.h" target="build/native/include" />
+    <file src="Win32/**/*.lib" target="build/native/lib" />
+    <file src="x64/**/*.lib" target="build/native/lib" />
+    <file src="Win32/**/*.pdb" target="build/native/symbols" />
+    <file src="x64/**/*.pdb" target="build/native/symbols" />
+    <file src="native-algorithms.targets" target="build/native" />
+  </files>
+</package>
