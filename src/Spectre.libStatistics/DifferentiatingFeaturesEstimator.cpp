@@ -43,7 +43,7 @@ std::vector<statistical_testing::StatisticalIndex> DifferentiatingFeaturesEstima
     {
         throw InconsistentNumberOfFeaturesException(first[0].size(), second[0].size());
     }
-    using namespace libFunctional;
+    using namespace spectre::core::functional;
     std::vector<statistical_testing::StatisticalIndex> indexes;
     indexes.reserve(first[0].size());
     const auto numberOfThreads = omp_get_num_procs() > 1 ? omp_get_num_procs() : 1;

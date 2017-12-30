@@ -25,7 +25,7 @@ limitations under the License.
 #include "Find.h"
 #include "Transform.h"
 
-namespace Spectre::libFunctional
+namespace spectre::core::functional
 {
 /// <summary>
 /// Filter the specified collection.

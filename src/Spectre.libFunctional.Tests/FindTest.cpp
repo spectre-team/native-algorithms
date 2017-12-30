@@ -25,7 +25,7 @@ limitations under the License.
 namespace
 {
 using namespace testing;
-using namespace Spectre::libFunctional;
+using namespace spectre::core::functional;
 
 TEST(BoolFindTest, finds_nothing_in_false_vector)
 {

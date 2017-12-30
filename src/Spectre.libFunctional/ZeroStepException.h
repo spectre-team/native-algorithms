@@ -20,7 +20,7 @@ limitations under the License.
 #pragma once
 #include "Spectre.libException/ExceptionBase.h"
 
-namespace Spectre::libFunctional
+namespace spectre::core::functional
 {
 /// <summary>
 /// Thrown on <see cref="range"/> function step equal to zero.

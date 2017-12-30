@@ -19,7 +19,7 @@ limitations under the License.
 
 #include "ZeroStepException.h"
 
-namespace Spectre::libFunctional
+namespace spectre::core::functional
 {
 ZeroStepException::ZeroStepException()
     : ExceptionBase("")

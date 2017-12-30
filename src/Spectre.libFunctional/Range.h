@@ -21,7 +21,7 @@ limitations under the License.
 #include <vector>
 #include "ZeroStepException.h"
 
-namespace Spectre::libFunctional
+namespace spectre::core::functional
 {
 /// <summary>
 /// Create range of values from lowerBound (inclusively) to upperBound (exclusively) with specified step.
