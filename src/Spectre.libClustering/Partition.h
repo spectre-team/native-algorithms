@@ -22,7 +22,7 @@
 #include <vector>
 #include <gsl.h>
 
-namespace Spectre::libClustering
+namespace spectre::unsupervised
 {
 /// <summary>
 /// Class storing simplified representation of partition vectors.
