@@ -19,7 +19,7 @@ limitations under the License.
 
 #include "StopCondition.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 StopCondition::StopCondition(unsigned int numberOfIterations):
     m_RemainingIterations(numberOfIterations),

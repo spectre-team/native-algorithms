@@ -27,7 +27,7 @@ limitations under the License.
 
 namespace
 {
-using namespace Spectre::libGenetic;
+using namespace spectre::algorithm::genetic;
 using namespace ::testing;
 
 reference_pair<Individual> toReferencePair(std::initializer_list<bool> binaryData)

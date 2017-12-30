@@ -22,7 +22,7 @@ limitations under the License.
 #include "DataTypes.h"
 #include "Generation.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 /// <summary>
 /// Describes how to preserve best individuals between iterations.s

@@ -21,7 +21,7 @@ limitations under the License.
 #include <gmock/gmock.h>
 #include "Spectre.libGenetic/ParentSelectionStrategy.h"
 
-namespace Spectre::libGenetic::Tests
+namespace spectre::algorithm::genetic::Tests
 {
 class MockParentSelectionStrategy: public ParentSelectionStrategy
 {

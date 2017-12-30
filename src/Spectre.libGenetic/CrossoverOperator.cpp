@@ -21,7 +21,7 @@ limitations under the License.
 #include "InconsistentChromosomeLengthException.h"
 #include "Individual.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 CrossoverOperator::CrossoverOperator(Seed rngSeed):
     m_RandomNumberGenerator(rngSeed) {}

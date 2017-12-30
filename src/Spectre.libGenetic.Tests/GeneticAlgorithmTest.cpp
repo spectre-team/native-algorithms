@@ -27,7 +27,7 @@ limitations under the License.
 namespace
 {
 using namespace ::testing;
-using namespace Spectre::libGenetic;
+using namespace spectre::algorithm::genetic;
 using namespace spectre::core::exception;
 
 class GeneticAlgorithmTest: public Test

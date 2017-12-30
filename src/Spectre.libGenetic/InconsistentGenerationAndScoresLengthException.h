@@ -20,7 +20,7 @@ limitations under the License.
 #pragma once
 #include "Spectre.libException/InconsistentArgumentSizesException.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 class InconsistentGenerationAndScoresLengthException :
     public spectre::core::exception::InconsistentArgumentSizesException

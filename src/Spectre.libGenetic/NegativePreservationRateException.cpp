@@ -19,7 +19,7 @@ limitations under the License.
 
 #include "NegativePreservationRateException.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 NegativePreservationRateException::NegativePreservationRateException(double actual):
     ArgumentOutOfRangeException<double>("preservationRate", 0, 1, actual) { }

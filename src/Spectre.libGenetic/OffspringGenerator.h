@@ -24,7 +24,7 @@ limitations under the License.
 #include "IndividualsBuilderStrategy.h"
 #include "PreservationStrategy.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 /// <summary>
 /// Specifies, how to create new generation from the old one, basing on scores of each individual.

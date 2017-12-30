@@ -22,7 +22,7 @@ limitations under the License.
 #include "DataTypes.h"
 #include "FitnessFunction.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 /// <summary>
 /// Scores the population with given fitness function.

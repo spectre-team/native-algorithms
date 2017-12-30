@@ -25,7 +25,7 @@ limitations under the License.
 
 using namespace std;
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 Generation::Generation(std::vector<Individual> &&generation):
     m_Generation(generation)

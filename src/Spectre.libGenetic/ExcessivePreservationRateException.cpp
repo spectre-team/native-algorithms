@@ -19,7 +19,7 @@ limitations under the License.
 
 #include "ExcessivePreservationRateException.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 ExcessivePreservationRateException::ExcessivePreservationRateException(double actual):
     ArgumentOutOfRangeException<double>("preservationRate", 0, 1, actual) { }

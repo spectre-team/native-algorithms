@@ -22,7 +22,7 @@ limitations under the License.
 #include "InconsistentGenerationAndScoresLengthException.h"
 #include "IndividualsBuilderStrategy.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 IndividualsBuilderStrategy::IndividualsBuilderStrategy(std::unique_ptr<CrossoverOperator> crossover,
                                                        std::unique_ptr<MutationOperator> mutation,

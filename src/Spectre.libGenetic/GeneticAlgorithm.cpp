@@ -21,7 +21,7 @@ limitations under the License.
 #include "Generation.h"
 #include "GeneticAlgorithm.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 GeneticAlgorithm::GeneticAlgorithm(std::unique_ptr<OffspringGenerator> offspringGenerator, std::unique_ptr<Scorer> scorer, std::unique_ptr<StopCondition> stopCondition)
     : m_OffspringGenerator(std::move(offspringGenerator)),

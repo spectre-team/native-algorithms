@@ -19,7 +19,7 @@ limitations under the License.
 
 #pragma once
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 /// <summary>
 /// States when to stop the algorithm

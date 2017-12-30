@@ -21,7 +21,7 @@ limitations under the License.
 #include "Spectre.libException/ArgumentOutOfRangeException.h"
 #include "MutationOperator.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 MutationOperator::MutationOperator(double mutationRate, double bitSwapRate, Seed rngSeed):
     m_MutationRate(mutationRate),

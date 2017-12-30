@@ -21,7 +21,7 @@ limitations under the License.
 #include "Spectre.libException/ArgumentOutOfRangeException.h"
 #include "InconsistentGenerationAndScoresLengthException.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 ParentSelectionStrategy::ParentSelectionStrategy(Seed seed):
     m_RandomNumberGenerator(seed) { }

@@ -34,7 +34,7 @@ ObservationExtractor::ObservationExtractor(const DataPointer data): m_Data(data)
     }
 }
 
-OpenCvDataset ObservationExtractor::getOpenCvDatasetFromIndividual(const libGenetic::Individual &individual)
+OpenCvDataset ObservationExtractor::getOpenCvDatasetFromIndividual(const spectre::algorithm::genetic::Individual &individual)
 {
     std::vector<DataType> data;
     std::vector<Label> labels;

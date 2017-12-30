@@ -21,7 +21,7 @@ limitations under the License.
 #include <gmock/gmock.h>
 #include "Spectre.libGenetic/Scorer.h"
 
-namespace Spectre::libGenetic::Tests
+namespace spectre::algorithm::genetic::Tests
 {
 class DummyFitnessFunction: public FitnessFunction
 {

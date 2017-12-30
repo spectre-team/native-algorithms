@@ -22,7 +22,7 @@ limitations under the License.
 
 namespace
 {
-using namespace Spectre::libGenetic;
+using namespace spectre::algorithm::genetic;
 
 TEST(StopCondition, initializes)
 {

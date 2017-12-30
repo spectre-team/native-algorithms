@@ -24,7 +24,7 @@ limitations under the License.
 
 using namespace std;
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 Individual::Individual(std::vector<bool> &&binaryData):
     m_BinaryData(binaryData) { }
