@@ -24,7 +24,7 @@ limitations under the License.
 #include "Spectre.libDataset/Empty.h"
 #include "Spectre.libClassifier/Types.h"
 
-namespace Spectre::libClassifier {
+namespace spectre::supervised {
 /// <summary>
 /// Data-owning structure which couples our typed with OpenCV cv::Mat
 /// </summary>

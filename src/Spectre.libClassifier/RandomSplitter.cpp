@@ -23,7 +23,7 @@ limitations under the License.
 #include "Spectre.libStatistics/Math.h"
 #include "Spectre.libGenetic/DataTypes.h"
 
-namespace Spectre::libClassifier {
+namespace spectre::supervised {
 
 using namespace spectre::core::functional;
 using namespace spectre::statistics;

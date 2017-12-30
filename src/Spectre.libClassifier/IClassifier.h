@@ -22,7 +22,7 @@ limitations under the License.
 #include "Spectre.libDataset/IReadOnlyDataset.h"
 #include "Types.h"
 
-namespace Spectre::libClassifier
+namespace spectre::supervised
 {
     /// <summary>
     /// Classifier base class.

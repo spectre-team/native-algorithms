@@ -23,7 +23,7 @@ limitations under the License.
 // @gmrukwa: TODO: Fix this include. It should be local to this project.
 #include "Spectre.libGenetic/DataTypes.h"
 
-namespace Spectre::libClassifier
+namespace spectre::supervised
 {
 /// <summary>
 /// Splits an input dataset randomly into two, proportionally sized subsets.

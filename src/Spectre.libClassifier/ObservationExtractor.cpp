@@ -20,7 +20,7 @@ limitations under the License.
 #include "Spectre.libException/NullPointerException.h"
 #include "ObservationExtractor.h"
 
-namespace Spectre::libClassifier {
+namespace spectre::supervised {
 
 ObservationExtractor::ObservationExtractor(const DataPointer data): m_Data(data)
 {

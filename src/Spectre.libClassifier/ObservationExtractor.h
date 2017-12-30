@@ -23,7 +23,7 @@ limitations under the License.
 #include "Spectre.libClassifier/OpenCvDataset.h"
 #include "Spectre.libGenetic/Individual.h"
 
-namespace Spectre::libClassifier {
+namespace spectre::supervised {
 
 using DataPointer = const spectre::core::dataset::IReadOnlyDataset<Observation, Label, spectre::core::dataset::Empty>*;
 

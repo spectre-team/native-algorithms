@@ -25,7 +25,7 @@ limitations under the License.
 namespace
 {
 using namespace ::testing;
-using namespace Spectre::libClassifier;
+using namespace spectre::supervised;
 
 TEST(RandomSplitterInitializationTest, correct_dataset_opencv_initialization)
 {

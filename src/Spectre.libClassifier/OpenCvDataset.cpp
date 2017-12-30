@@ -22,14 +22,14 @@ limitations under the License.
 #include "OpenCvDataset.h"
 #include "Spectre.libClassifier/EmptyOpenCvDatasetException.h"
 
-namespace Spectre::libClassifier {
+namespace spectre::supervised {
 
 const int ColumnMatrixWidth = 1;
 
 constexpr size_t throwOnEmpty(size_t size)
 {
     return size == 0
-        ? throw spectre::core::exception::EmptyOpenCvDatasetException("Empty argument")
+        ? throw spectre::supervised::exception::EmptyOpenCvDatasetException("Empty argument")
         : size;
 }
 

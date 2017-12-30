@@ -22,7 +22,7 @@ limitations under the License.
 #include <span.h>
 #include "Spectre.libDataset/Empty.h"
 
-namespace Spectre::libClassifier
+namespace spectre::supervised
 {
     using DataType = float;
     using Observation = gsl::span<const DataType>;

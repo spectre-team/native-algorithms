@@ -26,7 +26,7 @@ limitations under the License.
 
 namespace
 {
-using namespace Spectre::libClassifier;
+using namespace spectre::supervised;
 using namespace spectre::algorithm::genetic;
 using namespace spectre::core::exception;
 

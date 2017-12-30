@@ -19,7 +19,7 @@ limitations under the License.
 
 #include "Spectre.libClassifier/SplittedOpevCvDataset.h"
 
-namespace Spectre::libClassifier {
+namespace spectre::supervised {
 SplittedOpenCvDataset::SplittedOpenCvDataset(OpenCvDataset&& training, OpenCvDataset&& test)
     : trainingSet(std::move(training)),
       testSet(std::move(test))

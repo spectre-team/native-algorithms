@@ -20,7 +20,7 @@ limitations under the License.
 #pragma once
 #include "Spectre.libClassifier/OpenCvDataset.h"
 
-namespace Spectre::libClassifier {
+namespace spectre::supervised {
 class SplittedOpenCvDataset
 {
 public:

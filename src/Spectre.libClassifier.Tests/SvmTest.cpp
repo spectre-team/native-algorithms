@@ -25,7 +25,7 @@ limitations under the License.
 
 namespace
 {
-    using namespace Spectre::libClassifier;
+    using namespace spectre::supervised;
 
     class SvmTest : public ::testing::Test
     {

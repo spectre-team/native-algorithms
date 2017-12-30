@@ -29,8 +29,9 @@ limitations under the License.
 
 namespace
 {
-using namespace Spectre::libClassifier;
+using namespace spectre::supervised;
 using namespace spectre::core::exception;
+using namespace spectre::supervised::exception;
 
 class OpenCvDatasetInitializationTest : public ::testing::Test
 {
