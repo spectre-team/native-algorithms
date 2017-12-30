@@ -27,7 +27,7 @@ limitations under the License.
 
 typedef std::mt19937_64 RandomNumberGenerator;
 
-namespace Spectre::libGaussianMixtureModelling
+namespace spectre::unsupervised::gmm
 {
 /// <summary>
 /// Class serves as the container for all data required by

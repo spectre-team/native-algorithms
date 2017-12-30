@@ -34,7 +34,7 @@ limitations under the License.
 #include "GaussianDistribution.h"
 #include "DataType.h"
 
-namespace Spectre::libGaussianMixtureModelling
+namespace spectre::unsupervised::gmm
 {
 /// <summary>
 /// Class serves the purpose of calculation of log likelihood for the gaussian 

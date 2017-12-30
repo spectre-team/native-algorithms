@@ -24,7 +24,7 @@ limitations under the License.
 #include <stdlib.h>
 #include "GaussianMixtureModel.h"
 
-namespace Spectre::libGaussianMixtureModelling
+namespace spectre::unsupervised::gmm
 {
 class GaussianMixtureModelTest : public ::testing::Test
 {
