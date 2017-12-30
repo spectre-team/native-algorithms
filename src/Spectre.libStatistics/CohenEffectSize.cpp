@@ -23,7 +23,7 @@ limitations under the License.
 #include "CohenEffectSize.h"
 #include "Spectre.libException/EmptyArgumentException.h"
 
-namespace Spectre::libStatistics::statistical_testing
+namespace spectre::statistics::test
 {
 const std::array<std::string, 5> CohenEffectSize::interpretations = {
     std::string("None"),

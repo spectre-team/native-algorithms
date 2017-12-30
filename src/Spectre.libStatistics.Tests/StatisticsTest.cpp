@@ -24,7 +24,7 @@ limitations under the License.
 namespace
 {
 using namespace testing;
-using namespace Spectre::libStatistics::simple_statistics;
+using namespace spectre::statistics::simple_statistics;
 
 using Data = const std::vector<double>;
 

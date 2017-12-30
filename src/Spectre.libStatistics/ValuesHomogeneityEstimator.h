@@ -21,7 +21,7 @@ limitations under the License.
 #include <span.h>
 #include "Spectre.libStatistics/StatisticalIndex.h"
 
-namespace Spectre::libStatistics::statistical_testing
+namespace spectre::statistics::test
 {
 /// <summary>
 /// Compares level of values in two sets.

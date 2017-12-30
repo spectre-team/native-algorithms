@@ -32,11 +32,11 @@ namespace
 using namespace testing;
 using namespace spectre::core::dataset;
 using namespace spectre::core::exception;
-using namespace Spectre::libStatistics::Tests;
-using namespace Spectre::libStatistics;
-using namespace statistical_learning;
+using namespace spectre::statistics::Tests;
+using namespace spectre::statistics;
+using namespace learning;
 
-using Spectre::libStatistics::Values;
+using spectre::statistics::Values;
 using SimplestDataset = Dataset<Values, const Empty*, const Empty*>;
 
 const Empty *justNothing = &Empty::instance();
@@ -60,7 +60,7 @@ const SimplestDataset empty(emptyData, emptyMetadata, justNothing);
 const SimplestDataset narrowDataset(narrowData, firstMetadata, justNothing);
 
 const std::string interpretation = "BLAAAAH";
-const statistical_testing::StatisticalIndex index(1.0, 0, interpretation);
+const spectre::statistics::test::StatisticalIndex index(1.0, 0, interpretation);
 
 TEST(DifferentiatingFeaturesEstimator, initializes)
 {

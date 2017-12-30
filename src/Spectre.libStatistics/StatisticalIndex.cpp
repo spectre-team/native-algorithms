@@ -19,7 +19,7 @@ limitations under the License.
 
 #include "StatisticalIndex.h"
 
-namespace Spectre::libStatistics::statistical_testing
+namespace spectre::statistics::test
 {
 StatisticalIndex::StatisticalIndex(PrecisionType value, unsigned strength, const std::string &interpretation):
     value(value),

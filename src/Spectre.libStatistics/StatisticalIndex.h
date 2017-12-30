@@ -21,7 +21,7 @@ limitations under the License.
 #include <string>
 #include "Types.h"
 
-namespace Spectre::libStatistics::statistical_testing
+namespace spectre::statistics::test
 {
 /// <summary>
 /// Represents a statistical index that has information about its strength.

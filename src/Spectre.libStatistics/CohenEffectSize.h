@@ -21,7 +21,7 @@ limitations under the License.
 
 #include "ValuesHomogeneityEstimator.h"
 
-namespace Spectre::libStatistics::statistical_testing
+namespace spectre::statistics::test
 {
 /// <summary>
 /// Estimates effect size.

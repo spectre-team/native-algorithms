@@ -20,7 +20,7 @@ limitations under the License.
 #pragma once
 #include <span.h>
 
-namespace Spectre::libStatistics
+namespace spectre::statistics
 {
 using PrecisionType = float;
 using Values = gsl::span<const PrecisionType>;

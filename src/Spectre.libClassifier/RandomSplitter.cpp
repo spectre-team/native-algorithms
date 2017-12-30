@@ -26,7 +26,7 @@ limitations under the License.
 namespace Spectre::libClassifier {
 
 using namespace spectre::core::functional;
-using namespace libStatistics;
+using namespace spectre::statistics;
 
 RandomSplitter::RandomSplitter(double trainingRate, spectre::algorithm::genetic::Seed rngSeed)
     : m_trainingRate(trainingRate),
