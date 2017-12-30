@@ -63,8 +63,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libStatistics.Tests
 		{76542909-5FC8-405B-8E6D-D2E529162A7A} = {76542909-5FC8-405B-8E6D-D2E529162A7A}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spectre.Dependencies", "Spectre.Dependencies\Spectre.Dependencies.csproj", "{2B9F4DFD-C222-477A-9107-1A3C356002A4}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libFunctional", "Spectre.libFunctional\Spectre.libFunctional.vcxproj", "{7EB0161F-4E8A-4C72-BA18-31B554F411F2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libFunctional.Tests", "Spectre.libFunctional.Tests\Spectre.libFunctional.Tests.vcxproj", "{CF33269B-0876-4651-A8B9-2E32740C05C7}"
@@ -134,10 +132,6 @@ Global
 		{81F10DE8-B9EF-400F-B3A7-57F2AFF35A14}.Debug|x64.Build.0 = Debug|x64
 		{81F10DE8-B9EF-400F-B3A7-57F2AFF35A14}.Release|x64.ActiveCfg = Release|x64
 		{81F10DE8-B9EF-400F-B3A7-57F2AFF35A14}.Release|x64.Build.0 = Release|x64
-		{2B9F4DFD-C222-477A-9107-1A3C356002A4}.Debug|x64.ActiveCfg = Debug|x64
-		{2B9F4DFD-C222-477A-9107-1A3C356002A4}.Debug|x64.Build.0 = Debug|x64
-		{2B9F4DFD-C222-477A-9107-1A3C356002A4}.Release|x64.ActiveCfg = Debug|x64
-		{2B9F4DFD-C222-477A-9107-1A3C356002A4}.Release|x64.Build.0 = Debug|x64
 		{7EB0161F-4E8A-4C72-BA18-31B554F411F2}.Debug|x64.ActiveCfg = Debug|x64
 		{7EB0161F-4E8A-4C72-BA18-31B554F411F2}.Debug|x64.Build.0 = Debug|x64
 		{7EB0161F-4E8A-4C72-BA18-31B554F411F2}.Release|x64.ActiveCfg = Release|x64
