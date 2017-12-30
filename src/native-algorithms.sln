@@ -6,17 +6,10 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spectre.Algorithms", "Spectre.Algorithms\Spectre.Algorithms.csproj", "{9A886AEC-58DB-410D-91B9-C62E157501FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spectre.Algorithms.Tests", "Spectre.Algorithms.Tests\Spectre.Algorithms.Tests.csproj", "{BBF6329D-7BEC-494E-9FC9-B24B12D94EA0}"
-	ProjectSection(ProjectDependencies) = postProject
-		{287A1A8D-C029-4D47-96BC-755C91B7985D} = {287A1A8D-C029-4D47-96BC-755C91B7985D}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spectre.Data", "Spectre.Data\Spectre.Data.csproj", "{70C87AF7-3189-4F6C-AC85-93309CF7CFDC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spectre.Data.Tests", "Spectre.Data.Tests\Spectre.Data.Tests.csproj", "{01391E76-3D20-4B4B-B727-2A133B35A144}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spectre.Service", "Spectre.Service\Spectre.Service.csproj", "{287A1A8D-C029-4D47-96BC-755C91B7985D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spectre.Service.Tests", "Spectre.Service.Tests\Spectre.Service.Tests.csproj", "{1D79FD14-1DF4-4AED-94DF-62E595206DEF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Native Libraries", "Native Libraries", "{7C77A75B-F387-4E4E-9C34-FA904927C7BF}"
 EndProject
@@ -113,14 +106,6 @@ Global
 		{01391E76-3D20-4B4B-B727-2A133B35A144}.Debug|x64.Build.0 = Debug|x64
 		{01391E76-3D20-4B4B-B727-2A133B35A144}.Release|x64.ActiveCfg = Release|x64
 		{01391E76-3D20-4B4B-B727-2A133B35A144}.Release|x64.Build.0 = Release|x64
-		{287A1A8D-C029-4D47-96BC-755C91B7985D}.Debug|x64.ActiveCfg = Debug|x64
-		{287A1A8D-C029-4D47-96BC-755C91B7985D}.Debug|x64.Build.0 = Debug|x64
-		{287A1A8D-C029-4D47-96BC-755C91B7985D}.Release|x64.ActiveCfg = Release|x64
-		{287A1A8D-C029-4D47-96BC-755C91B7985D}.Release|x64.Build.0 = Release|x64
-		{1D79FD14-1DF4-4AED-94DF-62E595206DEF}.Debug|x64.ActiveCfg = Debug|x64
-		{1D79FD14-1DF4-4AED-94DF-62E595206DEF}.Debug|x64.Build.0 = Debug|x64
-		{1D79FD14-1DF4-4AED-94DF-62E595206DEF}.Release|x64.ActiveCfg = Release|x64
-		{1D79FD14-1DF4-4AED-94DF-62E595206DEF}.Release|x64.Build.0 = Release|x64
 		{450F225C-4610-4B20-84AE-2ED5B4C8D7C4}.Debug|x64.ActiveCfg = Debug|x64
 		{450F225C-4610-4B20-84AE-2ED5B4C8D7C4}.Debug|x64.Build.0 = Debug|x64
 		{450F225C-4610-4B20-84AE-2ED5B4C8D7C4}.Release|x64.ActiveCfg = Release|x64
