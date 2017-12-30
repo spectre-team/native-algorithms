@@ -40,7 +40,7 @@ build:
   project: .\src\native-algorithms.sln
   publish_nuget: true
   publish_nuget_symbols: false
-  verbosity: quiet
+  verbosity: minimal
 
 after_build:
   - cmd: rmdir /s /q C:\projects\native-algorithms\src\packages
