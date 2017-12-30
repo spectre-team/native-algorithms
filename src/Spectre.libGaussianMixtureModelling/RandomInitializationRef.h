@@ -33,8 +33,8 @@ limitations under the License.
 #pragma once
 #include <vector>
 #include <random>
-#include "GaussianMixtureModel.h"
-#include "DataType.h"
+#include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
+#include "Spectre.libGaussianMixtureModelling/DataType.h"
 
 typedef std::mt19937_64 RandomNumberGenerator;
 

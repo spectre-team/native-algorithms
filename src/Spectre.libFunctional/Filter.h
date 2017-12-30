@@ -22,8 +22,8 @@ limitations under the License.
 #include <span.h>
 #include "Spectre.libException/InconsistentArgumentSizesException.h"
 #include "Spectre.libException/OutOfRangeException.h"
-#include "Find.h"
-#include "Transform.h"
+#include "Spectre.libFunctional/Find.h"
+#include "Spectre.libFunctional/Transform.h"
 
 namespace spectre::core::functional
 {

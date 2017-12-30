@@ -19,7 +19,7 @@ limitations under the License.
 
 #pragma once
 #include <vector>
-#include "Individual.h"
+#include "Spectre.libGenetic/Individual.h"
 
 namespace spectre::algorithm::genetic
 {

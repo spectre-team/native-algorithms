@@ -20,7 +20,7 @@ limitations under the License.
 #pragma once
 #include <vector>
 #include "Spectre.libDataset/IReadOnlyDataset.h"
-#include "Types.h"
+#include "Spectre.libClassifier/Types.h"
 
 namespace spectre::supervised
 {

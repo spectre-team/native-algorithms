@@ -29,10 +29,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 #pragma once
-#include "ArgumentNullException.h"
-#include "GaussianMixtureModel.h"
-#include "GaussianDistribution.h"
-#include "DataType.h"
+#include "Spectre.libGaussianMixtureModelling/ArgumentNullException.h"
+#include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
+#include "Spectre.libGaussianMixtureModelling/GaussianDistribution.h"
+#include "Spectre.libGaussianMixtureModelling/DataType.h"
 
 namespace spectre::unsupervised::gmm
 {

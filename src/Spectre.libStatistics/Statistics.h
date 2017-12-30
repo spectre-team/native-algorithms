@@ -20,7 +20,7 @@ limitations under the License.
 #pragma once
 #include <numeric>
 #include <span.h>
-#include "Math.h"
+#include "Spectre.libStatistics/Math.h"
 
 namespace spectre::statistics::simple_statistics
 {

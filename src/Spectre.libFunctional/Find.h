@@ -22,7 +22,7 @@ limitations under the License.
 #include <iterator>
 #include <vector>
 #include <span.h>
-#include "Range.h"
+#include "Spectre.libFunctional/Range.h"
 
 namespace spectre::core::functional
 {
