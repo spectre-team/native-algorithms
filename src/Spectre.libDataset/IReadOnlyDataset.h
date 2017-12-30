@@ -21,7 +21,7 @@ limitations under the License.
 
 #include <span.h>
 
-namespace Spectre::libDataset
+namespace spectre::core::dataset
 {
 /// <summary>
 /// Read-only dataset interface.

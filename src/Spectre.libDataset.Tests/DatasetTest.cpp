@@ -23,7 +23,7 @@ limitations under the License.
 #include "Spectre.libDataset/Dataset.h"
 #include "Spectre.libException/OutOfRangeException.h"
 
-using namespace Spectre::libDataset;
+using namespace spectre::core::dataset;
 using namespace Spectre::libException;
 using samples = std::vector<int>;
 using samples_metadata = std::vector<int>;

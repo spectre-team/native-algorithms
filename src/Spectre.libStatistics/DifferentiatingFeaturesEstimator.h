@@ -44,8 +44,8 @@ public:
     /// <param name="second">The second dataset.</param>
     /// <returns>Statistical indexes expressing feature differentiation potential.</returns>
     template <class SampleMetadata1, class Metadata1, class SampleMetadata2, class Metadata2>
-    std::vector<statistical_testing::StatisticalIndex> Estimate(const libDataset::IDataset<Values, SampleMetadata1, Metadata1> &first,
-                                                                const libDataset::IDataset<Values, SampleMetadata2, Metadata2> &second) const
+    std::vector<statistical_testing::StatisticalIndex> Estimate(const spectre::core::dataset::IDataset<Values, SampleMetadata1, Metadata1> &first,
+                                                                const spectre::core::dataset::IDataset<Values, SampleMetadata2, Metadata2> &second) const
     {
         return Estimate(first.GetData(), second.GetData());
     }

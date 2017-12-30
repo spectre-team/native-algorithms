@@ -19,7 +19,7 @@ limitations under the License.
 
 #include "Empty.h"
 
-namespace Spectre::libDataset
+namespace spectre::core::dataset
 {
 Empty Empty::m_instance;
 

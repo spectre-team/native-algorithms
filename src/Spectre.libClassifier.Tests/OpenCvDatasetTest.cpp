@@ -174,7 +174,7 @@ TEST_F(OpenCvDatasetTest, check_getting_in_range_label)
 
 TEST_F(OpenCvDatasetTest, get_dataset_metadata)
 {
-    const auto &check = Spectre::libDataset::Empty::instance();
+    const auto &check = spectre::core::dataset::Empty::instance();
     EXPECT_EQ(&dataset->GetDatasetMetadata(), &check);
 }
 

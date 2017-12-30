@@ -30,7 +30,7 @@ limitations under the License.
 namespace
 {
 using namespace testing;
-using namespace Spectre::libDataset;
+using namespace spectre::core::dataset;
 using namespace Spectre::libException;
 using namespace Spectre::libStatistics::Tests;
 using namespace Spectre::libStatistics;

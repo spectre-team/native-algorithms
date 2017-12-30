@@ -106,9 +106,9 @@ const Label& OpenCvDataset::GetSampleMetadata(size_t idx) const
     return m_labels[idx];
 }
 
-const libDataset::Empty& OpenCvDataset::GetDatasetMetadata() const
+const spectre::core::dataset::Empty& OpenCvDataset::GetDatasetMetadata() const
 {
-    return libDataset::Empty::instance();
+    return spectre::core::dataset::Empty::instance();
 }
 
 gsl::span<const Observation> OpenCvDataset::GetData() const

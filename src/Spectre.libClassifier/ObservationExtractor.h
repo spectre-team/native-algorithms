@@ -25,7 +25,7 @@ limitations under the License.
 
 namespace Spectre::libClassifier {
 
-using DataPointer = const libDataset::IReadOnlyDataset<Observation, Label, libDataset::Empty>*;
+using DataPointer = const spectre::core::dataset::IReadOnlyDataset<Observation, Label, spectre::core::dataset::Empty>*;
 
 class ObservationExtractor
 {
