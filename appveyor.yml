@@ -49,6 +49,7 @@ build:
 after_build:
   - cmd: rmdir /s /q C:\projects\native-algorithms\src\packages
   - cmd: 7z a cached_artifacts.zip src\%PLATFORM%
+  - cmd: C:\projects\native-algorithms\scripts\pack_nuget.bat
 
 test_script:
 - cmd: C:\projects\native-algorithms\scripts\test_native_code.bat
@@ -84,6 +85,7 @@ deploy:
     symbol_server: https://ci.appveyor.com/nuget/gmrukwa-xfn7vhwq20u6
     artifact: /.*\.nupkg/
     on:
+      platform: x64
       configuration: Release
 
 on_finish:
