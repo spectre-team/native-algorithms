@@ -20,12 +20,12 @@ limitations under the License.
 #pragma once
 #include "Spectre.libException/ExceptionBase.h"
 
-namespace Spectre::libDataset
+namespace spectre::core::dataset
 {
 /// <summary>
 /// Thrown when two samples and metadata amounts are not equal.
 /// </summary>
-class InconsistentInputSizeException final : public libException::ExceptionBase
+class InconsistentInputSizeException final : public spectre::core::exception::ExceptionBase
 {
 public:
     /// <summary>

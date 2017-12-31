@@ -24,7 +24,7 @@ limitations under the License.
 #include "MockIndividualsBuilderStrategy.h"
 #include "MockPreservationStrategy.h"
 
-namespace Spectre::libGenetic::Tests
+namespace spectre::algorithm::genetic::Tests
 {
 class MockOffspringGenerator: public OffspringGenerator
 {

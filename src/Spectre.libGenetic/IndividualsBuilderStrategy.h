@@ -25,7 +25,7 @@ limitations under the License.
 #include "MutationOperator.h"
 #include "ParentSelectionStrategy.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 /// <summary>
 /// Builds new individuals from old population, basing on specific

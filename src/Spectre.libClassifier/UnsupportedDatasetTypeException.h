@@ -20,12 +20,12 @@ limitations under the License.
 #pragma once
 #include "Spectre.libException/ExceptionBase.h"
 
-namespace Spectre::libClassifier
+namespace spectre::supervised
 {
     /// <summary>
     /// Thrown, when dataset type is unsupported.
     /// </summary>
-    class UnsupportedDatasetTypeException final : public libException::ExceptionBase
+    class UnsupportedDatasetTypeException final : public spectre::core::exception::ExceptionBase
     {
     public:
         template <class TDatasetType>

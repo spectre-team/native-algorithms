@@ -19,7 +19,7 @@ limitations under the License.
 
 #pragma once
 
-namespace Spectre::libDataset
+namespace spectre::core::dataset
 {
 /// <summary>
 /// Empty class for temporary substitute of empty metadata.

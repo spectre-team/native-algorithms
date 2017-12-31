@@ -28,7 +28,7 @@ limitations under the License.
 
 typedef std::mt19937_64 RandomNumberGenerator;
 
-namespace Spectre::libGaussianMixtureModelling
+namespace spectre::unsupervised::gmm
 {
 class ExpectationMaximizationTest : public ::testing::Test
 {

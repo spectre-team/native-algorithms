@@ -22,7 +22,7 @@ limitations under the License.
 #include <span.h>
 #include "Spectre.libGenetic/PreservationStrategy.h"
 
-namespace Spectre::libGenetic::Tests
+namespace spectre::algorithm::genetic::Tests
 {
 class MockPreservationStrategy: public PreservationStrategy
 {

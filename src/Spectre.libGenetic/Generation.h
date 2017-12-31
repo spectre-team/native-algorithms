@@ -21,7 +21,7 @@ limitations under the License.
 #include <vector>
 #include "Individual.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 /// <summary>
 /// Container enclosing population of individuals at time instance of single generation.

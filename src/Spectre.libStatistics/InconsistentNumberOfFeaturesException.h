@@ -20,12 +20,12 @@ limitations under the License.
 #pragma once
 #include "Spectre.libException/InconsistentArgumentSizesException.h"
 
-namespace Spectre::libStatistics
+namespace spectre::statistics
 {
 /// <summary>
 /// Thrown when number of features in compared datasets differ.
 /// </summary>
-class InconsistentNumberOfFeaturesException final : public libException::InconsistentArgumentSizesException
+class InconsistentNumberOfFeaturesException final : public spectre::core::exception::InconsistentArgumentSizesException
 {
 public:
     /// <summary>

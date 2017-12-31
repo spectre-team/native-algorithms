@@ -20,12 +20,12 @@ limitations under the License.
 #pragma once
 #include "Spectre.libException/ExceptionBase.h"
 
-namespace Spectre::libClassifier
+namespace spectre::supervised
 {
     /// <summary>
     /// Thrown when a executing predict function on untrained classifier.
     /// </summary>
-    class UntrainedClassifierException final : public libException::ExceptionBase
+    class UntrainedClassifierException final : public spectre::core::exception::ExceptionBase
     {
     public:
         /// <summary>

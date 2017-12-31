@@ -25,8 +25,8 @@ limitations under the License.
 namespace
 {
 using namespace testing;
-using namespace Spectre::libException;
-using namespace Spectre::libFunctional;
+using namespace spectre::core::exception;
+using namespace spectre::core::functional;
 
 const std::vector<int> empty{};
 const std::vector<int> ints{ 1,2,3 };

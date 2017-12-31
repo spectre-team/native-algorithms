@@ -23,28 +23,28 @@ limitations under the License.
 #include "Spectre.libStatistics/InconsistentNumberOfFeaturesException.h"
 #include "Spectre.libStatistics/DifferentiatingFeaturesEstimator.h"
 
-namespace Spectre::libStatistics::statistical_learning
+namespace spectre::statistics::learning
 {
-DifferentiatingFeaturesEstimator::DifferentiatingFeaturesEstimator(const statistical_testing::ValuesHomogeneityEstimator &homogeneityEstimator) :
+DifferentiatingFeaturesEstimator::DifferentiatingFeaturesEstimator(const spectre::statistics::test::ValuesHomogeneityEstimator &homogeneityEstimator) :
     m_homogeneityEstimator(homogeneityEstimator) { }
 
-std::vector<statistical_testing::StatisticalIndex> DifferentiatingFeaturesEstimator::Estimate(ReadonlyMatrix first,
+std::vector<spectre::statistics::test::StatisticalIndex> DifferentiatingFeaturesEstimator::Estimate(ReadonlyMatrix first,
                                                                                               ReadonlyMatrix second) const
 {
     if (first.empty())
     {
-        throw libException::EmptyDatasetException("first");
+        throw spectre::core::exception::EmptyDatasetException("first");
     }
     if (second.empty())
     {
-        throw libException::EmptyDatasetException("second");
+        throw spectre::core::exception::EmptyDatasetException("second");
     }
     if (first[0].size() != second[0].size())
     {
         throw InconsistentNumberOfFeaturesException(first[0].size(), second[0].size());
     }
-    using namespace libFunctional;
-    std::vector<statistical_testing::StatisticalIndex> indexes;
+    using namespace spectre::core::functional;
+    std::vector<spectre::statistics::test::StatisticalIndex> indexes;
     indexes.reserve(first[0].size());
     const auto numberOfThreads = omp_get_num_procs() > 1 ? omp_get_num_procs() : 1;
     #pragma omp parallel for schedule(static, 1) num_threads(numberOfThreads)

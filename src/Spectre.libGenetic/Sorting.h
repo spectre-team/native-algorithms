@@ -21,7 +21,7 @@ limitations under the License.
 #include <span.h>
 #include <vector>
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 /// <summary>
 /// Utilities for sorting.

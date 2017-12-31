@@ -22,7 +22,7 @@ limitations under the License.
 #include "Spectre.libClassifier/UnsupportedDatasetTypeException.h"
 #include "Spectre.libClassifier/UntrainedClassifierException.h"
 
-namespace Spectre::libClassifier
+namespace spectre::supervised
 {
     Svm::Svm(unsigned int iterationsLimit, double tolerance)
     {

@@ -24,7 +24,7 @@ limitations under the License.
 #include "IDataset.h"
 #include "InconsistentInputSizeException.h"
 
-namespace Spectre::libDataset
+namespace spectre::core::dataset
 {
 /// <summary>
 /// Data-owning implementation of dataset interfaces.
@@ -68,7 +68,7 @@ public:
         }
         else
         {
-            throw libException::OutOfRangeException(idx, m_Data.size());
+            throw spectre::core::exception::OutOfRangeException(idx, m_Data.size());
         }
     }
 
@@ -85,7 +85,7 @@ public:
         }
         else
         {
-            throw libException::OutOfRangeException(idx, m_SampleMetadata.size());
+            throw spectre::core::exception::OutOfRangeException(idx, m_SampleMetadata.size());
         }
     }
 
@@ -111,7 +111,7 @@ public:
         }
         else
         {
-            throw libException::OutOfRangeException(idx, m_Data.size());
+            throw spectre::core::exception::OutOfRangeException(idx, m_Data.size());
         }
     }
 
@@ -128,7 +128,7 @@ public:
         }
         else
         {
-            throw libException::OutOfRangeException(idx, m_SampleMetadata.size());
+            throw spectre::core::exception::OutOfRangeException(idx, m_SampleMetadata.size());
         }
     }
 

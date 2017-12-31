@@ -23,19 +23,19 @@ limitations under the License.
 #include "Spectre.libStatistics/Math.h"
 #include "Spectre.libGenetic/DataTypes.h"
 
-namespace Spectre::libClassifier {
+namespace spectre::supervised {
 
-using namespace libFunctional;
-using namespace libStatistics;
+using namespace spectre::core::functional;
+using namespace spectre::statistics;
 
-RandomSplitter::RandomSplitter(double trainingRate, libGenetic::Seed rngSeed)
+RandomSplitter::RandomSplitter(double trainingRate, spectre::algorithm::genetic::Seed rngSeed)
     : m_trainingRate(trainingRate),
       m_Seed(rngSeed) { }
 
 SplittedOpenCvDataset RandomSplitter::split(const OpenCvDataset& data) const
 {
     auto indexes = range(0, int(data.size()));
-    libGenetic::RandomNumberGenerator rng(m_Seed);
+    spectre::algorithm::genetic::RandomNumberGenerator rng(m_Seed);
     std::shuffle(indexes.begin(), indexes.end(), rng);
 
     std::vector<DataType> trainingData{};

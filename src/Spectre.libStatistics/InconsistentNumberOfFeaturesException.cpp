@@ -19,7 +19,7 @@ limitations under the License.
 
 #include "InconsistentNumberOfFeaturesException.h"
 
-namespace Spectre::libStatistics
+namespace spectre::statistics
 {
 InconsistentNumberOfFeaturesException::InconsistentNumberOfFeaturesException(size_t first, size_t second):
     InconsistentArgumentSizesException("first", first, "second", second) { }

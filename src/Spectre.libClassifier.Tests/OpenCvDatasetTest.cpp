@@ -29,8 +29,9 @@ limitations under the License.
 
 namespace
 {
-using namespace Spectre::libClassifier;
-using namespace Spectre::libException;
+using namespace spectre::supervised;
+using namespace spectre::core::exception;
+using namespace spectre::supervised::exception;
 
 class OpenCvDatasetInitializationTest : public ::testing::Test
 {
@@ -174,7 +175,7 @@ TEST_F(OpenCvDatasetTest, check_getting_in_range_label)
 
 TEST_F(OpenCvDatasetTest, get_dataset_metadata)
 {
-    const auto &check = Spectre::libDataset::Empty::instance();
+    const auto &check = spectre::core::dataset::Empty::instance();
     EXPECT_EQ(&dataset->GetDatasetMetadata(), &check);
 }
 

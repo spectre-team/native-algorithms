@@ -19,7 +19,7 @@ limitations under the License.
 
 #include "InconsistentArgumentSizesException.h"
 
-namespace Spectre::libException
+namespace spectre::core::exception
 {
 InconsistentArgumentSizesException::InconsistentArgumentSizesException(
     const std::string &nameOfFirst,

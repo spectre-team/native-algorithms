@@ -21,14 +21,14 @@ limitations under the License.
 #include <gmock/gmock.h>
 #include "Spectre.libStatistics/ValuesHomogeneityEstimator.h"
 
-namespace Spectre::libStatistics::Tests
+namespace spectre::statistics::Tests
 {
 /// <summary>
 /// Mocks ValuesHomogeneityEstimator.
 /// </summary>
-class ValuesHomogeneityEstimatorMock final : public statistical_testing::ValuesHomogeneityEstimator
+class ValuesHomogeneityEstimatorMock final : public spectre::statistics::test::ValuesHomogeneityEstimator
 {
 public:
-    MOCK_CONST_METHOD2(Compare, statistical_testing::StatisticalIndex(Values first, Values second));
+    MOCK_CONST_METHOD2(Compare, spectre::statistics::test::StatisticalIndex(Values first, Values second));
 };
 }

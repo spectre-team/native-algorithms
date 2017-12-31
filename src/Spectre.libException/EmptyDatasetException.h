@@ -20,7 +20,7 @@ limitations under the License.
 #pragma once
 #include "Spectre.libException/EmptyArgumentException.h"
 
-namespace Spectre::libException
+namespace spectre::core::exception
 {
 /// <summary>
 /// Thrown when input dataset was empty.

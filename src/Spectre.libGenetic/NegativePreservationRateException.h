@@ -20,9 +20,9 @@ limitations under the License.
 #pragma once
 #include "Spectre.libException/ArgumentOutOfRangeException.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
-class NegativePreservationRateException: public libException::ArgumentOutOfRangeException<double>
+class NegativePreservationRateException: public spectre::core::exception::ArgumentOutOfRangeException<double>
 {
 public:
     explicit NegativePreservationRateException(double actual);

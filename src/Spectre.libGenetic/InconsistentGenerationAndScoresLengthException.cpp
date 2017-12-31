@@ -19,7 +19,7 @@ limitations under the License.
 
 #include "InconsistentGenerationAndScoresLengthException.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 InconsistentGenerationAndScoresLengthException::InconsistentGenerationAndScoresLengthException(size_t first, size_t second):
     InconsistentArgumentSizesException("generation", first, "scores", second) { }

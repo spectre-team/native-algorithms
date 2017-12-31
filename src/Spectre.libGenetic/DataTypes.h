@@ -21,7 +21,7 @@ limitations under the License.
 #include <random>
 #include "Generation.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 using ScoreType = double;
 using RandomDevice = std::random_device;

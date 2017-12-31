@@ -23,8 +23,8 @@ limitations under the License.
 
 namespace
 {
-using namespace Spectre::libStatistics;
-using namespace statistical_testing;
+using namespace spectre::statistics;
+using namespace spectre::statistics::test;
 using namespace ::testing;
 
 const std::string INTERPRETATION = "BLAH";

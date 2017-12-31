@@ -19,7 +19,7 @@ limitations under the License.
 
 #include "Find.h"
 
-namespace Spectre::libFunctional
+namespace spectre::core::functional
 {
 std::vector<size_t> find(std::vector<bool> collection)
 {

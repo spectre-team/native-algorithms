@@ -21,7 +21,7 @@
 #include <vector>
 #include <gsl.h>
 
-namespace Spectre::libGaussianMixtureModelling
+namespace spectre::unsupervised::gmm
 {
 /// <summary>
 /// Represents a single component of a Gaussian Mixture.

@@ -20,7 +20,7 @@ limitations under the License.
 #pragma once
 #include "DataTypes.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 /// <summary>
 /// Performs crossover between parent chromosomes and produces a child one.

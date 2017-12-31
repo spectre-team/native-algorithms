@@ -22,7 +22,7 @@ limitations under the License.
 #include <span.h>
 #include "Spectre.libGenetic/IndividualsBuilderStrategy.h"
 
-namespace Spectre::libGenetic::Tests
+namespace spectre::algorithm::genetic::Tests
 {
 class MockIndividualsBuilderStrategy: public IndividualsBuilderStrategy
 {

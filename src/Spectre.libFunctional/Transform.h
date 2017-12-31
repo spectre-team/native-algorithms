@@ -22,7 +22,7 @@ limitations under the License.
 #include <span.h>
 #include "Spectre.libException/InconsistentArgumentSizesException.h"
 
-namespace Spectre::libFunctional
+namespace spectre::core::functional
 {
 /// <summary>
 /// Transform a vector.
@@ -79,7 +79,7 @@ std::vector<OutputType> transform(gsl::span<const InputType1> first, gsl::span<c
     }
     else
     {
-        throw libException::InconsistentArgumentSizesException("first", first.size(), "second", second.size());
+        throw spectre::core::exception::InconsistentArgumentSizesException("first", first.size(), "second", second.size());
     }
 }
 

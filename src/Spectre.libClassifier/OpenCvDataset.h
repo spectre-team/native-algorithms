@@ -24,11 +24,11 @@ limitations under the License.
 #include "Spectre.libDataset/Empty.h"
 #include "Spectre.libClassifier/Types.h"
 
-namespace Spectre::libClassifier {
+namespace spectre::supervised {
 /// <summary>
 /// Data-owning structure which couples our typed with OpenCV cv::Mat
 /// </summary>
-class OpenCvDataset final : public libDataset::IReadOnlyDataset<Observation, Label, libDataset::Empty>
+class OpenCvDataset final : public spectre::core::dataset::IReadOnlyDataset<Observation, Label, spectre::core::dataset::Empty>
 {
 public:
     /// <summary>
@@ -70,7 +70,7 @@ public:
     /// Gets the dataset metadata in read-only fashion.
     /// </summary>
     /// <returns>Dataset metadata</returns>
-    const libDataset::Empty& GetDatasetMetadata() const override;
+    const spectre::core::dataset::Empty& GetDatasetMetadata() const override;
 
     /// <summary>
     /// Gets the data in read-only fashion.

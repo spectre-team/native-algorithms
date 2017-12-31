@@ -19,7 +19,7 @@ limitations under the License.
 
 #include "InconsistentChromosomeLengthException.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 InconsistentChromosomeLengthException::InconsistentChromosomeLengthException(size_t first, size_t second) :
     InconsistentArgumentSizesException("first", first, "second", second) { }

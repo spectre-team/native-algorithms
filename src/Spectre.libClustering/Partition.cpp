@@ -22,7 +22,7 @@ limitations under the License.
 
 #include <map>
 
-namespace Spectre::libClustering
+namespace spectre::unsupervised
 {
 Partition::Partition(gsl::span<unsigned int> partition) : m_Partition(partition.size())
 {

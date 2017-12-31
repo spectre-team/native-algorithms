@@ -25,9 +25,9 @@ limitations under the License.
 namespace
 {
 using namespace ::testing;
-using namespace Spectre::libStatistics;
-using namespace statistical_testing;
-using namespace Spectre::libException;
+using namespace spectre::statistics;
+using namespace spectre::statistics::test;
+using namespace spectre::core::exception;
 
 const std::vector<PrecisionType> first { 1.,2.,3. };
 const std::vector<PrecisionType> second { 10., 20., 30. };

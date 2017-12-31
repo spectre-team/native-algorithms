@@ -45,7 +45,7 @@ limitations under the License.
 #include "GaussianMixtureModel.h"
 #include "Matrix.h"
 
-namespace Spectre::libGaussianMixtureModelling
+namespace spectre::unsupervised::gmm
 {
 /// <summary>
 /// Class serves the purpose of maximization step of Expectation Maximization algorithm. 

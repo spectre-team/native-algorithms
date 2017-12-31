@@ -27,7 +27,7 @@ limitations under the License.
 #include "ArgumentNullException.h"
 
 
-namespace Spectre::libClustering::Tests
+namespace spectre::unsupervised::Tests
 {
 class PartitionTest : public ::testing::Test
 {

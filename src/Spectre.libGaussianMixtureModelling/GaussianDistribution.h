@@ -21,7 +21,7 @@ limitations under the License.
 #define _USE_MATH_DEFINES // used for M_PI
 #include <math.h>
 
-namespace Spectre::libGaussianMixtureModelling
+namespace spectre::unsupervised::gmm
 {
 /// <summary>
 /// Computes value of Guassian Function, also known as Normal distribution

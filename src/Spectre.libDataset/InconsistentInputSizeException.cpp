@@ -20,9 +20,9 @@ limitations under the License.
 #include <string>
 #include "InconsistentInputSizeException.h"
 
-namespace Spectre::libDataset
+namespace spectre::core::dataset
 {
 InconsistentInputSizeException::InconsistentInputSizeException(size_t samplesNumber, size_t metadataNumber)
-    : Spectre::libException::ExceptionBase(std::string("number of samples: ") + std::to_string(samplesNumber)
+    : spectre::core::exception::ExceptionBase(std::string("number of samples: ") + std::to_string(samplesNumber)
         + std::string("; amount of metadata: ") + std::to_string(metadataNumber)) { }
 }

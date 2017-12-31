@@ -21,7 +21,7 @@ limitations under the License.
 
 #include "ExceptionBase.h"
 
-namespace Spectre::libException
+namespace spectre::core::exception
 {
 /// <summary>
 /// Thrown, when function input is nullptr.

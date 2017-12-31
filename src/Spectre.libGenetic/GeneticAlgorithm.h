@@ -24,7 +24,7 @@ limitations under the License.
 #include "Scorer.h"
 #include "StopCondition.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 /// <summary>
 /// General-purpose genetic algorithm.
