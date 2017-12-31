@@ -59,7 +59,7 @@ deploy:
   # push all NuGet-s to GitHub releases
   # overwrites Debug NuGets with Release ones
   - provider: GitHub
-    release: platform-components-v$(appveyor_build_version)
+    release: native-algorithms-v$(appveyor_build_version)
     auth_token:
       secure: dQadz+smqtuxpigZ/LmrUKyA0uVZ5kgljKntyoHEdobTycbeMywbfmiJtZPNcOQ2
     artifact: /.*\.nupkg/
