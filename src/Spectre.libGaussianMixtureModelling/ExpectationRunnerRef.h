@@ -31,11 +31,11 @@ limitations under the License.
 */
 #pragma once
 #include <vector>
-#include "ArgumentNullException.h"
-#include "DataType.h"
-#include "GaussianDistribution.h"
-#include "GaussianMixtureModel.h"
-#include "Matrix.h"
+#include "Spectre.libException/NullPointerException.h"
+#include "Spectre.libGaussianMixtureModelling/DataType.h"
+#include "Spectre.libGaussianMixtureModelling/GaussianDistribution.h"
+#include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
+#include "Spectre.libGaussianMixtureModelling/Matrix.h"
 
 namespace spectre::unsupervised::gmm
 {
@@ -63,7 +63,7 @@ public:
     {
         if (mzArray == nullptr)
         {
-            throw ArgumentNullException("mzArray");
+            throw spectre::core::exception::NullPointerException("mzArray");
         }
     }
 

@@ -19,7 +19,7 @@ limitations under the License.
 
 #pragma once
 #include <string>
-#include "Types.h"
+#include "Spectre.libStatistics/Types.h"
 
 namespace spectre::statistics::test
 {

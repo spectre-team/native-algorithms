@@ -19,7 +19,7 @@ limitations under the License.
 
 #pragma once
 
-#include "ArgumentOutOfRangeException.h"
+#include "Spectre.libException/ArgumentOutOfRangeException.h"
 
 namespace spectre::core::exception
 {

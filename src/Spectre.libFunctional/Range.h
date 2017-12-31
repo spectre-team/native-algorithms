@@ -19,7 +19,7 @@ limitations under the License.
 
 #pragma once
 #include <vector>
-#include "ZeroStepException.h"
+#include "Spectre.libFunctional/ZeroStepException.h"
 
 namespace spectre::core::functional
 {

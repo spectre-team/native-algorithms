@@ -19,7 +19,7 @@ limitations under the License.
 
 #pragma once
 #include <span.h>
-#include "DataTypes.h"
+#include "Spectre.libGenetic/DataTypes.h"
 
 namespace spectre::algorithm::genetic
 {

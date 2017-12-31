@@ -17,8 +17,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+#include "Spectre.libException/NullPointerException.h"
 #include "Partition.h"
-#include "ArgumentNullException.h"
 
 #include <map>
 
@@ -27,7 +27,7 @@ namespace spectre::unsupervised
 Partition::Partition(gsl::span<unsigned int> partition) : m_Partition(partition.size())
 {
     if (partition.data() == nullptr)
-        throw ArgumentNullException("partition");
+        throw spectre::core::exception::NullPointerException("partition");
 
     std::map<unsigned int, int> labelsDictionary;
 

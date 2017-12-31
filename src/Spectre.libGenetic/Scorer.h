@@ -19,8 +19,8 @@ limitations under the License.
 
 #pragma once
 #include <memory>
-#include "DataTypes.h"
-#include "FitnessFunction.h"
+#include "Spectre.libGenetic/DataTypes.h"
+#include "Spectre.libGenetic/FitnessFunction.h"
 
 namespace spectre::algorithm::genetic
 {

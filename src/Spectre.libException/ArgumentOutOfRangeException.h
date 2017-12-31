@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 #pragma once
-#include "ExceptionBase.h"
+#include "Spectre.libException/ExceptionBase.h"
 
 namespace spectre::core::exception
 {

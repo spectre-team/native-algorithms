@@ -19,7 +19,7 @@ limitations under the License.
 
 #pragma once
 
-#include "IReadOnlyDataset.h"
+#include "Spectre.libDataset/IReadOnlyDataset.h"
 
 namespace spectre::core::dataset
 {

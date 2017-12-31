@@ -23,7 +23,7 @@ limitations under the License.
 #include "Spectre.libDataset/IReadOnlyDataset.h"
 #include "Spectre.libClassifier/IClassifier.h"
 #include "Spectre.libClassifier/OpenCvDataset.h"
-#include "Types.h"
+#include "Spectre.libClassifier/Types.h"
 
 namespace spectre::supervised
 {

@@ -19,10 +19,10 @@ limitations under the License.
 
 #pragma once
 #include <memory>
-#include "Generation.h"
-#include "OffspringGenerator.h"
-#include "Scorer.h"
-#include "StopCondition.h"
+#include "Spectre.libGenetic/Generation.h"
+#include "Spectre.libGenetic/OffspringGenerator.h"
+#include "Spectre.libGenetic/Scorer.h"
+#include "Spectre.libGenetic/StopCondition.h"
 
 namespace spectre::algorithm::genetic
 {

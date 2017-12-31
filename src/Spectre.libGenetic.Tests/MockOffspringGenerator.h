@@ -21,8 +21,8 @@ limitations under the License.
 #include <gmock/gmock.h>
 #include <span.h>
 #include "Spectre.libGenetic/OffspringGenerator.h"
-#include "MockIndividualsBuilderStrategy.h"
-#include "MockPreservationStrategy.h"
+#include "Spectre.libGenetic.Tests/MockIndividualsBuilderStrategy.h"
+#include "Spectre.libGenetic.Tests/MockPreservationStrategy.h"
 
 namespace spectre::algorithm::genetic::Tests
 {

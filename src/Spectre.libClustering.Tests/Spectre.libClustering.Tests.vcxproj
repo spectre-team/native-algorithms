@@ -64,7 +64,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>$(SolutionDir)$(Platform)\$(Configuration)\Spectre.libClustering.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Spectre.libClustering.lib;Spectre.libException.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -84,7 +84,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(SolutionDir)$(Platform)\$(Configuration)\Spectre.libClustering.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Spectre.libClustering.lib;Spectre.libException.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
