@@ -47,6 +47,7 @@ build:
 
 after_build:
   - cmd: rmdir /s /q C:\projects\native-algorithms\src\packages
+  - cmd: 7z a cached_artifacts.zip src\%PLATFORM%
 
 test_script:
 - cmd: C:\projects\native-algorithms\scripts\test_native_code.bat
@@ -54,8 +55,17 @@ test_script:
 artifacts:
 - path: '**\*.nupkg'
   name: NugetPackages-$(configuration)
+- path: cached_artifacts.zip
+  name: cached_artifacts
 
 deploy:
+  # push cached artifacts to GitHub releases
+  - provider: GitHub
+    release: native-algorithms-v$(appveyor_build_version)
+    auth_token:
+      secure: dQadz+smqtuxpigZ/LmrUKyA0uVZ5kgljKntyoHEdobTycbeMywbfmiJtZPNcOQ2
+    artifact: /.*\.zip/
+    draft: true
   # push all NuGet-s to GitHub releases
   # overwrites Debug NuGets with Release ones
   - provider: GitHub
