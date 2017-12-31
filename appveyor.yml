@@ -34,6 +34,7 @@ nuget:
 
 install:
 - ps: C:\projects\native-algorithms\scripts\restore_previous_artifacts.ps1
+- cmd: C:\projects\native-algorithms\scripts\patch_nuspec.bat
 - cmd: C:\projects\native-algorithms\scripts\restore_nugets.bat
 
 # skip branch build if there is an active pull request
