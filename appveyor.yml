@@ -6,6 +6,8 @@ environment:
     secure: Pzvx2CQjxp8eCBP+nFI2eg==
   appveyor_rdp_password:
     secure: Pzvx2CQjxp8eCBP+nFI2eg==
+  appveyor_api_token:
+    secure: fKs7X9cPwiL1ZKKR+hLHfNZlqlQQ4olhHFsZ0KFVp9E=
 configuration:
   - Debug
   - Release
