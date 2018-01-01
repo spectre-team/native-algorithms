@@ -1,7 +1,7 @@
 @echo off
 setlocal EnableDelayedExpansion
 echo Test discovery started...
-dir C:\projects\native-algorithms\*Tests.exe /b /s | findstr /v obj > __tmp_gtest.txt
+dir C:\projects\native-algorithms\%PLATFORM%\%CONFIGURATION%\*Tests.exe /b /s | findstr /v obj > __tmp_gtest.txt
 
 echo Testing (Google Test)...
 
