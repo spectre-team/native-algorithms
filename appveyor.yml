@@ -21,6 +21,7 @@ init:
 - cmd: echo Commit - %APPVEYOR_REPO_COMMIT%
 - cmd: echo Platform - %PLATFORM%
 - cmd: echo Configuration - %CONFIGURATION%
+- cmd: set RAW_BUILD_VERSION=%APPVEYOR_BUILD_VERSION%
 - cmd: IF NOT "%APPVEYOR_PULL_REQUEST_NUMBER%"=="" (SET APPVEYOR_BUILD_VERSION=%APPVEYOR_BUILD_VERSION%-alpha) ELSE IF "%APPVEYOR_REPO_BRANCH%"=="develop" (SET APPVEYOR_BUILD_VERSION=%APPVEYOR_BUILD_VERSION%-beta) ELSE IF NOT "%APPVEYOR_REPO_BRANCH%"=="master" (SET APPVEYOR_BUILD_VERSION=%APPVEYOR_BUILD_VERSION%-alpha)
 - cmd: echo Version - %APPVEYOR_BUILD_VERSION%
 #- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
