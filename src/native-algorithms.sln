@@ -4,8 +4,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libClustering", "Spectre.libClustering\Spectre.libClustering.vcxproj", "{450F225C-4610-4B20-84AE-2ED5B4C8D7C4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7417BF00-028B-4797-B58A-6058CA338493} = {7417BF00-028B-4797-B58A-6058CA338493}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libClustering.Tests", "Spectre.libClustering.Tests\Spectre.libClustering.Tests.vcxproj", "{1C2E181F-EAB0-46AA-B096-8BC78D7D8DB3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7417BF00-028B-4797-B58A-6058CA338493} = {7417BF00-028B-4797-B58A-6058CA338493}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libDivik", "Spectre.libDivik\Spectre.libDivik.vcxproj", "{369BDAFF-9E57-40D0-830D-B9232F35E4F4}"
 EndProject
@@ -25,6 +31,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libDataset.Tests", 
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libGaussianMixtureModelling.Tests", "Spectre.libGaussianMixtureModelling.Tests\Spectre.libGaussianMixtureModelling.Tests.vcxproj", "{2185C120-7B01-4E2E-B200-858A2D25C715}"
+	ProjectSection(ProjectDependencies) = postProject
+		{104D9A93-F6D7-4BF4-961F-7C52FEAEA77B} = {104D9A93-F6D7-4BF4-961F-7C52FEAEA77B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libGaussianMixtureModelling", "Spectre.libGaussianMixtureModelling\Spectre.libGaussianMixtureModelling.vcxproj", "{104D9A93-F6D7-4BF4-961F-7C52FEAEA77B}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -65,6 +74,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libStatistics.Tests
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libFunctional", "Spectre.libFunctional\Spectre.libFunctional.vcxproj", "{7EB0161F-4E8A-4C72-BA18-31B554F411F2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7417BF00-028B-4797-B58A-6058CA338493} = {7417BF00-028B-4797-B58A-6058CA338493}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libFunctional.Tests", "Spectre.libFunctional.Tests\Spectre.libFunctional.Tests.vcxproj", "{CF33269B-0876-4651-A8B9-2E32740C05C7}"
 	ProjectSection(ProjectDependencies) = postProject
