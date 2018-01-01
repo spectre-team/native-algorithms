@@ -190,7 +190,7 @@ TEST_F(OpenCvDatasetTest, get_data)
     for (auto i = 0u; i < numberOfObservations; i++)
     {
         EXPECT_EQ(result[i].size(), numberofColumns) << i;
-        for (auto j = 0u; j < numberofColumns; ++j)
+        for (auto j = 0u; j < static_cast<size_t>(numberofColumns); ++j)
         {
             EXPECT_EQ(result[i][j], local_dataset[i][j]) << i << " " << j;
         }
@@ -257,7 +257,7 @@ TEST_F(OpenCvDatasetTest, check_if_creating_copy)
     const auto &result_dataset = *result;
     for (auto i = 0u; i < numberOfObservations; ++i)
     {
-        for (auto j = 0u; j < result_dataset[i].size(); ++j)
+        for (auto j = 0u; j < static_cast<size_t>(result_dataset[i].size()); ++j)
         {
             EXPECT_EQ(result_dataset[i][j], tmpData[i * numberOfColumns + j]) << i << " " << j;
         }

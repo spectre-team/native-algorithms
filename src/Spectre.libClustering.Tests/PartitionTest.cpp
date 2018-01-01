@@ -53,7 +53,7 @@ TEST_F(PartitionTest, simplify_to_not_empty)
 {
     Partition test(testData);
     auto result = test.Get();
-    ASSERT_NE(result.size(), 0)
+    ASSERT_NE(result.size(), 0u)
         << "Sequence has been simplified to empty partition.";
 }
 

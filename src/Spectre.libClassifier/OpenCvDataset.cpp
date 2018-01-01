@@ -61,7 +61,7 @@ OpenCvDataset::OpenCvDataset(OpenCvDataset &&other) noexcept
     }
     const auto numberOfColumns = data.size() / labels.size();
     auto rowBegin = m_Data.data();
-    for (auto i = 0u; i < labels.size(); ++i)
+    for (auto i = 0u; i < static_cast<size_t>(labels.size()); ++i)
     {
         m_observations[i] = Observation(rowBegin, numberOfColumns);
         rowBegin += numberOfColumns;
@@ -90,7 +90,7 @@ OpenCvDataset::OpenCvDataset(cv::Mat data, cv::Mat labels):
 
 const Observation& OpenCvDataset::operator[](size_t idx) const
 {
-    if (idx >= m_Mat.rows)
+    if (idx >= static_cast<size_t>(m_Mat.rows))
     {
         throw spectre::core::exception::OutOfRangeException(idx, m_Mat.rows);
     }
@@ -99,7 +99,7 @@ const Observation& OpenCvDataset::operator[](size_t idx) const
 
 const Label& OpenCvDataset::GetSampleMetadata(size_t idx) const
 {
-    if (idx >= m_MatLabels.rows)
+    if (idx >= static_cast<size_t>(m_MatLabels.rows))
     {
         throw spectre::core::exception::OutOfRangeException(idx, m_MatLabels.rows);
     }
