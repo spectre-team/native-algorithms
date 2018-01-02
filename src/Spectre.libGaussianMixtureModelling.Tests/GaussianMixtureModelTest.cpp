@@ -55,12 +55,12 @@ TEST_F(GaussianMixtureModelTest, test_data_sizes)
 TEST_F(GaussianMixtureModelTest, test_original_data_correctness)
 {
     GaussianMixtureModel model(testData, testData, std::move(gaussianComponents));
-    for (int i = 0; i < testData.size(); i++)
+    for (size_t i = 0; i < testData.size(); i++)
     {
         EXPECT_EQ(model.originalMeanSpectrum[i], testData[i]);
         EXPECT_EQ(model.originalMzArray[i], testData[i]);
     }
-    for (int i = 0; i < gaussianComponents.size(); i++)
+    for (size_t i = 0; i < gaussianComponents.size(); i++)
     {
         EXPECT_EQ(model.components[i].deviation, gaussianComponents[i].deviation);
         EXPECT_EQ(model.components[i].mean, gaussianComponents[i].mean);

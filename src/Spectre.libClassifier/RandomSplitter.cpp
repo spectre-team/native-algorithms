@@ -53,7 +53,7 @@ SplittedOpenCvDataset RandomSplitter::split(const OpenCvDataset& data) const
         trainingData.insert(trainingData.end(), observation.begin(), observation.end());
         trainingLabels.push_back(data.GetSampleMetadata(indexes[i]));
     }
-    for (auto i = trainingLimit; i < data.size(); i++)
+    for (auto i = static_cast<size_t>(trainingLimit); i < data.size(); i++)
     {
         Observation observation(data[indexes[i]]);
         validationData.insert(validationData.end(), observation.begin(), observation.end());

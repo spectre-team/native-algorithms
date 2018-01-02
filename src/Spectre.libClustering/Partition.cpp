@@ -56,7 +56,7 @@ bool Partition::Compare(const Partition &lhs, const Partition &rhs, double toler
     unsigned int matchesCount = 0;
     size_t length = lhsPartition.size();
 
-    for (int i = 0; i < length; i++)
+    for (size_t i = 0; i < length; i++)
         if (lhsPartition[i] == rhsPartition[i])
             ++matchesCount;
 
