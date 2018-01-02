@@ -2,7 +2,7 @@
 * EmptyOpenCvDatasetException.h
 * Exception thrown, when we would create empty OpenCvDataset.
 *
-Copyright 2017 Grzegorz Mrukwa
+Copyright 2017 Spectre Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,13 +20,13 @@ limitations under the License.
 #pragma once
 #include "Spectre.libException/ExceptionBase.h"
 
-namespace Spectre::libException
+namespace spectre::supervised::exception
 {
     /// <summary>
     /// Thrown, when we would create empty OpenCvDataset.
     /// </summary>
 
-    class EmptyOpenCvDatasetException final : public ExceptionBase
+    class EmptyOpenCvDatasetException final : public core::exception::ExceptionBase
     {
     public:
         /// <summary>

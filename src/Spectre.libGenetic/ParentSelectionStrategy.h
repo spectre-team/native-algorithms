@@ -19,9 +19,9 @@ limitations under the License.
 
 #pragma once
 #include <span.h>
-#include "DataTypes.h"
+#include "Spectre.libGenetic/DataTypes.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 template <typename T>
 using reference_pair = std::pair<std::reference_wrapper<T>, std::reference_wrapper<T>>;

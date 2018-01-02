@@ -19,7 +19,7 @@ limitations under the License.
 
 #include "OutOfRangeException.h"
 
-namespace Spectre::libException
+namespace spectre::core::exception
 {
 OutOfRangeException::OutOfRangeException(size_t index, size_t size)
     : ArgumentOutOfRangeException<size_t>("index", 0, size, index) { }

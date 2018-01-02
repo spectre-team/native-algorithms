@@ -19,9 +19,9 @@ limitations under the License.
 
 #pragma once
 #include <vector>
-#include "Individual.h"
+#include "Spectre.libGenetic/Individual.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 /// <summary>
 /// Container enclosing population of individuals at time instance of single generation.

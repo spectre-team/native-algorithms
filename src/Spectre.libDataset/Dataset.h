@@ -20,10 +20,11 @@ limitations under the License.
 #pragma once
 
 #include <vector>
-#include "IDataset.h"
-#include "InconsistentInputSizeException.h"
+#include "Spectre.libException/OutOfRangeException.h"
+#include "Spectre.libDataset/IDataset.h"
+#include "Spectre.libDataset/InconsistentInputSizeException.h"
 
-namespace Spectre::libDataset
+namespace spectre::core::dataset
 {
 /// <summary>
 /// Data-owning implementation of dataset interfaces.
@@ -67,7 +68,7 @@ public:
         }
         else
         {
-            throw OutOfRangeException(idx, m_Data.size());
+            throw spectre::core::exception::OutOfRangeException(idx, m_Data.size());
         }
     }
 
@@ -84,7 +85,7 @@ public:
         }
         else
         {
-            throw OutOfRangeException(idx, m_SampleMetadata.size());
+            throw spectre::core::exception::OutOfRangeException(idx, m_SampleMetadata.size());
         }
     }
 
@@ -110,7 +111,7 @@ public:
         }
         else
         {
-            throw OutOfRangeException(idx, m_Data.size());
+            throw spectre::core::exception::OutOfRangeException(idx, m_Data.size());
         }
     }
 
@@ -127,7 +128,7 @@ public:
         }
         else
         {
-            throw OutOfRangeException(idx, m_SampleMetadata.size());
+            throw spectre::core::exception::OutOfRangeException(idx, m_SampleMetadata.size());
         }
     }
 

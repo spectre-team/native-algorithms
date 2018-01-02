@@ -25,7 +25,7 @@ limitations under the License.
 #include "PreservationStrategy.h"
 #include "Sorting.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 PreservationStrategy::PreservationStrategy(double preservationRate):
     m_PreservationRate(preservationRate)

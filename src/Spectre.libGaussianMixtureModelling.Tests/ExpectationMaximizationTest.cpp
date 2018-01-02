@@ -28,7 +28,7 @@ limitations under the License.
 
 typedef std::mt19937_64 RandomNumberGenerator;
 
-namespace Spectre::libGaussianMixtureModelling
+namespace spectre::unsupervised::gmm
 {
 class ExpectationMaximizationTest : public ::testing::Test
 {
@@ -126,7 +126,7 @@ TEST_F(ExpectationMaximizationTest, test_em_ref_initialization)
     // Check if values of assigned means come from available mz values
     initialization.AssignRandomMeans();
 
-    for (int i = 0; i < components.size(); i++)
+    for (size_t i = 0; i < components.size(); i++)
     {
         EXPECT_NE(std::find(mzs.begin(), mzs.end(), components[i].mean), mzs.end());
     }

@@ -21,7 +21,7 @@ limitations under the License.
 #include "Spectre.libException/NullPointerException.h"
 #include "Scorer.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 Scorer::Scorer(std::unique_ptr<FitnessFunction> fitnessFunction):
     m_FitnessFunction(std::move(fitnessFunction))
@@ -32,7 +32,7 @@ Scorer::Scorer(std::unique_ptr<FitnessFunction> fitnessFunction):
     }
     else
     {
-        throw libException::NullPointerException("fitnessFunction");
+        throw spectre::core::exception::NullPointerException("fitnessFunction");
     }
 }
 

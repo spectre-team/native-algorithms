@@ -19,6 +19,7 @@ limitations under the License.
 
 
 #include <gtest/gtest.h>
+#include <memory>
 #include <span.h>
 #include <opencv2/core/mat.hpp>
 #include "Spectre.libClassifier/OpenCvDataset.h"
@@ -28,18 +29,19 @@ limitations under the License.
 
 namespace
 {
-using namespace Spectre::libClassifier;
-using namespace Spectre::libException;
+using namespace spectre::supervised;
+using namespace spectre::core::exception;
+using namespace spectre::supervised::exception;
 
 class OpenCvDatasetInitializationTest : public ::testing::Test
 {
 protected:
-    const std::vector<DataType> data_empty{};
-    const std::vector<DataType> data_long{ 0.5f, 0.4f, 0.6f, 1.1f, 1.6f, 0.7f, 2.1f, 1.0f, 0.6f };
-    const std::vector<DataType> data_short{ 0.5f, 0.4f, 0.6f };
-    const std::vector<Label> labels_empty{};
-    const std::vector<Label> labels{ 3, 7, 14 };
-    const std::vector<Label> labels_too_long{ 3, 7, 14, 5 };
+    const std::vector<DataType> data_empty {};
+    const std::vector<DataType> data_long { 0.5f, 0.4f, 0.6f, 1.1f, 1.6f, 0.7f, 2.1f, 1.0f, 0.6f };
+    const std::vector<DataType> data_short { 0.5f, 0.4f, 0.6f };
+    const std::vector<Label> labels_empty {};
+    const std::vector<Label> labels { 3, 7, 14 };
+    const std::vector<Label> labels_too_long { 3, 7, 14, 5 };
 };
 
 TEST_F(OpenCvDatasetInitializationTest, correct_dataset_opencv_initialization_col_size_one)
@@ -122,17 +124,19 @@ public:
 
     static bool compareCVMats(cv::Mat mat1, cv::Mat mat2)
     {
-        if (mat1.rows != mat2.rows || mat1.cols != mat2.cols) return false;
-        for (auto i = 0; i<(mat1.rows*mat1.cols); i++)
+        if (mat1.rows != mat2.rows || mat1.cols != mat2.cols)
+            return false;
+        for (auto i = 0; i < (mat1.rows * mat1.cols); i++)
         {
-            if (mat1.data[i] != mat2.data[i]) return false;
+            if (mat1.data[i] != mat2.data[i])
+                return false;
         }
         return true;
     }
 
 protected:
-    const std::vector<DataType> data{ 0.5f, 0.4f, 0.6f, 1.1f, 1.6f, 0.7f, 2.1f, 1.0f, 0.6f };
-    const std::vector<Label> labels{ 3, 7, 14 };
+    const std::vector<DataType> data { 0.5f, 0.4f, 0.6f, 1.1f, 1.6f, 0.7f, 2.1f, 1.0f, 0.6f };
+    const std::vector<Label> labels { 3, 7, 14 };
     const size_t rowSize = data.size() / labels.size();
     std::unique_ptr<OpenCvDataset> dataset;
 
@@ -171,13 +175,13 @@ TEST_F(OpenCvDatasetTest, check_getting_in_range_label)
 
 TEST_F(OpenCvDatasetTest, get_dataset_metadata)
 {
-    const auto& check = Empty::instance();
+    const auto &check = spectre::core::dataset::Empty::instance();
     EXPECT_EQ(&dataset->GetDatasetMetadata(), &check);
 }
 
 TEST_F(OpenCvDatasetTest, get_data)
 {
-    const auto& local_dataset = *dataset;
+    const auto &local_dataset = *dataset;
     gsl::span<const Observation> result = dataset->GetData();
     const auto numberOfObservations = local_dataset.size();
     const auto numberofColumns = local_dataset[0].size();
@@ -186,7 +190,7 @@ TEST_F(OpenCvDatasetTest, get_data)
     for (auto i = 0u; i < numberOfObservations; i++)
     {
         EXPECT_EQ(result[i].size(), numberofColumns) << i;
-        for (auto j = 0u; j < numberofColumns; ++j)
+        for (auto j = 0u; j < static_cast<size_t>(numberofColumns); ++j)
         {
             EXPECT_EQ(result[i][j], local_dataset[i][j]) << i << " " << j;
         }
@@ -218,7 +222,7 @@ TEST_F(OpenCvDatasetTest, check_correct_dataset_size)
 
 TEST_F(OpenCvDatasetTest, check_getting_data_to_mat)
 {
-    std::vector<DataType> mat_data{ 0.5f, 0.4f, 0.6f, 1.1f, 1.6f, 0.7f, 2.1f, 1.0f, 0.6f };
+    std::vector<DataType> mat_data { 0.5f, 0.4f, 0.6f, 1.1f, 1.6f, 0.7f, 2.1f, 1.0f, 0.6f };
     cv::Mat check(3, 3, CV_TYPE, mat_data.data());
     cv::Mat result = dataset->getMatData();
     EXPECT_TRUE(compareCVMats(check, result));
@@ -226,7 +230,7 @@ TEST_F(OpenCvDatasetTest, check_getting_data_to_mat)
 
 TEST_F(OpenCvDatasetTest, check_getting_labels_to_mat)
 {
-    std::vector<Label> mat_labels{ 3, 7, 14 };
+    std::vector<Label> mat_labels { 3, 7, 14 };
     cv::Mat check(3, 1, CV_LABEL_TYPE, mat_labels.data());
     cv::Mat result = dataset->getMatLabels();
     EXPECT_TRUE(compareCVMats(check, result));
@@ -235,8 +239,8 @@ TEST_F(OpenCvDatasetTest, check_getting_labels_to_mat)
 TEST_F(OpenCvDatasetTest, check_if_creating_copy)
 {
     std::unique_ptr<OpenCvDataset> result;
-    const std::vector<DataType> tmpData{ 0.5f, 0.4f, 0.6f, 1.1f, 1.6f, 0.7f, 2.1f, 1.0f, 0.6f };
-    const std::vector<Label> tmpLabels{ 3, 7, 14 };
+    const std::vector<DataType> tmpData { 0.5f, 0.4f, 0.6f, 1.1f, 1.6f, 0.7f, 2.1f, 1.0f, 0.6f };
+    const std::vector<Label> tmpLabels { 3, 7, 14 };
     const auto numberOfObservations = tmpLabels.size();
     const auto numberOfColumns = tmpData.size() / numberOfObservations;
 
@@ -250,10 +254,10 @@ TEST_F(OpenCvDatasetTest, check_if_creating_copy)
 
     ASSERT_EQ(result->size(), numberOfObservations);
 
-    const auto& result_dataset = *result;
-    for(auto i = 0u; i < numberOfObservations; ++i)
+    const auto &result_dataset = *result;
+    for (auto i = 0u; i < numberOfObservations; ++i)
     {
-        for (auto j = 0u; j < result_dataset[i].size(); ++j)
+        for (auto j = 0u; j < static_cast<size_t>(result_dataset[i].size()); ++j)
         {
             EXPECT_EQ(result_dataset[i][j], tmpData[i * numberOfColumns + j]) << i << " " << j;
         }
@@ -262,13 +266,13 @@ TEST_F(OpenCvDatasetTest, check_if_creating_copy)
 
 TEST_F(OpenCvDatasetTest, returns_observation_with_valid_size_through_square_braces)
 {
-    const auto& observation = dataset->operator[](0);
+    const auto &observation = dataset->operator[](0);
     ASSERT_EQ(rowSize, observation.size());
 }
 
 TEST_F(OpenCvDatasetTest, returns_observation_with_valid_entries_through_square_braces)
 {
-    const auto& observation = dataset->operator[](0);
+    const auto &observation = dataset->operator[](0);
     for (auto i = 0u; i < rowSize; ++i)
     {
         EXPECT_EQ(data[i], observation[i]);

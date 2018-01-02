@@ -25,7 +25,7 @@ limitations under the License.
 
 using namespace std;
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 Generation::Generation(std::vector<Individual> &&generation):
     m_Generation(generation)
@@ -91,7 +91,7 @@ const Individual& Generation::operator[](size_t index) const
     }
     else
     {
-        throw libException::OutOfRangeException(index, m_Generation.size());
+        throw spectre::core::exception::OutOfRangeException(index, m_Generation.size());
     }
 }
 
@@ -103,7 +103,7 @@ Individual& Generation::operator[](size_t index)
     }
     else
     {
-        throw libException::OutOfRangeException(index, m_Generation.size());
+        throw spectre::core::exception::OutOfRangeException(index, m_Generation.size());
     }
 }
 

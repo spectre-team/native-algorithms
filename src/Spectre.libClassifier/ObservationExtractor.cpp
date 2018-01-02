@@ -20,7 +20,7 @@ limitations under the License.
 #include "Spectre.libException/NullPointerException.h"
 #include "ObservationExtractor.h"
 
-namespace Spectre::libClassifier {
+namespace spectre::supervised {
 
 ObservationExtractor::ObservationExtractor(const DataPointer data): m_Data(data)
 {
@@ -30,11 +30,11 @@ ObservationExtractor::ObservationExtractor(const DataPointer data): m_Data(data)
     }
     else
     {
-        throw libException::NullPointerException("data");
+        throw spectre::core::exception::NullPointerException("data");
     }
 }
 
-OpenCvDataset ObservationExtractor::getOpenCvDatasetFromIndividual(const libGenetic::Individual &individual)
+OpenCvDataset ObservationExtractor::getOpenCvDatasetFromIndividual(const spectre::algorithm::genetic::Individual &individual)
 {
     std::vector<DataType> data;
     std::vector<Label> labels;

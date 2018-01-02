@@ -20,14 +20,14 @@ limitations under the License.
 
 #pragma once
 #include <random>
-#include "ArgumentNullException.h"
-#include "DataType.h"
-#include "GaussianMixtureModel.h"
-#include "Matrix.h"
+#include "Spectre.libException/NullPointerException.h"
+#include "Spectre.libGaussianMixtureModelling/DataType.h"
+#include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
+#include "Spectre.libGaussianMixtureModelling/Matrix.h"
 
 typedef std::mt19937_64 RandomNumberGenerator;
 
-namespace Spectre::libGaussianMixtureModelling
+namespace spectre::unsupervised::gmm
 {
 /// <summary>
 /// Class serves as the container for all data required by
@@ -51,7 +51,7 @@ public:
     /// <param name="size">Size of the mzArray and itensities arrays.</param>
     /// <param name="rngEngine">Mersenne-Twister engine to be used during initialization step.</param>
     /// <param name="numberOfComponents">Number of Gaussian components that build up the approximation.</param>
-    /// <exception cref="ArgumentNullException">Thrown when either of mzArray or intensities pointers are null</exception>
+    /// <exception cref="NullPointerException">Thrown when either of mzArray or intensities pointers are null</exception>
     ExpectationMaximization(DataType *mzArray, DataType *intensities, const unsigned size,
                             RandomNumberGenerator &rngEngine, const unsigned numberOfComponents = 2)
         : m_pMzArray(mzArray), m_pIntensities(intensities), m_DataSize(size), m_Components(numberOfComponents)
@@ -63,12 +63,12 @@ public:
     {
         if (mzArray == nullptr)
         {
-            throw ArgumentNullException("mzArray");
+            throw spectre::core::exception::NullPointerException("mzArray");
         }
 
         if (intensities == nullptr)
         {
-            throw ArgumentNullException("intensities");
+            throw spectre::core::exception::NullPointerException("intensities");
         }
     }
 

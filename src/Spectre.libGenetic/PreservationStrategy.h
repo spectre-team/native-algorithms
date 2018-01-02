@@ -19,10 +19,10 @@ limitations under the License.
 
 #pragma once
 #include <span.h>
-#include "DataTypes.h"
-#include "Generation.h"
+#include "Spectre.libGenetic/DataTypes.h"
+#include "Spectre.libGenetic/Generation.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 /// <summary>
 /// Describes how to preserve best individuals between iterations.s

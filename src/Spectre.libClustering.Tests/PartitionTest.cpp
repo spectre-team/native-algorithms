@@ -24,10 +24,10 @@ limitations under the License.
 #include <vector>
 #include <algorithm>
 #include "Partition.h"
-#include "ArgumentNullException.h"
+#include "Spectre.libException/NullPointerException.h"
 
 
-namespace Spectre::libClustering::Tests
+namespace spectre::unsupervised::Tests
 {
 class PartitionTest : public ::testing::Test
 {
@@ -45,7 +45,7 @@ TEST_F(PartitionTest, fails_on_null)
 {
     ASSERT_THROW({
 			Partition test(nullptr);
-		                                                   }, ArgumentNullException)
+		                                                   }, spectre::core::exception::NullPointerException)
         << "Creation from null data did not throw exception.";
 }
 
@@ -53,7 +53,7 @@ TEST_F(PartitionTest, simplify_to_not_empty)
 {
     Partition test(testData);
     auto result = test.Get();
-    ASSERT_NE(result.size(), 0)
+    ASSERT_NE(result.size(), 0u)
         << "Sequence has been simplified to empty partition.";
 }
 

@@ -19,13 +19,13 @@ limitations under the License.
 
 #pragma once
 #include <memory>
-#include "CrossoverOperator.h"
-#include "DataTypes.h"
-#include "Generation.h"
-#include "MutationOperator.h"
-#include "ParentSelectionStrategy.h"
+#include "Spectre.libGenetic/CrossoverOperator.h"
+#include "Spectre.libGenetic/DataTypes.h"
+#include "Spectre.libGenetic/Generation.h"
+#include "Spectre.libGenetic/MutationOperator.h"
+#include "Spectre.libGenetic/ParentSelectionStrategy.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 /// <summary>
 /// Builds new individuals from old population, basing on specific

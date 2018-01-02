@@ -18,6 +18,7 @@ limitations under the License.
 */
 
 #include <gtest/gtest.h>
+#include <memory>
 #include "Spectre.libException/NullPointerException.h"
 #include "Spectre.libGenetic/Individual.h"
 #include "Spectre.libClassifier/OpenCvDataset.h"
@@ -25,9 +26,9 @@ limitations under the License.
 
 namespace
 {
-using namespace Spectre::libClassifier;
-using namespace Spectre::libGenetic;
-using namespace Spectre::libException;
+using namespace spectre::supervised;
+using namespace spectre::algorithm::genetic;
+using namespace spectre::core::exception;
 
 class ObservationExtractorInitializationTest : public ::testing::Test
 {
@@ -92,7 +93,7 @@ TEST_F(ObservationExtractorTest, observations_are_rewritten)
     auto result = extractor->getOpenCvDatasetFromIndividual(individual);
     const Observation row0Data = result[0];
     const Observation row1Data = result[1];
-    for (auto i = 0u; i < row0Data.size(); ++i)
+    for (auto i = 0u; i < static_cast<size_t>(row0Data.size()); ++i)
     {
         EXPECT_EQ(expectedFilteredRow0[i], row0Data[i]);
         EXPECT_EQ(expectedFilteredRow1[i], row1Data[i]);
@@ -104,7 +105,7 @@ TEST_F(ObservationExtractorTest, labels_are_rewritten)
     auto result = extractor->getOpenCvDatasetFromIndividual(individual);
     std::vector<Label> labelTest{ 3, 14 };
     gsl::span<const Label> labelData = result.GetSampleMetadata();
-    for (auto i = 0u; i < labelData.size(); i++)
+    for (auto i = 0u; i < static_cast<size_t>(labelData.size()); i++)
     {
         EXPECT_EQ(labelTest[i], labelData[i]);
     }

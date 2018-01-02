@@ -1,12 +1,6 @@
-version: 2.24.7.{build}
-# enable patching of AssemblyInfo.* files
-assembly_info:
-  patch: true
-  file: AssemblyInfo.*
-  assembly_version: "{version}"
-  assembly_file_version: "{version}"
-  assembly_informational_version: "{version}"
-platform: x64
+platform:
+  - Win32
+  - x64
 environment:
   nuget_user:
     secure: kWtlS49bKmP0IFXmdvDHmxGI8mS0xQGrwiJoco9nYtA=
@@ -14,13 +8,12 @@ environment:
     secure: Pzvx2CQjxp8eCBP+nFI2eg==
   appveyor_rdp_password:
     secure: Pzvx2CQjxp8eCBP+nFI2eg==
+  appveyor_api_token:
+    secure: fKs7X9cPwiL1ZKKR+hLHfNZlqlQQ4olhHFsZ0KFVp9E=
 configuration:
   - Debug
   - Release
-services: iis
-
-# skip branch build if there is an active pull request
-skip_branch_with_pr: true
+version: 3.0.0.{build}
 
 init:
 - cmd: echo Project - %APPVEYOR_PROJECT_NAME%
@@ -28,66 +21,78 @@ init:
 - cmd: echo Branch - %APPVEYOR_REPO_BRANCH%
 - cmd: echo Author - %APPVEYOR_REPO_COMMIT_AUTHOR%
 - cmd: echo Commit - %APPVEYOR_REPO_COMMIT%
-#- cmd: echo (%APPVEYOR_REPO_COMMIT_MESSAGE%)
-#- cmd: echo (%APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED%)
 - cmd: echo Platform - %PLATFORM%
 - cmd: echo Configuration - %CONFIGURATION%
+- cmd: set RAW_BUILD_VERSION=%APPVEYOR_BUILD_VERSION%
+- cmd: IF NOT "%APPVEYOR_PULL_REQUEST_NUMBER%"=="" (SET APPVEYOR_BUILD_VERSION=%APPVEYOR_BUILD_VERSION%-alpha) ELSE IF "%APPVEYOR_REPO_BRANCH%"=="develop" (SET APPVEYOR_BUILD_VERSION=%APPVEYOR_BUILD_VERSION%-beta) ELSE IF NOT "%APPVEYOR_REPO_BRANCH%"=="master" (SET APPVEYOR_BUILD_VERSION=%APPVEYOR_BUILD_VERSION%-alpha)
+- cmd: echo Version - %APPVEYOR_BUILD_VERSION%
 #- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
+# Here comes automated git clone by AppVeyor
 
 nuget:
   account_feed: false
   project_feed: false
 
 install:
-- cmd: C:\projects\spectre\scripts\restore_nugets.bat
-- ps: C:\projects\spectre\scripts\InstallNode.ps1
+- ps: C:\projects\native-algorithms\scripts\restore_previous_artifacts.ps1
+- cmd: C:\projects\native-algorithms\scripts\patch_nuspec.bat
+- cmd: C:\projects\native-algorithms\scripts\restore_nugets.bat
 
-build_script:
-- cmd: msbuild "C:\projects\spectre\src\Spectre.sln" /p:Configuration=%CONFIGURATION% /p:Platform=%PLATFORM% /m /verbosity:quiet /p:DeployOnBuild=true /p:PublishProfile=%CONFIGURATION% /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
-- cmd: C:\projects\spectre\scripts\build_ng_client.bat %CONFIGURATION%
+# skip branch build if there is an active pull request
+skip_branch_with_pr: true
+
+build:
+  parallel: true
+  project: .\src\native-algorithms.sln
+  publish_nuget: true
+  publish_nuget_symbols: false
+  verbosity: minimal
+
 after_build:
-- ps: C:\projects\spectre\scripts\BindPageToIisAndCreateDataDir.ps1 -AppVeyor
-- cmd: C:\projects\spectre\scripts\package_project.bat DiviK Spectre.DivikWpfClient
-- cmd: C:\projects\spectre\scripts\package_web_project.bat WebAPI Spectre
-- cmd: C:\projects\spectre\scripts\package_angular_client.bat
+  - cmd: rmdir /s /q C:\projects\native-algorithms\src\packages
+  - cmd: 7z a cached_artifacts.zip src\%PLATFORM%
+  - cmd: C:\projects\native-algorithms\scripts\pack_nuget.bat
 
 test_script:
-- cmd: C:\projects\spectre\scripts\test_native_code.bat
-- cmd: C:\projects\spectre\scripts\test_dotnet.bat --except Algorithm
-- cmd: C:\projects\spectre\scripts\test_frontend.bat
-- cmd: C:\projects\spectre\scripts\test_frontend_e2e.bat
+- cmd: C:\projects\native-algorithms\scripts\test_native_code.bat
 
 artifacts:
-- path: DiviK-$(configuration).zip
-  name: DivikExecutables
-- path: WebClient-$(configuration).zip
-  name: WebClient
-- path: WebAPI-$(configuration).zip
-  name: WebAPI
+- path: '**\*.nupkg'
+  name: NugetPackages-$(configuration)
+- path: cached_artifacts.zip
+  name: cached_artifacts
 
 deploy:
-- provider: GitHub
-  release: Spectre-v$(appveyor_build_version)
-  auth_token:
-    secure: dQadz+smqtuxpigZ/LmrUKyA0uVZ5kgljKntyoHEdobTycbeMywbfmiJtZPNcOQ2
-  artifact: DivikExecutables
-  draft: true
-- provider: GitHub
-  release: Spectre-v$(appveyor_build_version)
-  auth_token:
-    secure: dQadz+smqtuxpigZ/LmrUKyA0uVZ5kgljKntyoHEdobTycbeMywbfmiJtZPNcOQ2
-  artifact: WebClient
-  draft: true
-- provider: GitHub
-  release: Spectre-v$(appveyor_build_version)
-  auth_token:
-    secure: dQadz+smqtuxpigZ/LmrUKyA0uVZ5kgljKntyoHEdobTycbeMywbfmiJtZPNcOQ2
-  artifact: WebAPI
-  draft: true
+  # push cached artifacts to GitHub releases
+  - provider: GitHub
+    release: native-algorithms-v$(appveyor_build_version)
+    auth_token:
+      secure: dQadz+smqtuxpigZ/LmrUKyA0uVZ5kgljKntyoHEdobTycbeMywbfmiJtZPNcOQ2
+    artifact: /.*\.zip/
+    draft: true
+  # push all NuGet-s to GitHub releases
+  # overwrites Debug NuGets with Release ones
+  - provider: GitHub
+    release: native-algorithms-v$(appveyor_build_version)
+    auth_token:
+      secure: dQadz+smqtuxpigZ/LmrUKyA0uVZ5kgljKntyoHEdobTycbeMywbfmiJtZPNcOQ2
+    artifact: /.*\.nupkg/
+    draft: true
+  # push all NuGet-s to our feed
+  - provider: NuGet
+    server: https://ci.appveyor.com/nuget/gmrukwa-xfn7vhwq20u6
+    api_key:
+      secure: t8FO9T5wMCmRVqjBKL+8u6wmF+EPGJ8NDgcZoH7hbk4=
+    skip_symbols: true
+    symbol_server: https://ci.appveyor.com/nuget/gmrukwa-xfn7vhwq20u6
+    artifact: /.*\.nupkg/
+    on:
+      platform: x64
+      configuration: Release
 
 on_finish:
 #- ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-- cmd: C:\projects\spectre\scripts\upload-frontend-test-results.bat
 
 notifications:
 # this publishes to Continuous Integration channel in Glip
@@ -99,9 +104,9 @@ notifications:
   body: >-
     {
       "icon": "https://www.appveyor.com/assets/img/appveyor-logo-256.png",
-      "activity": "AppVeyor",
+      "activity": "AppVeyor for native-algorithms",
       "title": "Build {{buildVersion}} **{{#failed}}failed{{/failed}}{{#passed}}passed{{/passed}}** in {{duration}}",
-      "body": "{{#isPullRequest}}Pull request: [#{{pullRequestId}}](https://github.com/spectre-team/spectre/pull/{{pullRequestId}})\n{{/isPullRequest}}Branch: [{{branch}}](https://github.com/spectre-team/spectre/tree/{{branch}})\nCommit: [{{commitId}} {{commitMessage}}](https://github.com/spectre-team/spectre/commit/{{commitId}})\nAuthor: {{commitAuthor}}\n[Build details]({{buildUrl}})"
+      "body": "{{#isPullRequest}}Pull request: [#{{pullRequestId}}](https://github.com/spectre-team/native-algorithms/pull/{{pullRequestId}})\n{{/isPullRequest}}Branch: [{{branch}}](https://github.com/spectre-team/spectre/tree/{{branch}})\nCommit: [{{commitId}} {{commitMessage}}](https://github.com/spectre-team/native-algorithms/commit/{{commitId}})\nAuthor: {{commitAuthor}}\n[Build details]({{buildUrl}})"
     }
   on_build_success: true
   on_build_failure: true

@@ -33,12 +33,12 @@ limitations under the License.
 #pragma once
 #include <vector>
 #include <random>
-#include "GaussianMixtureModel.h"
-#include "DataType.h"
+#include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
+#include "Spectre.libGaussianMixtureModelling/DataType.h"
 
 typedef std::mt19937_64 RandomNumberGenerator;
 
-namespace Spectre::libGaussianMixtureModelling
+namespace spectre::unsupervised::gmm
 {
 /// <summary>
 /// Class serves the purpose of basic initialization of data for gaussian components
@@ -63,7 +63,7 @@ public:
     {
         if (mzArray == nullptr)
         {
-            throw ArgumentNullException("mzArray");
+            throw spectre::core::exception::NullPointerException("mzArray");
         }
     }
 

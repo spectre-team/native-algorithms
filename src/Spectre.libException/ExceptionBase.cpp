@@ -19,7 +19,7 @@ limitations under the License.
 
 #include "ExceptionBase.h"
 
-namespace Spectre::libException
+namespace spectre::core::exception
 {
 ExceptionBase::ExceptionBase(const std::string message): m_message(message) { }
 

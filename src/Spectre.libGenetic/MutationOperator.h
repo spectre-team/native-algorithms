@@ -18,9 +18,9 @@ limitations under the License.
 */
 
 #pragma once
-#include "DataTypes.h"
+#include "Spectre.libGenetic/DataTypes.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 /// <summary>
 /// Specifies, how to apply mutation on an individual.

@@ -20,7 +20,7 @@ limitations under the License.
 #pragma once
 #include <vector>
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 /// <summary>
 /// Binary representation of an individual chromosome in genetic algorithm.

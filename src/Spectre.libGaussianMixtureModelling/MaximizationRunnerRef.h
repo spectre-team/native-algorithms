@@ -40,12 +40,12 @@ limitations under the License.
 */
 #pragma once
 #include <vector>
-#include "ArgumentNullException.h"
-#include "DataType.h"
-#include "GaussianMixtureModel.h"
-#include "Matrix.h"
+#include "Spectre.libException/NullPointerException.h"
+#include "Spectre.libGaussianMixtureModelling/DataType.h"
+#include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
+#include "Spectre.libGaussianMixtureModelling/Matrix.h"
 
-namespace Spectre::libGaussianMixtureModelling
+namespace spectre::unsupervised::gmm
 {
 /// <summary>
 /// Class serves the purpose of maximization step of Expectation Maximization algorithm. 
@@ -72,12 +72,12 @@ public:
     {
         if (mzArray == nullptr)
         {
-            throw ArgumentNullException("mzArray");
+            throw spectre::core::exception::NullPointerException("mzArray");
         }
 
         if (intensities == nullptr)
         {
-            throw ArgumentNullException("intensities");
+            throw spectre::core::exception::NullPointerException("intensities");
         }
     }
 

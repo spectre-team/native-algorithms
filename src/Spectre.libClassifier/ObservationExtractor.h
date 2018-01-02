@@ -19,19 +19,19 @@ limitations under the License.
 
 #pragma once
 #include "Spectre.libDataset/IReadOnlyDataset.h"
-#include "Spectre.libClassifier/Empty.h"
+#include "Spectre.libDataset/Empty.h"
 #include "Spectre.libClassifier/OpenCvDataset.h"
 #include "Spectre.libGenetic/Individual.h"
 
-namespace Spectre::libClassifier {
+namespace spectre::supervised {
 
-using DataPointer = const libDataset::IReadOnlyDataset<Observation, Label, Empty>*;
+using DataPointer = const spectre::core::dataset::IReadOnlyDataset<Observation, Label, spectre::core::dataset::Empty>*;
 
 class ObservationExtractor
 {
 public:
     explicit ObservationExtractor(const DataPointer data);
-    OpenCvDataset getOpenCvDatasetFromIndividual(const libGenetic::Individual &individual);
+    OpenCvDataset getOpenCvDatasetFromIndividual(const spectre::algorithm::genetic::Individual &individual);
 
 private:
     const DataPointer m_Data;

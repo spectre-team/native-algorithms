@@ -19,9 +19,9 @@ limitations under the License.
 
 #pragma once
 
-#include "ArgumentOutOfRangeException.h"
+#include "Spectre.libException/ArgumentOutOfRangeException.h"
 
-namespace Spectre::libException
+namespace spectre::core::exception
 {
 /// <summary>
 /// Thrown when collection index out of bounds was requested

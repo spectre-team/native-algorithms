@@ -19,7 +19,7 @@ limitations under the License.
 
 #include "NullPointerException.h"
 
-namespace Spectre::libException
+namespace spectre::core::exception
 {
 NullPointerException::NullPointerException(const std::string &variableName):
     ExceptionBase(variableName) { }

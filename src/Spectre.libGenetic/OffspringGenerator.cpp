@@ -21,7 +21,7 @@ limitations under the License.
 #include "InconsistentGenerationAndScoresLengthException.h"
 #include "OffspringGenerator.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 OffspringGenerator::OffspringGenerator(std::unique_ptr<IndividualsBuilderStrategy> builder, std::unique_ptr<PreservationStrategy> preservationStrategy):
     m_Builder(std::move(builder)),
@@ -33,7 +33,7 @@ OffspringGenerator::OffspringGenerator(std::unique_ptr<IndividualsBuilderStrateg
     }
     else
     {
-        throw libException::NullPointerException("builder");
+        throw spectre::core::exception::NullPointerException("builder");
     }
     if (m_PreservationStrategy != nullptr)
     {
@@ -41,7 +41,7 @@ OffspringGenerator::OffspringGenerator(std::unique_ptr<IndividualsBuilderStrateg
     }
     else
     {
-        throw libException::NullPointerException("preservationStrategy");
+        throw spectre::core::exception::NullPointerException("preservationStrategy");
     }
 }
 

@@ -19,12 +19,12 @@ limitations under the License.
 
 #pragma once
 #include <span.h>
-#include "DataTypes.h"
-#include "Generation.h"
-#include "IndividualsBuilderStrategy.h"
-#include "PreservationStrategy.h"
+#include "Spectre.libGenetic/DataTypes.h"
+#include "Spectre.libGenetic/Generation.h"
+#include "Spectre.libGenetic/IndividualsBuilderStrategy.h"
+#include "Spectre.libGenetic/PreservationStrategy.h"
 
-namespace Spectre::libGenetic
+namespace spectre::algorithm::genetic
 {
 /// <summary>
 /// Specifies, how to create new generation from the old one, basing on scores of each individual.

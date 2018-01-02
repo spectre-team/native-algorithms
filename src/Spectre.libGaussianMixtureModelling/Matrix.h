@@ -18,9 +18,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 #pragma once
-#include "DataType.h"
+#include "Spectre.libGaussianMixtureModelling/DataType.h"
 
-namespace Spectre::libGaussianMixtureModelling
+namespace spectre::unsupervised::gmm
 {
 /// <summary>
 /// Struct serves as a temporary matrix representation.
