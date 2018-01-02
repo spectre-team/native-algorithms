@@ -20,14 +20,13 @@ limitations under the License.
 #pragma once
 #include <opencv2/core/mat.hpp>
 #include <span.h>
-#include "Spectre.libDataset/Empty.h"
 
 namespace spectre::supervised
 {
-    using DataType = float;
-    using Observation = gsl::span<const DataType>;
-    using Label = signed;
-    const auto CV_TYPE = CV_32FC1;
-    const auto CV_LABEL_TYPE = CV_32SC1;
-    using Seed = _ULonglong; // @gmrukwa: from mt19937_64
+using DataType = float;
+using Observation = gsl::span<const DataType>;
+using Label = signed;
+const auto CV_TYPE = CV_32FC1;
+const auto CV_LABEL_TYPE = CV_32SC1;
+using Seed = _ULonglong; // @gmrukwa: from mt19937_64
 }

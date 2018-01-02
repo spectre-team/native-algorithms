@@ -21,6 +21,7 @@ limitations under the License.
 #include <vector>
 #include "Spectre.libDataset/IReadOnlyDataset.h"
 #include "Spectre.libClassifier/Types.h"
+#include "Spectre.libDataset/Empty.h"
 
 namespace spectre::supervised
 {
@@ -30,7 +31,7 @@ namespace spectre::supervised
     class IClassifier
     {
     public:
-        using LabeledDataset = const spectre::core::dataset::IReadOnlyDataset<Observation, Label, spectre::core::dataset::Empty>&;
+        using LabeledDataset = const spectre::core::dataset::IReadOnlyDataset<Observation, Label, core::dataset::Empty>&;
         /// <summary>
         /// Try to fit classifier to the data.
         /// </summary>

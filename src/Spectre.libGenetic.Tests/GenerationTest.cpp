@@ -27,7 +27,34 @@ namespace
 using namespace spectre::algorithm::genetic;
 using namespace spectre::core::exception;
 
-class GenerationInitializationTest: public ::testing::Test
+const auto seed = 0ul;
+
+TEST(GenerationInitialization, initializes)
+{
+    const auto generationSize = 5u;
+    const auto individualSize = 6u;
+    const auto initialFillup = 4u;
+    EXPECT_NO_THROW(Generation(generationSize, individualSize, initialFillup, seed));
+}
+
+TEST(GenerationInitialization, throws_when_required_number_of_active_is_bigger_than_length)
+{
+    const auto generationSize = 5u;
+    const auto individualSize = 4u;
+    const auto excessiveInitialFillup = 6u;
+    EXPECT_THROW(Generation(generationSize, individualSize, excessiveInitialFillup, seed), ArgumentOutOfRangeException<size_t>);
+}
+
+TEST(GenerationInitialization, initializes_with_proper_size)
+{
+    const auto generationSize = 8u;
+    const auto individualSize = 10u;
+    const auto initialFillup = 6u;
+    Generation generation(generationSize, individualSize, initialFillup, seed);
+    EXPECT_EQ(generation.size(), generationSize);
+}
+
+class GenerationInitializationTest : public ::testing::Test
 {
 protected:
     const Individual smallerIndividual = Individual({ true, false, true });
@@ -51,7 +78,7 @@ TEST_F(GenerationInitializationTest, throws_on_inconsistent_chromosome_lengths)
 class GenerationTest : public GenerationInitializationTest
 {
 public:
-    GenerationTest():
+    GenerationTest() :
         generation1(std::vector<Individual>(generation1Data)),
         generation2(std::vector<Individual>(generation2Data)) {}
 

@@ -19,7 +19,7 @@ limitations under the License.
 
 #pragma once
 #include <vector>
-#include "Spectre.libGenetic/Individual.h"
+#include "Individual.h"
 
 namespace spectre::algorithm::genetic
 {
@@ -34,6 +34,14 @@ public:
     /// </summary>
     /// <param name="generation">The container with generation.</param>
     explicit Generation(std::vector<Individual> &&generation);
+    /// <summary>
+    /// Creates generation from parameters.
+    /// </summary>
+    /// <param name="size">Size of generation.</param>
+    /// <param name="individualSize">Size of every individual in generation.</param>
+    /// <param name="initialFillup">The initial fillup.</param>
+    /// <param name="seed">The seed.</param>
+    Generation(size_t size, size_t individualSize, size_t initialFillup, supervised::Seed seed);
     /// <summary>
     /// Concatenates populations.
     /// </summary>

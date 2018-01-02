@@ -18,13 +18,16 @@ limitations under the License.
 */
 
 #include <gtest/gtest.h>
-#include "Spectre.libException/OutOfRangeException.h"
 #include "Spectre.libGenetic/Individual.h"
 #include "Spectre.libGenetic/InconsistentChromosomeLengthException.h"
+#include "Spectre.libException/OutOfRangeException.h"
+#include "Spectre.libGenetic/DataTypes.h"
 
 namespace
 {
 using namespace spectre::algorithm::genetic;
+
+const auto seed = 0ul;
 
 TEST(IndividualInitialization, initializes)
 {
@@ -33,18 +36,27 @@ TEST(IndividualInitialization, initializes)
     EXPECT_NO_THROW(Individual({ true, false, true, false }));
 }
 
+TEST(IndividualInitialization, initializes_by_shuffle)
+{
+    const auto individualSize = 6u;
+    const auto initialFillup = 4u;
+    const auto excessiveFillup = 8u;
+    EXPECT_NO_THROW(Individual(individualSize, initialFillup, seed));
+    EXPECT_THROW(Individual(individualSize, excessiveFillup, seed), spectre::core::exception::ArgumentOutOfRangeException<size_t>);
+}
+
 class IndividualTest : public ::testing::Test
 {
 public:
-    IndividualTest():
+    IndividualTest() :
         trueIndividual(std::vector<bool>(TRUE_DATA)),
         falseIndividual(std::vector<bool>(FALSE_DATA)),
         mixedIndividual(std::vector<bool>(MIXED_DATA)) {}
 
 protected:
-    const std::vector<bool> TRUE_DATA { true, true, true, true };
-    const std::vector<bool> FALSE_DATA { false, false, false, false };
-    const std::vector<bool> MIXED_DATA { true, false, true, false };
+    const std::vector<bool> TRUE_DATA{ true, true, true, true };
+    const std::vector<bool> FALSE_DATA{ false, false, false, false };
+    const std::vector<bool> MIXED_DATA{ true, false, true, false };
     const Individual trueIndividual;
     const Individual falseIndividual;
     const Individual mixedIndividual;
@@ -69,7 +81,7 @@ TEST_F(IndividualTest, const_index_throws_for_exceeded_size)
 
 TEST_F(IndividualTest, mutable_index_throws_for_exceeded_size)
 {
-    Individual individual { std::vector<bool>(MIXED_DATA) };
+    Individual individual{ std::vector<bool>(MIXED_DATA) };
     EXPECT_THROW(individual[individual.size()] = false, spectre::core::exception::OutOfRangeException);
 }
 
@@ -108,7 +120,7 @@ TEST_F(IndividualTest, iterators_allow_to_iterate_over_const_binary_data)
 
 TEST_F(IndividualTest, iterators_allow_to_read_and_modify_binary_data)
 {
-    Individual mutableIndividual { std::vector<bool>(MIXED_DATA) };
+    Individual mutableIndividual{ std::vector<bool>(MIXED_DATA) };
     auto individualIterator = mutableIndividual.begin();
     auto dataIterator = MIXED_DATA.begin();
 
@@ -140,7 +152,7 @@ TEST_F(IndividualTest, equality_different_individuals_marked_unequal)
 
 TEST_F(IndividualTest, equality_same_individuals_marked_equal)
 {
-    const Individual copy { std::vector<bool>(MIXED_DATA) };
+    const Individual copy{ std::vector<bool>(MIXED_DATA) };
     EXPECT_TRUE(copy == mixedIndividual);
 }
 
@@ -151,7 +163,43 @@ TEST_F(IndividualTest, unequality_different_individuals_marked_unequal)
 
 TEST_F(IndividualTest, unequality_same_individuals_marked_equal)
 {
-    const Individual copy { std::vector<bool>(MIXED_DATA) };
+    const Individual copy{ std::vector<bool>(MIXED_DATA) };
     EXPECT_FALSE(copy != mixedIndividual);
+}
+
+TEST_F(IndividualTest, true_amount_equal_to_parameter)
+{
+    const auto individualSize = 10u;
+    const auto initialFillup = 6u;
+    Individual individual(individualSize, initialFillup, seed);
+    auto trueAmount = 0u;
+    for (auto i = 0; i < individual.size(); i++)
+    {
+        if (individual[i] == true)
+        {
+            trueAmount++;
+        }
+    }
+    EXPECT_EQ(trueAmount, initialFillup);
+}
+
+TEST_F(IndividualTest, create_different_individuals_for_different_seeds)
+{
+    const auto individualSize = 100u;
+    const auto initialFillup = 60u;
+    Seed seed1 = 1;
+    Seed seed2 = 2;
+    Individual individual1(individualSize, initialFillup, seed1);
+    Individual individual2(individualSize, initialFillup, seed2);
+    bool different = false;
+
+    for (auto i = 0u; i < individual1.size(); i++)
+    {
+        if (individual1[i] != individual2[i])
+        {
+            different = true;
+        }
+    }
+    EXPECT_EQ(different, true);
 }
 }

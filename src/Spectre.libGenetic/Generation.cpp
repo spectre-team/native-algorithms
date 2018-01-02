@@ -19,15 +19,16 @@ limitations under the License.
 
 #include <algorithm>
 #include <vector>
-#include "Spectre.libException/OutOfRangeException.h"
 #include "Generation.h"
 #include "InconsistentChromosomeLengthException.h"
+#include "Spectre.libException/ArgumentOutOfRangeException.h"
+#include "Spectre.libException/OutOfRangeException.h"
 
 using namespace std;
 
 namespace spectre::algorithm::genetic
 {
-Generation::Generation(std::vector<Individual> &&generation):
+Generation::Generation(std::vector<Individual> &&generation) :
     m_Generation(generation)
 {
     if (m_Generation.size() > 0)
@@ -35,13 +36,26 @@ Generation::Generation(std::vector<Individual> &&generation):
         const auto minmax = std::minmax_element(m_Generation.begin(), m_Generation.end(), [](const auto &first, const auto &second) { return first.size() < second.size(); });
         const auto minLength = minmax.first->size();
         const auto maxLength = minmax.second->size();
-        if (minLength == maxLength) { }
+        if (minLength == maxLength) {}
         else
         {
             throw InconsistentChromosomeLengthException(minLength, maxLength);
         }
     }
-    else { }
+    else {}
+}
+
+
+Generation::Generation(size_t size, size_t individualSize, size_t initialFillup, supervised::Seed seed)
+{
+    if (initialFillup > individualSize)
+    {
+        throw core::exception::ArgumentOutOfRangeException<size_t>("initialFillup", 0, individualSize, initialFillup);
+    }
+    for (auto i = 0u; i < size; i++)
+    {
+        m_Generation.push_back(Individual(individualSize, initialFillup, seed + i));
+    }
 }
 
 Generation Generation::operator+(const Generation &other) const
@@ -91,7 +105,7 @@ const Individual& Generation::operator[](size_t index) const
     }
     else
     {
-        throw spectre::core::exception::OutOfRangeException(index, m_Generation.size());
+        throw core::exception::OutOfRangeException(index, m_Generation.size());
     }
 }
 
@@ -103,7 +117,7 @@ Individual& Generation::operator[](size_t index)
     }
     else
     {
-        throw spectre::core::exception::OutOfRangeException(index, m_Generation.size());
+        throw core::exception::OutOfRangeException(index, m_Generation.size());
     }
 }
 
