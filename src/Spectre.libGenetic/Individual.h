@@ -19,7 +19,7 @@ limitations under the License.
 
 #pragma once
 #include <vector>
-#include "Spectre.libClassifier/Types.h"
+#include "DataTypes.h"
 
 namespace spectre::algorithm::genetic
 {
@@ -41,7 +41,7 @@ public:
     /// <param name="initialFillup">The initial fillup.</param>
     /// <param name="seed">The seed.</param>
     /// <returns>Individual.</returns>
-    Individual(size_t size, size_t initialFillup, supervised::Seed seed);
+    Individual(size_t size, size_t initialFillup, Seed seed);
     /// <summary>
     /// Gets the immutable data.
     /// </summary>

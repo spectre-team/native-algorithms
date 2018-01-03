@@ -41,7 +41,7 @@ public:
     /// <param name="individualSize">Size of every individual in generation.</param>
     /// <param name="initialFillup">The initial fillup.</param>
     /// <param name="seed">The seed.</param>
-    Generation(size_t size, size_t individualSize, size_t initialFillup, supervised::Seed seed);
+    Generation(size_t size, size_t individualSize, size_t initialFillup, Seed seed);
     /// <summary>
     /// Concatenates populations.
     /// </summary>

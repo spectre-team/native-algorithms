@@ -33,7 +33,7 @@ Individual::Individual(std::vector<bool> &&binaryData) :
     m_BinaryData(binaryData) { }
 
 
-Individual::Individual(size_t size, size_t initialFillup, supervised::Seed seed)
+Individual::Individual(size_t size, size_t initialFillup, Seed seed)
 {
     if (initialFillup > size)
     {

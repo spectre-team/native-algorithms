@@ -46,7 +46,7 @@ Generation::Generation(std::vector<Individual> &&generation) :
 }
 
 
-Generation::Generation(size_t size, size_t individualSize, size_t initialFillup, supervised::Seed seed)
+Generation::Generation(size_t size, size_t individualSize, size_t initialFillup, Seed seed)
 {
     if (initialFillup > individualSize)
     {
