@@ -24,24 +24,25 @@ limitations under the License.
 
 namespace spectre::supervised
 {
+/// <summary>
+/// Classifier base class.
+/// </summary>
+class IClassifier
+{
+public:
+    using LabeledDataset = const spectre::core::dataset::IReadOnlyDataset<Observation, Label, core::dataset::Empty>&;
     /// <summary>
-    /// Classifier base class.
+    /// Try to fit dataset in fitness function.
     /// </summary>
-    class IClassifier
-    {
-    public:
-        using LabeledDataset = const spectre::core::dataset::IReadOnlyDataset<Observation, Label, spectre::core::dataset::Empty>&;
-        /// <summary>
-        /// Try to fit classifier to the data.
-        /// </summary>
-        /// <param name="dataset">The dataset.</param>
-        virtual void Fit(LabeledDataset dataset) = 0;
-        /// <summary>
-        /// Predicts labels on test set.
-        /// </summary>
-        /// <param name="dataset">The dataset.</param>
-        /// <returns>vector of labels</returns>
-        virtual std::vector<Label> Predict(LabeledDataset dataset) const = 0;
-        virtual ~IClassifier() = default;
-    };
+    /// <param name="dataset">The dataset.</param>
+    /// <returns>void</returns>
+    virtual void Fit(LabeledDataset dataset) = 0;
+    /// <summary>
+    /// Predicts labels on test set.
+    /// </summary>
+    /// <param name="dataset">The dataset.</param>
+    /// <returns>vector of labels</returns>
+    virtual std::vector<Label> Predict(LabeledDataset dataset) const = 0;
+    virtual ~IClassifier() = default;
+};
 }
