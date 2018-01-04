@@ -18,21 +18,21 @@ limitations under the License.
 */
 
 #pragma once
+#include <string>
 #include "Spectre.libException/ExceptionBase.h"
 
 namespace spectre::supervised::exception
 {
+/// <summary>
+/// Thrown, when we would create empty OpenCvDataset.
+/// </summary>
+class EmptyOpenCvDatasetException final : public core::exception::ExceptionBase
+{
+public:
     /// <summary>
-    /// Thrown, when we would create empty OpenCvDataset.
+    /// Initializes a new instance of the <see cref="EmptyOpenCvDatasetException"/> class.
     /// </summary>
-
-    class EmptyOpenCvDatasetException final : public core::exception::ExceptionBase
-    {
-    public:
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EmptyOpenCvDatasetException"/> class.
-        /// </summary>
-        /// <param name="">Name of null variable.</param>
-        explicit EmptyOpenCvDatasetException(const std::string &variableName);
-    };
+    /// <param name="variableName">Name of null variable.</param>
+    explicit EmptyOpenCvDatasetException(const std::string &variableName);
+};
 }
