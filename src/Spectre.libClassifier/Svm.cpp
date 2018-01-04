@@ -24,55 +24,55 @@ limitations under the License.
 
 namespace spectre::supervised
 {
-    Svm::Svm(unsigned int iterationsLimit, double tolerance)
-    {
-        m_Svm = cv::ml::SVM::create();
-        m_Svm->setType(cv::ml::SVM::C_SVC);
-        m_Svm->setKernel(cv::ml::SVM::LINEAR);
-        const auto termination = cv::TermCriteria(cv::TermCriteria::MAX_ITER, iterationsLimit, tolerance);
-        m_Svm->setTermCriteria(termination);
-    }
+Svm::Svm(unsigned int iterationsLimit, double tolerance)
+{
+    m_Svm = cv::ml::SVM::create();
+    m_Svm->setType(cv::ml::SVM::C_SVC);
+    m_Svm->setKernel(cv::ml::SVM::LINEAR);
+    const auto termination = cv::TermCriteria(cv::TermCriteria::MAX_ITER, iterationsLimit, tolerance);
+    m_Svm->setTermCriteria(termination);
+}
 
-    void Svm::Fit(LabeledDataset dataset)
-    {
-        const auto& data = asSupported(dataset);
-        m_Svm->clear();
-        m_Svm->train(data.getMatData(), cv::ml::ROW_SAMPLE, data.getMatLabels());
-    }
+void Svm::Fit(LabeledDataset dataset)
+{
+    const auto& data = asSupported(dataset);
+    m_Svm->clear();
+    m_Svm->train(data.getMatData(), cv::ml::ROW_SAMPLE, data.getMatLabels());
+}
 
-    std::vector<Label> Svm::Predict(LabeledDataset dataset) const
+std::vector<Label> Svm::Predict(LabeledDataset dataset) const
+{
+    if (!m_Svm->isTrained())
     {
-        if (!m_Svm->isTrained())
-        {
-            throw UntrainedClassifierException();
-        }
-        const auto& data = asSupported(dataset);
-        const auto numberOfObservations = static_cast<unsigned>(data.getMatData().rows);
-        std::vector<float> predictions(numberOfObservations, 0);
-        cv::Mat predictionOutput(numberOfObservations, 1, CV_TYPE, predictions.data());
-        m_Svm->predict(data.getMatData(), predictionOutput);
-        std::vector<Label> labels(numberOfObservations, 0);
-        cv::Mat labelsOutput(numberOfObservations, 1, CV_LABEL_TYPE, labels.data());
-        predictionOutput.convertTo(labelsOutput, CV_LABEL_TYPE);
-        return labels;
+        throw exception::UntrainedClassifierException();
     }
+    const auto& data = asSupported(dataset);
+    const auto numberOfObservations = static_cast<unsigned>(data.getMatData().rows);
+    std::vector<float> predictions(numberOfObservations, 0);
+    cv::Mat predictionOutput(numberOfObservations, 1, CV_TYPE, predictions.data());
+    m_Svm->predict(data.getMatData(), predictionOutput);
+    std::vector<Label> labels(numberOfObservations, 0);
+    cv::Mat labelsOutput(numberOfObservations, 1, CV_LABEL_TYPE, labels.data());
+    predictionOutput.convertTo(labelsOutput, CV_LABEL_TYPE);
+    return labels;
+}
 
-    unsigned int Svm::GetNumberOfSupportVectors() const
+unsigned int Svm::GetNumberOfSupportVectors() const
+{
+    return m_Svm->getSupportVectors().rows;
+}
+
+
+const OpenCvDataset& Svm::asSupported(LabeledDataset dataset)
+{
+    try
     {
-        return m_Svm->getSupportVectors().rows;
+        const auto& casted = dynamic_cast<const OpenCvDataset&>(dataset);
+        return casted;
     }
-
-
-    const OpenCvDataset& Svm::asSupported(LabeledDataset dataset)
+    catch (const std::bad_cast&)
     {
-        try
-        {
-            const auto& casted = dynamic_cast<const OpenCvDataset&>(dataset);
-            return casted;
-        }
-        catch (const std::bad_cast&)
-        {
-            throw UnsupportedDatasetTypeException(dataset);
-        }
+        throw exception::UnsupportedDatasetTypeException(dataset);
     }
+}
 }
