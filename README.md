@@ -8,13 +8,13 @@ For the sake of simplicity, the toolset provided is available to be used
 through web application interface, which is currently a work-in-progress.
 
 In order to build and run the application, please refer to the
-[https://github.com/spectre-team/spectre#install](#install) section
+[install](https://github.com/spectre-team/spectre#install) section
 of the main repository.
 
 Please note, that 
 this repository contains just a subset of several components the Spectre
 project has been divided into. To view the main repository and to consult its
-readme, please refer to [https://github.com/spectre-team/spectre](this page).
+readme, please refer to [this page](https://github.com/spectre-team/spectre).
 
 ## About
 
