@@ -1,5 +1,5 @@
 /*
-* UnsupportedDatasetTypeException.h
+* UnsupportedDatasetTypeExceotion.h
 * Thrown when a data set type is not supported by the classifier.
 *
 Copyright 2017 Spectre Team
@@ -20,21 +20,21 @@ limitations under the License.
 #pragma once
 #include "Spectre.libException/ExceptionBase.h"
 
-namespace spectre::supervised
+namespace spectre::supervised::exception
 {
+/// <summary>
+/// Thrown, when dataset type is unsupported.
+/// </summary>
+class UnsupportedDatasetTypeException final : public spectre::core::exception::ExceptionBase
+{
+public:
+    template <class TDatasetType>
     /// <summary>
-    /// Thrown, when dataset type is unsupported.
+    /// Initializes a new instance of the <see cref="UnsupportedDatasetTypeException"/> class.
     /// </summary>
-    class UnsupportedDatasetTypeException final : public spectre::core::exception::ExceptionBase
+    /// <param name="dataset">The dataset.</param>
+    explicit UnsupportedDatasetTypeException(const TDatasetType& /*dataset*/) : ExceptionBase(typeid(TDatasetType).name())
     {
-    public:
-        template <class TDatasetType>
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UnsupportedDatasetTypeException"/> class.
-        /// </summary>
-        /// <param name="dataset">The dataset.</param>
-        explicit UnsupportedDatasetTypeException(const TDatasetType& /*dataset*/) : ExceptionBase(typeid(TDatasetType).name())
-        {
-        }
-    };
+    }
+};
 }
