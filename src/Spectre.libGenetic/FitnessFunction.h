@@ -19,6 +19,7 @@ limitations under the License.
 
 #pragma once
 #include "Spectre.libGenetic/DataTypes.h"
+#include "Spectre.libGenetic/Individual.h"
 
 namespace spectre::algorithm::genetic
 {
