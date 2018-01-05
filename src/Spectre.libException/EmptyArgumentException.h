@@ -28,6 +28,10 @@ namespace spectre::core::exception
 class EmptyArgumentException : public ExceptionBase
 {
 public:
-    EmptyArgumentException(const std::string &argumentName);
+    /// <summary>
+    /// Initializes a new instance of the <see cref="EmptyArgumentException"/> class.
+    /// </summary>
+    /// <param name="argumentName">Name of the variable.</param>
+    explicit EmptyArgumentException(const std::string &argumentName);
 };
 }

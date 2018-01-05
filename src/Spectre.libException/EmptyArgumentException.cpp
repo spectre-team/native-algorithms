@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "EmptyArgumentException.h"
+#include "Spectre.libException/EmptyArgumentException.h"
 
 namespace spectre::core::exception
 {
