@@ -13,11 +13,20 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Classifier">
-      <UniqueIdentifier>{46b1aa6c-1420-4a03-9817-ceadb4699ce7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Exceptions">
       <UniqueIdentifier>{79772ca0-59b1-4d1c-ab50-ca07d0551227}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Exceptions">
+      <UniqueIdentifier>{5bedc81d-e7c3-4673-8929-c00f71a4ddd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Exceptions">
+      <UniqueIdentifier>{e7ef017c-cb25-40a1-9ba7-87fc1d9d6877}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Classifiers">
+      <UniqueIdentifier>{cf4eb121-1f52-4b53-bade-3bb048a7dea5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classifiers">
+      <UniqueIdentifier>{29d8d554-a9d4-4ada-a93e-3aba15da69ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -33,11 +42,23 @@
     <ClCompile Include="SplittedOpenCvDataset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EmptyOpenCvDatasetException.cpp">
+    <ClCompile Include="ConfusionMatrix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ExcessiveTrainingRateException.cpp">
+      <Filter>Source Files\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="NegativeTrainingRateException.cpp">
+      <Filter>Source Files\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="EmptyOpenCvDatasetException.cpp">
+      <Filter>Source Files\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="NotABinaryLabelException.cpp">
+      <Filter>Source Files\Exceptions</Filter>
+    </ClCompile>
     <ClCompile Include="Svm.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Classifiers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -53,14 +74,26 @@
     <ClInclude Include="SplittedOpevCvDataset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ConfusionMatrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ExcessiveTrainingRateException.h">
+      <Filter>Header Files\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="NegativeTrainingRateException.h">
+      <Filter>Header Files\Exceptions</Filter>
+    </ClInclude>
     <ClInclude Include="EmptyOpenCvDatasetException.h">
+      <Filter>Header Files\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Svm.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Classifiers</Filter>
     </ClInclude>
     <ClInclude Include="IClassifier.h">
-      <Filter>Header Files\Classifier</Filter>
+      <Filter>Header Files\Classifiers</Filter>
     </ClInclude>
     <ClInclude Include="Types.h">
       <Filter>Header Files</Filter>
@@ -69,6 +102,9 @@
       <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="UntrainedClassifierException.h">
+      <Filter>Header Files\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="NotABinaryLabelException.h">
       <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
   </ItemGroup>
