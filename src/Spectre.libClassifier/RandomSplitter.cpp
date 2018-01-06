@@ -18,24 +18,47 @@ limitations under the License.
 */
 
 #include <random>
-#include "RandomSplitter.h"
+#include "Spectre.libClassifier/RandomSplitter.h"
 #include "Spectre.libFunctional/Filter.h"
 #include "Spectre.libStatistics/Math.h"
-#include "Spectre.libGenetic/DataTypes.h"
+#include "Spectre.libClassifier/Types.h"
+#include "Spectre.libClassifier/NegativeTrainingRateException.h"
+#include "Spectre.libClassifier/ExcessiveTrainingRateException.h"
+#include "Spectre.libClassifier/EmptyOpenCvDatasetException.h"
 
 namespace spectre::supervised {
 
 using namespace spectre::core::functional;
 using namespace spectre::statistics;
 
-RandomSplitter::RandomSplitter(double trainingRate, spectre::algorithm::genetic::Seed rngSeed)
+RandomSplitter::RandomSplitter(double trainingRate, Seed rngSeed)
     : m_trainingRate(trainingRate),
-      m_Seed(rngSeed) { }
+      m_Seed(rngSeed)
+{
+    if (trainingRate >= 0)
+    {
+    }
+    else
+    {
+        throw exception::NegativeTrainingRateException(trainingRate);
+    }
+    if (trainingRate <= 1)
+    {
+    }
+    else
+    {
+        throw exception::ExcessiveTrainingRateException(trainingRate);
+    }
+}
 
 SplittedOpenCvDataset RandomSplitter::split(const OpenCvDataset& data) const
 {
+    if (data.empty())
+    {
+        throw exception::EmptyOpenCvDatasetException("data");
+    }
     auto indexes = range(0, int(data.size()));
-    spectre::algorithm::genetic::RandomNumberGenerator rng(m_Seed);
+    RandomNumberGenerator rng(m_Seed);
     std::shuffle(indexes.begin(), indexes.end(), rng);
 
     std::vector<DataType> trainingData{};
