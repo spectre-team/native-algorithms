@@ -75,6 +75,9 @@
     <ClInclude Include="ExcessivePreservationRateException.h">
       <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
+    <ClInclude Include="GenerationFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MutationOperator.cpp">
@@ -121,6 +124,9 @@
     </ClCompile>
     <ClCompile Include="ExcessivePreservationRateException.cpp">
       <Filter>Source Files\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="GenerationFactory.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -19,7 +19,7 @@ limitations under the License.
 
 #pragma once
 #include <vector>
-#include "DataTypes.h"
+#include "Spectre.libGenetic/DataTypes.h"
 
 namespace spectre::algorithm::genetic
 {
@@ -34,14 +34,6 @@ public:
     /// </summary>
     /// <param name="binaryData">The binary data.</param>
     explicit Individual(std::vector<bool> &&binaryData);
-    /// <summary>
-    /// Initializes a new individual with trueAmount of true values inside.
-    /// </summary>
-    /// <param name="size">The size.</param>
-    /// <param name="initialFillup">The initial fillup.</param>
-    /// <param name="seed">The seed.</param>
-    /// <returns>Individual.</returns>
-    Individual(size_t size, size_t initialFillup, Seed seed);
     /// <summary>
     /// Gets the immutable data.
     /// </summary>

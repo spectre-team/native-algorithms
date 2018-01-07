@@ -1,6 +1,6 @@
 ﻿/*
 * ObservationExtractor.cpp
-* class for getting data from Individual object
+* class for getting OpenCvDataset from vector of bools containing which Observations to include.
 *
 Copyright 2017 Grzegorz Mrukwa, Wojciech Wilgierz
 
@@ -35,13 +35,13 @@ ObservationExtractor::ObservationExtractor(const DataPointer data): m_Data(data)
     }
 }
 
-OpenCvDataset ObservationExtractor::getOpenCvDatasetFromIndividual(const std::vector<bool>& individual) const
+OpenCvDataset ObservationExtractor::getOpenCvDatasetFromIndividual(const std::vector<bool>& observations) const
 {
     std::vector<DataType> data;
     std::vector<Label> labels;
-    for (auto i = 0u; i < individual.size(); ++i)
+    for (auto i = 0u; i < observations.size(); ++i)
     {
-        if (individual[i])
+        if (observations[i])
         {
             const auto& observation = m_Data->operator[](i);
             data.insert(data.end(), observation.begin(), observation.end());

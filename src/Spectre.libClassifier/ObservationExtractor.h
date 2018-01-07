@@ -1,6 +1,6 @@
 ﻿/*
 * ObservationExtractor.h
-* class for getting data from Individual object
+* class for getting OpenCvDataset from vector of bools containing which Observations to include.
 *
 Copyright 2017 Spectre Team
 
@@ -28,7 +28,7 @@ namespace spectre::supervised {
 using DataPointer = const spectre::core::dataset::IReadOnlyDataset<Observation, Label, spectre::core::dataset::Empty>*;
 
 /// <summary>
-/// Class used for getting dataset from individual.
+/// Class used for getting OpenCvDataset from vector of bools containing which Observations to include.
 /// </summary>
 class ObservationExtractor
 {
@@ -41,9 +41,9 @@ public:
     /// <summary>
     /// Gets data.
     /// </summary>
-    /// <param name="individual">The individual.</param>
+    /// <param name="observations">The vector of bool containing information which observations to include.</param>
     /// <returns>OpenCvDataset</returns>
-    OpenCvDataset getOpenCvDatasetFromIndividual(const std::vector<bool>& individual) const;
+    OpenCvDataset getOpenCvDatasetFromIndividual(const std::vector<bool>& observations) const;
 
 private:
     /// <summary>

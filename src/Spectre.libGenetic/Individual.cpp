@@ -31,25 +31,6 @@ namespace spectre::algorithm::genetic
 Individual::Individual(std::vector<bool> &&binaryData):
     m_BinaryData(binaryData) { }
 
-
-Individual::Individual(size_t size, size_t initialFillup, Seed seed)
-{
-    if (initialFillup > size)
-    {
-        throw ArgumentOutOfRangeException<size_t>("initialFillup", 0, size, initialFillup);
-    }
-    for (auto i = 0u; i < initialFillup; i++)
-    {
-        m_BinaryData.push_back(true);
-    }
-    for (auto i = initialFillup; i < size; i++)
-    {
-        m_BinaryData.push_back(false);
-    }
-    RandomNumberGenerator rng(seed);
-    std::shuffle(m_BinaryData.begin(), m_BinaryData.end(), rng);
-}
-
 std::vector<bool> Individual::getData() const
 {
     return m_BinaryData;
