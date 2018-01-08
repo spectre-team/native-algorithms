@@ -25,13 +25,13 @@ limitations under the License.
 namespace spectre::algorithm::genetic
 {
 /// <summary>
-/// Factory for creating Generation objects with parameters.
+/// Factory for creating random Generation objects with parameters.
 /// </summary>
 class GenerationFactory
 {
 public:
     /// <summary>
-    /// Creates generation from parameters.
+    /// Creates random Generation from parameters.
     /// </summary>
     /// <param name="size">Size of generation.</param>
     /// <param name="individualSize">Size of every individual in generation.</param>
@@ -42,7 +42,7 @@ public:
     /// Creates generation with default parameter values.
     /// </summary>
     /// <returns>Created generation.</returns>
-    Generation buildDefaultGeneration(Seed seed) const;
+    Generation operator()(Seed seed) const;
 private:
     /// <summary>
     /// Creates individual with default parameter values.

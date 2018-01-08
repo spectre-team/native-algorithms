@@ -26,8 +26,6 @@ namespace
 {
 using namespace spectre::algorithm::genetic;
 
-const auto seed = 0ul;
-
 TEST(IndividualInitialization, initializes)
 {
     EXPECT_NO_THROW(Individual({ true, true, true, true }));

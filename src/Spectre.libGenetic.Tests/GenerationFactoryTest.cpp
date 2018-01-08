@@ -71,7 +71,7 @@ protected:
 
 TEST_F(GenerationFactoryInitializationTest, true_amount_equal_to_parameter)
 {
-    Generation testGeneration = generationFatory.buildDefaultGeneration(seed);
+    Generation testGeneration = generationFatory(seed);
     for (auto i = 0u; i < testGeneration.size(); i++)
     {
         auto trueAmount = 0u;
@@ -88,7 +88,7 @@ TEST_F(GenerationFactoryInitializationTest, true_amount_equal_to_parameter)
 
 TEST_F(GenerationFactoryInitializationTest, create_different_individuals_for_different_seeds)
 {
-    Generation testGeneration = generationFatoryWithBigIndividuals.buildDefaultGeneration(seed);
+    Generation testGeneration = generationFatoryWithBigIndividuals(seed);
     bool different = false;
 
     EXPECT_EQ(testGeneration[0].size(), testGeneration[1].size());
@@ -97,9 +97,10 @@ TEST_F(GenerationFactoryInitializationTest, create_different_individuals_for_dif
         if (testGeneration[0][i] != testGeneration[1][i])
         {
             different = true;
+            break;
         }
     }
-    EXPECT_EQ(different, true);
+    EXPECT_TRUE(different);
 }
 
 }

@@ -35,12 +35,14 @@ GenerationFactory::GenerationFactory(size_t size, size_t individualSize, size_t 
     }
 }
 
-Generation GenerationFactory::buildDefaultGeneration(Seed seed) const
+Generation GenerationFactory::operator()(Seed seed) const
 {
+    RandomNumberGenerator rng(seed);
+    const auto seedIncrement = rng();
     std::vector<Individual> individuals;
     for (auto i = 0u; i < m_Size; i++)
     {
-        individuals.push_back(buildDefaultIndividual(seed + i));
+        individuals.push_back(buildDefaultIndividual(seed + i * seedIncrement));
     }
     Generation generation(std::move(individuals));
     return generation;
