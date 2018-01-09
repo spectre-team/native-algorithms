@@ -72,20 +72,20 @@ protected:
 
 TEST_F(ObservationExtractorTest, returns_dataset_of_expected_size)
 {
-    auto result = extractor->getOpenCvDatasetFromIndividual(selector);
+    auto result = extractor->getOpenCvDatasetFromObservations(selector);
     EXPECT_EQ(trueBits, result.size());
 }
 
 TEST_F(ObservationExtractorTest, observations_have_proper_size)
 {
-    auto result = extractor->getOpenCvDatasetFromIndividual(selector);
+    auto result = extractor->getOpenCvDatasetFromObservations(selector);
     EXPECT_EQ(rowSize, result[0].size());
     EXPECT_EQ(rowSize, result[1].size());
 }
 
 TEST_F(ObservationExtractorTest, observations_are_rewritten)
 {
-    auto result = extractor->getOpenCvDatasetFromIndividual(selector);
+    auto result = extractor->getOpenCvDatasetFromObservations(selector);
     const Observation row0Data = result[0];
     const Observation row1Data = result[1];
     for (auto i = 0u; i < static_cast<size_t>(row0Data.size()); ++i)
@@ -97,7 +97,7 @@ TEST_F(ObservationExtractorTest, observations_are_rewritten)
 
 TEST_F(ObservationExtractorTest, labels_are_rewritten)
 {
-    auto result = extractor->getOpenCvDatasetFromIndividual(selector);
+    auto result = extractor->getOpenCvDatasetFromObservations(selector);
     std::vector<Label> labelTest{ 3, 14 };
     gsl::span<const Label> labelData = result.GetSampleMetadata();
     for (auto i = 0u; i < static_cast<size_t>(labelData.size()); i++)

@@ -91,7 +91,7 @@ TEST_F(GenerationFactoryInitializationTest, create_different_individuals_for_dif
     Generation testGeneration = generationFatoryWithBigIndividuals(seed);
     bool different = false;
 
-    EXPECT_EQ(testGeneration[0].size(), testGeneration[1].size());
+    ASSERT_EQ(testGeneration[0].size(), testGeneration[1].size());
     for (auto i = 0u; i < testGeneration[0].size(); i++)
     {
         if (testGeneration[0][i] != testGeneration[1][i])

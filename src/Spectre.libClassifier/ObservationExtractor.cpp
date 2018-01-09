@@ -35,7 +35,7 @@ ObservationExtractor::ObservationExtractor(const DataPointer data): m_Data(data)
     }
 }
 
-OpenCvDataset ObservationExtractor::getOpenCvDatasetFromIndividual(const std::vector<bool>& observations) const
+OpenCvDataset ObservationExtractor::getOpenCvDatasetFromObservations(const std::vector<bool>& observations) const
 {
     std::vector<DataType> data;
     std::vector<Label> labels;

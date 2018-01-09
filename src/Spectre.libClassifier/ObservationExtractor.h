@@ -39,17 +39,17 @@ public:
     /// <param name="data">The data.</param>
     explicit ObservationExtractor(const DataPointer data);
     /// <summary>
-    /// Gets data.
+    /// Gets OpenCvDataset from vector of bools.
     /// </summary>
     /// <param name="observations">The vector of bool containing information which observations to include.</param>
     /// <returns>OpenCvDataset</returns>
-    OpenCvDataset getOpenCvDatasetFromIndividual(const std::vector<bool>& observations) const;
+    OpenCvDataset getOpenCvDatasetFromObservations(const std::vector<bool>& observations) const;
 
 private:
     /// <summary>
     /// The dataset.
     /// </summary>
-    const DataPointer m_Data;
+    DataPointer m_Data;
 };
 
 }
