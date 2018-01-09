@@ -24,6 +24,7 @@ limitations under the License.
 #include "InconsistentChromosomeLengthException.h"
 
 using namespace std;
+using namespace spectre::core::exception;
 
 namespace spectre::algorithm::genetic
 {
@@ -91,7 +92,7 @@ const Individual& Generation::operator[](size_t index) const
     }
     else
     {
-        throw spectre::core::exception::OutOfRangeException(index, m_Generation.size());
+        throw OutOfRangeException(index, m_Generation.size());
     }
 }
 
@@ -103,7 +104,7 @@ Individual& Generation::operator[](size_t index)
     }
     else
     {
-        throw spectre::core::exception::OutOfRangeException(index, m_Generation.size());
+        throw OutOfRangeException(index, m_Generation.size());
     }
 }
 

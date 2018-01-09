@@ -2,7 +2,7 @@
 * GenerationTest.cpp
 * Tests generation.
 *
-Copyright 2017 Grzegorz Mrukwa
+Copyright 2017 Spectre Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -177,4 +177,5 @@ TEST_F(GenerationTest, iterators_allow_to_iterate_the_individuals)
     EXPECT_EQ(generationIterator, generation1.end());
     EXPECT_EQ(dataIterator, generation1Data.end());
 }
+
 }

@@ -159,6 +159,7 @@
   <ItemGroup>
     <ClCompile Include="..\Common\Main.cpp" />
     <ClCompile Include="CrossoverOperatorTest.cpp" />
+    <ClCompile Include="GenerationFactoryTest.cpp" />
     <ClCompile Include="GenerationTest.cpp" />
     <ClCompile Include="GeneticAlgorithmTest.cpp" />
     <ClCompile Include="IndividualsBuilderStrategyTest.cpp" />

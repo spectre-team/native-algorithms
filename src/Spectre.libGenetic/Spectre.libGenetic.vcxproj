@@ -136,6 +136,7 @@
     <ClInclude Include="ExcessivePreservationRateException.h" />
     <ClInclude Include="FitnessFunction.h" />
     <ClInclude Include="Generation.h" />
+    <ClInclude Include="GenerationFactory.h" />
     <ClInclude Include="GeneticAlgorithm.h" />
     <ClInclude Include="CrossoverOperator.h" />
     <ClInclude Include="InconsistentChromosomeLengthException.h" />
@@ -154,6 +155,7 @@
   <ItemGroup>
     <ClCompile Include="ExcessivePreservationRateException.cpp" />
     <ClCompile Include="Generation.cpp" />
+    <ClCompile Include="GenerationFactory.cpp" />
     <ClCompile Include="GeneticAlgorithm.cpp" />
     <ClCompile Include="CrossoverOperator.cpp" />
     <ClCompile Include="InconsistentChromosomeLengthException.cpp" />
