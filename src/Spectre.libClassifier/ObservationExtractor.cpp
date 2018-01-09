@@ -25,11 +25,7 @@ namespace spectre::supervised {
 
 ObservationExtractor::ObservationExtractor(const DataPointer data): m_Data(data)
 {
-    if(m_Data!=nullptr)
-    {
-        // @gmrukwa: Purposeful empty branch
-    }
-    else
+    if(m_Data == nullptr)
     {
         throw spectre::core::exception::NullPointerException("data");
     }

@@ -38,7 +38,7 @@ public:
     /// Gets the immutable data.
     /// </summary>
     /// <returns>Vector of binary data.</returns>
-    std::vector<bool> getData() const;
+    const std::vector<bool>& getData() const;
     /// <summary>
     /// Gets the mutable data under specified index.
     /// </summary>

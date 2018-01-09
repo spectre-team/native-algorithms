@@ -31,7 +31,7 @@ namespace spectre::algorithm::genetic
 Individual::Individual(std::vector<bool> &&binaryData):
     m_BinaryData(binaryData) { }
 
-std::vector<bool> Individual::getData() const
+const std::vector<bool>& Individual::getData() const
 {
     return m_BinaryData;
 }
