@@ -18,29 +18,47 @@ limitations under the License.
 */
 
 #include <algorithm>
+#include <omp.h>
 #include "Spectre.libException/NullPointerException.h"
+#include "Spectre.libException/ArgumentOutOfRangeException.h"
 #include "Scorer.h"
 
 namespace spectre::algorithm::genetic
 {
-Scorer::Scorer(std::unique_ptr<FitnessFunction> fitnessFunction):
-    m_FitnessFunction(std::move(fitnessFunction))
+Scorer::Scorer(std::unique_ptr<FitnessFunction> fitnessFunction, unsigned int numberOfCores):
+    m_FitnessFunction(std::move(fitnessFunction)),
+    m_NumberOfCores(numberOfCores)
 {
-    if (m_FitnessFunction != nullptr)
+    if (m_FitnessFunction == nullptr)
     {
-        // @gmrukwa: usual empty execution branch
+        throw core::exception::NullPointerException("fitnessFunction");
     }
-    else
+    if (m_NumberOfCores == 0)
     {
-        throw spectre::core::exception::NullPointerException("fitnessFunction");
+        throw core::exception::ArgumentOutOfRangeException<unsigned>("numberOfCores", 1, omp_get_num_procs(), m_NumberOfCores);
     }
 }
 
 std::vector<ScoreType> Scorer::Score(const Generation &generation)
 {
     std::vector<ScoreType> scores(generation.size());
-    std::transform(generation.begin(), generation.end(), scores.begin(),
-                   [this](const Individual &individual) { return m_FitnessFunction->operator()(individual); });
+    if (m_NumberOfCores == 1)
+    {
+        std::transform(generation.begin(), generation.end(), scores.begin(),
+                       [this](const Individual &individual) { return m_FitnessFunction->computeFitness(individual); });
+    }
+    else
+    {
+        const auto optimalChunksNumber = 1;
+        const auto populationSize = static_cast<int>(generation.size());
+        const auto firstIndividual = generation.begin();
+        #pragma omp parallel for schedule(dynamic, optimalChunksNumber) num_threads (m_NumberOfCores)
+        for (auto i = 0; i < populationSize; ++i)
+        {
+            const auto& individual = *(firstIndividual + i);
+            scores[i] = m_FitnessFunction->computeFitness(individual);
+        }
+    }
     return std::move(scores);
 }
 }
