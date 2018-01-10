@@ -43,12 +43,12 @@ protected:
     OpenCvDataset testSet;
 };
 
-TEST_F(SplittedOpenCVDatasetTest, correct_splitted_opencv_dataset_initialization)
+TEST_F(SplittedOpenCVDatasetTest, splitted_opencv_dataset_initialization)
 {
     EXPECT_NO_THROW(SplittedOpenCvDataset(std::move(trainingSet), std::move(testSet)));
 }
 
-TEST_F(SplittedOpenCVDatasetTest, test_splitted_opencvdataset_data)
+TEST_F(SplittedOpenCVDatasetTest, test_correct_parameters_of_splitted_opencvdataset_data)
 {
     const auto trainingSetLength = 7;
     const auto testSetLength = 3;
@@ -63,7 +63,7 @@ TEST_F(SplittedOpenCVDatasetTest, test_splitted_opencvdataset_data)
     EXPECT_EQ(splittedData.testSet.getMatLabels().rows, testSetLength);
 }
 
-TEST_F(SplittedOpenCVDatasetTest, check_correctness_of_structure_data)
+TEST_F(SplittedOpenCVDatasetTest, check_coherension_of_data_in_splitted_opencv_dataset_with_datasets_used_to_create_it)
 {
     SplittedOpenCvDataset data = SplittedOpenCvDataset(std::move(trainingSet), std::move(testSet));
     OpenCvDataset verifyTrainingSet = OpenCvDataset(training_data, training_labels);
