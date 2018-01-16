@@ -93,6 +93,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "algorithm", "algorithm", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unsupervised", "unsupervised", "{1C5130A0-168B-41FA-911C-576D3034F160}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libWavelet", "Spectre.libWavelet\Spectre.libWavelet.vcxproj", "{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -295,6 +297,15 @@ Global
 		{CF33269B-0876-4651-A8B9-2E32740C05C7}.Release|x64.Build.0 = Release|x64
 		{CF33269B-0876-4651-A8B9-2E32740C05C7}.Release|x86.ActiveCfg = Release|Win32
 		{CF33269B-0876-4651-A8B9-2E32740C05C7}.Release|x86.Build.0 = Release|Win32
+		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Debug|Win32.Build.0 = Debug|Win32
+		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Debug|x64.ActiveCfg = Debug|x64
+		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Debug|x64.Build.0 = Debug|x64
+		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Debug|x86.ActiveCfg = Debug|x64
+		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Release|Win32.ActiveCfg = Release|x64
+		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Release|x64.ActiveCfg = Release|x64
+		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Release|x64.Build.0 = Release|x64
+		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -316,6 +327,7 @@ Global
 		{81F10DE8-B9EF-400F-B3A7-57F2AFF35A14} = {161BFBEB-A19E-4F5C-A7C1-1AAF0A6DA3EC}
 		{7EB0161F-4E8A-4C72-BA18-31B554F411F2} = {A136EE60-7CFE-4FEF-8BF8-7CB9AFC94353}
 		{CF33269B-0876-4651-A8B9-2E32740C05C7} = {A136EE60-7CFE-4FEF-8BF8-7CB9AFC94353}
+		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982} = {1006E08E-0DB2-4645-961A-1B1C902198C4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ED57AF8B-7937-40C6-9764-D313AB08FEC9}
