@@ -95,6 +95,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unsupervised", "unsupervise
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libWavelet", "Spectre.libWavelet\Spectre.libWavelet.vcxproj", "{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libWavelet.Tests", "Spectre.libWavelet.Tests\Spectre.libWavelet.Tests.vcxproj", "{5B426532-B8C6-43BD-807A-CF772C731DC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -302,10 +304,23 @@ Global
 		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Debug|x64.ActiveCfg = Debug|x64
 		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Debug|x64.Build.0 = Debug|x64
 		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Debug|x86.ActiveCfg = Debug|x64
-		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Release|Win32.ActiveCfg = Release|x64
+		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Release|Win32.ActiveCfg = Release|Win32
+		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Release|Win32.Build.0 = Release|Win32
 		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Release|x64.ActiveCfg = Release|x64
 		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Release|x64.Build.0 = Release|x64
 		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Release|x86.ActiveCfg = Release|x64
+		{5B426532-B8C6-43BD-807A-CF772C731DC1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5B426532-B8C6-43BD-807A-CF772C731DC1}.Debug|Win32.Build.0 = Debug|Win32
+		{5B426532-B8C6-43BD-807A-CF772C731DC1}.Debug|x64.ActiveCfg = Debug|x64
+		{5B426532-B8C6-43BD-807A-CF772C731DC1}.Debug|x64.Build.0 = Debug|x64
+		{5B426532-B8C6-43BD-807A-CF772C731DC1}.Debug|x86.ActiveCfg = Debug|Win32
+		{5B426532-B8C6-43BD-807A-CF772C731DC1}.Debug|x86.Build.0 = Debug|Win32
+		{5B426532-B8C6-43BD-807A-CF772C731DC1}.Release|Win32.ActiveCfg = Release|Win32
+		{5B426532-B8C6-43BD-807A-CF772C731DC1}.Release|Win32.Build.0 = Release|Win32
+		{5B426532-B8C6-43BD-807A-CF772C731DC1}.Release|x64.ActiveCfg = Release|x64
+		{5B426532-B8C6-43BD-807A-CF772C731DC1}.Release|x64.Build.0 = Release|x64
+		{5B426532-B8C6-43BD-807A-CF772C731DC1}.Release|x86.ActiveCfg = Release|Win32
+		{5B426532-B8C6-43BD-807A-CF772C731DC1}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -328,6 +343,7 @@ Global
 		{7EB0161F-4E8A-4C72-BA18-31B554F411F2} = {A136EE60-7CFE-4FEF-8BF8-7CB9AFC94353}
 		{CF33269B-0876-4651-A8B9-2E32740C05C7} = {A136EE60-7CFE-4FEF-8BF8-7CB9AFC94353}
 		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982} = {1006E08E-0DB2-4645-961A-1B1C902198C4}
+		{5B426532-B8C6-43BD-807A-CF772C731DC1} = {1006E08E-0DB2-4645-961A-1B1C902198C4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ED57AF8B-7937-40C6-9764-D313AB08FEC9}
