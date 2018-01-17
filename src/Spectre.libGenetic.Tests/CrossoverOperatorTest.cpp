@@ -172,4 +172,14 @@ TEST_F(CrossoverOperatorTest, test_if_return_first_individual_if_fillup_is_too_l
     }
 }
 
+TEST_F(CrossoverOperatorTest, test_if_return_first_individual_if_fillup_is_too_high)
+{
+    CrossoverOperator crossoverOperator(SEED, 1, 2);
+    const auto child = crossover->operator()(true_individual, false_individual);
+    for (auto i = 0u; i < child.size(); i++)
+    {
+        EXPECT_EQ(child[i], true_individual[i]);
+    }
+}
+
 }

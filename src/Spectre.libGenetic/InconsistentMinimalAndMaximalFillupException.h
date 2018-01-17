@@ -18,16 +18,15 @@ limitations under the License.
 */
 
 #pragma once
+#include "Spectre.libException/ExceptionBase.h"
 
-#include "Spectre.libException/InconsistentArgumentSizesException.h"
 
 namespace spectre::algorithm::genetic
 {
 /// <summary>
 /// Thrown when minimal and maximal fillup values are inconsistent.
 /// </summary>
-class InconsistentMinimalAndMaximalFillupException :
-    public core::exception::InconsistentArgumentSizesException
+class InconsistentMinimalAndMaximalFillupException : public core::exception::ExceptionBase
 {
 public:
     /// <summary>
@@ -35,6 +34,7 @@ public:
     /// </summary>
     /// <param name="minimal">The minimal fillup value.</param>
     /// <param name="maximal">The maximal fillup value.</param>
-    InconsistentMinimalAndMaximalFillupException(size_t minimal, size_t maximal);
+    InconsistentMinimalAndMaximalFillupException(size_t minimal, size_t maximal):
+        ExceptionBase("minimal value of fillup: " + std::to_string(minimal) + " is greater than its maximum value: " + std::to_string(maximal)) { }
 };
 }
