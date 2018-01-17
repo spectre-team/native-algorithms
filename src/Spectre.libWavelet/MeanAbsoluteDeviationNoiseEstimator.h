@@ -21,10 +21,23 @@
 
 namespace spectre::algorithm::wavelet
 {
+/// <summary>
+/// Estimates the Mean-absolute devaition of the noise in the signal
+/// </summary>
 class MeanAbsoluteDeviationNoiseEstimator
 {
 public:
+    /// <summary>
+    /// Initializes a new instance of the
+    /// <see cref="MeanAbsoluteDeviationNoiseEstimator"/> class.
+    /// </summary>
+    /// <param name="multiplier">The multiplier used for computations.</param>
     explicit MeanAbsoluteDeviationNoiseEstimator(DataType multiplier=1.0);
+    /// <summary>
+    /// Estimates the MAD of the noise.
+    /// </summary>
+    /// <param name="intensities">Signal to be analyzed.</param>
+    /// <returns>Estiamte of the noise in the signal.</returns>
     DataType Estimate(const Signal& intensities) const;
 private:
     const DataType m_Multiplier;

@@ -21,10 +21,22 @@
 
 namespace spectre::algorithm::wavelet
 {
+/// <summary>
+/// Applies soft tresholding on the signal provided.
+/// </summary>
 class SoftThresholder
 {
 public:
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SoftThresholder"/> class.
+    /// </summary>
+    /// <param name="threshold">Treshold to be used.</param>
     explicit SoftThresholder(DataType threshold);
+    /// <summary>
+    /// Tresholds the signal
+    /// </summary>
+    /// <param name="signal">Signal to apply tresholding to.</param>
+    /// <returns>Tresholded signal.</returns>
     Signal operator()(const Signal& signal) const;
 private:
     const DataType m_Threshold;
