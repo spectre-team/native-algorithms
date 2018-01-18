@@ -37,11 +37,7 @@ CrossoverOperator::CrossoverOperator(Seed rngSeed, size_t minimalFillup, size_t 
 
 Individual CrossoverOperator::operator()(const Individual &first, const Individual &second)
 {
-    if (first.size() == second.size())
-    {
-        // @gmrukwa: empty
-    }
-    else
+    if (first.size() != second.size())
     {
         throw InconsistentChromosomeLengthException(first.size(), second.size());
     }
@@ -57,10 +53,7 @@ Individual CrossoverOperator::operator()(const Individual &first, const Individu
     auto fillup = 0u;
     for(auto bit: phenotype)
     {
-        if(bit)
-        {
-            ++fillup;
-        }
+        fillup += bit;
     }
 
     if (fillup >= m_MinimalFillup && fillup <= m_MaximalFillup)

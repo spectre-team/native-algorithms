@@ -51,11 +51,10 @@ std::vector<ScoreType> Scorer::Score(const Generation &generation)
     {
         const auto optimalChunksNumber = 1;
         const auto populationSize = static_cast<int>(generation.size());
-        const auto firstIndividual = generation.begin();
         #pragma omp parallel for schedule(dynamic, optimalChunksNumber) num_threads (m_NumberOfCores)
         for (auto i = 0; i < populationSize; ++i)
         {
-            const auto& individual = *(firstIndividual + i);
+            const auto& individual = generation[i];
             scores[i] = (*m_FitnessFunction)(individual);
         }
     }

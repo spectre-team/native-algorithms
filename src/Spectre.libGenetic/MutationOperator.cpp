@@ -65,10 +65,7 @@ Individual MutationOperator::operator()(Individual &&individual)
     auto fillup = 0u;
     for (auto bit : individual)
     {
-        if (bit)
-        {
-            ++fillup;
-        }
+        fillup += bit;
     }
 
     if (fillup >= m_MinimalFillup && fillup <= m_MaximalFillup)

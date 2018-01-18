@@ -2,7 +2,7 @@
 * InconsistentMinimalAndMaximalFillupException.h
 * Thrown when minimal fillup is greater than maximal.
 *
-Copyright 2017 Grzegorz Mrukwa, Wojciech Wilgierz
+Copyright 2018 Grzegorz Mrukwa, Wojciech Wilgierz
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
