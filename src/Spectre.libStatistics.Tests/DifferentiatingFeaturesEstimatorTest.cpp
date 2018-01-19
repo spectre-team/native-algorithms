@@ -92,7 +92,7 @@ TEST(DifferentiatingFeaturesEstimator, throws_for_inconsistent_number_of_feature
     EXPECT_THROW(estimator.Estimate(narrowDataset, secondDataset), InconsistentNumberOfFeaturesException);
 }
 
-TEST(DifferentiatingFeaturesEstimator, calls_estimator_for_each_feature)
+TEST(DifferentiatingFeaturesEstimator, DISABLED_calls_estimator_for_each_feature)
 {
     const ValuesHomogeneityEstimatorMock mock;
     DifferentiatingFeaturesEstimator estimator(mock);

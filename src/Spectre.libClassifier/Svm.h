@@ -1,4 +1,4 @@
-﻿/*
+/*
 * Svm.h
 * Simple wrapper for OpenCV SVM.
 *
@@ -27,38 +27,38 @@ limitations under the License.
 
 namespace spectre::supervised
 {
+/// <summary>
+/// SVM classifier.
+/// </summary>
+class Svm : public IClassifier
+{
+public:
     /// <summary>
-    /// SVM classifier.
+    /// Initializes a new instance of the <see cref="Svm"/> class.
     /// </summary>
-    class Svm : public IClassifier
-    {
-    public:
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Svm"/> class.
-        /// </summary>
-        /// <param name="iterationsLimit">The iterations limit.</param>
-        /// <param name="tolerance">The tolerance.</param>
-        explicit Svm(unsigned int iterationsLimit = 100, double tolerance = 1e-6);
-        /// <summary>
-        /// Try to fit classifier to the data.
-        /// </summary>
-        /// <param name="dataset">The dataset.</param>
-        /// <returns>void</returns>
-        void Fit(LabeledDataset dataset) override;
-        /// <summary>
-        /// Predicts labels on test set.
-        /// </summary>
-        /// <param name="dataset">The dataset.</param>
-        /// <returns>vector of labels</returns>
-        std::vector<Label> Predict(LabeledDataset dataset) const override;
-        /// <summary>
-        /// Gets number of support vectors.
-        /// </summary>
-        /// <returns>unsigned int</returns>
-        unsigned int GetNumberOfSupportVectors() const;
-        virtual ~Svm() = default;
-    private:
-        static const OpenCvDataset& asSupported(LabeledDataset);
-        cv::Ptr<cv::ml::SVM> m_Svm;
-    };
+    /// <param name="iterationsLimit">The iterations limit.</param>
+    /// <param name="tolerance">The tolerance.</param>
+    explicit Svm(unsigned int iterationsLimit = 100, double tolerance = 1e-6);
+    /// <summary>
+    /// Try to fit classifier to the data.
+    /// </summary>
+    /// <param name="dataset">The dataset.</param>
+    /// <returns>void</returns>
+    void Fit(LabeledDataset dataset) override;
+    /// <summary>
+    /// Predicts labels on test set.
+    /// </summary>
+    /// <param name="dataset">The dataset.</param>
+    /// <returns>vector of labels</returns>
+    std::vector<Label> Predict(LabeledDataset dataset) const override;
+    /// <summary>
+    /// Gets number of support vectors.
+    /// </summary>
+    /// <returns>unsigned int</returns>
+    unsigned int GetNumberOfSupportVectors() const;
+    virtual ~Svm() = default;
+private:
+    static const OpenCvDataset& asSupported(LabeledDataset);
+    cv::Ptr<cv::ml::SVM> m_Svm;
+};
 }

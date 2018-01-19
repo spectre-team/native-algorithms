@@ -1,6 +1,6 @@
 /*
-* EmptyArgumentException.cpp
-* Thrown when argument is empty.
+* NegativeTrainingRateException.cpp
+* Thrown when training rate is negative.
 *
 Copyright 2017 Spectre Team
 
@@ -17,10 +17,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "Spectre.libException/EmptyArgumentException.h"
+#include "NegativeTrainingRateException.h"
 
-namespace spectre::core::exception
+namespace spectre::supervised::exception
 {
-EmptyArgumentException::EmptyArgumentException(const std::string &argumentName) :
-    ExceptionBase(argumentName + " cannot be empty.") { }
+    NegativeTrainingRateException::NegativeTrainingRateException(double actual) :
+        ArgumentOutOfRangeException<double>("trainingRate", 0, 1, actual) { }
 }

@@ -1,6 +1,6 @@
 /*
-* UnsupportedDatasetTypeExceotion.h
-* Thrown when a data set type is not supported by the classifier.
+* NotABinaryLabelException
+* Thrown when label was expected to be a binary
 *
 Copyright 2017 Spectre Team
 
@@ -19,22 +19,22 @@ limitations under the License.
 
 #pragma once
 #include "Spectre.libException/ExceptionBase.h"
+#include "Spectre.libClassifier/Types.h"
 
 namespace spectre::supervised::exception
 {
 /// <summary>
-/// Thrown, when dataset type is unsupported.
+/// Thrown, when label is not a binary.
 /// </summary>
-class UnsupportedDatasetTypeException final : public spectre::core::exception::ExceptionBase
+class NotABinaryLabelException final: public core::exception::ExceptionBase
 {
 public:
-    template <class TDatasetType>
     /// <summary>
-    /// Initializes a new instance of the <see cref="UnsupportedDatasetTypeException"/> class.
+    /// Initializes a new instance of the <see cref="NotABinaryLabelException"/> class.
     /// </summary>
-    /// <param name="dataset">The dataset.</param>
-    explicit UnsupportedDatasetTypeException(const TDatasetType& /*dataset*/) : ExceptionBase(typeid(TDatasetType).name())
-    {
-    }
+    /// <param name="label">The label.</param>
+    /// <param name="location">The location.</param>
+    /// <param name="collection">The collection.</param>
+    NotABinaryLabelException(Label label, size_t location, std::string collection);
 };
 }

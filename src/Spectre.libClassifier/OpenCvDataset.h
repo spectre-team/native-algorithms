@@ -18,8 +18,6 @@ limitations under the License.
 */
 
 #pragma once
-#include <span.h>
-#include <opencv2/core/mat.hpp>
 #include "Spectre.libDataset/IReadOnlyDataset.h"
 #include "Spectre.libDataset/Empty.h"
 #include "Spectre.libClassifier/Types.h"

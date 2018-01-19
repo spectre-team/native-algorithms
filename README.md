@@ -8,48 +8,26 @@ For the sake of simplicity, the toolset provided is available to be used
 through web application interface, which is currently a work-in-progress.
 
 In order to build and run the application, please refer to the
-[installation](#install) section.
+[install](https://github.com/spectre-team/spectre#install) section
+of the main repository.
+
+Please note, that 
+this repository contains just a subset of several components the Spectre
+project has been divided into. To view the main repository and to consult its
+readme, please refer to [this page](https://github.com/spectre-team/spectre).
 
 ## About
 
-The project is currently in its early stage. However, it comprises the
-implementation of our own spectra modelling based on Gaussian Mixture Models,
-and Divisive IK-means algorithm for unsupervised segmentation, which can be
-used for efficient dataset compression, as well as for knowledge discovery.
+The native-algorithms repository encapsulates the C++ implementations of the
+Gaussian Mixture Modelling and Genetic algorithms used for the sake of fast
+and efficient computations. The Gaussian Mixture Modelling is expected to
+have its CUDA implementation carried out in near future.
+
 Aformentioned algorithms have already been published and refering links
 have been enclosed under [references](#references) section.
 
 Also, several classification and clusterization methods will be provided soon,
 along with supporting statistics.
-
-## Install
-
-### DiviK local client
-
-Please refer to [this manual](docs/Spectre.DivikWpfClient.pdf), as MATLAB
-Common Runtime has to be installed.
-
-### Spectre service & web application
-
-The Web service is all the time available [here](http://vaei-bit01.aei.polsl.pl/).
-If you still would like to host it yourself, please contact us by
-[e-mail](mailto:Grzegorz.Mrukwa@polsl.pl). We will provide you with exhaustive
-explanation.
-
-## Exemplary usage
-
-### DiviK local client
-
-Please refer to [docs](docs/Spectre.DivikWpfClient.pdf).
-
-### Spectre service & web application
-
-The application is available online [here](http://vaei-bit01.aei.polsl.pl/).
-
-Right now, our web application allows only for an interactive visualization
-of some of the data we were using in the research, along with Divisive
-Intelligent K-means algorithm results. More features will get documented
-when they appear.
 
 ## How to contribute?
 
@@ -59,10 +37,6 @@ you in details.
 Short contribution guide is actively constructed on
 [the project's wiki](https://github.com/spectre-team/spectre/wiki)
 as the development progresses.
-
-## Environment
-
-Please refer to [the docs](docs/Spectre.DivikWpfClient.pdf).
 
 ## References
 

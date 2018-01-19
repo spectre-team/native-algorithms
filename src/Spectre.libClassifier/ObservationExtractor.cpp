@@ -1,6 +1,6 @@
 ﻿/*
 * ObservationExtractor.cpp
-* class for getting data from Individual object
+* class for getting OpenCvDataset from vector of bools containing which Observations to include.
 *
 Copyright 2017 Grzegorz Mrukwa, Wojciech Wilgierz
 
@@ -17,30 +17,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+#include <vector>
 #include "Spectre.libException/NullPointerException.h"
-#include "ObservationExtractor.h"
+#include "Spectre.libClassifier/ObservationExtractor.h"
 
 namespace spectre::supervised {
 
 ObservationExtractor::ObservationExtractor(const DataPointer data): m_Data(data)
 {
-    if(m_Data!=nullptr)
-    {
-        // @gmrukwa: Purposeful empty branch
-    }
-    else
+    if(m_Data == nullptr)
     {
         throw spectre::core::exception::NullPointerException("data");
     }
 }
 
-OpenCvDataset ObservationExtractor::getOpenCvDatasetFromIndividual(const spectre::algorithm::genetic::Individual &individual)
+OpenCvDataset ObservationExtractor::getOpenCvDatasetFromObservations(const std::vector<bool>& observations) const
 {
     std::vector<DataType> data;
     std::vector<Label> labels;
-    for (auto i = 0u; i < individual.size(); ++i)
+    for (auto i = 0u; i < observations.size(); ++i)
     {
-        if (individual[i] == true)
+        if (observations[i])
         {
             const auto& observation = m_Data->operator[](i);
             data.insert(data.end(), observation.begin(), observation.end());

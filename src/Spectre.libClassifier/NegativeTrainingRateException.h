@@ -1,8 +1,8 @@
 /*
-* NegativePreservationRateException.h
-* Thrown when preservation rate is negative.
+* NegativeTrainingRateException.h
+* Thrown when training rate is negative.
 *
-Copyright 2017 Grzegorz Mrukwa
+Copyright 2017 Spectre Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,18 +20,18 @@ limitations under the License.
 #pragma once
 #include "Spectre.libException/ArgumentOutOfRangeException.h"
 
-namespace spectre::algorithm::genetic
+namespace spectre::supervised::exception
 {
 /// <summary>
-/// Thrown when preservation rate is negative.
+/// Thrown, when training rate would be negative.
 /// </summary>
-class NegativePreservationRateException: public spectre::core::exception::ArgumentOutOfRangeException<double>
+class NegativeTrainingRateException final : public spectre::core::exception::ArgumentOutOfRangeException<double>
 {
 public:
     /// <summary>
-    /// Initializes a new instance of the <see cref="NegativePreservationRateException"/> class.
+    /// Initializes a new instance of the <see cref="NegativeTrainingRateException"/> class.
     /// </summary>
-    /// <param name="actual">The value of preservation rate.</param>
-    explicit NegativePreservationRateException(double actual);
+    /// <param name="actual">The value of training rate.</param>
+    explicit NegativeTrainingRateException(double actual);
 };
 }
