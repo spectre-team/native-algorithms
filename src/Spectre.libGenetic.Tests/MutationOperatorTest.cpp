@@ -55,7 +55,8 @@ class MutationTest: public ::testing::Test
 {
 public:
     MutationTest():
-        individual(std::vector<bool>(defaultData)) {}
+        individual(std::vector<bool>(defaultData)),
+        allTrueIndividual(std::vector<bool>(allTrueData)){}
 
 protected:
     const unsigned NUMBER_OF_TRIALS = 1000;
@@ -64,11 +65,14 @@ protected:
     const double NEVER = 0;
     const Seed SEED = 0;
     const std::vector<bool> defaultData { false, false, false };
+    const std::vector<bool> allTrueData{ true, true, true, true, true, true, true, true, true, true };
     Individual individual;
+    Individual allTrueIndividual;
 
     void SetUp() override
     {
         individual = Individual(std::vector<bool>(defaultData));
+        allTrueIndividual = Individual(std::vector<bool>(allTrueData));
     }
 };
 
@@ -106,7 +110,7 @@ TEST_F(MutationTest, changes_nothing_when_zero_mutation_rate)
     for (unsigned i = 0; i < NUMBER_OF_TRIALS; ++i)
     {
         individual = mutate(std::move(individual));
-        for (size_t j = 0; j < individual.size(); ++j)
+        for (size_t j = 0u; j < individual.size(); ++j)
         {
             EXPECT_FALSE(individual[j]) << "trial: " << i << "; bit: " << j;
         }
@@ -116,10 +120,10 @@ TEST_F(MutationTest, changes_nothing_when_zero_mutation_rate)
 TEST_F(MutationTest, changes_nothing_when_zero_bit_swap_rate)
 {
     MutationOperator mutate(ALWAYS, NEVER, SEED);
-    for (unsigned i = 0; i < NUMBER_OF_TRIALS; ++i)
+    for (unsigned i = 0u; i < NUMBER_OF_TRIALS; ++i)
     {
         individual = mutate(std::move(individual));
-        for (size_t j = 0; j < individual.size(); ++j)
+        for (size_t j = 0u; j < individual.size(); ++j)
         {
             EXPECT_FALSE(individual[j]) << "trial: " << i << "; bit: " << j;
         }
@@ -129,11 +133,11 @@ TEST_F(MutationTest, changes_nothing_when_zero_bit_swap_rate)
 TEST_F(MutationTest, swaps_all_bits_on_both_rates_equal_one)
 {
     MutationOperator mutate(ALWAYS, ALWAYS, SEED);
-    for (unsigned i = 0; i < NUMBER_OF_TRIALS; ++i)
+    for (unsigned i = 0u; i < NUMBER_OF_TRIALS; ++i)
     {
         const auto last = Individual(std::vector<bool>(individual.begin(), individual.end()));
         individual = mutate(std::move(individual));
-        for (size_t j = 0; j < individual.size(); ++j)
+        for (size_t j = 0u; j < individual.size(); ++j)
         {
             EXPECT_NE(individual[j], last[j]) << "trial: " << i << "; bit: " << j;
         }
@@ -147,11 +151,11 @@ TEST_F(MutationTest, toggles_in_approximate_percentage_of_cases_for_specified_mu
     const auto expectedNumberOfToggles = NUMBER_OF_TRIALS * individual.size() * MUTATION_RATE;
     const auto allowedMissCount = ALLOWED_MISS_RATE * expectedNumberOfToggles;
     unsigned numberOfToggles = 0;
-    for (unsigned i = 0; i < NUMBER_OF_TRIALS; ++i)
+    for (unsigned i = 0u; i < NUMBER_OF_TRIALS; ++i)
     {
         const auto last = Individual(std::vector<bool>(individual.begin(), individual.end()));
         individual = mutate(std::move(individual));
-        for (size_t j = 0; j < individual.size(); ++j)
+        for (size_t j = 0u; j < individual.size(); ++j)
         {
             numberOfToggles += last[j] != individual[j];
         }
@@ -167,16 +171,40 @@ TEST_F(MutationTest, toggles_in_approximate_percentage_of_cases_for_specified_bi
     const auto expectedNumberOfToggles = NUMBER_OF_TRIALS * individual.size() * BIT_SWAP_RATE;
     const auto allowedMissCount = ALLOWED_MISS_RATE * expectedNumberOfToggles;
     unsigned numberOfToggles = 0;
-    for (unsigned i = 0; i < NUMBER_OF_TRIALS; ++i)
+    for (unsigned i = 0u; i < NUMBER_OF_TRIALS; ++i)
     {
         const auto last = Individual(std::vector<bool>(individual.begin(), individual.end()));
         individual = mutate(std::move(individual));
-        for (size_t j = 0; j < individual.size(); ++j)
+        for (size_t j = 0u; j < individual.size(); ++j)
         {
             numberOfToggles += last[j] != individual[j];
         }
     }
     EXPECT_LT(numberOfToggles, expectedNumberOfToggles + allowedMissCount);
     EXPECT_GT(numberOfToggles, expectedNumberOfToggles - allowedMissCount);
+}
+
+TEST_F(MutationTest, test_if_returns_original_if_fillup_is_too_low_after_changing_all_true_values_to_false)
+{
+    const auto BIT_SWAP_RATE = 0.5;
+    MutationOperator mutate(ALWAYS, BIT_SWAP_RATE, SEED, 8, 9);
+    const auto last = Individual(std::vector<bool>(individual.begin(), individual.end()));
+    individual = mutate(std::move(individual));
+    for (auto j = 0u; j < individual.size(); j++)
+    {
+        EXPECT_EQ(individual[j], last[j]);
+    }
+}
+
+TEST_F(MutationTest, test_if_returns_original_if_fillup_is_too_high_because_of_no_change_of_data)
+{
+    const auto BIT_SWAP_RATE = 0.5;
+    MutationOperator mutate(NEVER, BIT_SWAP_RATE, SEED, 8, 9);
+    const auto last = Individual(std::vector<bool>(individual.begin(), individual.end()));
+    individual = mutate(std::move(individual));
+    for (auto j = 0u; j < individual.size(); j++)
+    {
+        EXPECT_EQ(individual[j], last[j]);
+    }
 }
 }
