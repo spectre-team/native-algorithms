@@ -24,12 +24,12 @@ limitations under the License.
 #include "Spectre.libGenetic/FitnessFunction.h"
 #include "RaportGenerator.h"
 
-namespace Spectre::GaSvmNative
+namespace spectre::algorithm::genetic
 {
 /// <summary>
 /// Fitness function based on openCV SVM algorithm.
 /// </summary>
-class SVMFitnessFunction : public libGenetic::FitnessFunction
+class SVMFitnessFunction : public spectre::algorithm::genetic::FitnessFunction
 {
 public:
     /// <summary>
@@ -40,9 +40,9 @@ public:
     /// <param name="independentValidation">The independent validation.</param>
     /// <param name="svmIterations">The number of SVM iterations.</param>
     /// <param name="svmTolerance">The SVM tolerance.</param>
-    SVMFitnessFunction(libClassifier::SplittedOpenCvDataset&& data,
-                       RaportGenerator& raportGenerator,
-                       const libClassifier::OpenCvDataset* independentValidation = nullptr,
+    SVMFitnessFunction(spectre::supervised::SplittedOpenCvDataset&& data,
+                       scenario::gasvm::RaportGenerator& raportGenerator,
+                       const spectre::supervised::OpenCvDataset* independentValidation = nullptr,
                        unsigned int svmIterations=100u,
                        double svmTolerance=1e-6);
     /// <summary>
@@ -50,21 +50,21 @@ public:
     /// </summary>
     /// <param name="other">The other population.</param>
     /// <returns>Self.</returns>
-    libGenetic::ScoreType computeFitness(const libGenetic::Individual &individual) override;
+    spectre::algorithm::genetic::ScoreType operator()(const spectre::algorithm::genetic::Individual &individual) override;
     virtual ~SVMFitnessFunction() = default;
 private:
     /// <summary>
     /// The dataset.
     /// </summary>
-    libClassifier::SplittedOpenCvDataset m_Dataset;
+    spectre::supervised::SplittedOpenCvDataset m_Dataset;
     /// <summary>
     /// The independent validation.
     /// </summary>
-    const libClassifier::OpenCvDataset* m_IndependentValidation;
+    const spectre::supervised::OpenCvDataset* m_IndependentValidation;
     /// <summary>
     /// The report generator.
     /// </summary>
-    RaportGenerator& m_RaportGenerator;
+    scenario::gasvm::RaportGenerator& m_RaportGenerator;
     /// <summary>
     /// The number of SVM iterations.
     /// </summary>
@@ -80,6 +80,6 @@ private:
     /// <param name="data">The data.</param>
     /// <param name="individual">The individual.</param>
     /// <returns>The confusion matrix.</returns>
-    libClassifier::ConfusionMatrix getResultMatrix(const libClassifier::OpenCvDataset& data, const libGenetic::Individual& individual) const;
+    spectre::supervised::ConfusionMatrix getResultMatrix(const spectre::supervised::OpenCvDataset& data, const spectre::algorithm::genetic::Individual& individual) const;
 };
 }

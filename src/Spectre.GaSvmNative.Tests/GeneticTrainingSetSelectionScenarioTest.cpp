@@ -21,11 +21,8 @@ limitations under the License.
 #include "Spectre.GaSvmNative/GeneticTrainingSetSelectionScenario.h"
 #include "Spectre.GaSvmNative/RaportGenerator.h"
 
-namespace
+namespace spectre::algorithm::genetic
 {
-using namespace Spectre::libGenetic;
-using namespace Spectre::GaSvmNative;
-
 const double TRAINING_SET_SPLIT_RATE = 0.7;
 const double MUTATION_RATE = 0.5;
 const double BIT_SWAP_RATE = 0.5;
@@ -38,7 +35,7 @@ const Seed SEED = 1;
 
 TEST(GeneticTrainingSetSelectionScenarioInitialization, initializes)
 {
-    EXPECT_NO_THROW(GeneticTrainingSetSelectionScenario(TRAINING_SET_SPLIT_RATE,
+    EXPECT_NO_THROW(scenario::gasvm::GeneticTrainingSetSelectionScenario(TRAINING_SET_SPLIT_RATE,
                                                         MUTATION_RATE,
                                                         BIT_SWAP_RATE,
                                                         PRESERVATION_RATE,
@@ -53,10 +50,10 @@ class GeneticTrainingSetSelectionScenarioInitializationTest : public ::testing::
 {
 public:
     GeneticTrainingSetSelectionScenarioInitializationTest():
-        dataSet(std::make_unique<Spectre::libClassifier::OpenCvDataset>(data, labels)) {}
+        dataSet(std::make_unique<spectre::supervised::OpenCvDataset>(data, labels)) {}
 
 protected:
-    const std::vector<Spectre::libClassifier::DataType> data{
+    const std::vector<spectre::supervised::DataType> data{
         0.5f, 0.4f, 0.6f,
         1.1f, 1.6f, 0.7f,
         2.1f, 1.0f, 0.6f,
@@ -68,18 +65,18 @@ protected:
         0.7f, 1.9f, 0.2f,
         1.2f, 1.3f, 1.2f
     };
-    const std::vector<Spectre::libClassifier::Label> labels{ 1, 1, 0, 1, 0, 0, 1, 1, 0, 0 };
-    std::unique_ptr<Spectre::libClassifier::OpenCvDataset> dataSet;
+    const std::vector<spectre::supervised::Label> labels{ 1, 1, 0, 1, 0, 0, 1, 1, 0, 0 };
+    std::unique_ptr<spectre::supervised::OpenCvDataset> dataSet;
 
     void SetUp() override
     {
-        dataSet = std::make_unique<Spectre::libClassifier::OpenCvDataset>(data, labels);
+        dataSet = std::make_unique<spectre::supervised::OpenCvDataset>(data, labels);
     }
 };
 
 TEST_F(GeneticTrainingSetSelectionScenarioInitializationTest, few_data_scenario)
 {
-    GeneticTrainingSetSelectionScenario scenario(TRAINING_SET_SPLIT_RATE,
+    scenario::gasvm::GeneticTrainingSetSelectionScenario scenario(TRAINING_SET_SPLIT_RATE,
                                                  MUTATION_RATE,
                                                  BIT_SWAP_RATE,
                                                  PRESERVATION_RATE,

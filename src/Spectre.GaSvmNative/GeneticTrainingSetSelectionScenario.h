@@ -22,7 +22,7 @@ limitations under the License.
 #include "Spectre.libGenetic/DataTypes.h"
 #include "Spectre.libGenetic/GeneticAlgorithmFactory.h"
 
-namespace Spectre::GaSvmNative
+namespace spectre::scenario::gasvm
 {
 /// <summary>
 /// Genetic algorithm executor with given parameters.
@@ -58,7 +58,7 @@ public:
                                         const std::string& reportFilename,
                                         unsigned int numberOfRestarts,
                                         unsigned int numberOfCores=1u,
-                                        libGenetic::Seed seed = 0,
+                                        spectre::algorithm::genetic::Seed seed = 0,
                                         size_t minimalFillup=1ul,
                                         size_t maximalFillup=std::numeric_limits<size_t>::max(),
                                         uint svmIterations=100u,
@@ -69,8 +69,8 @@ public:
     /// <param name="data">The data.</param>
     /// <param name="independentValidation">The independent validation.</param>
     /// <returns>void</returns>
-    void execute(const libClassifier::OpenCvDataset& data,
-                 const libClassifier::OpenCvDataset* independentValidation=nullptr) const;
+    void execute(const spectre::supervised::OpenCvDataset& data,
+                 const spectre::supervised::OpenCvDataset* independentValidation=nullptr) const;
 private:
     /// <summary>
     /// The population sizes.
@@ -99,11 +99,11 @@ private:
     /// <summary>
     /// The seed.
     /// </summary>
-    const libGenetic::Seed m_Seed;
+    const spectre::algorithm::genetic::Seed m_Seed;
     /// <summary>
     /// The genetic algorithm factory.
     /// </summary>
-    const libGenetic::GeneticAlgorithmFactory m_GaFactory;
+    const spectre::algorithm::genetic::GeneticAlgorithmFactory m_GaFactory;
     /// <summary>
     /// The SVM iterations.
     /// </summary>
