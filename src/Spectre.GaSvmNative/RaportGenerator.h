@@ -24,7 +24,7 @@ limitations under the License.
 #include "Spectre.libClassifier/OpenCvDataset.h"
 #include "Spectre.libGenetic/Individual.h"
 
-namespace Spectre::GaSvmNative
+namespace spectre::scenario::gasvm
 {
 /// <summary>
 /// Class used to create file reports from genetic algorithm execution results.
@@ -51,12 +51,12 @@ public:
     /// <param name="numberOfSupportVectors">The number of support vectors.</param>
     /// <param name="validationResults">The validation results.</param>
     /// <returns>void</returns>
-    void Write(const libClassifier::ConfusionMatrix& matrix,
-               const libGenetic::Individual& individual,
+    void Write(const spectre::supervised::ConfusionMatrix& matrix,
+               const spectre::algorithm::genetic::Individual& individual,
                double trainingTime,
                double meanClassificationTime,
                unsigned int numberOfSupportVectors,
-               const libClassifier::ConfusionMatrix* validationResults);
+               const spectre::supervised::ConfusionMatrix* validationResults);
     ~RaportGenerator();
 private:
     /// <summary>

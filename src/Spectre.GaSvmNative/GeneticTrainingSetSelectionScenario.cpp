@@ -26,8 +26,9 @@ limitations under the License.
 #include "GeneticTrainingSetSelectionScenario.h"
 #include "RaportGenerator.h"
 #include "SVMFitnessFunction.h"
+#include "Spectre.libGenetic/GenerationFactory.h"
 
-namespace Spectre::GaSvmNative
+namespace spectre::scenario::gasvm
 {
 GeneticTrainingSetSelectionScenario::GeneticTrainingSetSelectionScenario(double trainingSetSplitRate,
                                                                          double mutationRate,
@@ -39,7 +40,7 @@ GeneticTrainingSetSelectionScenario::GeneticTrainingSetSelectionScenario(double 
                                                                          const std::string& filename,
                                                                          unsigned int numberOfRestarts,
                                                                          unsigned int numberOfCores,
-                                                                         libGenetic::Seed seed,
+                                                                         spectre::algorithm::genetic::Seed seed,
                                                                          size_t minimalFillup,
                                                                          size_t maximalFillup,
                                                                          uint svmIterations,
@@ -61,18 +62,14 @@ GeneticTrainingSetSelectionScenario::GeneticTrainingSetSelectionScenario(double 
     m_SvmIterations(svmIterations),
     m_SvmTolerance(svmTolerance)
 {
-    if (m_NumberOfCores != 0)
+    if (m_NumberOfCores == 0)
     {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
-    {
-        throw libException::ArgumentOutOfRangeException<unsigned>("numberOfCores", 1, omp_get_num_procs(), m_NumberOfCores);
+        throw spectre::core::exception::ArgumentOutOfRangeException<unsigned>("numberOfCores", 1, omp_get_num_procs(), m_NumberOfCores);
     }
 }
 
-void GeneticTrainingSetSelectionScenario::execute(const libClassifier::OpenCvDataset& data,
-                                                  const libClassifier::OpenCvDataset* independentValidation) const
+void GeneticTrainingSetSelectionScenario::execute(const spectre::supervised::OpenCvDataset& data,
+                                                  const spectre::supervised::OpenCvDataset* independentValidation) const
 {
     const auto optimalChunksNumber = 1;
     omp_set_nested(1);
@@ -89,18 +86,18 @@ void GeneticTrainingSetSelectionScenario::execute(const libClassifier::OpenCvDat
                                                 + "-fillup-" + std::to_string(initialFillup),
                                                 popSize);
 
-                libClassifier::RandomSplitter splitter(m_TrainingDatasetSizeRate, m_Seed + runNumber);
+                spectre::supervised::RandomSplitter splitter(m_TrainingDatasetSizeRate, m_Seed + runNumber);
                 auto splittedDataset = splitter.split(data);
                 auto trainingSetSize = splittedDataset.trainingSet.size();
 
-                auto fitnessFunction = std::make_unique<SVMFitnessFunction>(std::move(splittedDataset),
+                auto fitnessFunction = std::make_unique<algorithm::genetic::SVMFitnessFunction>(std::move(splittedDataset),
                                                                             raportGenerator,
                                                                             independentValidation,
                                                                             m_SvmIterations,
                                                                             m_SvmTolerance);
                 auto algorithm = m_GaFactory.BuildDefault(std::move(fitnessFunction), m_Seed + runNumber);
-
-                libGenetic::Generation initialGeneration(popSize, trainingSetSize, initialFillup, m_Seed + runNumber);
+                spectre::algorithm::genetic::GenerationFactory generationFactory(trainingSetSize, popSize, initialFillup);
+                spectre::algorithm::genetic::Generation initialGeneration = generationFactory(m_Seed + runNumber);
                 auto finalGeneration = algorithm->evolve(std::move(initialGeneration));
             }
         }

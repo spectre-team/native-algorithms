@@ -18,18 +18,16 @@ limitations under the License.
 */
 
 #include <ctime>
-#include "Spectre.libClassifier/ConfusionMatrix.h"
-#include "Spectre.libPlatform/Filter.h"
 #include "SVMFitnessFunction.h"
+#include "Spectre.libException/InconsistentArgumentSizesException.h"
+#include "Spectre.libFunctional/Filter.h"
+#include <memory>
 
-namespace Spectre::GaSvmNative
+namespace spectre::algorithm::genetic
 {
-using namespace libClassifier;
-using namespace libGenetic;
-
-SVMFitnessFunction::SVMFitnessFunction(SplittedOpenCvDataset&& data,
-                                       RaportGenerator& raportGenerator,
-                                       const libClassifier::OpenCvDataset* independentValidation,
+SVMFitnessFunction::SVMFitnessFunction(supervised::SplittedOpenCvDataset&& data,
+                                       scenario::gasvm::RaportGenerator& raportGenerator,
+                                       const spectre::supervised::OpenCvDataset* independentValidation,
                                        unsigned int svmIterations,
                                        double svmTolerance)
     : m_Dataset(std::move(data)),
@@ -40,32 +38,32 @@ SVMFitnessFunction::SVMFitnessFunction(SplittedOpenCvDataset&& data,
 {
 }
 
-ScoreType SVMFitnessFunction::computeFitness(const Individual &individual)
+ScoreType SVMFitnessFunction::operator()(const Individual &individual)
 {
     if (m_Dataset.trainingSet.size() != individual.size())
     {
-        throw libException::InconsistentArgumentSizesException("data", m_Dataset.trainingSet.size(), "individual", individual.size());
+        throw core::exception::InconsistentArgumentSizesException("data", m_Dataset.trainingSet.size(), "individual", individual.size());
     }
 
     const auto& dataToFilter = m_Dataset.trainingSet.GetData();
-    const auto twoDimensionalFilteredData = libPlatform::Functional::filter(dataToFilter, individual.getData());
-    std::vector<DataType> oneDimensionalFilteredData;
+    const auto twoDimensionalFilteredData = spectre::core::functional::filter(dataToFilter, individual.getData());
+    std::vector<spectre::supervised::DataType> oneDimensionalFilteredData;
     oneDimensionalFilteredData.reserve(twoDimensionalFilteredData.size() * twoDimensionalFilteredData[0].size());
     for (const auto& observation: twoDimensionalFilteredData)
     {
         oneDimensionalFilteredData.insert(oneDimensionalFilteredData.end(), observation.begin(), observation.end());
     }
-    const auto filteredLabels = libPlatform::Functional::filter(m_Dataset.trainingSet.GetSampleMetadata(), individual.getData());
-    OpenCvDataset individualDataset(oneDimensionalFilteredData, filteredLabels);
+    const auto filteredLabels = spectre::core::functional::filter(m_Dataset.trainingSet.GetSampleMetadata(), individual.getData());
+    supervised::OpenCvDataset individualDataset(oneDimensionalFilteredData, filteredLabels);
 
     const auto result = getResultMatrix(std::move(individualDataset), individual);
 
     return result.DiceIndex;
 }
 
-ConfusionMatrix SVMFitnessFunction::getResultMatrix(const OpenCvDataset& data, const Individual& individual) const
+supervised::ConfusionMatrix SVMFitnessFunction::getResultMatrix(const supervised::OpenCvDataset& data, const Individual& individual) const
 {
-    Svm svm(m_SvmIterations, m_SvmTolerance);
+    supervised::Svm svm(m_SvmIterations, m_SvmTolerance);
     const auto trainingBegin = clock();
     svm.Fit(data);
     const auto trainingEnd = clock();
@@ -75,13 +73,13 @@ ConfusionMatrix SVMFitnessFunction::getResultMatrix(const OpenCvDataset& data, c
     const auto predictions = svm.Predict((m_Dataset.testSet));
     const auto classificationEnd = clock();
     const auto classificationTime = double(classificationEnd - classificationBegin) / CLOCKS_PER_SEC;
-    ConfusionMatrix confusions(predictions, m_Dataset.testSet.GetSampleMetadata());
+    supervised::ConfusionMatrix confusions(predictions, m_Dataset.testSet.GetSampleMetadata());
 
-    std::unique_ptr<ConfusionMatrix> validationConfusions;
+    std::unique_ptr<supervised::ConfusionMatrix> validationConfusions;
     if (m_IndependentValidation != nullptr)
     {
         const auto validationPredictions = svm.Predict(*m_IndependentValidation);
-        validationConfusions = std::make_unique<ConfusionMatrix>(validationPredictions, m_IndependentValidation->GetSampleMetadata());
+        validationConfusions = std::make_unique<supervised::ConfusionMatrix>(validationPredictions, m_IndependentValidation->GetSampleMetadata());
     }
 
     m_RaportGenerator.Write(confusions,

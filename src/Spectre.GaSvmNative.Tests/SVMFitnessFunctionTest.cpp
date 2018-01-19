@@ -18,15 +18,15 @@ limitations under the License.
 */
 
 #include <gtest/gtest.h>
-#include "Spectre.libException/InconsistentArgumentSizesException.h"
-#include "Spectre.libPlatform/Filter.h"
 #include "Spectre.GaSvmNative/SVMFitnessFunction.h"
+#include "Spectre.libException/InconsistentArgumentSizesException.h"
 
-namespace
+namespace spectre::scenario::gasvm
 {
-using namespace Spectre::libClassifier;
-using namespace Spectre::GaSvmNative;
-
+using namespace spectre::supervised;
+using namespace spectre::core::exception;
+using namespace spectre::algorithm::genetic;
+      
 class SVMFitnessFunctionTest : public ::testing::Test
 {
 public:
@@ -57,15 +57,15 @@ TEST_F(SVMFitnessFunctionTest, correct_svm_initialization)
 TEST_F(SVMFitnessFunctionTest, svm_fit)
 {
     SVMFitnessFunction svm(std::move(data), m_ReportGenerator);
-    Spectre::libGenetic::Individual individual(std::vector<bool> { true, false, true, true, false, false, true });
-    EXPECT_NO_THROW(svm.computeFitness(individual));
+    Individual individual(std::vector<bool> { true, false, true, true, false, false, true });
+    EXPECT_NO_THROW(svm(individual));
 }
 
 TEST_F(SVMFitnessFunctionTest, throws_when_fitting_svm_on_inconsistent_size_individual)
 {
     SVMFitnessFunction svm(std::move(data), m_ReportGenerator);
-    Spectre::libGenetic::Individual too_short_individual({ true, false, true, true, false, true });
-    EXPECT_THROW(svm.computeFitness(too_short_individual), Spectre::libException::InconsistentArgumentSizesException);
+    Individual too_short_individual({ true, false, true, true, false, true });
+    EXPECT_THROW(svm(too_short_individual), InconsistentArgumentSizesException);
 }
 
 }
