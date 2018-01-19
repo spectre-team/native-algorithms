@@ -1,5 +1,5 @@
 /*
-* InconsistentMinimalAndMaximalFillupException.h
+* InconsistentMinimalAndMaximalFillupException.cpp
 * Thrown when minimal fillup is greater than maximal.
 *
 Copyright 2018 Grzegorz Mrukwa, Wojciech Wilgierz
@@ -17,23 +17,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#pragma once
-#include "Spectre.libException/ExceptionBase.h"
-
+#include <string>
+#include "InconsistentMinimalAndMaximalFillupException.h"
 
 namespace spectre::algorithm::genetic
 {
-/// <summary>
-/// Thrown when minimal and maximal fillup values are inconsistent.
-/// </summary>
-class InconsistentMinimalAndMaximalFillupException : public core::exception::ExceptionBase
-{
-public:
-    /// <summary>
-    /// Initializes a new instance of the <see cref="InconsistentMinimalAndMaximalFillupException"/> class.
-    /// </summary>
-    /// <param name="minimal">The minimal fillup value.</param>
-    /// <param name="maximal">The maximal fillup value.</param>
-    InconsistentMinimalAndMaximalFillupException(size_t minimal, size_t maximal);
-};
+InconsistentMinimalAndMaximalFillupException::InconsistentMinimalAndMaximalFillupException(size_t minimal, size_t maximal) :
+    ExceptionBase("minimal value of fillup: " + std::to_string(minimal) + " is greater than its maximum value: " + std::to_string(maximal)) { }
 }
