@@ -22,17 +22,17 @@ limitations under the License.
 #include "RaportGenerator.h"
 #include "Spectre.libException/ArgumentEqualZeroException.h"
 
-namespace Spectre::GaSvmNative
+namespace spectre::scenario::gasvm
 {
-RaportGenerator::RaportGenerator(std::string filename, unsigned int populationSize, const std::string& separator):
-    m_Separator(separator),
-    m_IndividualsProcessed(0),
-    m_PopulationSize(populationSize),
-    m_Filename(filename)
+scenario::gasvm::RaportGenerator::RaportGenerator(std::string filename, unsigned int populationSize, const std::string& separator)
+    : m_Separator(separator),
+      m_IndividualsProcessed(0),
+      m_PopulationSize(populationSize),
+      m_Filename(filename)
 {
     if (m_PopulationSize == 0)
     {
-        throw libException::ArgumentEqualZeroException(populationSize);
+        throw core::exception::ArgumentEqualZeroException(populationSize);
     }
     m_File.open(filename + ".csv");
     m_File << "generation" << m_Separator;
@@ -55,12 +55,12 @@ RaportGenerator::RaportGenerator(std::string filename, unsigned int populationSi
     omp_init_lock(&m_WriteLock);
 }
 
-void RaportGenerator::Write(const libClassifier::ConfusionMatrix& matrix,
-                            const libGenetic::Individual& individual,
+void scenario::gasvm::RaportGenerator::Write(const spectre::supervised::ConfusionMatrix& matrix,
+                            const spectre::algorithm::genetic::Individual& individual,
                             double trainingTime,
                             double meanClassificationTime,
                             unsigned int numberOfSupportVectors,
-                            const libClassifier::ConfusionMatrix* validationResults)
+                            const spectre::supervised::ConfusionMatrix* validationResults)
 {
     auto count = 0u;
     for(auto bit: individual)
@@ -101,7 +101,7 @@ void RaportGenerator::Write(const libClassifier::ConfusionMatrix& matrix,
 }
 
 
-RaportGenerator::~RaportGenerator()
+scenario::gasvm::RaportGenerator::~RaportGenerator()
 {
     m_File.close();
     omp_destroy_lock(&m_WriteLock);

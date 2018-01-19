@@ -20,12 +20,12 @@ limitations under the License.
 #pragma once
 #include "ExceptionBase.h"
 
-namespace Spectre::libException
+namespace spectre::core::exception
 {
     /// <summary>
     /// Thrown when function argument is empty.
     /// </summary>
-    class ArgumentEqualZeroException : public ExceptionBase
+    class ArgumentEqualZeroException : public spectre::core::exception::ExceptionBase
     {
     public:
         /// <summary>

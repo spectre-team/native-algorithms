@@ -22,7 +22,7 @@ limitations under the License.
 
 namespace
 {
-using namespace Spectre::GaSvmNative;
+    using namespace spectre::scenario::gasvm;
 
 TEST(RaportGeneratorInitialization, initializes)
 {
