@@ -134,6 +134,9 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
+    <ItemGroup>
+    <ClInclude Include="HeatmapDataScalingAlgorithm.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ItemGroup>
     <None Include="packages.config">
