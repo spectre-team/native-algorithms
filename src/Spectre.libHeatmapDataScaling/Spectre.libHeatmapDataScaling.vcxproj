@@ -136,6 +136,10 @@
   </ItemDefinitionGroup>
     <ItemGroup>
     <ClInclude Include="HeatmapDataScalingAlgorithm.h" />
+    <ClInclude Include="Normalization.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Normalization.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ItemGroup>
