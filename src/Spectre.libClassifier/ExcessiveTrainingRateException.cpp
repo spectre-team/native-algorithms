@@ -1,6 +1,6 @@
 /*
-* Types.h
-* Types used in classifiers.
+* ExcessiveTrainingRateException.cpp
+* Thrown when training rate is greater than one.
 *
 Copyright 2017 Spectre Team
 
@@ -17,19 +17,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#pragma once
-#include <random>
-#include <opencv2/core/mat.hpp>
-#include <span.h>
-#include "Spectre.libDataset/Empty.h"
+#include "ExcessiveTrainingRateException.h"
 
-namespace spectre::supervised
+namespace spectre::supervised::exception
 {
-    using DataType = float;
-    using Observation = gsl::span<const DataType>;
-    using Label = signed;
-    const auto CV_TYPE = CV_32FC1;
-    const auto CV_LABEL_TYPE = CV_32SC1;
-    using RandomNumberGenerator = std::mt19937_64;
-    using Seed = _ULonglong; // @gmrukwa: from mt19937_64
+ExcessiveTrainingRateException::ExcessiveTrainingRateException(double actual) :
+    ArgumentOutOfRangeException<double>("trainingRate", 0, 1, actual) { }
 }

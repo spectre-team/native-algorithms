@@ -1,6 +1,6 @@
 /*
-* Types.h
-* Types used in classifiers.
+* NotABinaryLabelException
+* Thrown when label was expected to be a binary
 *
 Copyright 2017 Spectre Team
 
@@ -17,19 +17,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#pragma once
-#include <random>
-#include <opencv2/core/mat.hpp>
-#include <span.h>
-#include "Spectre.libDataset/Empty.h"
+#include "NotABinaryLabelException.h"
 
-namespace spectre::supervised
+namespace spectre::supervised::exception
 {
-    using DataType = float;
-    using Observation = gsl::span<const DataType>;
-    using Label = signed;
-    const auto CV_TYPE = CV_32FC1;
-    const auto CV_LABEL_TYPE = CV_32SC1;
-    using RandomNumberGenerator = std::mt19937_64;
-    using Seed = _ULonglong; // @gmrukwa: from mt19937_64
+NotABinaryLabelException::NotABinaryLabelException(Label label, size_t location, std::string collection):
+    ExceptionBase("was: " + std::to_string(label) + ", at: " + std::to_string(location) + ", in: " + collection) { }
 }
