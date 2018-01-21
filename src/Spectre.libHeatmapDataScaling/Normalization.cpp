@@ -18,8 +18,7 @@ limitations under the License.
 
 namespace Spectre::libHeatmapDataScaling
 {
-	Normalization::Normalization(const int _min, const int _max) 
-		: min(_min), max(_max) { };
+	Normalization::Normalization(const int _min, const int _max) : min(_min), max(_max) { };
 
 	std::vector<double> Normalization::scaleData(const gsl::span<double> intensities)
 	{
