@@ -36,11 +36,13 @@ namespace
         MeanAbsoluteDeviationNoiseEstimator estimator;
     };
 
-    TEST_F(MeanAbsoluteDeviationNoiseEstimatorTest, estimate_noise)
+    TEST_F(MeanAbsoluteDeviationNoiseEstimatorTest, estimates_noise_for_regular_input)
     {
         Signal signal = { 1.0f, 2.0f, 3.0f };
+        DataType maxAbsoluteError = 0.0001;
         constexpr DataType result = static_cast<DataType>(1.4650890114825907);
+
         DataType estimate = estimator.Estimate(signal);
-        ASSERT_EQ(estimate, result);
+        ASSERT_NEAR(estimate, result, maxAbsoluteError);
     }
 }

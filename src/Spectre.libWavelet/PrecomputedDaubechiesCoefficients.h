@@ -52,7 +52,7 @@ constexpr std::array<const DataType, 8> DecompositionYhNumerator{
     -precomputedDaubechiesCoefficient[6],
     -precomputedDaubechiesCoefficient[7]
 };
-constexpr std::array<const DataType, 8> DecompositionYlNumerator{ // @gmrukwa: reverse of f0
+constexpr std::array<const DataType, 8> DecompositionYlNumerator{
     -precomputedDaubechiesCoefficient[7],
     precomputedDaubechiesCoefficient[6],
     precomputedDaubechiesCoefficient[5],
@@ -62,7 +62,7 @@ constexpr std::array<const DataType, 8> DecompositionYlNumerator{ // @gmrukwa: r
     precomputedDaubechiesCoefficient[1],
     precomputedDaubechiesCoefficient[0]
 };
-constexpr std::array<const DataType, 8> ReconstructionVhNumerator{ // @gmrukwa: reverse of h1
+constexpr std::array<const DataType, 8> ReconstructionVhNumerator{
     -precomputedDaubechiesCoefficient[7],
     -precomputedDaubechiesCoefficient[6],
     precomputedDaubechiesCoefficient[5],

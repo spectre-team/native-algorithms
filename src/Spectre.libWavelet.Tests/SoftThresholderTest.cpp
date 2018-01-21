@@ -39,7 +39,7 @@ namespace
         SoftThresholder tresholder;
     };
 
-    TEST_F(SoftThresholderTest, signal_tresholding)
+    TEST_F(SoftThresholderTest, properly_tresholds_signal)
     {
         Signal input = { 1.0f, 2.0f, 3.0f, 4.0f };
         Signal output = tresholder(input);
