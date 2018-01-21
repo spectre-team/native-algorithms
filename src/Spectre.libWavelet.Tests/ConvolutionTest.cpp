@@ -35,11 +35,12 @@ namespace
         Convolution convolution;
     };
 
-    TEST_F(ConvolutionTest, signal_filtering)
+    TEST_F(ConvolutionTest, properly_convolves_the_kernel_over_a_signal)
     {
-        Signal signal = { 1.0f, 2.0f, 3.0f, 4.0f };
-        Signal result = convolution.Filter(signal);
-        Signal correctResult = { 1.0f, 3.0f, 6.0f, 10.0f };
+        Signal signal = { 1.0, 2.0, 3.0, 4.0 };
+        Signal kernel = { -0.5, 1.0 };
+        Signal result = convolution.Convolve(kernel, signal);
+        Signal correctResult = { -0.5, 0.0, 0.5, 1.0 };
         ASSERT_EQ(correctResult, result);
     }
 }

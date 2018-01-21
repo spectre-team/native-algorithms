@@ -34,10 +34,11 @@ public:
     /// </summary>
     explicit Convolution();
     /// <summary>
-    /// Performs filtering on the signal.
+    /// Convolves the signal using provided kernel.
     /// </summary>
-    /// <param name="signal">Signal to be filtered</param>
+    /// <param name="kernel">Kernel to be used.</param>
+    /// <param name="signal">Signal to be convolved.</param>
     /// <returns>Filtered signal.</returns>
-    Signal Filter(const Signal& signal);
+    Signal Convolve(const Signal& kernel, const Signal& signal);
 };
 }

@@ -24,16 +24,19 @@ Convolution::Convolution()
 {
 }
 
-Signal Convolution::Filter(const Signal &signal)
+Signal Convolution::Convolve(const Signal& kernel, const Signal &signal)
 {
-    std::vector<DataType> filtered(signal.size());
-    for(unsigned n = 0u; n < signal.size(); ++n)
+    std::vector<DataType> convolved(signal.size());
+    for (unsigned n = 0u; n < signal.size(); ++n)
     {
-        for (unsigned i = 0u; i < filtered.size() && static_cast<int>(n) - static_cast<int>(i) >= 0; ++i)
+        size_t limit = kernel.size() < (n + 1) ? kernel.size() : (n + 1);
+        DataType result = 0.0f; // @sand3r-: speeds the computations up on vc++
+        for (unsigned i = 0u; i < limit; ++i)
         {
-            filtered[n] += signal[n - i];
+            result += kernel[i] * signal[n - i];
         }
+        convolved[n] = result;
     }
-    return filtered;
+    return convolved;
 }
 }
