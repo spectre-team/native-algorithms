@@ -41,9 +41,9 @@ namespace
 
     TEST_F(SoftThresholderTest, properly_tresholds_signal)
     {
-        Signal input = { 1.0f, 2.0f, 3.0f, 4.0f };
+        Signal input = { -1.0f, 2.0f, -3.0f, 4.0f };
         Signal output = tresholder(input);
-        Signal correctOutput = { 0.0f, 1.0f, 2.0f, 3.0f };
+        Signal correctOutput = { -0.0f, 1.0f, -2.0f, 3.0f };
         ASSERT_EQ(correctOutput, output);
     }
 }
