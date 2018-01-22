@@ -96,7 +96,7 @@ void GeneticTrainingSetSelectionScenario::execute(const spectre::supervised::Ope
                                                                             m_SvmIterations,
                                                                             m_SvmTolerance);
                 auto algorithm = m_GaFactory.BuildDefault(std::move(fitnessFunction), m_Seed + runNumber);
-                spectre::algorithm::genetic::GenerationFactory generationFactory(trainingSetSize, popSize, initialFillup);
+                spectre::algorithm::genetic::GenerationFactory generationFactory(popSize, trainingSetSize, initialFillup);
                 spectre::algorithm::genetic::Generation initialGeneration = generationFactory(m_Seed + runNumber);
                 auto finalGeneration = algorithm->evolve(std::move(initialGeneration));
             }
