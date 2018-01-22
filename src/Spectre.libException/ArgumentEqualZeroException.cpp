@@ -20,10 +20,8 @@ limitations under the License.
 
 #include "Spectre.libException/ArgumentEqualZeroException.h"
 
-namespace Spectre::libException
+namespace spectre::core::exception
 {
-
-    ArgumentEqualZeroException::ArgumentEqualZeroException(const int &variableName) :
+    spectre::core::exception::ArgumentEqualZeroException::ArgumentEqualZeroException(const int &variableName) :
         ExceptionBase(variableName + " is equal zero when it shouldn't be.") { }
-
 }

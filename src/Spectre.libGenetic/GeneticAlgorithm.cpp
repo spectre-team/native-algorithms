@@ -28,27 +28,15 @@ GeneticAlgorithm::GeneticAlgorithm(std::unique_ptr<OffspringGenerator> offspring
       m_Scorer(std::move(scorer)),
       m_StopCondition(std::move(stopCondition))
 {
-    if (m_OffspringGenerator != nullptr)
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (m_OffspringGenerator == nullptr)
     {
         throw spectre::core::exception::NullPointerException("offspringGenerator");
     }
-    if (m_Scorer != nullptr)
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (m_Scorer == nullptr)
     {
         throw spectre::core::exception::NullPointerException("scorer");
     }
-    if (m_StopCondition != nullptr)
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (m_StopCondition == nullptr)
     {
         throw spectre::core::exception::NullPointerException("stopCondition");
     }

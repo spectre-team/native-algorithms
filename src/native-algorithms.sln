@@ -88,8 +88,15 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scenario", "scenario", "{B326C03D-FD6F-417F-9D92-477BAA7B1559}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.GaSvmNative", "Spectre.GaSvmNative\Spectre.GaSvmNative.vcxproj", "{ACC9B0E5-4106-4392-A7B6-A8A050759AFB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7417BF00-028B-4797-B58A-6058CA338493} = {7417BF00-028B-4797-B58A-6058CA338493}
+		{7EB0161F-4E8A-4C72-BA18-31B554F411F2} = {7EB0161F-4E8A-4C72-BA18-31B554F411F2}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.GaSvmNative.Tests", "Spectre.GaSvmNative.Tests\Spectre.GaSvmNative.Tests.vcxproj", "{268F145F-5CFE-4634-9D59-0688CEBBF340}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ACC9B0E5-4106-4392-A7B6-A8A050759AFB} = {ACC9B0E5-4106-4392-A7B6-A8A050759AFB}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
