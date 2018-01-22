@@ -32,6 +32,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libDataset.Tests", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libGaussianMixtureModelling.Tests", "Spectre.libGaussianMixtureModelling.Tests\Spectre.libGaussianMixtureModelling.Tests.vcxproj", "{2185C120-7B01-4E2E-B200-858A2D25C715}"
 	ProjectSection(ProjectDependencies) = postProject
+		{7417BF00-028B-4797-B58A-6058CA338493} = {7417BF00-028B-4797-B58A-6058CA338493}
 		{104D9A93-F6D7-4BF4-961F-7C52FEAEA77B} = {104D9A93-F6D7-4BF4-961F-7C52FEAEA77B}
 	EndProjectSection
 EndProject
@@ -44,6 +45,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libException", "Spe
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libGenetic.Tests", "Spectre.libGenetic.Tests\Spectre.libGenetic.Tests.vcxproj", "{F5FFC2E5-66F4-493A-8D77-D47128A719D9}"
 	ProjectSection(ProjectDependencies) = postProject
+		{7417BF00-028B-4797-B58A-6058CA338493} = {7417BF00-028B-4797-B58A-6058CA338493}
+		{76542909-5FC8-405B-8E6D-D2E529162A7A} = {76542909-5FC8-405B-8E6D-D2E529162A7A}
 		{9786751A-6AE1-48D3-938D-4129D0399667} = {9786751A-6AE1-48D3-938D-4129D0399667}
 	EndProjectSection
 EndProject
@@ -70,7 +73,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libStatistics", "Sp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libStatistics.Tests", "Spectre.libStatistics.Tests\Spectre.libStatistics.Tests.vcxproj", "{81F10DE8-B9EF-400F-B3A7-57F2AFF35A14}"
 	ProjectSection(ProjectDependencies) = postProject
+		{7417BF00-028B-4797-B58A-6058CA338493} = {7417BF00-028B-4797-B58A-6058CA338493}
 		{76542909-5FC8-405B-8E6D-D2E529162A7A} = {76542909-5FC8-405B-8E6D-D2E529162A7A}
+		{B7DB309D-3ED6-4771-993D-A1CF3A6436D9} = {B7DB309D-3ED6-4771-993D-A1CF3A6436D9}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libFunctional", "Spectre.libFunctional\Spectre.libFunctional.vcxproj", "{7EB0161F-4E8A-4C72-BA18-31B554F411F2}"
@@ -94,8 +99,15 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unsupervised", "unsupervised", "{1C5130A0-168B-41FA-911C-576D3034F160}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libWavelet", "Spectre.libWavelet\Spectre.libWavelet.vcxproj", "{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}"
+	ProjectSection(ProjectDependencies) = postProject
+		{76542909-5FC8-405B-8E6D-D2E529162A7A} = {76542909-5FC8-405B-8E6D-D2E529162A7A}
+		{7EB0161F-4E8A-4C72-BA18-31B554F411F2} = {7EB0161F-4E8A-4C72-BA18-31B554F411F2}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libWavelet.Tests", "Spectre.libWavelet.Tests\Spectre.libWavelet.Tests.vcxproj", "{5B426532-B8C6-43BD-807A-CF772C731DC1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982} = {3BD3D898-F14B-4129-BAE5-6E3E83E9D982}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
