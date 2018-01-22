@@ -36,6 +36,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ArgumentEqualZeroException.cpp" />
     <ClCompile Include="EmptyArgumentException.cpp">
       <SubType>Source Files</SubType>
     </ClCompile>

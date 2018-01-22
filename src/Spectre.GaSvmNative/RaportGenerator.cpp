@@ -18,8 +18,8 @@ limitations under the License.
 */
 
 #include <string>
-#include "Spectre.libClassifier/ConfusionMatrix.h"
 #include "RaportGenerator.h"
+#include "Spectre.libClassifier/ConfusionMatrix.h"
 #include "Spectre.libException/ArgumentEqualZeroException.h"
 
 namespace spectre::scenario::gasvm
