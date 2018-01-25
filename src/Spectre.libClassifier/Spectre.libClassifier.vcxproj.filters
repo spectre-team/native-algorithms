@@ -60,6 +60,9 @@
     <ClCompile Include="Svm.cpp">
       <Filter>Source Files\Classifiers</Filter>
     </ClCompile>
+    <ClCompile Include="InsufficientDataException.cpp">
+      <Filter>Source Files\Exceptions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenCvDataset.h">
@@ -105,6 +108,9 @@
       <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="NotABinaryLabelException.h">
+      <Filter>Header Files\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="InsufficientDataException.h">
       <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
   </ItemGroup>
