@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libClustering", "Spectre.libClustering\Spectre.libClustering.vcxproj", "{450F225C-4610-4B20-84AE-2ED5B4C8D7C4}"
 EndProject
@@ -85,7 +85,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.GaSvmNative", "Spectre.GaSvmNative\Spectre.GaSvmNative.vcxproj", "{ACC9B0E5-4106-4392-A7B6-A8A050759AFB}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7417BF00-028B-4797-B58A-6058CA338493} = {7417BF00-028B-4797-B58A-6058CA338493}
+		{9786751A-6AE1-48D3-938D-4129D0399667} = {9786751A-6AE1-48D3-938D-4129D0399667}
 		{7EB0161F-4E8A-4C72-BA18-31B554F411F2} = {7EB0161F-4E8A-4C72-BA18-31B554F411F2}
+		{5419AEEB-98B4-4D79-9FCA-A794200073FC} = {5419AEEB-98B4-4D79-9FCA-A794200073FC}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.GaSvmNative.Tests", "Spectre.GaSvmNative.Tests\Spectre.GaSvmNative.Tests.vcxproj", "{268F145F-5CFE-4634-9D59-0688CEBBF340}"
