@@ -21,6 +21,7 @@ limitations under the License.
 #include "Spectre.libClassifier/OpenCvDataset.h"
 #include "Spectre.libClassifier/UnsupportedDatasetTypeException.h"
 #include "Spectre.libClassifier/UntrainedClassifierException.h"
+#include "InsufficientDataException.h"
 
 namespace spectre::supervised
 {
@@ -35,6 +36,22 @@ Svm::Svm(unsigned int iterationsLimit, double tolerance)
 
 void Svm::Fit(LabeledDataset dataset)
 {
+    auto sum = 0u;
+    const auto positive = 1u;
+    const auto negative = 0u;
+    for (size_t i = 0u; i < dataset.size(); ++i)
+    {
+        const auto label = dataset.GetSampleMetadata(i);
+        if (label != negative && label != positive)
+        {
+            throw exception::NotABinaryLabelException(label, i, "dataset");
+        }
+        sum += label;
+    }
+    if (sum == 0u || sum == dataset.size())
+    {
+        throw exception::InsufficientDataException(sum == 0u ? positive : negative);
+    }
     const auto& data = asSupported(dataset);
     m_Svm->clear();
     m_Svm->train(data.getMatData(), cv::ml::ROW_SAMPLE, data.getMatLabels());
