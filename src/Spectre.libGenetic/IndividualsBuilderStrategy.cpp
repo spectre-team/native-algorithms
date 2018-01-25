@@ -31,27 +31,15 @@ IndividualsBuilderStrategy::IndividualsBuilderStrategy(std::unique_ptr<Crossover
     m_Mutation(std::move(mutation)),
     m_ParentSelectionStrategy(std::move(parentSelectionStrategy))
 {
-    if (m_Crossover != nullptr)
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (m_Crossover == nullptr)
     {
         throw spectre::core::exception::NullPointerException("crossover");
     }
-    if (m_Mutation != nullptr)
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (m_Mutation == nullptr)
     {
         throw spectre::core::exception::NullPointerException("mutation");
     }
-    if (m_ParentSelectionStrategy != nullptr)
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (m_ParentSelectionStrategy == nullptr)
     {
         throw spectre::core::exception::NullPointerException("parentSelectionStrategy");
     }
@@ -59,11 +47,7 @@ IndividualsBuilderStrategy::IndividualsBuilderStrategy(std::unique_ptr<Crossover
 
 Generation IndividualsBuilderStrategy::Build(Generation &old, gsl::span<const ScoreType> scores, size_t newSize) const
 {
-    if (old.size() == static_cast<size_t>(scores.size()))
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (old.size() != static_cast<size_t>(scores.size()))
     {
         throw InconsistentGenerationAndScoresLengthException(old.size(), scores.size());
     }
@@ -71,10 +55,30 @@ Generation IndividualsBuilderStrategy::Build(Generation &old, gsl::span<const Sc
     newIndividuals.reserve(newSize);
     for (size_t i = 0; i < newSize; ++i)
     {
-        const auto parents = m_ParentSelectionStrategy->next(old, scores);
-        auto child = (*m_Crossover)(parents.first, parents.second);
-        auto mutant = (*m_Mutation)(std::move(child));
-        newIndividuals.push_back(std::move(mutant));
+        bool correctIndividual = false;
+        do
+        {
+            const auto parents = m_ParentSelectionStrategy->next(old, scores);
+            auto child = (*m_Crossover)(parents.first, parents.second);
+            auto mutant = (*m_Mutation)(std::move(child));
+            int trueValueNumber = 0;
+            for (int j = 0; j < mutant.size(); j++)
+            {
+                if (mutant[j])
+                {
+                    if (trueValueNumber == 0)
+                    {
+                        trueValueNumber++;
+                    }
+                    else
+                    {
+                        correctIndividual = true;
+                        newIndividuals.push_back(std::move(mutant));
+                        break;
+                    }
+                }
+            }
+        } while (correctIndividual == false);
     }
     Generation newGeneration(std::move(newIndividuals));
     return std::move(newGeneration);

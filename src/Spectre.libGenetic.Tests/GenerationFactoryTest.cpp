@@ -46,8 +46,8 @@ class GenerationFactoryInitializationTest : public ::testing::Test
 {
 public:
     GenerationFactoryInitializationTest():
-        generationFatory(generationSize, individualSize, initialFillup),
-        generationFatoryWithBigIndividuals(bigGenerationSize, bigIndividualSize, bigInitialFillup) {}
+        generationFactory(generationSize, individualSize, initialFillup),
+        generationFactoryWithBigIndividuals(bigGenerationSize, bigIndividualSize, bigInitialFillup) {}
 
 protected:
     const size_t generationSize = 1u;
@@ -59,19 +59,19 @@ protected:
     const Seed seed = 0ul;
     const Seed seed1 = 5u;
     const Seed seed2 = 6u;
-    GenerationFactory generationFatory;
-    GenerationFactory generationFatoryWithBigIndividuals;
+    GenerationFactory generationFactory;
+    GenerationFactory generationFactoryWithBigIndividuals;
 
     void SetUp() override
     {
-        generationFatory = GenerationFactory(generationSize, individualSize, initialFillup);
-        generationFatoryWithBigIndividuals = GenerationFactory(bigGenerationSize, bigIndividualSize, bigInitialFillup);
+        generationFactory = GenerationFactory(generationSize, individualSize, initialFillup);
+        generationFactoryWithBigIndividuals = GenerationFactory(bigGenerationSize, bigIndividualSize, bigInitialFillup);
     }
 };
 
 TEST_F(GenerationFactoryInitializationTest, true_amount_equal_to_parameter)
 {
-    Generation testGeneration = generationFatory(seed);
+    Generation testGeneration = generationFactory(seed);
     for (auto i = 0u; i < testGeneration.size(); i++)
     {
         auto trueAmount = 0u;
@@ -88,7 +88,7 @@ TEST_F(GenerationFactoryInitializationTest, true_amount_equal_to_parameter)
 
 TEST_F(GenerationFactoryInitializationTest, create_different_individuals_for_different_seeds)
 {
-    Generation testGeneration = generationFatoryWithBigIndividuals(seed);
+    Generation testGeneration = generationFactoryWithBigIndividuals(seed);
     bool different = false;
 
     ASSERT_EQ(testGeneration[0].size(), testGeneration[1].size());

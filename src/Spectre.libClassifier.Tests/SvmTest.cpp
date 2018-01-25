@@ -71,6 +71,18 @@ TEST_F(SvmTest, predicts_sign)
     }
 }
 
+TEST_F(SvmTest, predicts_small_data)
+{
+    const std::vector<Label> tempLabels = { 1 };
+    const std::vector<DataType> tempFeatures = {
+        1., 1.
+    };
+    OpenCvDataset tempData = std::move(OpenCvDataset(tempFeatures, tempLabels));
+    Svm svm;
+    svm.Fit(tempData);
+    EXPECT_THROW(svm.Predict(tempData), UntrainedClassifierException);
+}
+
 TEST_F(SvmTest, get_support_vector_number_test)
 {
     Svm svm;

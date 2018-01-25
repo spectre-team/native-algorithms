@@ -30,19 +30,11 @@ namespace spectre::algorithm::genetic
 PreservationStrategy::PreservationStrategy(double preservationRate):
     m_PreservationRate(preservationRate)
 {
-    if (preservationRate >= 0)
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (preservationRate < 0)
     {
         throw NegativePreservationRateException(preservationRate);
     }
-    if (preservationRate <= 1)
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (preservationRate > 1)
     {
         throw ExcessivePreservationRateException(preservationRate);
     }
@@ -50,11 +42,7 @@ PreservationStrategy::PreservationStrategy(double preservationRate):
 
 Generation PreservationStrategy::PickBest(const Generation &generation, gsl::span<const ScoreType> scores)
 {
-    if (generation.size() == static_cast<size_t>(scores.size()))
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (generation.size() != static_cast<size_t>(scores.size()))
     {
         throw InconsistentGenerationAndScoresLengthException(generation.size(), scores.size());
     }
