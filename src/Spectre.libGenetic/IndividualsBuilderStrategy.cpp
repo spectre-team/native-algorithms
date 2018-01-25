@@ -53,7 +53,7 @@ Generation IndividualsBuilderStrategy::Build(Generation &old, gsl::span<const Sc
     }
     std::vector<Individual> newIndividuals;
     newIndividuals.reserve(newSize);
-    for (size_t i = 0; i < newSize; ++i)
+    for (size_t i = 0u; i < newSize; ++i)
     {
         bool correctIndividual = false;
         do
@@ -62,7 +62,7 @@ Generation IndividualsBuilderStrategy::Build(Generation &old, gsl::span<const Sc
             auto child = (*m_Crossover)(parents.first, parents.second);
             auto mutant = (*m_Mutation)(std::move(child));
             int trueValueNumber = 0;
-            for (int j = 0; j < mutant.size(); j++)
+            for (size_t j = 0u; j < mutant.size(); j++)
             {
                 if (mutant[j])
                 {
