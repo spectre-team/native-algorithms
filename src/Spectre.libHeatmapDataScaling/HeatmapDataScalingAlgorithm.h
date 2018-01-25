@@ -18,24 +18,24 @@ limitations under the License.
 #include <span.h>
 #include <vector>
 
-namespace Spectre::libHeatmapDataScaling
+namespace Spectre::visualization
 {
+/// <summary>
+/// Abstract, base class for scaling data algorithms.
+/// </summary>
+class HeatmapDataScalingAlgorithm
+{
+public:
     /// <summary>
-    /// Abstract, base class for scaling data algorithms.
+    /// Virtual destructor of base HeatmapDataScalingAlgorithm class.
     /// </summary>
-	class HeatmapDataScalingAlgorithm
-	{
-	public:
-        /// <summary>
-        /// Virtual destructor of base HeatmapDataScalingAlgorithm class.
-        /// </summary>
-		virtual ~HeatmapDataScalingAlgorithm() {};
+    virtual ~HeatmapDataScalingAlgorithm() {};
 
-        /// <summary>
-        /// Method for scaling data using different algorithms for contrast enhancement and heatmap blur.
-        /// </summary>
-        /// <param name="intensities">Vector of floating point values representing intensities for each point on the heatmap.</param>
-        /// <returns>Vector of scaled floating point values representing intensities for each point on the heatmap.</returns>
-		virtual std::vector<double> scaleData(const gsl::span<double> intensities) = 0;
-	};
+    /// <summary>
+    /// Method for scaling data using different algorithms for contrast enhancement and heatmap blur.
+    /// </summary>
+    /// <param name="intensities">Vector of floating point values representing intensities for each point on the heatmap.</param>
+    /// <returns>Vector of scaled floating point values representing intensities for each point on the heatmap.</returns>
+    virtual std::vector<double> scaleData(const gsl::span<double> intensities) = 0;
+};
 }

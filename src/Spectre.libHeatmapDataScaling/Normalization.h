@@ -16,30 +16,30 @@ limitations under the License.
 
 #pragma once
 #include <vector>
-#include "HeatmapDataScalingAlgorithm.h"
+#include "Spectre.libHeatmapDataScaling/HeatmapDataScalingAlgorithm.h"
 
-namespace Spectre::libHeatmapDataScaling
+namespace Spectre::visualization
 {
+/// <summary>
+/// Class containing normalization algorithm implementation.
+/// </summary>
+class Normalization : public HeatmapDataScalingAlgorithm
+{
+public:
     /// <summary>
-    /// Class containing normalization algorithm implementation.
+    /// Initializes a new instance of the <see cref="Normalization"/> class.
     /// </summary>
-	class Normalization : public HeatmapDataScalingAlgorithm
-	{
-	public:
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Normalization"/> class.
-        /// </summary>
-        /// <param name="_min">Minimum value of the range.</param>
-        /// <param name="_max">Maximum value of the range.</param>
-		Normalization(const int _min = 0, const int _max = 100);
+    /// <param name="minIntensityRange">Minimum value of the range.</param>
+    /// <param name="maxIntensityRange">Maximum value of the range.</param>
+    Normalization(const int minIntensityRange = 0, const int maxIntensityRange = 100);
 
-        /// <summary>
-        /// Method for data normalization to the given range.
-        /// </summary>
-        /// <param name="intensities">Vector of floating point values representing intensities for each point on the heatmap.</param>
-        /// <returns>Vector of normalized floating point values representing intensities for each point on the heatmap.</returns>
-		std::vector<double> scaleData(const gsl::span<double> intensities) override;
-	private:
-		const int min, max;
-	};
+    /// <summary>
+    /// Method for data normalization to the given range.
+    /// </summary>
+    /// <param name="intensities">Vector of floating point values representing intensities for each point on the heatmap.</param>
+    /// <returns>Vector of normalized floating point values representing intensities for each point on the heatmap.</returns>
+    std::vector<double> scaleData(const gsl::span<double> intensities) override;
+private:
+    const int minIntensityRange, maxIntensityRange, intensityRange;
+};
 }
