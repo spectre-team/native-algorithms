@@ -55,10 +55,30 @@ Generation IndividualsBuilderStrategy::Build(Generation &old, gsl::span<const Sc
     newIndividuals.reserve(newSize);
     for (size_t i = 0; i < newSize; ++i)
     {
-        const auto parents = m_ParentSelectionStrategy->next(old, scores);
-        auto child = (*m_Crossover)(parents.first, parents.second);
-        auto mutant = (*m_Mutation)(std::move(child));
-        newIndividuals.push_back(std::move(mutant));
+        bool correctIndividual = false;
+        do
+        {
+            const auto parents = m_ParentSelectionStrategy->next(old, scores);
+            auto child = (*m_Crossover)(parents.first, parents.second);
+            auto mutant = (*m_Mutation)(std::move(child));
+            int trueValueNumber = 0;
+            for (int j = 0; j < mutant.size(); j++)
+            {
+                if (mutant[j])
+                {
+                    if (trueValueNumber == 0)
+                    {
+                        trueValueNumber++;
+                    }
+                    else
+                    {
+                        correctIndividual = true;
+                        newIndividuals.push_back(std::move(mutant));
+                        break;
+                    }
+                }
+            }
+        } while (correctIndividual == false);
     }
     Generation newGeneration(std::move(newIndividuals));
     return std::move(newGeneration);
