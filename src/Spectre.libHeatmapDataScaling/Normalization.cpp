@@ -18,7 +18,7 @@ limitations under the License.
 
 namespace Spectre::visualization
 {
-Normalization::Normalization(const int minIntensityRange, const int maxIntensityRange) : 
+Normalization::Normalization(const int minIntensityRange, const int maxIntensityRange) :
     minIntensityRange(minIntensityRange), maxIntensityRange(maxIntensityRange), intensityRange(maxIntensityRange - minIntensityRange) { }
 
 std::vector<double> Normalization::scaleData(const gsl::span<double> intensities)
