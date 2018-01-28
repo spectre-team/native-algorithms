@@ -1,6 +1,6 @@
 /*
-* Normalization.h
-* Class with normalization algorithm implementation.
+* SupressionAlgorithm.h
+* Class with suppresion algorithm implementation for contrast enhancement.
 *
 Copyright 2018 Daniel Babiak
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,31 +15,36 @@ limitations under the License.
 */
 
 #pragma once
-#include <vector>
 #include "Spectre.libHeatmapDataScaling/HeatmapDataScalingAlgorithm.h"
 
 namespace spectre::visualization
 {
 /// <summary>
-/// Class containing normalization algorithm implementation.
+/// Class containing suppression algorithm implementation.
 /// </summary>
-class Normalization : public HeatmapDataScalingAlgorithm
+class SuppressionAlgorithm : public HeatmapDataScalingAlgorithm
 {
 public:
     /// <summary>
-    /// Initializes a new instance of the <see cref="Normalization"/> class.
+    /// Initializes a new instance of the <see cref="SuppressionAlgorithm"/> class.
     /// </summary>
-    /// <param name="minIntensityRange">Minimum value of the range.</param>
-    /// <param name="maxIntensityRange">Maximum value of the range.</param>
-    Normalization(const int minIntensityRange = 0, const int maxIntensityRange = 100);
+    /// <param name="topPercent">Percent of outliers which will be suppressed.</param>
+    SuppressionAlgorithm(const double topPercent = 0.01);
 
     /// <summary>
-    /// Method for data normalization to the given ranges.
+    /// Method for calculating quantile.
+    /// </summary>
+    /// <param name="probability">Determines the quantile.</param>
+    /// <returns>Quantile value.</returns>
+    double calculateQuantile(const gsl::span<double> intensities, const double probability);
+
+    /// <summary>
+    /// Method for scaling data using suppression algorithm for contrast enhancement.
     /// </summary>
     /// <param name="intensities">Vector of floating point values representing intensities for each point on the heatmap.</param>
     /// <returns>Vector of normalized floating point values representing intensities for each point on the heatmap.</returns>
     std::vector<double> scaleData(const gsl::span<double> intensities) override;
 private:
-    const int minIntensityRange, maxIntensityRange, intensityRange;
+    const double topPercent;
 };
 }

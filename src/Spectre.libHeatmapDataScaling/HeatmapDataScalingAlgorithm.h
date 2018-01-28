@@ -18,7 +18,7 @@ limitations under the License.
 #include <span.h>
 #include <vector>
 
-namespace Spectre::visualization
+namespace spectre::visualization
 {
 /// <summary>
 /// Abstract, base class for scaling data algorithms.
