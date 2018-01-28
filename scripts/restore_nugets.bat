@@ -5,9 +5,10 @@ if errorlevel 1 (
 	echo Connection to GMrukwaAppVeyorFeed failed.
 	EXIT /B 1
 )
-nuget restore >nul 2>&1
+nuget restore >nuget.log 2>&1
 if errorlevel 1 (
 	echo NuGet failed to restore packages.
+	type nuget.log
 	EXIT /B 1
 )
 cd ..
