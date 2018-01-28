@@ -16,7 +16,7 @@ limitations under the License.
 
 #include "Spectre.libHeatmapDataScaling/Normalization.h"
 
-namespace Spectre::visualization
+namespace spectre::visualization
 {
 Normalization::Normalization(const int minIntensityRange, const int maxIntensityRange) :
     minIntensityRange(minIntensityRange), maxIntensityRange(maxIntensityRange), intensityRange(maxIntensityRange - minIntensityRange) { }

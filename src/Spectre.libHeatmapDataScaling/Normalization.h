@@ -18,7 +18,7 @@ limitations under the License.
 #include <vector>
 #include "Spectre.libHeatmapDataScaling/HeatmapDataScalingAlgorithm.h"
 
-namespace Spectre::visualization
+namespace spectre::visualization
 {
 /// <summary>
 /// Class containing normalization algorithm implementation.
