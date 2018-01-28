@@ -76,6 +76,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualization", "visualization", "{1ACF6927-D6B8-492B-8386-7FBA7BF70CB5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libHeatmapDataScaling", "Spectre.libHeatmapDataScaling\Spectre.libHeatmapDataScaling.vcxproj", "{6B7BF168-E96C-44D6-ADB7-CADE77E2A654}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libWavelet", "Spectre.libWavelet\Spectre.libWavelet.vcxproj", "{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libWavelet.Tests", "Spectre.libWavelet.Tests\Spectre.libWavelet.Tests.vcxproj", "{5B426532-B8C6-43BD-807A-CF772C731DC1}"

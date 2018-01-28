@@ -26,11 +26,11 @@ std::vector<double> Normalization::scaleData(const gsl::span<double> intensities
     std::vector<double> newIntensities(intensities.size());
     double const oldMin = *min_element(std::begin(intensities), std::end(intensities));
     double const oldMax = *max_element(std::begin(intensities), std::end(intensities));
-    double const differenceBetweenOldMaxAndOldMin = oldMax - oldMin;
+    double const oldRange = oldMax - oldMin;
 
     for (int i = 0; i< intensities.size(); i++)
     {
-        newIntensities[i] = ((intensities[i] - oldMin) * (intensityRange) / (differenceBetweenOldMaxAndOldMin)) + minIntensityRange;
+        newIntensities[i] = ((intensities[i] - oldMin) * (intensityRange) / (oldRange)) + minIntensityRange;
     }
     return newIntensities;
 }
