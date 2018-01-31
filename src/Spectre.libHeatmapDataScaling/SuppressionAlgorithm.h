@@ -42,7 +42,7 @@ public:
     /// Method for scaling data using suppression algorithm for contrast enhancement.
     /// </summary>
     /// <param name="intensities">Vector of floating point values representing intensities for each point on the heatmap.</param>
-    /// <returns>Vector of normalized floating point values representing intensities for each point on the heatmap.</returns>
+    /// <returns>Vector of scaled floating point values representing intensities for each point on the heatmap.</returns>
     std::vector<double> scaleData(const gsl::span<double> intensities) override;
 private:
     const double topPercent;
