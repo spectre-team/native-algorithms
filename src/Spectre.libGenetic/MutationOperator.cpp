@@ -24,12 +24,13 @@ limitations under the License.
 
 namespace spectre::algorithm::genetic
 {
-MutationOperator::MutationOperator(double mutationRate, double bitSwapRate, Seed rngSeed, size_t minimalFillup, size_t maximalFillup):
+MutationOperator::MutationOperator(double mutationRate, double bitSwapRate, Seed rngSeed, size_t minimalFillup, size_t maximalFillup, BaseIndividualFeasibilityCondition* condition):
     m_MutationRate(mutationRate),
     m_BitSwapRate(bitSwapRate),
     m_RandomNumberGenerator(rngSeed),
     m_MinimalFillup(minimalFillup),
-    m_MaximalFillup(maximalFillup)
+    m_MaximalFillup(maximalFillup),
+    m_IndividualFeasibilityCondition(condition)
 {
     if (m_MutationRate < 0 || m_MutationRate > 1) 
     {
@@ -46,6 +47,17 @@ MutationOperator::MutationOperator(double mutationRate, double bitSwapRate, Seed
 }
 
 Individual MutationOperator::operator()(Individual &&individual)
+{
+    Individual mutated(individual);
+    do
+    {
+        auto original(individual);
+        mutated = mutate(std::move(original));
+    } while (m_IndividualFeasibilityCondition != nullptr && !m_IndividualFeasibilityCondition->checkCondition(mutated));
+    return mutated;
+}
+
+Individual MutationOperator::mutate(Individual&& individual)
 {
     auto original(individual);
 
@@ -75,4 +87,5 @@ Individual MutationOperator::operator()(Individual &&individual)
         return original;
     }
 }
+
 }

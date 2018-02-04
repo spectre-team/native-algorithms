@@ -24,10 +24,11 @@ limitations under the License.
 
 namespace spectre::algorithm::genetic
 {
-CrossoverOperator::CrossoverOperator(Seed rngSeed, size_t minimalFillup, size_t maximalFillup):
+CrossoverOperator::CrossoverOperator(Seed rngSeed, size_t minimalFillup, size_t maximalFillup, BaseIndividualFeasibilityCondition* individualFeasibilityCondition):
     m_RandomNumberGenerator(rngSeed),
     m_MinimalFillup(minimalFillup),
-    m_MaximalFillup(maximalFillup)
+    m_MaximalFillup(maximalFillup),
+    m_IndividualFeasibilityCondition(individualFeasibilityCondition)
 {
     if (m_MinimalFillup > m_MaximalFillup)
     {
@@ -41,6 +42,16 @@ Individual CrossoverOperator::operator()(const Individual &first, const Individu
     {
         throw InconsistentChromosomeLengthException(first.size(), second.size());
     }
+    Individual child(first);
+    do
+    {
+         child = cross(first, second);
+    } while (m_IndividualFeasibilityCondition != nullptr && !m_IndividualFeasibilityCondition->checkCondition(child));
+    return child;
+}
+
+Individual CrossoverOperator::cross(const Individual& first, const Individual& second)
+{
     std::uniform_int_distribution<size_t> distribution(0, first.size());
     const auto cuttingPoint = distribution(m_RandomNumberGenerator);
     const auto endOfFirst = first.begin() + cuttingPoint;
@@ -51,7 +62,7 @@ Individual CrossoverOperator::operator()(const Individual &first, const Individu
     phenotype.insert(phenotype.end(), beginningOfSecond, second.end());
 
     auto fillup = 0u;
-    for(auto bit: phenotype)
+    for (auto bit : phenotype)
     {
         fillup += bit;
     }
@@ -65,4 +76,5 @@ Individual CrossoverOperator::operator()(const Individual &first, const Individu
         return first;
     }
 }
+
 }
