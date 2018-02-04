@@ -41,8 +41,8 @@ protected:
     const std::vector<DataType> training_data{ 0.5f, 0.4f, 0.6f, 1.1f, 1.6f, 0.7f, 2.1f, 1.0f, 0.6f,
                                                0.4f, 1.6f, 0.9f, 1.2f, 2.2f, 0.7f, 1.3f, 2.0f, 1.4f, 0.7f, 0.7f, 0.9f};
     const std::vector<DataType> test_data{ 0.8f, 0.3f, 1.2f, 0.7f, 1.9f, 0.2f, 1.2f, 1.3f, 1.2f };
-    const std::vector<Label> training_labels{ 1, 1, 0, 1, 0, 0, 1 };
-    const std::vector<Label> test_labels{ 1, 0, 0 };
+    const std::vector<spectre::supervised::Label> training_labels{ 1, 1, 0, 1, 0, 0, 1 };
+    const std::vector<spectre::supervised::Label> test_labels{ 1, 0, 0 };
     OpenCvDataset trainingSet;
     OpenCvDataset testSet;
     SplittedOpenCvDataset data;

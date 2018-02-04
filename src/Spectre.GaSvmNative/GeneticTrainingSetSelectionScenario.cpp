@@ -27,6 +27,9 @@ limitations under the License.
 #include "RaportGenerator.h"
 #include "SVMFitnessFunction.h"
 #include "Spectre.libGenetic/GenerationFactory.h"
+#include "Spectre.libGenetic/MinimalLengthCondition.h"
+#include "Spectre.libGenetic/MinimalTrueValueNumberCondition.h"
+#include "Spectre.libGenetic/AllLabelTypesIncludedCondition.h"
 
 namespace spectre::scenario::gasvm
 {
@@ -90,12 +93,16 @@ void GeneticTrainingSetSelectionScenario::execute(const spectre::supervised::Ope
                 auto splittedDataset = splitter.split(data);
                 auto trainingSetSize = splittedDataset.trainingSet.size();
 
+                std::unique_ptr<algorithm::genetic::AllLabelTypesIncludedCondition> allLabelCondition = std::make_unique<algorithm::genetic::AllLabelTypesIncludedCondition>(splittedDataset.trainingSet.GetSampleMetadata());
+                std::unique_ptr<algorithm::genetic::MinimalTrueValueNumberCondition> minimalTrueValueNumberCondition = std::make_unique<algorithm::genetic::MinimalTrueValueNumberCondition>(1, std::move(allLabelCondition));
+                std::unique_ptr<algorithm::genetic::MinimalLengthCondition> individualFeasibilityConditions = std::make_unique<algorithm::genetic::MinimalLengthCondition>(2, std::move(minimalTrueValueNumberCondition));
+
                 auto fitnessFunction = std::make_unique<algorithm::genetic::SVMFitnessFunction>(std::move(splittedDataset),
                                                                             raportGenerator,
                                                                             independentValidation,
                                                                             m_SvmIterations,
                                                                             m_SvmTolerance);
-                auto algorithm = m_GaFactory.BuildDefault(std::move(fitnessFunction), m_Seed + runNumber);
+                auto algorithm = m_GaFactory.BuildDefault(std::move(fitnessFunction), m_Seed + runNumber, std::move(individualFeasibilityConditions));
                 spectre::algorithm::genetic::GenerationFactory generationFactory(popSize, trainingSetSize, initialFillup);
                 spectre::algorithm::genetic::Generation initialGeneration = generationFactory(m_Seed + runNumber);
                 auto finalGeneration = algorithm->evolve(std::move(initialGeneration));

@@ -21,6 +21,7 @@ limitations under the License.
 #include <vector>
 #include "Spectre.libDataset/IReadOnlyDataset.h"
 #include "Spectre.libClassifier/Types.h"
+#include "Spectre.libDataset/Empty.h"
 
 namespace spectre::supervised
 {
