@@ -18,6 +18,9 @@ limitations under the License.
 */
 
 #include "GeneticAlgorithmFactory.h"
+#include "MinimalLengthCondition.h"
+#include "AllLabelTypesIncludedCondition.h"
+#include "MinimalTrueValueNumberCondition.h"
 
 
 namespace spectre::algorithm::genetic
@@ -39,11 +42,11 @@ GeneticAlgorithmFactory::GeneticAlgorithmFactory(double mutationRate,
 { }
 
 
-std::unique_ptr<GeneticAlgorithm> GeneticAlgorithmFactory::BuildDefault(std::unique_ptr<FitnessFunction> fitnessFunction,
-                                                                        Seed seed) const
+std::unique_ptr<GeneticAlgorithm> GeneticAlgorithmFactory::BuildDefault(std::unique_ptr<FitnessFunction> fitnessFunction, Seed seed,
+                                                                            std::unique_ptr<BaseIndividualFeasibilityCondition> individualFeasibilityConditions) const
 {
-    auto crossoverOperator = std::make_unique<CrossoverOperator>(seed, m_MinimalFillup, m_MaximalFillup);
-    auto mutationOperator = std::make_unique<MutationOperator>(m_MutationRate, m_BitSwapRate, seed, m_MinimalFillup, m_MaximalFillup);
+    auto crossoverOperator = std::make_unique<CrossoverOperator>(seed, m_MinimalFillup, m_MaximalFillup, individualFeasibilityConditions.get());
+    auto mutationOperator = std::make_unique<MutationOperator>(m_MutationRate, m_BitSwapRate, seed, m_MinimalFillup, m_MaximalFillup, individualFeasibilityConditions.get());
     auto parentSelectionStrategy = std::make_unique<ParentSelectionStrategy>(seed);
     auto individualsBuilderStrategy = std::make_unique<IndividualsBuilderStrategy>(std::move(crossoverOperator), std::move(mutationOperator), std::move(parentSelectionStrategy));
 
