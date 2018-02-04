@@ -93,9 +93,9 @@ void GeneticTrainingSetSelectionScenario::execute(const spectre::supervised::Ope
                 auto splittedDataset = splitter.split(data);
                 auto trainingSetSize = splittedDataset.trainingSet.size();
 
-                std::unique_ptr<algorithm::genetic::AllLabelTypesIncludedCondition> allLabelCondition = std::make_unique<algorithm::genetic::AllLabelTypesIncludedCondition>(splittedDataset.trainingSet.GetSampleMetadata());
-                std::unique_ptr<algorithm::genetic::MinimalTrueValueNumberCondition> minimalTrueValueNumberCondition = std::make_unique<algorithm::genetic::MinimalTrueValueNumberCondition>(1, std::move(allLabelCondition));
-                std::unique_ptr<algorithm::genetic::MinimalLengthCondition> individualFeasibilityConditions = std::make_unique<algorithm::genetic::MinimalLengthCondition>(2, std::move(minimalTrueValueNumberCondition));
+                auto allLabelCondition = std::make_unique<algorithm::genetic::AllLabelTypesIncludedCondition>(splittedDataset.trainingSet.GetSampleMetadata());
+                auto minimalTrueValueNumberCondition = std::make_unique<algorithm::genetic::MinimalTrueValueNumberCondition>(1, std::move(allLabelCondition));
+                auto individualFeasibilityConditions = std::make_unique<algorithm::genetic::MinimalLengthCondition>(2, std::move(minimalTrueValueNumberCondition));
 
                 auto fitnessFunction = std::make_unique<algorithm::genetic::SVMFitnessFunction>(std::move(splittedDataset),
                                                                             raportGenerator,

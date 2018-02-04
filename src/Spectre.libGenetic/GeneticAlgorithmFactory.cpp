@@ -18,9 +18,6 @@ limitations under the License.
 */
 
 #include "GeneticAlgorithmFactory.h"
-#include "MinimalLengthCondition.h"
-#include "AllLabelTypesIncludedCondition.h"
-#include "MinimalTrueValueNumberCondition.h"
 
 
 namespace spectre::algorithm::genetic
@@ -57,7 +54,7 @@ std::unique_ptr<GeneticAlgorithm> GeneticAlgorithmFactory::BuildDefault(std::uni
     auto scorer = std::make_unique<Scorer>(std::move(fitnessFunction), m_NumberOfCores);
     auto stopCondition = std::make_unique<StopCondition>(m_GenerationsNumber);
 
-    auto algorithm = std::make_unique<GeneticAlgorithm>(std::move(offspringGenerator), std::move(scorer), std::move(stopCondition));
+    auto algorithm = std::make_unique<GeneticAlgorithm>(std::move(offspringGenerator), std::move(scorer), std::move(stopCondition), std::move(individualFeasibilityConditions));
 
     return algorithm;
 }
