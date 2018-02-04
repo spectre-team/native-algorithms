@@ -28,7 +28,6 @@ BaseIndividualFeasibilityCondition::BaseIndividualFeasibilityCondition(std::uniq
 
 bool BaseIndividualFeasibilityCondition::checkCondition(const Individual &individual)
 {
-    //TODO zmien na one line return
     if (!this->privateConditionCheck(individual))
     {
         return false;
