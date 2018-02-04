@@ -136,6 +136,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AllLabelTypesIncludedCondition.h">
+      <SubType>Header Files</SubType>
+    </ClInclude>
     <ClInclude Include="DataTypes.h" />
     <ClInclude Include="ExcessivePreservationRateException.h" />
     <ClInclude Include="FitnessFunction.h" />
@@ -144,10 +147,19 @@
     <ClInclude Include="GeneticAlgorithm.h" />
     <ClInclude Include="CrossoverOperator.h" />
     <ClInclude Include="GeneticAlgorithmFactory.h" />
+    <ClInclude Include="BaseIndividualFeasibilityCondition.h">
+      <SubType>Header Files</SubType>
+    </ClInclude>
     <ClInclude Include="InconsistentChromosomeLengthException.h" />
     <ClInclude Include="InconsistentGenerationAndScoresLengthException.h" />
     <ClInclude Include="InconsistentMinimalAndMaximalFillupException.h" />
     <ClInclude Include="IndividualsBuilderStrategy.h" />
+    <ClInclude Include="MinimalLengthCondition.h">
+      <SubType>Header Files</SubType>
+    </ClInclude>
+    <ClInclude Include="MinimalTrueValueNumberCondition.h">
+      <SubType>Header Files</SubType>
+    </ClInclude>
     <ClInclude Include="MutationOperator.h" />
     <ClInclude Include="Individual.h" />
     <ClInclude Include="NegativePreservationRateException.h" />
@@ -159,6 +171,8 @@
     <ClInclude Include="StopCondition.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AllLabelTypesIncludedCondition.cpp" />
+    <ClCompile Include="BaseIndividualFeasibilityCondition.cpp" />
     <ClCompile Include="ExcessivePreservationRateException.cpp" />
     <ClCompile Include="Generation.cpp" />
     <ClCompile Include="GenerationFactory.cpp" />
@@ -168,6 +182,8 @@
     <ClCompile Include="InconsistentChromosomeLengthException.cpp" />
     <ClCompile Include="InconsistentGenerationAndScoresLengthException.cpp" />
     <ClCompile Include="IndividualsBuilderStrategy.cpp" />
+    <ClCompile Include="MinimalLengthCondition.cpp" />
+    <ClCompile Include="MinimalTrueValueNumberCondition.cpp" />
     <ClCompile Include="MutationOperator.cpp" />
     <ClCompile Include="Individual.cpp" />
     <ClCompile Include="NegativePreservationRateException.cpp" />
