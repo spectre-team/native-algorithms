@@ -31,27 +31,15 @@ IndividualsBuilderStrategy::IndividualsBuilderStrategy(std::unique_ptr<Crossover
     m_Mutation(std::move(mutation)),
     m_ParentSelectionStrategy(std::move(parentSelectionStrategy))
 {
-    if (m_Crossover != nullptr)
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (m_Crossover == nullptr)
     {
         throw spectre::core::exception::NullPointerException("crossover");
     }
-    if (m_Mutation != nullptr)
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (m_Mutation == nullptr)
     {
         throw spectre::core::exception::NullPointerException("mutation");
     }
-    if (m_ParentSelectionStrategy != nullptr)
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (m_ParentSelectionStrategy == nullptr)
     {
         throw spectre::core::exception::NullPointerException("parentSelectionStrategy");
     }
@@ -59,11 +47,7 @@ IndividualsBuilderStrategy::IndividualsBuilderStrategy(std::unique_ptr<Crossover
 
 Generation IndividualsBuilderStrategy::Build(Generation &old, gsl::span<const ScoreType> scores, size_t newSize) const
 {
-    if (old.size() == static_cast<size_t>(scores.size()))
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (old.size() != static_cast<size_t>(scores.size()))
     {
         throw InconsistentGenerationAndScoresLengthException(old.size(), scores.size());
     }
