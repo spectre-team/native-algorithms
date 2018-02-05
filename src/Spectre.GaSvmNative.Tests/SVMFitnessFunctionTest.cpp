@@ -26,7 +26,7 @@ namespace spectre::scenario::gasvm
 using namespace spectre::supervised;
 using namespace spectre::core::exception;
 using namespace spectre::algorithm::genetic;
-      
+
 class SVMFitnessFunctionTest : public ::testing::Test
 {
 public:

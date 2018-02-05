@@ -39,7 +39,7 @@ public:
     /// <param name="scorer">The scorer.</param>
     /// <param name="stopCondition">The stop condition.</param>
     /// <param name="individualFeasibilityConditions">The individual feasibility conditions.</param>
-    GeneticAlgorithm(std::unique_ptr<OffspringGenerator> offspringGenerator, std::unique_ptr<Scorer> scorer, std::unique_ptr<StopCondition> stopCondition, 
+    GeneticAlgorithm(std::unique_ptr<OffspringGenerator> offspringGenerator, std::unique_ptr<Scorer> scorer, std::unique_ptr<StopCondition> stopCondition,
                      std::unique_ptr<BaseIndividualFeasibilityCondition> individualFeasibilityConditions = nullptr);
     /// <summary>
     /// Evolves the specified generation.

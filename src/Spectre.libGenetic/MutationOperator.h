@@ -39,7 +39,7 @@ public:
     /// <param name="minimalFillup">The maximal fillup.</param>
     /// <param name="maximalFillup">The minimal fillup.</param>
     /// <param name="individualFeasibilityCondition">The individual feasibility condition.</param>
-    explicit MutationOperator(double mutationRate, double bitSwapRate, Seed rngSeed = 0, size_t minimalFillup=0, size_t maximalFillup=std::numeric_limits<size_t>::max(), 
+    explicit MutationOperator(double mutationRate, double bitSwapRate, Seed rngSeed = 0, size_t minimalFillup=0, size_t maximalFillup=std::numeric_limits<size_t>::max(),
                               BaseIndividualFeasibilityCondition* condition = nullptr);
     /// <summary>
     /// Mutates the specified individual until it matches conditions.
