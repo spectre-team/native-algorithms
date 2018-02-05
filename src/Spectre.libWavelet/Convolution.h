@@ -17,11 +17,14 @@
    limitations under the License.
 */
 #pragma once
+#include <array>
 #include <span.h>
 #include "DataTypes.h"
 
 namespace spectre::algorithm::wavelet
 {
+using Kernel = const std::array<const DataType, 8>;
+
 /// <summary>
 /// Filters the signal using rational transfer function.
 /// The denominator is set to 1.
@@ -39,6 +42,6 @@ public:
     /// <param name="kernel">Kernel to be used.</param>
     /// <param name="signal">Signal to be convolved.</param>
     /// <returns>Filtered signal.</returns>
-    Signal Convolve(const Signal& kernel, const Signal& signal);
+    Signal Convolve(Kernel& kernel, const Signal& signal) const;
 };
 }

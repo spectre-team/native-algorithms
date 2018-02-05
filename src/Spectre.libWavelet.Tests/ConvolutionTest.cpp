@@ -31,16 +31,25 @@ namespace
 
     class ConvolutionTest : public ::testing::Test
     {
+    public:
+        void InitializeSignal(Signal& signal)
+        {
+            for (unsigned i = 0; i < signal.size(); i++)
+            {
+                signal[i] = (DataType)i;
+            }
+        }
     protected:
         Convolution convolution;
     };
 
     TEST_F(ConvolutionTest, properly_convolves_the_kernel_over_a_signal)
     {
-        Signal signal = { 1.0, 2.0, 3.0, 4.0 };
-        Signal kernel = { -0.5, 1.0 };
+        Signal signal(10);
+        InitializeSignal(signal);
+        Kernel kernel = { 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0 };
         Signal result = convolution.Convolve(kernel, signal);
-        Signal correctResult = { -0.5, 0.0, 0.5, 1.0 };
+        Signal correctResult = { 0.0, 0.0, 1.0, 4.0, 10.0, 20.0, 35.0, 56.0, 84.0, 112.0 };
         ASSERT_EQ(correctResult, result);
     }
 }
