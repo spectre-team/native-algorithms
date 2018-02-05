@@ -141,6 +141,7 @@
     <ClCompile Include="MeanAbsoluteDeviationNoiseEstimatorTest.cpp" />
     <ClCompile Include="ConvolutionTest.cpp" />
     <ClCompile Include="SoftThresholderTest.cpp" />
+    <ClCompile Include="WaveletDecomposerRefTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
