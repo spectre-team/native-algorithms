@@ -23,28 +23,29 @@ limitations under the License.
 
 namespace
 {
-    using namespace spectre::algorithm::wavelet;
+using namespace spectre::algorithm::wavelet;
 
-    static void CompareVectors(const std::vector<DataType>& estimate, const std::vector<DataType>& correct)
+static void CompareVectors(const std::vector<DataType>& estimate,
+    const std::vector<DataType>& correct)
+{
+    constexpr DataType maxAbsoluteError = 0.0001;
+    for (unsigned i = 0; i < estimate.size(); i++)
     {
-        constexpr DataType maxAbsoluteError = 0.0001;
-        for (unsigned i = 0; i < estimate.size(); i++)
-        {
-            ASSERT_NEAR(estimate[i], correct[i], maxAbsoluteError);
-        }
+        ASSERT_NEAR(estimate[i], correct[i], maxAbsoluteError);
     }
+}
 
-    TEST(WaveletDecomposerInitialization, initializes)
-    {
-        EXPECT_NO_THROW(WaveletDecomposerRef());
-    }
+TEST(WaveletDecomposerInitialization, initializes)
+{
+    EXPECT_NO_THROW(WaveletDecomposerRef());
+}
 
-    class WaveletDecomposerRefTest : public ::testing::Test
+class WaveletDecomposerRefTest : public ::testing::Test
+{
+public:
+    WaveletDecomposerRefTest()
     {
-    public:
-        WaveletDecomposerRefTest()
-        {
-            lastRowLastHighFrequencyResult = {
+        lastRowLastHighFrequencyResult = {
                 -1.00930961719589e-05,
                 0.000631661429085606,
                 0.00363953257484134,
@@ -61,7 +62,7 @@ namespace
                 -3.09968872155731e-06,
                 0.0
             };
-            firstRowLastHighFrequencyResult = {
+        firstRowLastHighFrequencyResult = {
                 0.0,
                 -8.84442489411620e-06,
                 0.000586138712079808,
@@ -78,7 +79,7 @@ namespace
                 -0.0212504983010336,
                 -1.63488447864066e-06
             };
-            firstHighFrequencyResult = {
+        firstHighFrequencyResult = {
                 0,
                 -0.230377813308897,
                 0.254090943935123,
@@ -97,7 +98,7 @@ namespace
                 -0.380726319282519,
                 -0.0953766160656215
             };
-            firstLowFrequencyResult = {
+        firstLowFrequencyResult = {
                 0.0,
                 -4.06844404044861e-07,
                 2.69624376778159e-05,
@@ -115,7 +116,7 @@ namespace
                 3.55408918941385e-05,
                 0.0
             };
-            lastLowFrequencyResult = {
+        lastLowFrequencyResult = {
                 -4.64283404088808e-07,
                 2.90564870809657e-05,
                 0.000170041467736160,
@@ -133,39 +134,42 @@ namespace
                 0.0,
                 0.0
             };
-        }
-
-        void InitializeSignal(Signal& signal)
-        {
-            for (unsigned i = 0; i < signal.size(); i++)
-            {
-                signal[i] = (DataType)i;
-            }
-        }
-
-    protected:
-        WaveletDecomposerRef decomposer;
-        std::vector<DataType> lastRowLastHighFrequencyResult;
-        std::vector<DataType> firstRowLastHighFrequencyResult;
-        std::vector<DataType> firstHighFrequencyResult;
-        std::vector<DataType> firstLowFrequencyResult;
-        std::vector<DataType> lastLowFrequencyResult;
-    };
-
-    TEST_F(WaveletDecomposerRefTest, decomposes_the_signal)
-    {
-        Signal signal(10);
-        InitializeSignal(signal);
-        WaveletCoefficients coefficients = decomposer.Decompose(std::move(signal));
-
-        // Due to high amount of coefficients generated, only a few sets will be
-        // compared
-        CompareVectors(coefficients.data[0][0], firstHighFrequencyResult);
-        CompareVectors(coefficients.data[WAVELET_LEVELS - 1][0], firstRowLastHighFrequencyResult);
-        CompareVectors(coefficients.data[WAVELET_LEVELS - 1][(1 << (WAVELET_LEVELS - 1)) - 1],
-            lastRowLastHighFrequencyResult);
-        CompareVectors(coefficients.data[WAVELET_LEVELS][0], firstLowFrequencyResult);
-        CompareVectors(coefficients.data[WAVELET_LEVELS][(1 << (WAVELET_LEVELS - 1)) - 1],
-            lastLowFrequencyResult);
     }
+
+    void InitializeSignal(Signal& signal)
+    {
+        for (unsigned i = 0; i < signal.size(); i++)
+        {
+            signal[i] = (DataType)i;
+        }
+    }
+
+protected:
+    WaveletDecomposerRef decomposer;
+    std::vector<DataType> lastRowLastHighFrequencyResult;
+    std::vector<DataType> firstRowLastHighFrequencyResult;
+    std::vector<DataType> firstHighFrequencyResult;
+    std::vector<DataType> firstLowFrequencyResult;
+    std::vector<DataType> lastLowFrequencyResult;
+};
+
+TEST_F(WaveletDecomposerRefTest, decomposes_the_signal)
+{
+    Signal signal(10);
+    InitializeSignal(signal);
+    WaveletCoefficients coefficients = decomposer.Decompose(std::move(signal));
+
+    // Due to high amount of coefficients generated, only a few sets will be
+    // compared
+    CompareVectors(coefficients.data[0][0], firstHighFrequencyResult);
+    CompareVectors(coefficients.data[WAVELET_LEVELS - 1][0],
+        firstRowLastHighFrequencyResult);
+    CompareVectors(
+        coefficients.data[WAVELET_LEVELS - 1][(1 << (WAVELET_LEVELS - 1)) - 1],
+        lastRowLastHighFrequencyResult);
+    CompareVectors(coefficients.data[WAVELET_LEVELS][0], firstLowFrequencyResult);
+    CompareVectors(
+        coefficients.data[WAVELET_LEVELS][(1 << (WAVELET_LEVELS - 1)) - 1],
+        lastLowFrequencyResult);
+}
 }

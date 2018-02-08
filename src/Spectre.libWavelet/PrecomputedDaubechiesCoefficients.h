@@ -1,6 +1,6 @@
 /*
- * precomputedDaubechies4Coefficientss.h
- * Contains precomputed daubechie filters coefficients.
+ * PrecomputedDaubechies4Coefficients.h
+ * Contains precomputed daubechies filters coefficients.
  *
    Copyright 2018 Michal Gallus
 

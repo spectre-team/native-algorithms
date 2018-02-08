@@ -22,38 +22,37 @@ limitations under the License.
 
 namespace spectre::algorithm::wavelet
 {
-    constexpr unsigned int WAVELET_LEVELS = 10;
-    constexpr unsigned int WAVELET_BASIS = 4;
+constexpr unsigned int WAVELET_LEVELS = 10;
+constexpr unsigned int WAVELET_BASIS = 4;
 
-    struct WaveletCoefficients
-    {
-        CoefficientsPerLevel data[WAVELET_LEVELS + 1]; // + 1 for lowest frequency
-    };
+struct WaveletCoefficients
+{
+    CoefficientsPerLevel data[WAVELET_LEVELS + 1]; // + 1 for lowest frequency
+};
 
+/// <summary>
+/// Decomposes the signal into set of Daubechies coefficients.
+/// </summary>
+class WaveletDecomposerRef
+{
+public:
     /// <summary>
-    /// Decomposes the signal into set of Daubechies coefficients.
+    /// Initializes a new instance of the <see cref="WaveletDecomposer"/> class.
     /// </summary>
-    class WaveletDecomposerRef
-    {
-    public:
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WaveletDecomposer"/> class.
-        /// </summary>
-        /// <param name="threshold">Treshold to be used.</param>
-        explicit WaveletDecomposerRef();
-        /// <summary>
-        /// Decomposes the signal into wavelet coefficients.
-        /// </summary>
-        /// <param name="signal">Signal to decompose.</param>
-        /// <returns>Set of Daubechies wavelet coefficients.</returns>
-        WaveletCoefficients Decompose(Signal&& signal) const;
+    explicit WaveletDecomposerRef();
+    /// <summary>
+    /// Decomposes the signal into wavelet coefficients.
+    /// </summary>
+    /// <param name="signal">Signal to decompose.</param>
+    /// <returns>Set of Daubechies wavelet coefficients.</returns>
+    WaveletCoefficients Decompose(Signal&& signal) const;
 
-    private:
-        inline void WaveletDecomposerRef::ApplyFilters(
-            WaveletCoefficients& coefficients,
-            CoefficientsPerLevel& lowFrequencyCoefficients,
-            size_t scale, size_t blockLength, unsigned level) const;
+private:
+    inline void WaveletDecomposerRef::ApplyFilters(
+        WaveletCoefficients& coefficients,
+        CoefficientsPerLevel& lowFrequencyCoefficients,
+        size_t scale, size_t blockLength, unsigned level) const;
 
-        const Convolution m_Convolution;
-    };
+    const Convolution m_Convolution;
+};
 }
