@@ -23,7 +23,7 @@
 
 namespace spectre::algorithm::wavelet
 {
-using Kernel = const std::array<const DataType, 8>;
+using Kernel = std::array<const DataType, 8>;
 
 /// <summary>
 /// Filters the signal using rational transfer function.
@@ -42,6 +42,6 @@ public:
     /// <param name="kernel">Kernel to be used.</param>
     /// <param name="signal">Signal to be convolved.</param>
     /// <returns>Filtered signal.</returns>
-    Signal Convolve(Kernel& kernel, const Signal& signal) const;
+    Signal Convolve(const Kernel& kernel, const Signal& signal) const;
 };
 }
