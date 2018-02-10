@@ -20,6 +20,7 @@ limitations under the License.
 
 #include <gtest/gtest.h>
 #include "Spectre.libWavelet\WaveletDecomposerRef.h"
+#include "Spectre.libFunctional\Range.h"
 
 namespace
 {
@@ -136,14 +137,6 @@ public:
             };
     }
 
-    void InitializeSignal(Signal& signal)
-    {
-        for (unsigned i = 0; i < signal.size(); i++)
-        {
-            signal[i] = (DataType)i;
-        }
-    }
-
 protected:
     WaveletDecomposerRef decomposer;
     std::vector<DataType> lastRowLastHighFrequencyResult;
@@ -155,8 +148,7 @@ protected:
 
 TEST_F(WaveletDecomposerRefTest, decomposes_the_signal)
 {
-    Signal signal(10);
-    InitializeSignal(signal);
+    Signal signal = spectre::core::functional::range<DataType>(10);
     WaveletCoefficients coefficients = decomposer.Decompose(std::move(signal));
 
     // Due to high amount of coefficients generated, only a few sets will be
