@@ -21,20 +21,12 @@ limitations under the License.
 #include <gtest/gtest.h>
 #include "Spectre.libWavelet\WaveletDecomposerRef.h"
 #include "Spectre.libFunctional\Range.h"
+#include <gmock/gmock-matchers.h>
+#include <gmock/gmock-more-actions.h>
 
 namespace
 {
 using namespace spectre::algorithm::wavelet;
-
-static void CompareVectors(const std::vector<DataType>& estimate,
-    const std::vector<DataType>& correct)
-{
-    constexpr DataType maxAbsoluteError = 0.0001;
-    for (unsigned i = 0; i < estimate.size(); i++)
-    {
-        ASSERT_NEAR(estimate[i], correct[i], maxAbsoluteError);
-    }
-}
 
 TEST(WaveletDecomposerInitialization, initializes)
 {
@@ -114,8 +106,7 @@ public:
                 1.23299325679310,
                 1.41702876032074,
                 0.461966379081157,
-                3.55408918941385e-05,
-                0.0
+                3.55408918941385e-05
             };
         lastLowFrequencyResult = {
                 -4.64283404088808e-07,
@@ -132,7 +123,6 @@ public:
                 1.41934784856588,
                 0.463535004863161,
                 6.73843951653069e-05,
-                0.0,
                 0.0
             };
     }
@@ -146,22 +136,54 @@ protected:
     std::vector<DataType> lastLowFrequencyResult;
 };
 
+class DoubleNear : public testing::MatcherInterface<std::tuple<const double&, const double&>>
+{
+public:
+    explicit DoubleNear(double max_abs_error) : m_maxAbsError(max_abs_error) { }
+
+    bool MatchAndExplain(std::tuple<const double&, const double&> x, testing::MatchResultListener* listener) const override
+    {
+        const auto first = std::get<0>(x);
+        const auto second = std::get<1>(x);
+        const auto absoluteDifference = abs(first - second);
+        if (absoluteDifference > m_maxAbsError && listener->IsInterested())
+        {
+            *listener->stream() << "absolute difference is " << absoluteDifference;
+        }
+        return absoluteDifference < m_maxAbsError;
+    }
+
+    void DescribeTo(::std::ostream* os) const override
+    {
+        *os << "absolute difference is lower than " << m_maxAbsError;
+    }
+
+private:
+    const double m_maxAbsError;
+};
+
+
+testing::Matcher<std::tuple<const double&, const double&>> double_near(double max_abs_error)
+{
+    return testing::MakeMatcher(new DoubleNear(max_abs_error));
+}
+
 TEST_F(WaveletDecomposerRefTest, decomposes_the_signal)
 {
     Signal signal = spectre::core::functional::range<DataType>(10);
     WaveletCoefficients coefficients = decomposer.Decompose(std::move(signal));
 
-    // Due to high amount of coefficients generated, only a few sets will be
-    // compared
-    CompareVectors(coefficients.data[0][0], firstHighFrequencyResult);
-    CompareVectors(coefficients.data[WAVELET_LEVELS - 1][0],
-        firstRowLastHighFrequencyResult);
-    CompareVectors(
-        coefficients.data[WAVELET_LEVELS - 1][(1 << (WAVELET_LEVELS - 1)) - 1],
-        lastRowLastHighFrequencyResult);
-    CompareVectors(coefficients.data[WAVELET_LEVELS][0], firstLowFrequencyResult);
-    CompareVectors(
-        coefficients.data[WAVELET_LEVELS][(1 << (WAVELET_LEVELS - 1)) - 1],
-        lastLowFrequencyResult);
+    // Due to high amount of coefficients generated, only a few sets will be compared
+    auto doubleNear = double_near(0.001);
+    EXPECT_THAT(coefficients.data[0][0],
+        testing::Pointwise(doubleNear, firstHighFrequencyResult));
+    EXPECT_THAT(coefficients.data[WAVELET_LEVELS - 1][0],
+        testing::Pointwise(doubleNear, firstRowLastHighFrequencyResult));
+    EXPECT_THAT(coefficients.data[WAVELET_LEVELS - 1][(1 << (WAVELET_LEVELS - 1)) - 1],
+        testing::Pointwise(doubleNear, lastRowLastHighFrequencyResult));
+    EXPECT_THAT(coefficients.data[WAVELET_LEVELS][0],
+        testing::Pointwise(doubleNear, firstLowFrequencyResult));
+    EXPECT_THAT(coefficients.data[WAVELET_LEVELS][(1 << (WAVELET_LEVELS - 1)) - 1],
+        testing::Pointwise(doubleNear, lastLowFrequencyResult));
 }
 }
