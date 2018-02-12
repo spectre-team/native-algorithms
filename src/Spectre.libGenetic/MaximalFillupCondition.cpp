@@ -1,6 +1,6 @@
 /*
-* MinimalTrueValueNumberCondition.cpp
-* Checks, if Individual has at least specific amount of true values.
+* MaximalFillupCondition.cpp
+* Checks, if Individual has at max specific amount of true values.
 *
 Copyright 2018 Spectre Team
 
@@ -17,21 +17,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "MinimalTrueValueNumberCondition.h"
+#include "MaximalFillupCondition.h"
 
 namespace spectre::algorithm::genetic
 {
-MinimalTrueValueNumberCondition::MinimalTrueValueNumberCondition(size_t minimalTrueAmount, std::unique_ptr<BaseIndividualFeasibilityCondition> condition):
+MaximalFillupCondition::MaximalFillupCondition(size_t minimalFillup, std::unique_ptr<BaseIndividualFeasibilityCondition> condition) :
     BaseIndividualFeasibilityCondition(std::move(condition)),
-    m_MinimalTrueAmount(minimalTrueAmount) {}
+    m_MaximalFillup(minimalFillup) {}
 
-bool MinimalTrueValueNumberCondition::privateConditionCheck(const spectre::algorithm::genetic::Individual &individual)
+bool MaximalFillupCondition::currentConditionCheck(const spectre::algorithm::genetic::Individual &individual)
 {
     auto number = 0u;
-    for (bool value: individual.getData())
+    for (bool value : individual.getData())
     {
         number += value;
-        if (number >= m_MinimalTrueAmount) return true;
+        if (number <= m_MaximalFillup) return true;
     }
     return false;
 }

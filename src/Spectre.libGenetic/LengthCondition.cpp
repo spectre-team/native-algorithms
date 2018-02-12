@@ -17,17 +17,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "MinimalLengthCondition.h"
+#include "LengthCondition.h"
 
 namespace spectre::algorithm::genetic
 {
-MinimalLengthCondition::MinimalLengthCondition(size_t minimalLength, std::unique_ptr<BaseIndividualFeasibilityCondition> condition):
+LengthCondition::LengthCondition(size_t length, std::unique_ptr<BaseIndividualFeasibilityCondition> condition):
     BaseIndividualFeasibilityCondition(std::move(condition)),
-    m_MinimalLength(minimalLength) {}
+    m_Length(length) {}
 
-bool MinimalLengthCondition::privateConditionCheck(const spectre::algorithm::genetic::Individual &individual)
+bool LengthCondition::currentConditionCheck(const spectre::algorithm::genetic::Individual &individual)
 {
-    return individual.size() >= m_MinimalLength;
+    return individual.size() == m_Length;
 }
 
 }

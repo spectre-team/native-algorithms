@@ -26,10 +26,9 @@ BaseIndividualFeasibilityCondition::BaseIndividualFeasibilityCondition(std::uniq
     m_Next = std::move(condition);
 }
 
-bool BaseIndividualFeasibilityCondition::checkCondition(const Individual &individual)
+bool BaseIndividualFeasibilityCondition::check(const Individual &individual)
 {
-    //TODO zmien na one line return
-    if (!this->privateConditionCheck(individual))
+    if (!this->currentConditionCheck(individual))
     {
         return false;
     }
@@ -37,7 +36,7 @@ bool BaseIndividualFeasibilityCondition::checkCondition(const Individual &indivi
     {
         return true;
     }
-    return m_Next->checkCondition(individual);
+    return m_Next->check(individual);
 }
 
 }

@@ -39,14 +39,14 @@ protected:
     /// </summary>
     /// <param name="individual">The individual to check.</param>
     /// <returns>true if conditions are fulfilled by an individual.</returns>
-    virtual bool privateConditionCheck(const Individual &individual) = 0;
+    virtual bool currentConditionCheck(const Individual &individual) = 0;
 public:
     /// <summary>
     /// Check individual feasibility if it's correct.
     /// </summary>
     /// <param name="individual">The individual to check.</param>
     /// <returns>bool</returns>
-    bool checkCondition(const Individual &individual);
+    bool check(const Individual &individual);
     virtual ~BaseIndividualFeasibilityCondition() = default;
 private:
     /// <summary>

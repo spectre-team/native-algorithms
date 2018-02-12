@@ -1,6 +1,6 @@
 /*
-* MinimalLengthCondition.h
-* Checks, if Individual is at least of specific length.
+* LengthCondition.h
+* Checks, if Individual is of specific length.
 *
 Copyright 2018 Spectre Team
 
@@ -25,25 +25,25 @@ namespace spectre::algorithm::genetic
 /// <summary>
 /// Checks, if Individual is at least of specific length.
 /// </summary>
-class MinimalLengthCondition : public BaseIndividualFeasibilityCondition
+class LengthCondition : public BaseIndividualFeasibilityCondition
 {
 public:
     /// <summary>
-    /// Initializes a new instance of the <see cref="MinimalLengthCondition"/> class.
+    /// Initializes a new instance of the <see cref="LengthCondition"/> class.
     /// </summary>
-    /// <param name="minimalLength">The minimal length of individual.</param>
+    /// <param name="minimalLength">The length of individual.</param>
     /// <param name="condition">The individual feasibility condition.</param>
-    MinimalLengthCondition(size_t minimalLength, std::unique_ptr<BaseIndividualFeasibilityCondition> condition = nullptr);
+    LengthCondition(size_t length, std::unique_ptr<BaseIndividualFeasibilityCondition> condition = nullptr);
     /// <summary>
     /// Check individual feasibility if it's correct.
     /// </summary>
     /// <param name="individual">The individual to check.</param>
     /// <returns>true if conditions are fulfilled by an individual.</returns>
-    bool privateConditionCheck(const Individual &individual) override;
+    bool currentConditionCheck(const Individual &individual) override;
 private:
     /// <summary>
-    /// The minimal allowed length.
+    /// The allowed length.
     /// </summary>
-    size_t m_MinimalLength;
+    size_t m_Length;
 };
 }
