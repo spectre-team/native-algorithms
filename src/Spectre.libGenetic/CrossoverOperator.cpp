@@ -42,15 +42,15 @@ Individual CrossoverOperator::operator()(const Individual &first, const Individu
     {
         throw InconsistentChromosomeLengthException(first.size(), second.size());
     }
-    Individual child(first);
-    do
+    Individual child = crossWithoutConditions(first, second);
+    while (m_IndividualFeasibilityCondition != nullptr && !m_IndividualFeasibilityCondition->check(child))
     {
-         child = cross(first, second);
-    } while (m_IndividualFeasibilityCondition != nullptr && !m_IndividualFeasibilityCondition->checkCondition(child));
+         child = crossWithoutConditions(first, second);
+    }
     return child;
 }
 
-Individual CrossoverOperator::cross(const Individual& first, const Individual& second)
+Individual CrossoverOperator::crossWithoutConditions(const Individual& first, const Individual& second)
 {
     std::uniform_int_distribution<size_t> distribution(0, first.size());
     const auto cuttingPoint = distribution(m_RandomNumberGenerator);

@@ -41,21 +41,21 @@ public:
                                 BaseIndividualFeasibilityCondition* individualFeasibilityCondition = nullptr);
     virtual ~CrossoverOperator() = default;
     /// <summary>
-    /// Create new individual until it its conditions.
+    /// Create new individual until it fits its conditions.
     /// </summary>
     /// <param name="first">The first parent.</param>
     /// <param name="second">The second parent.</param>
     /// <returns>A child fulfilling conditions.</returns>
     virtual Individual operator()(const Individual &first, const Individual &second);
+
+private:
     /// <summary>
     /// Create new individual.
     /// </summary>
     /// <param name="first">The first parent.</param>
     /// <param name="second">The second parent.</param>
     /// <returns>A child.</returns>
-    virtual Individual cross(const Individual &first, const Individual &second);
-
-private:
+    virtual Individual crossWithoutConditions(const Individual &first, const Individual &second);
     /// <summary>
     /// The random number generator.
     /// </summary>

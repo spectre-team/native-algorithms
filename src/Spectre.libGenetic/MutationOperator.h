@@ -47,14 +47,14 @@ public:
     /// <param name="individual">The individual.</param>
     /// <returns>Mutated individual fulfilling conditions .</returns>
     virtual Individual operator()(Individual &&individual);
+    virtual ~MutationOperator() = default;
+private:
     /// <summary>
     /// Mutates the specified individual.
     /// </summary>
     /// <param name="individual">The individual.</param>
     /// <returns>Mutated individual.</returns>
-    virtual Individual mutate(Individual &&individual);
-    virtual ~MutationOperator() = default;
-private:
+    virtual Individual mutateWithoutConditions(Individual &&individual);
     /// <summary>
     /// The mutation rate.
     /// </summary>

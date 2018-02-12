@@ -54,12 +54,12 @@ Individual MutationOperator::operator()(Individual &&individual)
     do
     {
         auto original(individual);
-        mutated = mutate(std::move(original));
-    } while (m_IndividualFeasibilityCondition != nullptr && !m_IndividualFeasibilityCondition->checkCondition(mutated));
+        mutated = mutateWithoutConditions(std::move(original));
+    } while (m_IndividualFeasibilityCondition != nullptr && !m_IndividualFeasibilityCondition->check(mutated));
     return mutated;
 }
 
-Individual MutationOperator::mutate(Individual&& individual)
+Individual MutationOperator::mutateWithoutConditions(Individual&& individual)
 {
     auto original(individual);
 
