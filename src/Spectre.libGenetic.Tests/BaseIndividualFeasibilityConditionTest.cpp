@@ -41,10 +41,10 @@ TEST(BaseIndividualFeasibilityConditionInitialization, return_true_for_chained_c
 {
     Individual test({ true });
     auto firstCondition = std::make_unique<Tests::MockBaseIndividualFeasibilityCondition>(nullptr);
-    EXPECT_CALL(*firstCondition, currentConditionCheck(test)).WillOnce(testing::Return(true));
+    EXPECT_CALL(*firstCondition, checkCurrentCondition(test)).WillOnce(testing::Return(true));
 
     Tests::MockBaseIndividualFeasibilityCondition secondCondition(std::move(firstCondition));
-    EXPECT_CALL(secondCondition, currentConditionCheck(test)).WillOnce(testing::Return(true));
+    EXPECT_CALL(secondCondition, checkCurrentCondition(test)).WillOnce(testing::Return(true));
 
     EXPECT_TRUE(secondCondition.check(test));
 }
@@ -53,10 +53,10 @@ TEST(BaseIndividualFeasibilityConditionInitialization, return_false_for_first_co
 {
     Individual test({ true });
     auto firstCondition = std::make_unique<Tests::MockBaseIndividualFeasibilityCondition>(nullptr);
-    EXPECT_CALL(*firstCondition, currentConditionCheck(test)).WillOnce(testing::Return(false));
+    EXPECT_CALL(*firstCondition, checkCurrentCondition(test)).WillOnce(testing::Return(false));
 
     Tests::MockBaseIndividualFeasibilityCondition secondCondition(std::move(firstCondition));
-    EXPECT_CALL(secondCondition, currentConditionCheck(test)).WillOnce(testing::Return(true));
+    EXPECT_CALL(secondCondition, checkCurrentCondition(test)).WillOnce(testing::Return(true));
 
     EXPECT_FALSE(secondCondition.check(test));
 }
@@ -67,7 +67,7 @@ TEST(BaseIndividualFeasibilityConditionInitialization, return_false_for_second_c
     auto firstCondition = std::make_unique<Tests::MockBaseIndividualFeasibilityCondition>(nullptr);
 
     Tests::MockBaseIndividualFeasibilityCondition secondCondition(std::move(firstCondition));
-    EXPECT_CALL(secondCondition, currentConditionCheck(test)).WillOnce(testing::Return(false));
+    EXPECT_CALL(secondCondition, checkCurrentCondition(test)).WillOnce(testing::Return(false));
 
     EXPECT_FALSE(secondCondition.check(test));
 }

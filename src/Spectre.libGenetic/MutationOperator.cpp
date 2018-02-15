@@ -50,12 +50,14 @@ MutationOperator::MutationOperator(double mutationRate, double bitSwapRate, Seed
 
 Individual MutationOperator::operator()(Individual &&individual)
 {
-    Individual mutated(individual);
-    do
+    auto original(individual);
+    Individual mutated = mutateWithoutConditions(std::move(original));
+    if (m_IndividualFeasibilityCondition == nullptr) return mutated;
+    while (!m_IndividualFeasibilityCondition->check(mutated))
     {
-        auto original(individual);
-        mutated = mutateWithoutConditions(std::move(original));
-    } while (m_IndividualFeasibilityCondition != nullptr && !m_IndividualFeasibilityCondition->check(mutated));
+        auto temporaryOriginal(individual);
+        mutated = mutateWithoutConditions(std::move(temporaryOriginal));
+    }
     return mutated;
 }
 

@@ -45,23 +45,19 @@ protected:
     const size_t lowLen = 2;
     const Individual mediumIndividual = Individual({ false, false, true, true, false, true, true });
     const Individual shortIndividual = Individual({ true, false, false });
-
-    void SetUp() override
-    {
-    }
 };
 
 TEST_F(MaximalFillupConditionTest, return_true_for_correct_single_condition)
 {
     MaximalFillupCondition condition(lowLen);
-    auto result = condition.currentConditionCheck(shortIndividual);
+    auto result = condition.checkCurrentCondition(shortIndividual);
     EXPECT_TRUE(result);
 }
 
 TEST_F(MaximalFillupConditionTest, return_false_for_too_high_fillup_in_individual)
 {
     MaximalFillupCondition condition(lowLen);
-    auto result = condition.currentConditionCheck(mediumIndividual);
+    auto result = condition.checkCurrentCondition(mediumIndividual);
     EXPECT_FALSE(result);
 }
 }

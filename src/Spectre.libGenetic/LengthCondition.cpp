@@ -25,7 +25,7 @@ LengthCondition::LengthCondition(size_t length, std::unique_ptr<BaseIndividualFe
     BaseIndividualFeasibilityCondition(std::move(condition)),
     m_Length(length) {}
 
-bool LengthCondition::currentConditionCheck(const spectre::algorithm::genetic::Individual &individual)
+bool LengthCondition::checkCurrentCondition(const spectre::algorithm::genetic::Individual &individual)
 {
     return individual.size() == m_Length;
 }

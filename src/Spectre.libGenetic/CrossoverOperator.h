@@ -45,10 +45,8 @@ public:
     /// </summary>
     /// <param name="first">The first parent.</param>
     /// <param name="second">The second parent.</param>
-    /// <returns>A child fulfilling conditions.</returns>
+    /// <returns>A child fulfilling conditions. Operator crossovers individual until created one meets all the conditions.</returns>
     virtual Individual operator()(const Individual &first, const Individual &second);
-
-private:
     /// <summary>
     /// Create new individual.
     /// </summary>
@@ -56,6 +54,7 @@ private:
     /// <param name="second">The second parent.</param>
     /// <returns>A child.</returns>
     virtual Individual crossWithoutConditions(const Individual &first, const Individual &second);
+private:
     /// <summary>
     /// The random number generator.
     /// </summary>

@@ -21,22 +21,22 @@ limitations under the License.
 
 namespace spectre::algorithm::genetic
 {
-BaseIndividualFeasibilityCondition::BaseIndividualFeasibilityCondition(std::unique_ptr<BaseIndividualFeasibilityCondition> condition)
+BaseIndividualFeasibilityCondition::BaseIndividualFeasibilityCondition(std::unique_ptr<BaseIndividualFeasibilityCondition> nextCondition)
 {
-    m_Next = std::move(condition);
+    m_NextCondition = std::move(nextCondition);
 }
 
 bool BaseIndividualFeasibilityCondition::check(const Individual &individual)
 {
-    if (!this->currentConditionCheck(individual))
+    if (!this->checkCurrentCondition(individual))
     {
         return false;
     }
-    if (m_Next == nullptr)
+    if (m_NextCondition == nullptr)
     {
         return true;
     }
-    return m_Next->check(individual);
+    return m_NextCondition->check(individual);
 }
 
 }

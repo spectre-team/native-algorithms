@@ -45,16 +45,16 @@ public:
     /// Mutates the specified individual until it matches conditions.
     /// </summary>
     /// <param name="individual">The individual.</param>
-    /// <returns>Mutated individual fulfilling conditions .</returns>
+    /// <returns>Mutated individual fulfilling conditions. Operator mutates individual until all conditions are met</returns>
     virtual Individual operator()(Individual &&individual);
-    virtual ~MutationOperator() = default;
-private:
     /// <summary>
     /// Mutates the specified individual.
     /// </summary>
     /// <param name="individual">The individual.</param>
     /// <returns>Mutated individual.</returns>
     virtual Individual mutateWithoutConditions(Individual &&individual);
+    virtual ~MutationOperator() = default;
+private:
     /// <summary>
     /// The mutation rate.
     /// </summary>

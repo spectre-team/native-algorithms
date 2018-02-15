@@ -25,15 +25,14 @@ MinimalFillupCondition::MinimalFillupCondition(size_t minimalFillup, std::unique
 BaseIndividualFeasibilityCondition(std::move(condition)),
 m_MinimalFillup(minimalFillup) {}
 
-bool MinimalFillupCondition::currentConditionCheck(const spectre::algorithm::genetic::Individual &individual)
+bool MinimalFillupCondition::checkCurrentCondition(const spectre::algorithm::genetic::Individual &individual)
 {
     auto number = 0u;
     for (bool value: individual.getData())
     {
         number += value;
-        if (number >= m_MinimalFillup) return true;
     }
-    return false;
+    return number >= m_MinimalFillup;
 }
 
 }

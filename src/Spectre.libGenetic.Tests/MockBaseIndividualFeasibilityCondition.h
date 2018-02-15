@@ -2,7 +2,7 @@
 * MockBaseIndividualFeasibilityCondition.h
 * Mock for a base individual feasibility condition.
 *
-Copyright 2017 Grzegorz Mrukwa
+Copyright 2018 Spectre Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ public:
     MockBaseIndividualFeasibilityCondition(std::unique_ptr<BaseIndividualFeasibilityCondition> condition):
         BaseIndividualFeasibilityCondition(std::move(condition)) {}
 
-    MOCK_METHOD1(currentConditionCheck, bool(const Individual &individual));
+    MOCK_METHOD1(checkCurrentCondition, bool(const Individual &individual));
 private:
     std::unique_ptr<BaseIndividualFeasibilityCondition> base_individual_feasibility_condition;
 };
