@@ -126,11 +126,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AlgorithmConstants.h" />
     <ClInclude Include="Convolution.h" />
     <ClInclude Include="DataTypes.h" />
     <ClInclude Include="MeanAbsoluteDeviationNoiseEstimator.h" />
     <ClInclude Include="PrecomputedDaubechiesCoefficients.h" />
     <ClInclude Include="SoftThresholder.h" />
+    <ClInclude Include="WaveletCoefficients.h" />
     <ClInclude Include="WaveletDecomposerRef.h" />
   </ItemGroup>
   <ItemGroup>
