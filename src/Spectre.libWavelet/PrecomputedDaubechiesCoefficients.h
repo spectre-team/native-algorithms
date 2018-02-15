@@ -1,6 +1,6 @@
 /*
- * PrecomputedDaubechiesCoefficients.h
- * Contains precomputed daubechie filters coefficients.
+ * PrecomputedDaubechies4Coefficients.h
+ * Contains precomputed daubechies filters coefficients.
  *
    Copyright 2018 Michal Gallus
 
@@ -22,7 +22,7 @@
 
 namespace spectre::algorithm::wavelet::precomputed
 {
-constexpr std::array<const DataType, 8> precomputedDaubechiesCoefficient{
+constexpr std::array<const DataType, 8> precomputedDaubechies4Coefficients{
     0.23037781330889653408355854935508,
     0.71484657055291567218091586255468,
     0.63088076792985892105036782595562,
@@ -32,44 +32,44 @@ constexpr std::array<const DataType, 8> precomputedDaubechiesCoefficient{
     0.032883011666885168799989713761533,
     0.010597401785069055987764663484541
 };
-constexpr std::array<const DataType, 8> ReconstructionVlNumerator{
-    precomputedDaubechiesCoefficient[0],
-    precomputedDaubechiesCoefficient[1],
-    precomputedDaubechiesCoefficient[2],
-    -precomputedDaubechiesCoefficient[3],
-    -precomputedDaubechiesCoefficient[4],
-    precomputedDaubechiesCoefficient[5],
-    precomputedDaubechiesCoefficient[6],
-    -precomputedDaubechiesCoefficient[7]
+constexpr std::array<const DataType, 8> ReconstructionLowPassFilter{
+    precomputedDaubechies4Coefficients[0],
+    precomputedDaubechies4Coefficients[1],
+    precomputedDaubechies4Coefficients[2],
+    -precomputedDaubechies4Coefficients[3],
+    -precomputedDaubechies4Coefficients[4],
+    precomputedDaubechies4Coefficients[5],
+    precomputedDaubechies4Coefficients[6],
+    -precomputedDaubechies4Coefficients[7]
 };
-constexpr std::array<const DataType, 8> DecompositionYhNumerator{
-    -precomputedDaubechiesCoefficient[0],
-    precomputedDaubechiesCoefficient[1],
-    -precomputedDaubechiesCoefficient[2],
-    -precomputedDaubechiesCoefficient[3],
-    precomputedDaubechiesCoefficient[4],
-    precomputedDaubechiesCoefficient[5],
-    -precomputedDaubechiesCoefficient[6],
-    -precomputedDaubechiesCoefficient[7]
+constexpr std::array<const DataType, 8> DecompositionHighPassFilter{
+    -precomputedDaubechies4Coefficients[0],
+    precomputedDaubechies4Coefficients[1],
+    -precomputedDaubechies4Coefficients[2],
+    -precomputedDaubechies4Coefficients[3],
+    precomputedDaubechies4Coefficients[4],
+    precomputedDaubechies4Coefficients[5],
+    -precomputedDaubechies4Coefficients[6],
+    -precomputedDaubechies4Coefficients[7]
 };
-constexpr std::array<const DataType, 8> DecompositionYlNumerator{
-    -precomputedDaubechiesCoefficient[7],
-    precomputedDaubechiesCoefficient[6],
-    precomputedDaubechiesCoefficient[5],
-    -precomputedDaubechiesCoefficient[4],
-    -precomputedDaubechiesCoefficient[3],
-    precomputedDaubechiesCoefficient[2],
-    precomputedDaubechiesCoefficient[1],
-    precomputedDaubechiesCoefficient[0]
+constexpr std::array<const DataType, 8> DecompositionLowPassFilter{
+    -precomputedDaubechies4Coefficients[7],
+    precomputedDaubechies4Coefficients[6],
+    precomputedDaubechies4Coefficients[5],
+    -precomputedDaubechies4Coefficients[4],
+    -precomputedDaubechies4Coefficients[3],
+    precomputedDaubechies4Coefficients[2],
+    precomputedDaubechies4Coefficients[1],
+    precomputedDaubechies4Coefficients[0]
 };
-constexpr std::array<const DataType, 8> ReconstructionVhNumerator{
-    -precomputedDaubechiesCoefficient[7],
-    -precomputedDaubechiesCoefficient[6],
-    precomputedDaubechiesCoefficient[5],
-    precomputedDaubechiesCoefficient[4],
-    -precomputedDaubechiesCoefficient[3],
-    -precomputedDaubechiesCoefficient[2],
-    precomputedDaubechiesCoefficient[1],
-    -precomputedDaubechiesCoefficient[0]
+constexpr std::array<const DataType, 8> ReconstructionHighPassFilter{
+    -precomputedDaubechies4Coefficients[7],
+    -precomputedDaubechies4Coefficients[6],
+    precomputedDaubechies4Coefficients[5],
+    precomputedDaubechies4Coefficients[4],
+    -precomputedDaubechies4Coefficients[3],
+    -precomputedDaubechies4Coefficients[2],
+    precomputedDaubechies4Coefficients[1],
+    -precomputedDaubechies4Coefficients[0]
 };
 }

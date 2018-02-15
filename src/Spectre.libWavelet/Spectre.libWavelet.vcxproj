@@ -131,11 +131,13 @@
     <ClInclude Include="MeanAbsoluteDeviationNoiseEstimator.h" />
     <ClInclude Include="PrecomputedDaubechiesCoefficients.h" />
     <ClInclude Include="SoftThresholder.h" />
+    <ClInclude Include="WaveletDecomposerRef.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Convolution.cpp" />
     <ClCompile Include="MeanAbsoluteDeviationNoiseEstimator.cpp" />
     <ClCompile Include="SoftThresholder.cpp" />
+    <ClCompile Include="WaveletDecomposerRef.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

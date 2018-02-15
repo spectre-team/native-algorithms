@@ -24,7 +24,7 @@ Convolution::Convolution()
 {
 }
 
-Signal Convolution::Convolve(const Signal& kernel, const Signal &signal)
+Signal Convolution::Convolve(const Kernel& kernel, const Signal &signal) const
 {
     std::vector<DataType> convolved(signal.size());
     for (unsigned n = 0u; n < signal.size(); ++n)

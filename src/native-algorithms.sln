@@ -81,6 +81,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libWavelet", "Spect
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libWavelet.Tests", "Spectre.libWavelet.Tests\Spectre.libWavelet.Tests.vcxproj", "{5B426532-B8C6-43BD-807A-CF772C731DC1}"
 	ProjectSection(ProjectDependencies) = postProject
+		{7EB0161F-4E8A-4C72-BA18-31B554F411F2} = {7EB0161F-4E8A-4C72-BA18-31B554F411F2}
 		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982} = {3BD3D898-F14B-4129-BAE5-6E3E83E9D982}
 	EndProjectSection
 EndProject
