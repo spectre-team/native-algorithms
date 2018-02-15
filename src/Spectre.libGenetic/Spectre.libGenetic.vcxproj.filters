@@ -87,9 +87,6 @@
     <ClInclude Include="GeneticAlgorithmFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="InconsistentMinimalAndMaximalFillupException.h">
-      <Filter>Header Files\Exceptions</Filter>
-    </ClInclude>
     <ClInclude Include="BaseIndividualFeasibilityCondition.h">
       <Filter>Header Files\IndividualFeasibilityConditions</Filter>
     </ClInclude>

@@ -18,15 +18,15 @@ limitations under the License.
 */
 
 #include <gtest/gtest.h>
-#include "Spectre.libGenetic/AllLabelTypesIncludedCondition.h"
+#include "Spectre.GaSvmNative/AllLabelTypesIncludedCondition.h"
 
 namespace
 {
-using namespace spectre::algorithm::genetic;
+using namespace spectre::scenario::gasvm;
 
 TEST(AllLabelTypesIncludedConditionInitialization, initializes_with_one_parameter)
 {
-    const std::vector<Label> labels{ true, true, true, true, true };
+    const std::vector<spectre::supervised::Label> labels{ true, true, true, true, true };
     EXPECT_NO_THROW(AllLabelTypesIncludedCondition condition(labels));
 }
 
@@ -35,10 +35,10 @@ class AllLabelTypesIncludedConditionTest : public ::testing::Test
 public:
     AllLabelTypesIncludedConditionTest() {}
 protected:
-    const Individual individual = Individual({ true, true, true, true, true });
-    const std::vector<Label> allTrueLabels{ true, true, true, true, true };
-    const std::vector<Label> allFalseLabels{ false, false, false, false, false };
-    const std::vector<Label> trueFalseLabels{ true, false, true, true, false };
+    const spectre::algorithm::genetic::Individual individual = spectre::algorithm::genetic::Individual({ true, true, true, true, true });
+    const std::vector<spectre::supervised::Label> allTrueLabels{ true, true, true, true, true };
+    const std::vector<spectre::supervised::Label> allFalseLabels{ false, false, false, false, false };
+    const std::vector<spectre::supervised::Label> trueFalseLabels{ true, false, true, true, false };
 
     void SetUp() override
     {

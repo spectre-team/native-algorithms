@@ -17,12 +17,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "AllLabelTypesIncludedCondition.h"
 #include <span.h>
+#include "AllLabelTypesIncludedCondition.h"
+#include "Spectre.libClassifier/NotABinaryLabelException.h"
 
-namespace spectre::algorithm::genetic
+namespace spectre::scenario::gasvm
 {
-AllLabelTypesIncludedCondition::AllLabelTypesIncludedCondition(gsl::span<const Label> labels, std::unique_ptr<BaseIndividualFeasibilityCondition> condition) :
+AllLabelTypesIncludedCondition::AllLabelTypesIncludedCondition(gsl::span<const supervised::Label> labels, std::unique_ptr<BaseIndividualFeasibilityCondition> condition) :
     BaseIndividualFeasibilityCondition(std::move(condition)),
     m_Labels(labels) {}
 
