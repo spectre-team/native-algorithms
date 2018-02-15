@@ -28,8 +28,10 @@ limitations under the License.
 #include "SVMFitnessFunction.h"
 #include "Spectre.libGenetic/GenerationFactory.h"
 #include "Spectre.libGenetic/MinimalLengthCondition.h"
-#include "Spectre.libGenetic/MinimalTrueValueNumberCondition.h"
 #include "Spectre.libGenetic/AllLabelTypesIncludedCondition.h"
+#include "Spectre.libGenetic/MinimalFillupCondition.h"
+#include "Spectre.libGenetic/MaximalFillupCondition.h"
+#include "Spectre.libGenetic/InconsistentMinimalAndMaximalFillupException.h"
 
 namespace spectre::scenario::gasvm
 {
@@ -59,12 +61,16 @@ GeneticTrainingSetSelectionScenario::GeneticTrainingSetSelectionScenario(double 
                 bitSwapRate,
                 preservationRate,
                 numberOfGenerations,
-                numberOfCores / numberOfRestarts > 0 ? numberOfCores / numberOfRestarts : 1u,
-                minimalFillup,
-                maximalFillup),
+                numberOfCores / numberOfRestarts > 0 ? numberOfCores / numberOfRestarts : 1u),
     m_SvmIterations(svmIterations),
-    m_SvmTolerance(svmTolerance)
+    m_SvmTolerance(svmTolerance),
+    m_MinimalFillup(minimalFillup),
+    m_MaximalFillup(maximalFillup)
 {
+    if (m_MinimalFillup > m_MaximalFillup)
+    {
+        throw algorithm::genetic::InconsistentMinimalAndMaximalFillupException(m_MinimalFillup, m_MaximalFillup);
+    }
     if (m_NumberOfCores == 0)
     {
         throw spectre::core::exception::ArgumentOutOfRangeException<unsigned>("numberOfCores", 1, omp_get_num_procs(), m_NumberOfCores);
@@ -94,8 +100,9 @@ void GeneticTrainingSetSelectionScenario::execute(const spectre::supervised::Ope
                 auto trainingSetSize = splittedDataset.trainingSet.size();
 
                 auto allLabelCondition = std::make_unique<algorithm::genetic::AllLabelTypesIncludedCondition>(splittedDataset.trainingSet.GetSampleMetadata());
-                auto minimalTrueValueNumberCondition = std::make_unique<algorithm::genetic::MinimalTrueValueNumberCondition>(1, std::move(allLabelCondition));
-                auto individualFeasibilityConditions = std::make_unique<algorithm::genetic::MinimalLengthCondition>(2, std::move(minimalTrueValueNumberCondition));
+                auto minimalFillupCondition = std::make_unique<algorithm::genetic::MinimalFillupCondition>(m_MinimalFillup, std::move(allLabelCondition));
+                auto maximalFillupCondition = std::make_unique<algorithm::genetic::MaximalFillupCondition>(m_MaximalFillup, std::move(minimalFillupCondition));
+                auto individualFeasibilityConditions = std::make_unique<algorithm::genetic::MinimalLengthCondition>(2, std::move(maximalFillupCondition));
 
                 auto fitnessFunction = std::make_unique<algorithm::genetic::SVMFitnessFunction>(std::move(splittedDataset),
                                                                             raportGenerator,

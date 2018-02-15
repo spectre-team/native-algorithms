@@ -183,28 +183,4 @@ TEST_F(MutationTest, toggles_in_approximate_percentage_of_cases_for_specified_bi
     EXPECT_LT(numberOfToggles, expectedNumberOfToggles + allowedMissCount);
     EXPECT_GT(numberOfToggles, expectedNumberOfToggles - allowedMissCount);
 }
-
-TEST_F(MutationTest, test_if_returns_original_if_fillup_is_too_low_after_changing_all_true_values_to_false)
-{
-    const auto BIT_SWAP_RATE = 0.5;
-    MutationOperator mutate(ALWAYS, BIT_SWAP_RATE, SEED, 8, 9);
-    const auto last = Individual(std::vector<bool>(individual.begin(), individual.end()));
-    individual = mutate(std::move(individual));
-    for (auto j = 0u; j < individual.size(); j++)
-    {
-        EXPECT_EQ(individual[j], last[j]);
-    }
-}
-
-TEST_F(MutationTest, test_if_returns_original_if_fillup_is_too_high_because_of_no_change_of_data)
-{
-    const auto BIT_SWAP_RATE = 0.5;
-    MutationOperator mutate(NEVER, BIT_SWAP_RATE, SEED, 8, 9);
-    const auto last = Individual(std::vector<bool>(individual.begin(), individual.end()));
-    individual = mutate(std::move(individual));
-    for (auto j = 0u; j < individual.size(); j++)
-    {
-        EXPECT_EQ(individual[j], last[j]);
-    }
-}
 }

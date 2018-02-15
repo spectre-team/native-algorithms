@@ -43,9 +43,7 @@ public:
                             double bitSwapRate,
                             double preservationRate,
                             unsigned generationsNumber,
-                            unsigned numberOfCores,
-                            size_t minimalFillup,
-                            size_t maximalFillup);
+                            unsigned numberOfCores);
     /// <summary>
     /// Creates Genetic Algorithm with default parameter values.
     /// </summary>
@@ -76,13 +74,5 @@ private:
     /// The number of cores.
     /// </summary>
     const unsigned m_NumberOfCores;
-    /// <summary>
-    /// The minimal fillup.
-    /// </summary>
-    const size_t m_MinimalFillup;
-    /// <summary>
-    /// The maximal fillup.
-    /// </summary>
-    const size_t m_MaximalFillup;
 };
 }

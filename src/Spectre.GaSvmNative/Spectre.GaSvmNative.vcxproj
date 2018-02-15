@@ -132,11 +132,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AllLabelTypesIncludedCondition.h" />
     <ClInclude Include="GeneticTrainingSetSelectionScenario.h" />
     <ClInclude Include="RaportGenerator.h" />
     <ClInclude Include="SVMFitnessFunction.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AllLabelTypesIncludedCondition.cpp" />
     <ClCompile Include="GeneticTrainingSetSelectionScenario.cpp" />
     <ClCompile Include="RaportGenerator.cpp" />
     <ClCompile Include="SVMFitnessFunction.cpp" />

@@ -36,7 +36,7 @@ TEST(CrossoverOperatorInitialization, initializes)
 
 TEST(CrossoverOperatorInitialization, throws_on_wrong_fillups_arguments)
 {
-    EXPECT_THROW(CrossoverOperator crossover(0, 2, 1), InconsistentMinimalAndMaximalFillupException);
+    EXPECT_THROW(CrossoverOperator crossover(0), InconsistentMinimalAndMaximalFillupException);
 }
 
 class CrossoverOperatorTest: public ::testing::Test
@@ -161,25 +161,4 @@ TEST_F(CrossoverOperatorTest, cuts_are_from_uniform_distribution)
         EXPECT_LT(count, meanCount + allowedCountMiss) << i;
     }
 }
-
-TEST_F(CrossoverOperatorTest, test_if_return_first_individual_if_fillup_is_too_low)
-{
-    CrossoverOperator crossoverOperator(SEED, 8, 9);
-    const auto child = (*crossover.get())(true_individual, false_individual);
-    for (auto i = 0u; i < child.size(); i++)
-    {
-        EXPECT_EQ(child[i], true_individual[i]);
-    }
-}
-
-TEST_F(CrossoverOperatorTest, test_if_return_first_individual_if_fillup_is_too_high)
-{
-    CrossoverOperator crossoverOperator(SEED, 1, 2);
-    const auto child = (*crossover.get())(true_individual, false_individual);
-    for (auto i = 0u; i < child.size(); i++)
-    {
-        EXPECT_EQ(child[i], true_individual[i]);
-    }
-}
-
 }
