@@ -21,19 +21,19 @@ limitations under the License.
 #include "Spectre.libException/ExceptionBase.h"
 
 
-namespace spectre::algorithm::genetic
+namespace spectre::scenario::gasvm
 {
-/// <summary>
-/// Thrown when minimal and maximal fillup values are inconsistent.
-/// </summary>
-class InconsistentMinimalAndMaximalFillupException : public core::exception::ExceptionBase
-{
-public:
     /// <summary>
-    /// Initializes a new instance of the <see cref="InconsistentMinimalAndMaximalFillupException"/> class.
+    /// Thrown when minimal and maximal fillup values are inconsistent.
     /// </summary>
-    /// <param name="minimal">The minimal fillup value.</param>
-    /// <param name="maximal">The maximal fillup value.</param>
-    InconsistentMinimalAndMaximalFillupException(size_t minimal, size_t maximal);
-};
+    class InconsistentMinimalAndMaximalFillupException : public core::exception::ExceptionBase
+    {
+    public:
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InconsistentMinimalAndMaximalFillupException"/> class.
+        /// </summary>
+        /// <param name="minimal">The minimal fillup value.</param>
+        /// <param name="maximal">The maximal fillup value.</param>
+        InconsistentMinimalAndMaximalFillupException(size_t minimal, size_t maximal);
+    };
 }

@@ -23,7 +23,6 @@ limitations under the License.
 #include "Spectre.libGenetic/Individual.h"
 #include "Spectre.libGenetic/CrossoverOperator.h"
 #include "Spectre.libGenetic/InconsistentChromosomeLengthException.h"
-#include "Spectre.libGenetic/InconsistentMinimalAndMaximalFillupException.h"
 
 namespace
 {
@@ -32,11 +31,6 @@ using namespace spectre::algorithm::genetic;
 TEST(CrossoverOperatorInitialization, initializes)
 {
     EXPECT_NO_THROW(CrossoverOperator crossover(0));
-}
-
-TEST(CrossoverOperatorInitialization, throws_on_wrong_fillups_arguments)
-{
-    EXPECT_THROW(CrossoverOperator crossover(0), InconsistentMinimalAndMaximalFillupException);
 }
 
 class CrossoverOperatorTest: public ::testing::Test

@@ -20,13 +20,14 @@ limitations under the License.
 #pragma once
 #include <span.h>
 #include "Spectre.libGenetic/BaseIndividualFeasibilityCondition.h"
+#include "Spectre.libClassifier/NotABinaryLabelException.h"
 
-namespace spectre::algorithm::genetic
+namespace spectre::scenario::gasvm
 {
 /// <summary>
 /// Checks, if Individual has at least specific amount of true values.
 /// </summary>
-class AllLabelTypesIncludedCondition : public BaseIndividualFeasibilityCondition
+class AllLabelTypesIncludedCondition : public algorithm::genetic::BaseIndividualFeasibilityCondition
 {
 public:
     /// <summary>
@@ -34,17 +35,17 @@ public:
     /// </summary>
     /// <param name="labels">The labels.</param>
     /// <param name="condition">The individual feasibility condition.</param>
-    AllLabelTypesIncludedCondition(gsl::span<const Label> labels, std::unique_ptr<BaseIndividualFeasibilityCondition> condition = nullptr);
+    AllLabelTypesIncludedCondition(gsl::span<const supervised::Label> labels, std::unique_ptr<BaseIndividualFeasibilityCondition> condition = nullptr);
     /// <summary>
     /// Check individual feasibility if it's correct.
     /// </summary>
     /// <param name="individual">The individual to check.</param>
     /// <returns>true if conditions are fulfilled by an individual.</returns>
-    bool currentConditionCheck(const Individual &individual) override;
+    bool currentConditionCheck(const algorithm::genetic::Individual &individual) override;
 private:
     /// <summary>
     /// The labels.
     /// </summary>
-    gsl::span<const Label> m_Labels;
+    gsl::span<const supervised::Label> m_Labels;
 };
 }
