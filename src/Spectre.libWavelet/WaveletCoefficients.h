@@ -1,5 +1,6 @@
 /*
 * WaveletCoefficients.h
+* Decouple wavelet coefficients & constants from decomposer
 * Coefficients used by wavelet decomposition and reconstruction.
 *
 Copyright 2018 Michal Gallus
