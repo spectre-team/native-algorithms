@@ -48,21 +48,21 @@ protected:
 TEST_F(AllLabelTypesIncludedConditionTest, return_true_for_correct_label)
 {
     AllLabelTypesIncludedCondition condition(trueFalseLabels);
-    auto result = condition.currentConditionCheck(individual);
+    auto result = condition.checkCurrentCondition(individual);
     EXPECT_TRUE(result);
 }
 
 TEST_F(AllLabelTypesIncludedConditionTest, return_false_for_all_true_label)
 {
     AllLabelTypesIncludedCondition condition(allTrueLabels);
-    auto result = condition.currentConditionCheck(individual);
+    auto result = condition.checkCurrentCondition(individual);
     EXPECT_FALSE(result);
 }
 
 TEST_F(AllLabelTypesIncludedConditionTest, return_false_for_all_false_label)
 {
     AllLabelTypesIncludedCondition condition(allFalseLabels);
-    auto result = condition.currentConditionCheck(individual);
+    auto result = condition.checkCurrentCondition(individual);
     EXPECT_FALSE(result);
 }
 }

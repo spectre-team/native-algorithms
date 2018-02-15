@@ -27,7 +27,7 @@ AllLabelTypesIncludedCondition::AllLabelTypesIncludedCondition(gsl::span<const s
     BaseIndividualFeasibilityCondition(std::move(condition)),
     m_Labels(labels) {}
 
-bool AllLabelTypesIncludedCondition::currentConditionCheck(const spectre::algorithm::genetic::Individual &individual)
+bool AllLabelTypesIncludedCondition::checkCurrentCondition(const spectre::algorithm::genetic::Individual &individual)
 {
     auto valueSum = 0u;
     auto labelsAmount = 0u;
