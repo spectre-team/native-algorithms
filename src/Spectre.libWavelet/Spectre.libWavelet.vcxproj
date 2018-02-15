@@ -134,6 +134,7 @@
     <ClInclude Include="SoftThresholder.h" />
     <ClInclude Include="WaveletCoefficients.h" />
     <ClInclude Include="WaveletDecomposerRef.h" />
+    <ClInclude Include="WaveletUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Convolution.cpp" />
