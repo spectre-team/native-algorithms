@@ -27,15 +27,9 @@ namespace spectre::algorithm::genetic::Tests
 class MockBaseIndividualFeasibilityCondition : public BaseIndividualFeasibilityCondition
 {
 public:
-    MockBaseIndividualFeasibilityCondition(std::unique_ptr<MockBaseIndividualFeasibilityCondition>()) : 
-        BaseIndividualFeasibilityCondition(std::unique_ptr<MockBaseIndividualFeasibilityCondition>())
-    {
-        ON_CALL(*this, check(testing::_)).WillByDefault(testing::Invoke(&base_individual_feasibility_condition, &BaseIndividualFeasibilityCondition::check));
-    }
-    MockBaseIndividualFeasibilityCondition(const MockBaseIndividualFeasibilityCondition&) = default;
-    MockBaseIndividualFeasibilityCondition& operator=(const MockBaseIndividualFeasibilityCondition&) = default;
+    MockBaseIndividualFeasibilityCondition(std::unique_ptr<BaseIndividualFeasibilityCondition> condition) : 
+        BaseIndividualFeasibilityCondition(std::move(condition)) {}
 
-    MOCK_METHOD1(check, bool(const Individual &individual));
     MOCK_METHOD1(currentConditionCheck, bool(const Individual &individual));
 private:
     std::unique_ptr<BaseIndividualFeasibilityCondition> base_individual_feasibility_condition;

@@ -25,52 +25,50 @@ namespace
 {
 using namespace spectre::algorithm::genetic;
 
-TEST(MinimalLengthConditionInitialization, initializes_with_one_parameter)
+TEST(BaseIndividualFeasibilityConditionInitialization, initializes_with_one_parameter)
 {
     EXPECT_NO_THROW(Tests::MockBaseIndividualFeasibilityCondition condition(nullptr));
 }
 
-TEST(MinimalLengthConditionInitialization, initializes_with_two_parameters)
+TEST(BaseIndividualFeasibilityConditionInitialization, initializes_with_two_parameters)
 {
-    Tests::MockBaseIndividualFeasibilityCondition firstCondition(nullptr);
-    std::unique_ptr<Tests::MockBaseIndividualFeasibilityCondition> secondCondition = std::make_unique<Tests::MockBaseIndividualFeasibilityCondition>(std::move(firstCondition));
+    auto firstCondition = std::make_unique<Tests::MockBaseIndividualFeasibilityCondition>(nullptr);
+    std::unique_ptr<Tests::MockBaseIndividualFeasibilityCondition> secondCondition(std::move(firstCondition));
     EXPECT_NO_THROW(std::unique_ptr<Tests::MockBaseIndividualFeasibilityCondition> thirdCondition(std::move(secondCondition)));
 }
 
-TEST(MinimalLengthConditionInitialization, return_true_for_chained_condition_check)
+TEST(BaseIndividualFeasibilityConditionInitialization, return_true_for_chained_condition_check)
 {
     Individual test({ true });
-    std::unique_ptr<Tests::MockBaseIndividualFeasibilityCondition> firstCondition(nullptr);
+    auto firstCondition = std::make_unique<Tests::MockBaseIndividualFeasibilityCondition>(nullptr);
     EXPECT_CALL(*firstCondition, currentConditionCheck(test)).WillOnce(testing::Return(true));
 
-    std::unique_ptr<Tests::MockBaseIndividualFeasibilityCondition> secondCondition = std::make_unique<Tests::MockBaseIndividualFeasibilityCondition>(std::move(*firstCondition));
-    EXPECT_CALL(*secondCondition, currentConditionCheck(test)).WillOnce(testing::Return(true));
+    Tests::MockBaseIndividualFeasibilityCondition secondCondition(std::move(firstCondition));
+    EXPECT_CALL(secondCondition, currentConditionCheck(test)).WillOnce(testing::Return(true));
 
-    EXPECT_TRUE(secondCondition.get()->check(test));
+    EXPECT_TRUE(secondCondition.check(test));
 }
 
-TEST(MinimalLengthConditionInitialization, return_false_for_first_condition_not_fulfilled)
+TEST(BaseIndividualFeasibilityConditionInitialization, return_false_for_first_condition_not_fulfilled)
 {
     Individual test({ true });
-    std::unique_ptr<Tests::MockBaseIndividualFeasibilityCondition> firstCondition(nullptr);
+    auto firstCondition = std::make_unique<Tests::MockBaseIndividualFeasibilityCondition>(nullptr);
     EXPECT_CALL(*firstCondition, currentConditionCheck(test)).WillOnce(testing::Return(false));
 
-    std::unique_ptr<Tests::MockBaseIndividualFeasibilityCondition> secondCondition = std::make_unique<Tests::MockBaseIndividualFeasibilityCondition>(std::move(*firstCondition));
-    EXPECT_CALL(*secondCondition, currentConditionCheck(test)).WillOnce(testing::Return(true));
+    Tests::MockBaseIndividualFeasibilityCondition secondCondition(std::move(firstCondition));
+    EXPECT_CALL(secondCondition, currentConditionCheck(test)).WillOnce(testing::Return(true));
 
-    EXPECT_FALSE(secondCondition.get()->check(test));
+    EXPECT_FALSE(secondCondition.check(test));
 }
 
-TEST(MinimalLengthConditionInitialization, return_false_for_second_condition_not_fulfilled)
+TEST(BaseIndividualFeasibilityConditionInitialization, return_false_for_second_condition_not_fulfilled)
 {
     Individual test({ true });
-    std::unique_ptr<Tests::MockBaseIndividualFeasibilityCondition> firstCondition(nullptr);
-    EXPECT_CALL(*firstCondition, currentConditionCheck(test)).WillOnce(testing::Return(true));
+    auto firstCondition = std::make_unique<Tests::MockBaseIndividualFeasibilityCondition>(nullptr);
 
-    std::unique_ptr<Tests::MockBaseIndividualFeasibilityCondition> secondCondition = std::make_unique<Tests::MockBaseIndividualFeasibilityCondition>(std::move(*firstCondition));
-    EXPECT_CALL(*secondCondition, currentConditionCheck(test)).WillOnce(testing::Return(false));
+    Tests::MockBaseIndividualFeasibilityCondition secondCondition(std::move(firstCondition));
+    EXPECT_CALL(secondCondition, currentConditionCheck(test)).WillOnce(testing::Return(false));
 
-    EXPECT_FALSE(secondCondition.get()->check(test));
+    EXPECT_FALSE(secondCondition.check(test));
 }
-
 }

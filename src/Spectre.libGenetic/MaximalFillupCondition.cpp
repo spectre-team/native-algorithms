@@ -31,8 +31,8 @@ bool MaximalFillupCondition::currentConditionCheck(const spectre::algorithm::gen
     for (bool value : individual.getData())
     {
         number += value;
-        if (number <= m_MaximalFillup) return true;
     }
+    if (number <= m_MaximalFillup) return true;
     return false;
 }
 
