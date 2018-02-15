@@ -59,6 +59,7 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\PropertySheets\NativeTestProject.props" />
+    <Import Project="..\PropertySheets\OpenCvDependencies.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -67,6 +68,7 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\PropertySheets\NativeTestProject.props" />
+    <Import Project="..\PropertySheets\OpenCvDependencies.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -148,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="MockCrossoverOperator.h" />
     <ClInclude Include="MockFitnessFunction.h" />
+    <ClInclude Include="MockBaseIndividualFeasibilityCondition.h" />
     <ClInclude Include="MockIndividualsBuilderStrategy.h" />
     <ClInclude Include="MockMutationOperator.h" />
     <ClInclude Include="MockOffspringGenerator.h" />
@@ -158,15 +161,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Common\Main.cpp" />
-    <ClCompile Include="AllLabelTypesIncludedConditionTest.cpp" />
+    <ClCompile Include="BaseIndividualFeasibilityConditionTest.cpp" />
     <ClCompile Include="CrossoverOperatorTest.cpp" />
     <ClCompile Include="GenerationFactoryTest.cpp" />
     <ClCompile Include="GenerationTest.cpp" />
     <ClCompile Include="GeneticAlgorithmTest.cpp" />
     <ClCompile Include="IndividualsBuilderStrategyTest.cpp" />
     <ClCompile Include="IndividualTest.cpp" />
-    <ClCompile Include="MinimalLengthConditionTest.cpp" />
-    <ClCompile Include="MinimalTrueValueNumberConditionTest.cpp" />
+    <ClCompile Include="LengthConditionTest.cpp" />
+    <ClCompile Include="MaximalFillupConditionTest.cpp" />
+    <ClCompile Include="MinimalFillupConditionTest.cpp" />
     <ClCompile Include="MutationOperatorTest.cpp" />
     <ClCompile Include="OffspringGeneratorTest.cpp" />
     <ClCompile Include="ParentSelectionStrategyTest.cpp" />

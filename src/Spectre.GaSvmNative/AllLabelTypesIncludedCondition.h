@@ -1,5 +1,5 @@
 /*
-* MinimalTrueValueNumberCondition.h
+* AllLabelTypesIncludedCondition.h
 * Checks, if Individual has at least specific amount of true values.
 *
 Copyright 2018 Spectre Team
@@ -18,6 +18,7 @@ limitations under the License.
 */
 
 #pragma once
+#include <span.h>
 #include "Spectre.libGenetic/BaseIndividualFeasibilityCondition.h"
 
 namespace spectre::algorithm::genetic
@@ -25,25 +26,25 @@ namespace spectre::algorithm::genetic
 /// <summary>
 /// Checks, if Individual has at least specific amount of true values.
 /// </summary>
-class MinimalTrueValueNumberCondition : public BaseIndividualFeasibilityCondition
+class AllLabelTypesIncludedCondition : public BaseIndividualFeasibilityCondition
 {
 public:
     /// <summary>
-    /// Initializes a new instance of the <see cref="MinimalTrueValueNumberCondition"/> class.
+    /// Initializes a new instance of the <see cref="AllLabelTypesIncludedCondition"/> class.
     /// </summary>
-    /// <param name="minimalLength">The minimal amount of true values.</param>
+    /// <param name="labels">The labels.</param>
     /// <param name="condition">The individual feasibility condition.</param>
-    MinimalTrueValueNumberCondition(size_t minimalTrueAmount, std::unique_ptr<BaseIndividualFeasibilityCondition> condition = nullptr);
+    AllLabelTypesIncludedCondition(gsl::span<const Label> labels, std::unique_ptr<BaseIndividualFeasibilityCondition> condition = nullptr);
     /// <summary>
     /// Check individual feasibility if it's correct.
     /// </summary>
     /// <param name="individual">The individual to check.</param>
     /// <returns>true if conditions are fulfilled by an individual.</returns>
-    bool privateConditionCheck(const Individual &individual) override;
+    bool currentConditionCheck(const Individual &individual) override;
 private:
     /// <summary>
-    /// The minimal allowed amount of true values.
+    /// The labels.
     /// </summary>
-    size_t m_MinimalTrueAmount;
+    gsl::span<const Label> m_Labels;
 };
 }

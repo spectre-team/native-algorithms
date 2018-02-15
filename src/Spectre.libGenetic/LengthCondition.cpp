@@ -1,6 +1,6 @@
 /*
-* BaseIndividualFeasibilityCondition.cpp
-* Base class for Individual feasibility condition classes.
+* MinimalLengthCondition.cpp
+* Checks, if Individual is at least of specific length.
 *
 Copyright 2018 Spectre Team
 
@@ -17,26 +17,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "BaseIndividualFeasibilityCondition.h"
+#include "LengthCondition.h"
 
 namespace spectre::algorithm::genetic
 {
-BaseIndividualFeasibilityCondition::BaseIndividualFeasibilityCondition(std::unique_ptr<BaseIndividualFeasibilityCondition> condition)
-{
-    m_Next = std::move(condition);
-}
+LengthCondition::LengthCondition(size_t length, std::unique_ptr<BaseIndividualFeasibilityCondition> condition):
+    BaseIndividualFeasibilityCondition(std::move(condition)),
+    m_Length(length) {}
 
-bool BaseIndividualFeasibilityCondition::check(const Individual &individual)
+bool LengthCondition::currentConditionCheck(const spectre::algorithm::genetic::Individual &individual)
 {
-    if (!this->currentConditionCheck(individual))
-    {
-        return false;
-    }
-    if (m_Next == nullptr)
-    {
-        return true;
-    }
-    return m_Next->check(individual);
+    return individual.size() == m_Length;
 }
 
 }

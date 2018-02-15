@@ -1,6 +1,6 @@
 /*
-* AllLabelTypesIncludedCondition.h
-* Checks, if Individual has at least specific amount of true values.
+* MaximalFillupCondition.h
+* Checks, if Individual has at max specific amount of true values.
 *
 Copyright 2018 Spectre Team
 
@@ -18,23 +18,22 @@ limitations under the License.
 */
 
 #pragma once
-#include <span.h>
 #include "Spectre.libGenetic/BaseIndividualFeasibilityCondition.h"
 
 namespace spectre::algorithm::genetic
 {
 /// <summary>
-/// Checks, if Individual has at least specific amount of true values.
+/// Checks, if Individual has at max specific amount of true values.
 /// </summary>
-class AllLabelTypesIncludedCondition : public BaseIndividualFeasibilityCondition
+class MaximalFillupCondition : public BaseIndividualFeasibilityCondition
 {
 public:
     /// <summary>
-    /// Initializes a new instance of the <see cref="AllLabelTypesIncludedCondition"/> class.
+    /// Initializes a new instance of the <see cref="MaximalFillupCondition"/> class.
     /// </summary>
-    /// <param name="labels">The labels.</param>
+    /// <param name="maximalFillup">The maximal fillup.</param>
     /// <param name="condition">The individual feasibility condition.</param>
-    AllLabelTypesIncludedCondition(gsl::span<const Label> labels, std::unique_ptr<BaseIndividualFeasibilityCondition> condition = nullptr);
+    MaximalFillupCondition(size_t maximalFillup, std::unique_ptr<BaseIndividualFeasibilityCondition> condition = nullptr);
     /// <summary>
     /// Check individual feasibility if it's correct.
     /// </summary>
@@ -43,8 +42,8 @@ public:
     bool currentConditionCheck(const Individual &individual) override;
 private:
     /// <summary>
-    /// The labels.
+    /// The maximal fillup.
     /// </summary>
-    gsl::span<const Label> m_Labels;
+    size_t m_MaximalFillup;
 };
 }

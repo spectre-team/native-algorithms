@@ -93,13 +93,13 @@
     <ClInclude Include="BaseIndividualFeasibilityCondition.h">
       <Filter>Header Files\IndividualFeasibilityConditions</Filter>
     </ClInclude>
-    <ClInclude Include="MinimalLengthCondition.h">
+    <ClInclude Include="LengthCondition.h">
       <Filter>Header Files\IndividualFeasibilityConditions</Filter>
     </ClInclude>
-    <ClInclude Include="MinimalTrueValueNumberCondition.h">
+    <ClInclude Include="MinimalFillupCondition.h">
       <Filter>Header Files\IndividualFeasibilityConditions</Filter>
     </ClInclude>
-    <ClInclude Include="AllLabelTypesIncludedCondition.h">
+    <ClInclude Include="MaximalFillupCondition.h">
       <Filter>Header Files\IndividualFeasibilityConditions</Filter>
     </ClInclude>
   </ItemGroup>
@@ -155,19 +155,16 @@
     <ClCompile Include="GeneticAlgorithmFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InconsistentMinimalAndMaximalFillupException.cpp">
-      <Filter>Source Files\Exceptions</Filter>
-    </ClCompile>
     <ClCompile Include="BaseIndividualFeasibilityCondition.cpp">
       <Filter>Source Files\IndividualFeasibilityConditions</Filter>
     </ClCompile>
-    <ClCompile Include="MinimalLengthCondition.cpp">
+    <ClCompile Include="LengthCondition.cpp">
       <Filter>Source Files\IndividualFeasibilityConditions</Filter>
     </ClCompile>
-    <ClCompile Include="MinimalTrueValueNumberCondition.cpp">
+    <ClCompile Include="MinimalFillupCondition.cpp">
       <Filter>Source Files\IndividualFeasibilityConditions</Filter>
     </ClCompile>
-    <ClCompile Include="AllLabelTypesIncludedCondition.cpp">
+    <ClCompile Include="MaximalFillupCondition.cpp">
       <Filter>Source Files\IndividualFeasibilityConditions</Filter>
     </ClCompile>
   </ItemGroup>

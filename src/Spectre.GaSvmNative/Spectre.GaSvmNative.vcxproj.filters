@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\IndividualFeasibilityConditions">
+      <UniqueIdentifier>{d8ad4816-5226-4f39-b09c-325e03d5c135}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IndividualFeasibilityConditions">
+      <UniqueIdentifier>{cb8c700d-f7c2-4b85-9b17-8ec8e340e622}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneticTrainingSetSelectionScenario.h">
@@ -24,6 +30,9 @@
     <ClInclude Include="SVMFitnessFunction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AllLabelTypesIncludedCondition.h">
+      <Filter>Header Files\IndividualFeasibilityConditions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GeneticTrainingSetSelectionScenario.cpp">
@@ -34,6 +43,9 @@
     </ClCompile>
     <ClCompile Include="SVMFitnessFunction.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AllLabelTypesIncludedCondition.cpp">
+      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

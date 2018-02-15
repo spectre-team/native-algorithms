@@ -59,6 +59,7 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\PropertySheets\NativeProject.props" />
+    <Import Project="..\PropertySheets\OpenCvDependencies.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -67,6 +68,7 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\PropertySheets\NativeProject.props" />
+    <Import Project="..\PropertySheets\OpenCvDependencies.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -134,9 +136,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AllLabelTypesIncludedCondition.h">
-      <SubType>Header Files</SubType>
-    </ClInclude>
     <ClInclude Include="DataTypes.h" />
     <ClInclude Include="ExcessivePreservationRateException.h" />
     <ClInclude Include="FitnessFunction.h" />
@@ -152,10 +151,13 @@
     <ClInclude Include="InconsistentGenerationAndScoresLengthException.h" />
     <ClInclude Include="InconsistentMinimalAndMaximalFillupException.h" />
     <ClInclude Include="IndividualsBuilderStrategy.h" />
-    <ClInclude Include="MinimalLengthCondition.h">
+    <ClInclude Include="LengthCondition.h">
       <SubType>Header Files</SubType>
     </ClInclude>
-    <ClInclude Include="MinimalTrueValueNumberCondition.h">
+    <ClInclude Include="MaximalFillupCondition.h">
+      <SubType>Header Files</SubType>
+    </ClInclude>
+    <ClInclude Include="MinimalFillupCondition.h">
       <SubType>Header Files</SubType>
     </ClInclude>
     <ClInclude Include="MutationOperator.h" />
@@ -169,7 +171,6 @@
     <ClInclude Include="StopCondition.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AllLabelTypesIncludedCondition.cpp" />
     <ClCompile Include="BaseIndividualFeasibilityCondition.cpp" />
     <ClCompile Include="ExcessivePreservationRateException.cpp" />
     <ClCompile Include="Generation.cpp" />
@@ -179,10 +180,10 @@
     <ClCompile Include="GeneticAlgorithmFactory.cpp" />
     <ClCompile Include="InconsistentChromosomeLengthException.cpp" />
     <ClCompile Include="InconsistentGenerationAndScoresLengthException.cpp" />
-    <ClCompile Include="InconsistentMinimalAndMaximalFillupException.cpp" />
     <ClCompile Include="IndividualsBuilderStrategy.cpp" />
-    <ClCompile Include="MinimalLengthCondition.cpp" />
-    <ClCompile Include="MinimalTrueValueNumberCondition.cpp" />
+    <ClCompile Include="LengthCondition.cpp" />
+    <ClCompile Include="MaximalFillupCondition.cpp" />
+    <ClCompile Include="MinimalFillupCondition.cpp" />
     <ClCompile Include="MutationOperator.cpp" />
     <ClCompile Include="Individual.cpp" />
     <ClCompile Include="NegativePreservationRateException.cpp" />

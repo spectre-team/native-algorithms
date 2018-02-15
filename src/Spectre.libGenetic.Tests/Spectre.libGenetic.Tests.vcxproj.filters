@@ -16,6 +16,9 @@
     <Filter Include="Source Files\IndividualFeasibilityConditions">
       <UniqueIdentifier>{45e56fdb-5e10-4a87-8689-bed3cf0537d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\IndividualFeasibilityConditions">
+      <UniqueIdentifier>{d7ef4fae-f3ad-4cf7-9fd6-71ea24c28465}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -47,6 +50,9 @@
     </ClInclude>
     <ClInclude Include="MockStopCondition.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MockBaseIndividualFeasibilityCondition.h">
+      <Filter>Header Files\IndividualFeasibilityConditions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -95,13 +101,16 @@
     <ClCompile Include="GenerationFactoryTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MinimalLengthConditionTest.cpp">
+    <ClCompile Include="BaseIndividualFeasibilityConditionTest.cpp">
       <Filter>Source Files\IndividualFeasibilityConditions</Filter>
     </ClCompile>
-    <ClCompile Include="MinimalTrueValueNumberConditionTest.cpp">
+    <ClCompile Include="LengthConditionTest.cpp">
       <Filter>Source Files\IndividualFeasibilityConditions</Filter>
     </ClCompile>
-    <ClCompile Include="AllLabelTypesIncludedConditionTest.cpp">
+    <ClCompile Include="MinimalFillupConditionTest.cpp">
+      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
+    </ClCompile>
+    <ClCompile Include="MaximalFillupConditionTest.cpp">
       <Filter>Source Files\IndividualFeasibilityConditions</Filter>
     </ClCompile>
   </ItemGroup>

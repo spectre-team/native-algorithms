@@ -112,5 +112,13 @@ private:
     /// The SVM tolerance.
     /// </summary>
     const double m_SvmTolerance;
+    /// <summary>
+    /// The minimal fillup.
+    /// </summary>
+    const size_t m_MinimalFillup;
+    /// <summary>
+    /// The maximal fillup.
+    /// </summary>
+    const size_t m_MaximalFillup;
 };
 }

@@ -39,22 +39,21 @@ public:
     /// <param name="minimalFillup">The maximal fillup.</param>
     /// <param name="maximalFillup">The minimal fillup.</param>
     /// <param name="individualFeasibilityCondition">The individual feasibility condition.</param>
-    explicit MutationOperator(double mutationRate, double bitSwapRate, Seed rngSeed = 0, size_t minimalFillup=0, size_t maximalFillup=std::numeric_limits<size_t>::max(),
-                              BaseIndividualFeasibilityCondition* condition = nullptr);
+    explicit MutationOperator(double mutationRate, double bitSwapRate, Seed rngSeed = 0, BaseIndividualFeasibilityCondition* condition = nullptr);
     /// <summary>
     /// Mutates the specified individual until it matches conditions.
     /// </summary>
     /// <param name="individual">The individual.</param>
     /// <returns>Mutated individual fulfilling conditions .</returns>
     virtual Individual operator()(Individual &&individual);
+    virtual ~MutationOperator() = default;
+private:
     /// <summary>
     /// Mutates the specified individual.
     /// </summary>
     /// <param name="individual">The individual.</param>
     /// <returns>Mutated individual.</returns>
-    virtual Individual mutate(Individual &&individual);
-    virtual ~MutationOperator() = default;
-private:
+    virtual Individual mutateWithoutConditions(Individual &&individual);
     /// <summary>
     /// The mutation rate.
     /// </summary>
@@ -67,14 +66,6 @@ private:
     /// The random number generator.
     /// </summary>
     RandomNumberGenerator m_RandomNumberGenerator;
-    /// <summary>
-    /// The minimal fillup.
-    /// </summary>
-    const size_t m_MinimalFillup;
-    /// <summary>
-    /// The maximal fillup.
-    /// </summary>
-    const size_t m_MaximalFillup;
     /// <summary>
     /// The individual feasibility condition.
     /// </summary>
