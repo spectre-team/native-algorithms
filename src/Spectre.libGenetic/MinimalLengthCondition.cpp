@@ -1,8 +1,8 @@
 /*
-* DataTypes.h
-* Types & aliases used in this library.
+* MinimalLengthCondition.cpp
+* Checks, if Individual is at least of specific length.
 *
-Copyright 2017 Grzegorz Mrukwa
+Copyright 2018 Spectre Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,14 +17,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#pragma once
-#include <random>
+#include "MinimalLengthCondition.h"
 
 namespace spectre::algorithm::genetic
 {
-using ScoreType = double;
-using Label = signed;
-using RandomDevice = std::random_device;
-using RandomNumberGenerator = std::mt19937_64;
-using Seed = _ULonglong; // @gmrukwa: from mt19937_64
+MinimalLengthCondition::MinimalLengthCondition(size_t minimalLength, std::unique_ptr<BaseIndividualFeasibilityCondition> condition):
+    BaseIndividualFeasibilityCondition(std::move(condition)),
+    m_MinimalLength(minimalLength) {}
+
+bool MinimalLengthCondition::privateConditionCheck(const spectre::algorithm::genetic::Individual &individual)
+{
+    return individual.size() >= m_MinimalLength;
+}
+
 }

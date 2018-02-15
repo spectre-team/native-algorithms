@@ -21,7 +21,6 @@ limitations under the License.
 #include <random>
 #include <opencv2/core/mat.hpp>
 #include <span.h>
-#include "Spectre.libDataset/Empty.h"
 
 namespace spectre::supervised
 {

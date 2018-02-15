@@ -38,7 +38,9 @@ public:
     /// <param name="offspringGenerator">The offspring generator.</param>
     /// <param name="scorer">The scorer.</param>
     /// <param name="stopCondition">The stop condition.</param>
-    GeneticAlgorithm(std::unique_ptr<OffspringGenerator> offspringGenerator, std::unique_ptr<Scorer> scorer, std::unique_ptr<StopCondition> stopCondition);
+    /// <param name="individualFeasibilityConditions">The individual feasibility conditions.</param>
+    GeneticAlgorithm(std::unique_ptr<OffspringGenerator> offspringGenerator, std::unique_ptr<Scorer> scorer, std::unique_ptr<StopCondition> stopCondition,
+                     std::unique_ptr<BaseIndividualFeasibilityCondition> individualFeasibilityConditions = nullptr);
     /// <summary>
     /// Evolves the specified generation.
     /// </summary>
@@ -60,5 +62,9 @@ private:
     /// The stop condition.
     /// </summary>
     std::unique_ptr<StopCondition> m_StopCondition;
+    /// <summary>
+    /// The individual feasibility conditions.
+    /// </summary>
+    std::unique_ptr<BaseIndividualFeasibilityCondition> m_IndividualFeasibilityConditions;
 };
 }

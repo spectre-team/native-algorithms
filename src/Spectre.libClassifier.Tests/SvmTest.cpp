@@ -22,6 +22,7 @@ limitations under the License.
 #include "Spectre.libClassifier/OpenCvDataset.h"
 #include "Spectre.libClassifier/Svm.h"
 #include "Spectre.libClassifier/UntrainedClassifierException.h"
+#include "Spectre.libClassifier/InsufficientDataException.h"
 
 namespace
 {
@@ -69,6 +70,28 @@ TEST_F(SvmTest, predicts_sign)
     {
         EXPECT_EQ(m_Labels[i], prediction[i]);
     }
+}
+
+TEST_F(SvmTest, predicts_small_data)
+{
+    const std::vector<Label> tempLabels = { 1 };
+    const std::vector<DataType> tempFeatures = {
+        1., 1.
+    };
+    OpenCvDataset tempData = std::move(OpenCvDataset(tempFeatures, tempLabels));
+    Svm svm;
+    EXPECT_THROW(svm.Fit(tempData), InsufficientDataException);
+}
+
+TEST_F(SvmTest, fit_with_non_binary_labels_throw_not_a_binary_exception)
+{
+    const std::vector<Label> tempLabels = { 2 };
+    const std::vector<DataType> tempFeatures = {
+        1., 1.
+    };
+    OpenCvDataset tempData = std::move(OpenCvDataset(tempFeatures, tempLabels));
+    Svm svm;
+    EXPECT_THROW(svm.Fit(tempData), NotABinaryLabelException);
 }
 
 TEST_F(SvmTest, get_support_vector_number_test)

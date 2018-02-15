@@ -1,8 +1,8 @@
-/*
-* DataTypes.h
-* Types & aliases used in this library.
+﻿/*
+* ArgumentEqualZeroException.cpp
+* Thrown when argument is equal zero.
 *
-Copyright 2017 Grzegorz Mrukwa
+Copyright 2017 Spectre Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,14 +17,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#pragma once
-#include <random>
 
-namespace spectre::algorithm::genetic
+#include "Spectre.libException/ArgumentEqualZeroException.h"
+
+namespace spectre::core::exception
 {
-using ScoreType = double;
-using Label = signed;
-using RandomDevice = std::random_device;
-using RandomNumberGenerator = std::mt19937_64;
-using Seed = _ULonglong; // @gmrukwa: from mt19937_64
+    spectre::core::exception::ArgumentEqualZeroException::ArgumentEqualZeroException(const int &variableName) :
+        ExceptionBase(variableName + " is equal zero when it shouldn't be.") { }
 }

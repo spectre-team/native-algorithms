@@ -51,9 +51,10 @@ public:
     /// </summary>
     /// <param name="fitnessFunction">The fitness function.</param>
     /// <param name="seed">The seed.</param>
+    /// <param name="individualFeasibilityConditions">The individual feasibility conditions.</param>
     /// <returns>The Genetic Algorithm object</returns>
-    std::unique_ptr<GeneticAlgorithm> BuildDefault(std::unique_ptr<FitnessFunction> fitnessFunction,
-                                                   Seed seed=0) const;
+    std::unique_ptr<GeneticAlgorithm> BuildDefault(std::unique_ptr<FitnessFunction> fitnessFunction, Seed seed = 0,
+                               std::unique_ptr<BaseIndividualFeasibilityCondition> individualFeasibilityConditions = nullptr) const;
 private:
     /// <summary>
     /// The mutation rate.

@@ -1,8 +1,8 @@
 /*
-* DataTypes.h
-* Types & aliases used in this library.
+* RaportGeneratorTest.cpp
+* Tests RaportGenerator.
 *
-Copyright 2017 Grzegorz Mrukwa
+Copyright 2017 Grzegorz Mrukwa, Wojciech Wilgierz
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,14 +17,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#pragma once
-#include <random>
+#include <gtest/gtest.h>
+#include "Spectre.GaSvmNative/RaportGenerator.h"
 
-namespace spectre::algorithm::genetic
+namespace
 {
-using ScoreType = double;
-using Label = signed;
-using RandomDevice = std::random_device;
-using RandomNumberGenerator = std::mt19937_64;
-using Seed = _ULonglong; // @gmrukwa: from mt19937_64
+    using namespace spectre::scenario::gasvm;
+
+TEST(RaportGeneratorInitialization, initializes)
+{
+    EXPECT_NO_THROW(RaportGenerator("raportGeneratorTest", 2));
+}
 }

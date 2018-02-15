@@ -34,7 +34,6 @@ public:
     /// </summary>
     /// <param name="minimal">The minimal fillup value.</param>
     /// <param name="maximal">The maximal fillup value.</param>
-    InconsistentMinimalAndMaximalFillupException(size_t minimal, size_t maximal):
-        ExceptionBase("minimal value of fillup: " + std::to_string(minimal) + " is greater than its maximum value: " + std::to_string(maximal)) { }
+    InconsistentMinimalAndMaximalFillupException(size_t minimal, size_t maximal);
 };
 }

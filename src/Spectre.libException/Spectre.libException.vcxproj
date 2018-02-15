@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArgumentEqualZeroException.h" />
     <ClInclude Include="ArgumentOutOfRangeException.h" />
     <ClInclude Include="EmptyArgumentException.h">
       <SubType>Header Files</SubType>
@@ -35,6 +36,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ArgumentEqualZeroException.cpp" />
     <ClCompile Include="EmptyArgumentException.cpp">
       <SubType>Source Files</SubType>
     </ClCompile>
