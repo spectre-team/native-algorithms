@@ -31,7 +31,7 @@ public:
     /// <summary>
     /// Initializes a new instance of the <see cref="LengthCondition"/> class.
     /// </summary>
-    /// <param name="minimalLength">The length of individual.</param>
+    /// <param name="length">The length of individual.</param>
     /// <param name="condition">The individual feasibility condition.</param>
     LengthCondition(size_t length, std::unique_ptr<BaseIndividualFeasibilityCondition> condition = nullptr);
     /// <summary>
@@ -39,7 +39,7 @@ public:
     /// </summary>
     /// <param name="individual">The individual to check.</param>
     /// <returns>true if conditions are fulfilled by an individual.</returns>
-    bool currentConditionCheck(const Individual &individual) override;
+    bool checkCurrentCondition(const Individual &individual) override;
 private:
     /// <summary>
     /// The allowed length.

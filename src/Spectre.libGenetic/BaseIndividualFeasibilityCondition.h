@@ -32,17 +32,17 @@ protected:
     /// <summary>
     /// Initializes a new instance of the <see cref="BaseIndividualFeasibilityCondition"/> class.
     /// </summary>
-    /// <param name="condition">The individual feasibility condition.</param>
-    BaseIndividualFeasibilityCondition(std::unique_ptr<BaseIndividualFeasibilityCondition> condition);
+    /// <param name="condition">The next individual feasibility condition.</param>
+    BaseIndividualFeasibilityCondition(std::unique_ptr<BaseIndividualFeasibilityCondition> nextCondition);
     /// <summary>
     /// Unique individual check feasibility if it's correct.
     /// </summary>
     /// <param name="individual">The individual to check.</param>
     /// <returns>true if conditions are fulfilled by an individual.</returns>
-    virtual bool currentConditionCheck(const Individual &individual) = 0;
+    virtual bool checkCurrentCondition(const Individual &individual) = 0;
 public:
     /// <summary>
-    /// Check individual feasibility if it's correct.
+    /// Check currentConditionCheck of this condition, then recursively checks on next condition if individual is correct.
     /// </summary>
     /// <param name="individual">The individual to check.</param>
     /// <returns>bool</returns>
@@ -52,6 +52,6 @@ private:
     /// <summary>
     /// The next individual feasibility condition.
     /// </summary>
-    std::unique_ptr<BaseIndividualFeasibilityCondition> m_Next;
+    std::unique_ptr<BaseIndividualFeasibilityCondition> m_NextCondition;
 };
 }

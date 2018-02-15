@@ -39,7 +39,7 @@ public:
     /// </summary>
     /// <param name="individual">The individual to check.</param>
     /// <returns>true if conditions are fulfilled by an individual.</returns>
-    bool currentConditionCheck(const Individual &individual) override;
+    bool checkCurrentCondition(const Individual &individual) override;
 private:
     /// <summary>
     /// The minimal fillup.

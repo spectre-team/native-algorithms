@@ -1,6 +1,6 @@
 /*
-* MinimalLengthConditionTest.cpp
-* Tests MinimalLengthCondition class.
+* LengthConditionTest.cpp
+* Tests LengthCondition class.
 *
 Copyright 2018 Spectre Team
 
@@ -45,23 +45,19 @@ protected:
     const size_t highLen = 5;
     const Individual longIndividual = Individual({ true, true, true, true, true });
     const Individual shortIndividual = Individual({ true });
-
-    void SetUp() override
-    {
-    }
 };
 
 TEST_F(MinimalLengthConditionTest, return_true_for_correct_length_condition)
 {
     LengthCondition condition(highLen);
-    auto result = condition.currentConditionCheck(longIndividual);
+    auto result = condition.checkCurrentCondition(longIndividual);
     EXPECT_TRUE(result);
 }
 
 TEST_F(MinimalLengthConditionTest, return_false_on_too_short_individual)
 {
     LengthCondition condition(highLen);
-    auto result = condition.currentConditionCheck(shortIndividual);
+    auto result = condition.checkCurrentCondition(shortIndividual);
     EXPECT_FALSE(result);
 }
 }
