@@ -27,7 +27,7 @@ namespace spectre::algorithm::genetic::Tests
 class MockBaseIndividualFeasibilityCondition : public BaseIndividualFeasibilityCondition
 {
 public:
-    MockBaseIndividualFeasibilityCondition(std::unique_ptr<BaseIndividualFeasibilityCondition> condition) : 
+    MockBaseIndividualFeasibilityCondition(std::unique_ptr<BaseIndividualFeasibilityCondition> condition):
         BaseIndividualFeasibilityCondition(std::move(condition)) {}
 
     MOCK_METHOD1(currentConditionCheck, bool(const Individual &individual));
