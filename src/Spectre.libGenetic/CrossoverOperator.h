@@ -20,6 +20,7 @@ limitations under the License.
 #pragma once
 #include "Spectre.libGenetic/DataTypes.h"
 #include "Spectre.libGenetic/Individual.h"
+#include "Spectre.libGenetic/BaseIndividualFeasibilityCondition.h"
 
 namespace spectre::algorithm::genetic
 {
@@ -33,19 +34,42 @@ public:
     /// Initializes a new instance of the <see cref="CrossoverOperator"/> class.
     /// </summary>
     /// <param name="rngSeed">The RNG seed.</param>
-    explicit CrossoverOperator(Seed rngSeed = 0, size_t minimalFillup=0, size_t maximalFillup=std::numeric_limits<size_t>::max());
+    /// <param name="minimalFillup">The maximal fillup.</param>
+    /// <param name="maximalFillup">The minimal fillup.</param>
+    /// <param name="individualFeasibilityCondition">The individual feasibility condition.</param>
+    explicit CrossoverOperator(Seed rngSeed = 0, size_t minimalFillup = 0, size_t maximalFillup = std::numeric_limits<size_t>::max(),
+                                BaseIndividualFeasibilityCondition* individualFeasibilityCondition = nullptr);
     virtual ~CrossoverOperator() = default;
+    /// <summary>
+    /// Create new individual until it fits its conditions.
+    /// </summary>
+    /// <param name="first">The first parent.</param>
+    /// <param name="second">The second parent.</param>
+    /// <returns>A child fulfilling conditions. Operator crossovers individual until created one meets all the conditions.</returns>
+    virtual Individual operator()(const Individual &first, const Individual &second);
     /// <summary>
     /// Create new individual.
     /// </summary>
     /// <param name="first">The first parent.</param>
     /// <param name="second">The second parent.</param>
     /// <returns>A child.</returns>
-    virtual Individual operator()(const Individual &first, const Individual &second);
-
+    virtual Individual crossWithoutConditions(const Individual &first, const Individual &second);
 private:
+    /// <summary>
+    /// The random number generator.
+    /// </summary>
     RandomNumberGenerator m_RandomNumberGenerator;
+    /// <summary>
+    /// The minimal fillup.
+    /// </summary>
     const size_t m_MinimalFillup;
+    /// <summary>
+    /// The maximal fillup.
+    /// </summary>
     const size_t m_MaximalFillup;
+    /// <summary>
+    /// The individual feasibility condition.
+    /// </summary>
+    BaseIndividualFeasibilityCondition* m_IndividualFeasibilityCondition;
 };
 }
