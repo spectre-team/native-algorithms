@@ -134,6 +134,7 @@
     <ClInclude Include="SoftThresholder.h" />
     <ClInclude Include="WaveletCoefficients.h" />
     <ClInclude Include="WaveletDecomposerRef.h" />
+    <ClInclude Include="WaveletReconstructorRef.h" />
     <ClInclude Include="WaveletUtils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +142,7 @@
     <ClCompile Include="MeanAbsoluteDeviationNoiseEstimator.cpp" />
     <ClCompile Include="SoftThresholder.cpp" />
     <ClCompile Include="WaveletDecomposerRef.cpp" />
+    <ClCompile Include="WaveletReconstructorRef.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
