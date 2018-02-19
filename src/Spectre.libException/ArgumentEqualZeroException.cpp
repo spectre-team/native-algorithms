@@ -2,7 +2,7 @@
 * ArgumentEqualZeroException.cpp
 * Thrown when argument is equal zero.
 *
-Copyright 2017 Spectre Team
+Copyright 2018 Spectre Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,6 +22,6 @@ limitations under the License.
 
 namespace spectre::core::exception
 {
-    spectre::core::exception::ArgumentEqualZeroException::ArgumentEqualZeroException(const int &variableName) :
-        ExceptionBase(variableName + " is equal zero when it shouldn't be.") { }
+spectre::core::exception::ArgumentEqualZeroException::ArgumentEqualZeroException(const int &variableName) :
+    ExceptionBase(variableName + " is equal zero when it shouldn't be.") { }
 }

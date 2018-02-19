@@ -39,10 +39,6 @@ protected:
     const std::vector<spectre::supervised::Label> allTrueLabels{ true, true, true, true, true };
     const std::vector<spectre::supervised::Label> allFalseLabels{ false, false, false, false, false };
     const std::vector<spectre::supervised::Label> trueFalseLabels{ true, false, true, true, false };
-
-    void SetUp() override
-    {
-    }
 };
 
 TEST_F(AllLabelTypesIncludedConditionTest, return_true_for_correct_label)

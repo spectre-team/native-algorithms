@@ -21,5 +21,5 @@ limitations under the License.
 
 namespace spectre::supervised::exception
 {
-    InsufficientDataException::InsufficientDataException(Label missingClass): ExceptionBase("Dataset is missing " + std::to_string(missingClass) + " label") {}
+InsufficientDataException::InsufficientDataException(Label missingClass): ExceptionBase("Dataset is missing " + std::to_string(missingClass) + " label") {}
 }

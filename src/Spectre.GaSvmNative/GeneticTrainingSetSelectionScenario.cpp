@@ -2,7 +2,7 @@
 * GeneticTrainingSetSelectionScenario.cpp
 * Executes whole genetic algorithm and returns results
 *
-Copyright 2017 Spectre Team
+Copyright 2018 Spectre Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -73,6 +73,13 @@ GeneticTrainingSetSelectionScenario::GeneticTrainingSetSelectionScenario(double 
     if (m_NumberOfCores == 0)
     {
         throw spectre::core::exception::ArgumentOutOfRangeException<unsigned>("numberOfCores", 1, omp_get_num_procs(), m_NumberOfCores);
+    }
+    for (auto fillup : m_InitialIndividualFillups)
+    {
+        if (fillup > m_MaximalFillup || fillup < m_MinimalFillup)
+        {
+            throw core::exception::ArgumentOutOfRangeException<size_t>("initialFillup", m_MinimalFillup, m_MaximalFillup, fillup);
+        }
     }
 }
 

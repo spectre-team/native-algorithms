@@ -2,7 +2,7 @@
 * ArgumentEqualZeroException.h
 * Thrown when argument is equal zero.
 *
-Copyright 2017 Spectre Team
+Copyright 2018 Spectre Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,16 +22,16 @@ limitations under the License.
 
 namespace spectre::core::exception
 {
+/// <summary>
+/// Thrown when function argument is empty.
+/// </summary>
+class ArgumentEqualZeroException : public spectre::core::exception::ExceptionBase
+{
+public:
     /// <summary>
-    /// Thrown when function argument is empty.
+    /// Initializes a new instance of the <see cref="ArgumentEqualZeroException"/> class.
     /// </summary>
-    class ArgumentEqualZeroException : public spectre::core::exception::ExceptionBase
-    {
-    public:
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArgumentEqualZeroException"/> class.
-        /// </summary>
-        /// <param name="variableName">Name of the variable.</param>
-        explicit ArgumentEqualZeroException(const int &variableName);
-    };
+    /// <param name="variableName">Name of the variable.</param>
+    explicit ArgumentEqualZeroException(const int &variableName);
+};
 }

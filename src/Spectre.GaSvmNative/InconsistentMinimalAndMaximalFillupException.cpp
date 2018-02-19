@@ -2,7 +2,7 @@
 * InconsistentMinimalAndMaximalFillupException.cpp
 * Thrown when minimal fillup is greater than maximal.
 *
-Copyright 2018 Grzegorz Mrukwa, Wojciech Wilgierz
+Copyright 2018 Spectre Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,6 +22,6 @@ limitations under the License.
 
 namespace spectre::scenario::gasvm
 {
-    InconsistentMinimalAndMaximalFillupException::InconsistentMinimalAndMaximalFillupException(size_t minimal, size_t maximal) :
-        ExceptionBase("minimal value of fillup: " + std::to_string(minimal) + " is greater than its maximum value: " + std::to_string(maximal)) { }
+InconsistentMinimalAndMaximalFillupException::InconsistentMinimalAndMaximalFillupException(size_t minimal, size_t maximal) :
+    ExceptionBase("minimal value of fillup: " + std::to_string(minimal) + " is greater than its maximum value: " + std::to_string(maximal)) { }
 }

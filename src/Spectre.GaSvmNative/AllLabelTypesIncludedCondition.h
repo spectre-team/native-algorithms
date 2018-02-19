@@ -34,7 +34,7 @@ public:
     /// Initializes a new instance of the <see cref="AllLabelTypesIncludedCondition"/> class.
     /// </summary>
     /// <param name="labels">The labels.</param>
-    /// <param name="condition">The individual feasibility condition.</param>
+    /// <param name="condition">The next individual feasibility condition.</param>
     AllLabelTypesIncludedCondition(gsl::span<const supervised::Label> labels, std::unique_ptr<BaseIndividualFeasibilityCondition> condition = nullptr);
     /// <summary>
     /// Check individual feasibility if it's correct.

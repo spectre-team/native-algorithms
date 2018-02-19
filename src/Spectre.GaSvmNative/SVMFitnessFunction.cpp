@@ -2,7 +2,7 @@
 * SVMFitnessFunction.cpp
 * Trains data in svm and returns score of a Individual.
 *
-Copyright 2017 Spectre Team
+Copyright 2018 Spectre Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

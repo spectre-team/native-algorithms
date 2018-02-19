@@ -38,9 +38,8 @@ bool AllLabelTypesIncludedCondition::checkCurrentCondition(const spectre::algori
             ++labelsAmount;
             valueSum += m_Labels[i];
         }
-        if (valueSum != 0 && valueSum != labelsAmount) return true;
     }
-    return false;
+    return (valueSum != 0 && valueSum != labelsAmount);
 }
 
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libClustering", "Spectre.libClustering\Spectre.libClustering.vcxproj", "{450F225C-4610-4B20-84AE-2ED5B4C8D7C4}"
 EndProject

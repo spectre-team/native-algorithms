@@ -23,16 +23,16 @@ limitations under the License.
 
 namespace spectre::supervised::exception
 {
+/// <summary>
+/// Throws when data does not cover all classes.
+/// </summary>
+class InsufficientDataException final : public core::exception::ExceptionBase
+{
+public:
     /// <summary>
-    /// Throws when data does not cover all classes.
+    /// Initializes a new instance of the <see cref="InsufficientDataException"/> class.
     /// </summary>
-    class InsufficientDataException final : public core::exception::ExceptionBase
-    {
-    public:
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InsufficientDataException"/> class.
-        /// </summary>
-        /// <param name="actual">The missing class .</param>
-        explicit InsufficientDataException(Label missingClass);
-    };
+    /// <param name="actual">The missing class .</param>
+    explicit InsufficientDataException(Label missingClass);
+};
 }
