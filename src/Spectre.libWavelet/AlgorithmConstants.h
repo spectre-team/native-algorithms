@@ -22,4 +22,5 @@ namespace spectre::algorithm::wavelet
 {
     constexpr unsigned int WAVELET_LEVELS = 10;
     constexpr unsigned int WAVELET_BASIS = 4;
+    constexpr unsigned BASIS_LENGTH = (WAVELET_BASIS * 2) - 1;
 }

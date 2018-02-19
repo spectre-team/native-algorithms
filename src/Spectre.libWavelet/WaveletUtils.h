@@ -51,8 +51,6 @@ inline size_t CeiledDivision(size_t dividend, size_t divisor)
 /// <returns>Number of samples to be filtered.</returns>
 inline size_t ComputeBlockLength(unsigned level, size_t scale, size_t signalLength)
 {
-    constexpr unsigned BASIS_LENGTH = (WAVELET_BASIS * 2) - 1;
-
     const size_t numerator = signalLength + ((1 << level) - 1) * BASIS_LENGTH;
     const size_t denominator = scale;
     const size_t blockLength = CeiledDivision(numerator, denominator) + BASIS_LENGTH;
