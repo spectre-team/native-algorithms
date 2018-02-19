@@ -43,5 +43,14 @@ public:
     /// <param name="signal">Signal to be convolved.</param>
     /// <returns>Filtered signal.</returns>
     Signal Convolve(const Kernel& kernel, const Signal& signal) const;
+    /// <summary>
+    /// Convolves the signal using provided kernel using up to determined
+    /// amount of samples.
+    /// </summary>
+    /// <param name="kernel">Kernel to be used.</param>
+    /// <param name="signal">Signal to be convolved.</param>
+    /// <param name="length">Length of signal to consider.</param>
+    /// <returns>Filtered signal.</returns>
+    Signal Convolve(const Kernel& kernel, const Signal& signal, size_t length) const;
 };
 }

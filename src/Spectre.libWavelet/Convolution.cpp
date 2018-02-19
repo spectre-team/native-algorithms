@@ -26,8 +26,13 @@ Convolution::Convolution()
 
 Signal Convolution::Convolve(const Kernel& kernel, const Signal &signal) const
 {
-    std::vector<DataType> convolved(signal.size());
-    for (unsigned n = 0u; n < signal.size(); ++n)
+    return Convolve(kernel, signal, signal.size());
+}
+
+Signal Convolution::Convolve(const Kernel& kernel, const Signal &signal, size_t length) const
+{
+    std::vector<DataType> convolved(length);
+    for (unsigned n = 0u; n < length; ++n)
     {
         size_t limit = kernel.size() < (n + 1) ? kernel.size() : (n + 1);
         DataType result = 0.0f; // @sand3r-: speeds the computations up on vc++
