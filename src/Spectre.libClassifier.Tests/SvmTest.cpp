@@ -78,7 +78,7 @@ TEST_F(SvmTest, predicts_small_data)
     const std::vector<DataType> tempFeatures = {
         1., 1.
     };
-    OpenCvDataset tempData = std::move(OpenCvDataset(tempFeatures, tempLabels));
+    OpenCvDataset tempData(tempFeatures, tempLabels);
     Svm svm;
     EXPECT_THROW(svm.Fit(tempData), InsufficientDataException);
 }
@@ -89,7 +89,7 @@ TEST_F(SvmTest, fit_with_non_binary_labels_throw_not_a_binary_exception)
     const std::vector<DataType> tempFeatures = {
         1., 1.
     };
-    OpenCvDataset tempData = std::move(OpenCvDataset(tempFeatures, tempLabels));
+    OpenCvDataset tempData(tempFeatures, tempLabels);
     Svm svm;
     EXPECT_THROW(svm.Fit(tempData), NotABinaryLabelException);
 }
