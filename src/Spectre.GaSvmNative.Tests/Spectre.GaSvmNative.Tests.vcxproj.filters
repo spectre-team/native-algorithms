@@ -21,20 +21,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="RaportGeneratorTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SVMFitnessFunctionTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Common\Main.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneticTrainingSetSelectionScenarioTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AllLabelTypesIncludedConditionTest.cpp">
-      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\regis\Documents\GitHub\native-algorithms\src\Spectre.GaSvmNative.Tests\..\..\lib\native\src\gtest\gtest-all.cc">
       <Filter>Source Files</Filter>

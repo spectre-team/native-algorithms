@@ -27,35 +27,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GeneticTrainingSetSelectionScenario.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RaportGenerator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SVMFitnessFunction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AllLabelTypesIncludedCondition.h">
-      <Filter>Header Files\IndividualFeasibilityConditions</Filter>
-    </ClInclude>
     <ClInclude Include="InconsistentMinimalAndMaximalFillupException.h">
       <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GeneticTrainingSetSelectionScenario.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RaportGenerator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SVMFitnessFunction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AllLabelTypesIncludedCondition.cpp">
-      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
-    </ClCompile>
     <ClCompile Include="InconsistentMinimalAndMaximalFillupException.cpp">
       <Filter>Source Files\Exceptions</Filter>
     </ClCompile>
