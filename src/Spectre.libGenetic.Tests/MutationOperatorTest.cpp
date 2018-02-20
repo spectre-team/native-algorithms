@@ -20,6 +20,7 @@ limitations under the License.
 #include <gtest/gtest.h>
 #include "Spectre.libException/ArgumentOutOfRangeException.h"
 #include "Spectre.libGenetic/MutationOperator.h"
+#include "MockBaseIndividualFeasibilityCondition.h"
 
 namespace
 {
@@ -126,6 +127,22 @@ TEST_F(MutationTest, changes_nothing_when_zero_bit_swap_rate)
         for (size_t j = 0u; j < individual.size(); ++j)
         {
             EXPECT_FALSE(individual[j]) << "trial: " << i << "; bit: " << j;
+        }
+    }
+}
+
+TEST_F(MutationTest, returns_original_if_conditions_failed)
+{
+    auto firstCondition = std::make_unique<Tests::MockBaseIndividualFeasibilityCondition>(nullptr);
+    EXPECT_CALL(*firstCondition, checkCurrentCondition(testing::_)).WillRepeatedly(testing::Return(false));
+    MutationOperator mutate(0.5, 0.5, SEED, firstCondition.get());
+    for (unsigned i = 0; i < NUMBER_OF_TRIALS; ++i)
+    {
+        auto original(allTrueIndividual);
+        auto child = mutate(std::move(allTrueIndividual));
+        for (size_t j = 0; j < child.size(); ++j)
+        {
+            EXPECT_EQ(child[j], original[j]);
         }
     }
 }

@@ -36,12 +36,8 @@ Individual CrossoverOperator::operator()(const Individual &first, const Individu
         throw InconsistentChromosomeLengthException(first.size(), second.size());
     }
     Individual child = crossWithoutConditions(first, second);
-    if (m_IndividualFeasibilityCondition == nullptr) return child;
-    while (!m_IndividualFeasibilityCondition->check(child))
-    {
-        child = crossWithoutConditions(first, second);
-    }
-    return child;
+    if (m_IndividualFeasibilityCondition == nullptr || m_IndividualFeasibilityCondition->check(child)) return child;
+    return first;
 }
 
 Individual CrossoverOperator::crossWithoutConditions(const Individual& first, const Individual& second)
