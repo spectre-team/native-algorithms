@@ -29,7 +29,7 @@ GenerationFactory::GenerationFactory(size_t size, size_t individualSize, size_t 
       m_IndividualSize(individualSize),
       m_InitialFillup(initialFillup)
 {
-    if (initialFillup > individualSize || initialFillup < 0)
+    if (initialFillup > individualSize)
     {
         throw core::exception::ArgumentOutOfRangeException<size_t>("initialFillup", 0, individualSize, initialFillup);
     }

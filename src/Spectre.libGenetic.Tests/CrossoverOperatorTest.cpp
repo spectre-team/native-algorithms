@@ -23,6 +23,7 @@ limitations under the License.
 #include "Spectre.libGenetic/Individual.h"
 #include "Spectre.libGenetic/CrossoverOperator.h"
 #include "Spectre.libGenetic/InconsistentChromosomeLengthException.h"
+#include "MockBaseIndividualFeasibilityCondition.h"
 
 namespace
 {
@@ -74,6 +75,21 @@ TEST_F(CrossoverOperatorTest, crossover_of_same_parents_result_in_copy)
         for (size_t j = 0; j < child.size(); ++j)
         {
             EXPECT_EQ(child[j], singleParent[j]);
+        }
+    }
+}
+
+TEST_F(CrossoverOperatorTest, return_parent_if_condition_failed)
+{
+    auto firstCondition = std::make_unique<Tests::MockBaseIndividualFeasibilityCondition>(nullptr);
+    EXPECT_CALL(*firstCondition, checkCurrentCondition(testing::_)).WillRepeatedly(testing::Return(false));
+    CrossoverOperator first(SEED, firstCondition.get());
+    for (unsigned i = 0; i < NUMBER_OF_TRIALS; ++i)
+    {
+        const auto child = first(true_individual, false_individual);
+        for (size_t j = 0; j < child.size(); ++j)
+        {
+            EXPECT_EQ(child[j], true_individual[j]);
         }
     }
 }
@@ -155,4 +171,5 @@ TEST_F(CrossoverOperatorTest, cuts_are_from_uniform_distribution)
         EXPECT_LT(count, meanCount + allowedCountMiss) << i;
     }
 }
+
 }
