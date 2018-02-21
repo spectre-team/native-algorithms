@@ -20,7 +20,7 @@ limitations under the License.
 #include <string>
 #include "RaportGenerator.h"
 #include "Spectre.libClassifier/ConfusionMatrix.h"
-#include "Spectre.libException/ArgumentEqualZeroException.h"
+#include "Spectre.libException/ArgumentOutOfRangeException.h"
 
 namespace spectre::scenario::gasvm
 {
@@ -32,7 +32,7 @@ scenario::gasvm::RaportGenerator::RaportGenerator(std::string filename, unsigned
 {
     if (m_PopulationSize == 0)
     {
-        throw core::exception::ArgumentEqualZeroException(populationSize);
+        throw core::exception::ArgumentOutOfRangeException<unsigned>("populationSize", 1, UINT_MAX, m_PopulationSize);
     }
     m_File.open(filename + ".csv");
     m_File << "generation" << m_Separator;
