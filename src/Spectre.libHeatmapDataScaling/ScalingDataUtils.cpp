@@ -1,6 +1,6 @@
 /*
-* Normalization.cpp
-* Class with normalization algorithm implementation.
+* ScalingDataUtils.cpp
+* Utils for scaling data.
 *
 Copyright 2018 Daniel Babiak
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,15 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "Spectre.libHeatmapDataScaling/Normalization.h"
+#include "Spectre.libHeatmapDataScaling/ScalingDataUtils.h"
 
 namespace spectre::visualization
 {
-Normalization::Normalization(const int minIntensityRange, const int maxIntensityRange) :
-    minIntensityRange(minIntensityRange), maxIntensityRange(maxIntensityRange), intensityRange(maxIntensityRange - minIntensityRange) { }
-
-std::vector<double> Normalization::scaleData(const gsl::span<const double> intensities)
+std::vector<double> normalizeData(const gsl::span<double> intensities, const int minIntensityRange, const int maxIntensityRange)
 {
+    const int intensityRange = maxIntensityRange - minIntensityRange;
     std::vector<double> newIntensities(intensities.size());
     double const oldMin = *min_element(std::begin(intensities), std::end(intensities));
     double const oldMax = *max_element(std::begin(intensities), std::end(intensities));

@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Normalization.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="HeatmapDataScalingAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -27,15 +24,18 @@
     <ClInclude Include="HistogramEqualization.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ScalingDataUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Normalization.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SuppressionAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HistogramEqualization.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScalingDataUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

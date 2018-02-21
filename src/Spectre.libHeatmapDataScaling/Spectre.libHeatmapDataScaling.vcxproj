@@ -132,12 +132,12 @@
   <ItemGroup>
     <ClInclude Include="HeatmapDataScalingAlgorithm.h" />
     <ClInclude Include="HistogramEqualization.h" />
-    <ClInclude Include="Normalization.h" />
+    <ClInclude Include="ScalingDataUtils.h" />
     <ClInclude Include="SuppressionAlgorithm.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HistogramEqualization.cpp" />
-    <ClCompile Include="Normalization.cpp" />
+    <ClCompile Include="ScalingDataUtils.cpp" />
     <ClCompile Include="SuppressionAlgorithm.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
