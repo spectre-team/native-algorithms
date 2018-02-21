@@ -37,8 +37,6 @@ public:
     /// <param name="preservationRate">The preservation rate.</param>
     /// <param name="generationsNumber">The number of generation.</param>
     /// <param name="numberOfCores">The number of cores.</param>
-    /// <param name="minimalFillup">The minimal fillup.</param>
-    /// <param name="maximalFillup">The maximal fillup.</param>
     GeneticAlgorithmFactory(double mutationRate,
                             double bitSwapRate,
                             double preservationRate,
