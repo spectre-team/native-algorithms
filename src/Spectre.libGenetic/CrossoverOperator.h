@@ -37,8 +37,7 @@ public:
     /// <param name="minimalFillup">The maximal fillup.</param>
     /// <param name="maximalFillup">The minimal fillup.</param>
     /// <param name="individualFeasibilityCondition">The individual feasibility condition.</param>
-    explicit CrossoverOperator(Seed rngSeed = 0, size_t minimalFillup = 0, size_t maximalFillup = std::numeric_limits<size_t>::max(),
-                                BaseIndividualFeasibilityCondition* individualFeasibilityCondition = nullptr);
+    explicit CrossoverOperator(Seed rngSeed = 0, BaseIndividualFeasibilityCondition* individualFeasibilityCondition = nullptr);
     virtual ~CrossoverOperator() = default;
     /// <summary>
     /// Create new individual until it fits its conditions.
@@ -59,14 +58,6 @@ private:
     /// The random number generator.
     /// </summary>
     RandomNumberGenerator m_RandomNumberGenerator;
-    /// <summary>
-    /// The minimal fillup.
-    /// </summary>
-    const size_t m_MinimalFillup;
-    /// <summary>
-    /// The maximal fillup.
-    /// </summary>
-    const size_t m_MaximalFillup;
     /// <summary>
     /// The individual feasibility condition.
     /// </summary>

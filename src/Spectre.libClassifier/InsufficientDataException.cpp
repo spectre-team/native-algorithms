@@ -1,8 +1,8 @@
 /*
-* DataTypes.h
-* Types & aliases used in this library.
+* InsufficientDataException.cpp
+* Throws when data does not cover all classes.
 *
-Copyright 2017 Grzegorz Mrukwa
+Copyright 2018 Spectre Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,14 +17,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#pragma once
-#include <random>
+#include "InsufficientDataException.h"
 
-namespace spectre::algorithm::genetic
+namespace spectre::supervised::exception
 {
-using ScoreType = double;
-using Label = signed;
-using RandomDevice = std::random_device;
-using RandomNumberGenerator = std::mt19937_64;
-using Seed = _ULonglong; // @gmrukwa: from mt19937_64
+InsufficientDataException::InsufficientDataException(Label missingClass): ExceptionBase("Dataset is missing " + std::to_string(missingClass) + " label") {}
 }

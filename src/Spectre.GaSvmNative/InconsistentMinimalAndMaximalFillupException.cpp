@@ -1,8 +1,8 @@
 /*
-* DataTypes.h
-* Types & aliases used in this library.
+* InconsistentMinimalAndMaximalFillupException.cpp
+* Thrown when minimal fillup is greater than maximal.
 *
-Copyright 2017 Grzegorz Mrukwa
+Copyright 2018 Spectre Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,14 +17,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#pragma once
-#include <random>
+#include <string>
+#include "InconsistentMinimalAndMaximalFillupException.h"
 
-namespace spectre::algorithm::genetic
+namespace spectre::scenario::gasvm
 {
-using ScoreType = double;
-using Label = signed;
-using RandomDevice = std::random_device;
-using RandomNumberGenerator = std::mt19937_64;
-using Seed = _ULonglong; // @gmrukwa: from mt19937_64
+InconsistentMinimalAndMaximalFillupException::InconsistentMinimalAndMaximalFillupException(size_t minimal, size_t maximal) :
+    ExceptionBase("minimal value of fillup: " + std::to_string(minimal) + " is greater than its maximum value: " + std::to_string(maximal)) { }
 }

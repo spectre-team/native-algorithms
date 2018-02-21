@@ -149,7 +149,6 @@
     </ClInclude>
     <ClInclude Include="InconsistentChromosomeLengthException.h" />
     <ClInclude Include="InconsistentGenerationAndScoresLengthException.h" />
-    <ClInclude Include="InconsistentMinimalAndMaximalFillupException.h" />
     <ClInclude Include="IndividualsBuilderStrategy.h" />
     <ClInclude Include="LengthCondition.h">
       <SubType>Header Files</SubType>

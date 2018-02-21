@@ -35,17 +35,11 @@ RandomSplitter::RandomSplitter(double trainingRate, Seed rngSeed)
     : m_trainingRate(trainingRate),
       m_Seed(rngSeed)
 {
-    if (trainingRate >= 0)
-    {
-    }
-    else
+    if (trainingRate < 0)
     {
         throw exception::NegativeTrainingRateException(trainingRate);
     }
-    if (trainingRate <= 1)
-    {
-    }
-    else
+    if (trainingRate > 1)
     {
         throw exception::ExcessiveTrainingRateException(trainingRate);
     }

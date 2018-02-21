@@ -20,6 +20,7 @@ limitations under the License.
 #include <gtest/gtest.h>
 #include "Spectre.libException/ArgumentOutOfRangeException.h"
 #include "Spectre.libGenetic/MutationOperator.h"
+#include "MockBaseIndividualFeasibilityCondition.h"
 
 namespace
 {
@@ -130,6 +131,22 @@ TEST_F(MutationTest, changes_nothing_when_zero_bit_swap_rate)
     }
 }
 
+TEST_F(MutationTest, returns_original_if_conditions_failed)
+{
+    auto firstCondition = std::make_unique<Tests::MockBaseIndividualFeasibilityCondition>(nullptr);
+    EXPECT_CALL(*firstCondition, checkCurrentCondition(testing::_)).WillRepeatedly(testing::Return(false));
+    MutationOperator mutate(0.5, 0.5, SEED, firstCondition.get());
+    for (unsigned i = 0; i < NUMBER_OF_TRIALS; ++i)
+    {
+        auto original(allTrueIndividual);
+        auto child = mutate(std::move(allTrueIndividual));
+        for (size_t j = 0; j < child.size(); ++j)
+        {
+            EXPECT_EQ(child[j], original[j]);
+        }
+    }
+}
+
 TEST_F(MutationTest, swaps_all_bits_on_both_rates_equal_one)
 {
     MutationOperator mutate(ALWAYS, ALWAYS, SEED);
@@ -182,29 +199,5 @@ TEST_F(MutationTest, toggles_in_approximate_percentage_of_cases_for_specified_bi
     }
     EXPECT_LT(numberOfToggles, expectedNumberOfToggles + allowedMissCount);
     EXPECT_GT(numberOfToggles, expectedNumberOfToggles - allowedMissCount);
-}
-
-TEST_F(MutationTest, test_if_returns_original_if_fillup_is_too_low_after_changing_all_true_values_to_false)
-{
-    const auto BIT_SWAP_RATE = 0.5;
-    MutationOperator mutate(ALWAYS, BIT_SWAP_RATE, SEED, 8, 9);
-    const auto last = Individual(std::vector<bool>(individual.begin(), individual.end()));
-    individual = mutate(std::move(individual));
-    for (auto j = 0u; j < individual.size(); j++)
-    {
-        EXPECT_EQ(individual[j], last[j]);
-    }
-}
-
-TEST_F(MutationTest, test_if_returns_original_if_fillup_is_too_high_because_of_no_change_of_data)
-{
-    const auto BIT_SWAP_RATE = 0.5;
-    MutationOperator mutate(NEVER, BIT_SWAP_RATE, SEED, 8, 9);
-    const auto last = Individual(std::vector<bool>(individual.begin(), individual.end()));
-    individual = mutate(std::move(individual));
-    for (auto j = 0u; j < individual.size(); j++)
-    {
-        EXPECT_EQ(individual[j], last[j]);
-    }
 }
 }

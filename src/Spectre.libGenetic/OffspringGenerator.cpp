@@ -27,19 +27,11 @@ OffspringGenerator::OffspringGenerator(std::unique_ptr<IndividualsBuilderStrateg
     m_Builder(std::move(builder)),
     m_PreservationStrategy(std::move(preservationStrategy))
 {
-    if (m_Builder != nullptr)
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (m_Builder == nullptr)
     {
         throw spectre::core::exception::NullPointerException("builder");
     }
-    if (m_PreservationStrategy != nullptr)
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (m_PreservationStrategy == nullptr)
     {
         throw spectre::core::exception::NullPointerException("preservationStrategy");
     }
@@ -47,11 +39,7 @@ OffspringGenerator::OffspringGenerator(std::unique_ptr<IndividualsBuilderStrateg
 
 Generation OffspringGenerator::next(Generation &old, gsl::span<const ScoreType> scores) const
 {
-    if (old.size() == static_cast<size_t>(scores.size()))
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (old.size() != static_cast<size_t>(scores.size()))
     {
         throw InconsistentGenerationAndScoresLengthException(old.size(), scores.size());
     }
