@@ -31,13 +31,7 @@ public:
     /// </summary>
     /// <param name="intensities">Vector of floating point values representing intensities for each point on the heatmap.</param>
     /// <returns>Vector of scaled floating point values representing intensities for each point on the heatmap.</returns>
-    std::vector<double> scaleData(const gsl::span<double> intensities) override;
-    /// <summary>
-    /// Method for rounding vector of floating point values.
-    /// </summary>
-    /// <param name="intensities">Vector of floating point values of intensities.</param>
-    /// <returns>Vector of rounded intensities.</returns>
-    std::vector<double> HistogramEqualization::roundIntensities(const gsl::span<double> intensities);
+    std::vector<double> scaleData(const gsl::span<const double> intensities) override;
     /// <summary>
     /// Method for counting repeating values in the vector.
     /// </summary>

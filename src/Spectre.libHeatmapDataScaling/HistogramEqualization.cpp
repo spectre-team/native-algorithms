@@ -14,25 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+#include "Spectre.libFunctional/Transform.h"
 #include "Spectre.libHeatmapDataScaling/HistogramEqualization.h"
 
 namespace spectre::visualization
 {
-std::vector<double> HistogramEqualization::scaleData(const gsl::span<double> intensities)
+std::vector<double> HistogramEqualization::scaleData(const gsl::span<const double> intensities)
 {
-    std::vector<double> roundedIntensities = roundIntensities(intensities);
+    std::vector<double> roundedIntensities = spectre::core::functional::transform(intensities, [](double intensity) { return static_cast<int>(intensity + 0.5); });
     std::map<double, unsigned int> const histogramMap = calculateCumulativeDistribution(countRepeatingValues(roundedIntensities));
     return calculateNewHistogramData(roundedIntensities, histogramMap);
-}
-
-std::vector<double> HistogramEqualization::roundIntensities(const gsl::span<double> intensities)
-{
-    std::vector<double> roundedIntensities(intensities.size());
-    for (int i = 0; i < intensities.size(); i++)
-    {
-        roundedIntensities[i] = round(intensities[i]);
-    }
-    return roundedIntensities;
 }
 
 std::map<double, unsigned int> HistogramEqualization::countRepeatingValues(const gsl::span<double> intensities)

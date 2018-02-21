@@ -21,7 +21,7 @@ namespace spectre::visualization
 Normalization::Normalization(const int minIntensityRange, const int maxIntensityRange) :
     minIntensityRange(minIntensityRange), maxIntensityRange(maxIntensityRange), intensityRange(maxIntensityRange - minIntensityRange) { }
 
-std::vector<double> Normalization::scaleData(const gsl::span<double> intensities)
+std::vector<double> Normalization::scaleData(const gsl::span<const double> intensities)
 {
     std::vector<double> newIntensities(intensities.size());
     double const oldMin = *min_element(std::begin(intensities), std::end(intensities));

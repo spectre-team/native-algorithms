@@ -36,6 +36,6 @@ public:
     /// </summary>
     /// <param name="intensities">Vector of floating point values representing intensities for each point on the heatmap.</param>
     /// <returns>Vector of scaled floating point values representing intensities for each point on the heatmap.</returns>
-    virtual std::vector<double> scaleData(const gsl::span<double> intensities) = 0;
+    virtual std::vector<double> scaleData(const gsl::span<const double> intensities) = 0;
 };
 }

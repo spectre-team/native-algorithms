@@ -20,7 +20,7 @@ namespace spectre::visualization
 {
 SuppressionAlgorithm::SuppressionAlgorithm(const double topPercent) : topPercent(topPercent) { }
 
-std::vector<double> SuppressionAlgorithm::scaleData(const gsl::span<double> intensities)
+std::vector<double> SuppressionAlgorithm::scaleData(const gsl::span<const double> intensities)
 {
     std::vector<double> newIntensities;
     newIntensities.reserve(intensities.size());
@@ -36,7 +36,7 @@ std::vector<double> SuppressionAlgorithm::scaleData(const gsl::span<double> inte
     return newIntensities;
 }
 
-double SuppressionAlgorithm::calculateQuantile(gsl::span<double> intensities, const double probability)
+double SuppressionAlgorithm::calculateQuantile(gsl::span<const double> intensities, const double probability)
 {
     const int size = static_cast<int>(intensities.size());
     std::vector<double> sortedIntensities(size);
