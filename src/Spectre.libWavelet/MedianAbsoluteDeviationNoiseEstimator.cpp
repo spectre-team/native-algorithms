@@ -1,6 +1,6 @@
 /*
- * MeanAbsoluteDeviationNoiseEstimator.cpp
- * Estimates mean absolute devation of noise in the signal.
+ * MedianAbsoluteDeviationNoiseEstimator.cpp
+ * Estimates median absolute devation of noise in the signal.
  *
    Copyright 2018 Michal Gallus
 
@@ -17,21 +17,21 @@
    limitations under the License.
 */
 #include "Spectre.libStatistics/Statistics.h"
-#include "MeanAbsoluteDeviationNoiseEstimator.h"
+#include "MedianAbsoluteDeviationNoiseEstimator.h"
 
 namespace spectre::algorithm::wavelet
 {
-MeanAbsoluteDeviationNoiseEstimator::MeanAbsoluteDeviationNoiseEstimator(DataType multiplier) :
+    MedianAbsoluteDeviationNoiseEstimator::MedianAbsoluteDeviationNoiseEstimator(DataType multiplier) :
     m_Multiplier(multiplier)
 {
 }
 
-DataType MeanAbsoluteDeviationNoiseEstimator::Estimate(const Signal& intensities) const
+DataType MedianAbsoluteDeviationNoiseEstimator::Estimate(Signal& highFreqCoefficients) const
 {
-    constexpr auto locationOfThirdQuartileInNormalDistribution = static_cast<DataType>(.6745);
+    constexpr auto inverseOfThirdQuartileInNormalDistribution = static_cast<DataType>(1.0 / .6745);
     return m_Multiplier
-        * sqrt(2 * log(intensities.size()))
-        * statistics::simple_statistics::MeanAbsoluteDeviation(gsl::as_span(intensities))
-        / locationOfThirdQuartileInNormalDistribution;
+        * sqrt(2 * log(highFreqCoefficients.size()))
+        * statistics::simple_statistics::MedianAbsoluteDeviation(gsl::as_span(highFreqCoefficients))
+        * inverseOfThirdQuartileInNormalDistribution;
 }
 }
