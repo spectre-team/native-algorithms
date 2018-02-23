@@ -99,6 +99,12 @@
     <ClInclude Include="MaximalFillupCondition.h">
       <Filter>Header Files\IndividualFeasibilityConditions</Filter>
     </ClInclude>
+    <ClInclude Include="MinimalPercentageFillupCondition.h">
+      <Filter>Header Files\IndividualFeasibilityConditions</Filter>
+    </ClInclude>
+    <ClInclude Include="MaximalPercentageFillupCondition.h">
+      <Filter>Header Files\IndividualFeasibilityConditions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MutationOperator.cpp">
@@ -162,6 +168,12 @@
       <Filter>Source Files\IndividualFeasibilityConditions</Filter>
     </ClCompile>
     <ClCompile Include="MaximalFillupCondition.cpp">
+      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
+    </ClCompile>
+    <ClCompile Include="MinimalPercentageFillupCondition.cpp">
+      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
+    </ClCompile>
+    <ClCompile Include="MaximalPercentageFillupCondition.cpp">
       <Filter>Source Files\IndividualFeasibilityConditions</Filter>
     </ClCompile>
   </ItemGroup>

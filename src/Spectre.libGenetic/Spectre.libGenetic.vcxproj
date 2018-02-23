@@ -156,7 +156,13 @@
     <ClInclude Include="MaximalFillupCondition.h">
       <SubType>Header Files</SubType>
     </ClInclude>
+    <ClInclude Include="MaximalPercentageFillupCondition.h">
+      <SubType>Header Files</SubType>
+    </ClInclude>
     <ClInclude Include="MinimalFillupCondition.h">
+      <SubType>Header Files</SubType>
+    </ClInclude>
+    <ClInclude Include="MinimalPercentageFillupCondition.h">
       <SubType>Header Files</SubType>
     </ClInclude>
     <ClInclude Include="MutationOperator.h" />
@@ -182,7 +188,9 @@
     <ClCompile Include="IndividualsBuilderStrategy.cpp" />
     <ClCompile Include="LengthCondition.cpp" />
     <ClCompile Include="MaximalFillupCondition.cpp" />
+    <ClCompile Include="MaximalPercentageFillupCondition.cpp" />
     <ClCompile Include="MinimalFillupCondition.cpp" />
+    <ClCompile Include="MinimalPercentageFillupCondition.cpp" />
     <ClCompile Include="MutationOperator.cpp" />
     <ClCompile Include="Individual.cpp" />
     <ClCompile Include="NegativePreservationRateException.cpp" />
