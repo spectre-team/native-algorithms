@@ -37,7 +37,7 @@ inline size_t ComputeScale(unsigned level)
 /// <param name="dividend">The nominator.</param>
 /// <param name="divisor">The denominator.</param>
 /// <returns>Result of ceil(dividend/divisor).</returns>
-inline size_t CeiledDivision(size_t dividend, size_t divisor)
+inline size_t CeiledDivisionUnsafe(size_t dividend, size_t divisor)
 {
     return dividend / divisor + (dividend % divisor != 0);
 }
@@ -53,7 +53,7 @@ inline size_t ComputeBlockLength(unsigned level, size_t scale, size_t signalLeng
 {
     const size_t numerator = signalLength + ((1 << level) - 1) * BASIS_LENGTH;
     const size_t denominator = scale;
-    const size_t blockLength = CeiledDivision(numerator, denominator) + BASIS_LENGTH;
+    const size_t blockLength = CeiledDivisionUnsafe(numerator, denominator) + BASIS_LENGTH;
 
     return blockLength;
 }

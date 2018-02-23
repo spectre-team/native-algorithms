@@ -54,7 +54,7 @@ static inline size_t ComputeCoefficientsNumber(unsigned level, size_t signalLeng
     const size_t numerator = (MAX_SCALE - 1) * BASIS_LENGTH + signalLength;
     const size_t denominator = MAX_SCALE;
     const size_t coeffsNumber =
-        CeiledDivision(numerator, denominator) * ComputeScale(WAVELET_LEVELS - level);
+        CeiledDivisionUnsafe(numerator, denominator) * ComputeScale(WAVELET_LEVELS - level);
 
     return coeffsNumber;
 }
