@@ -36,14 +36,8 @@ public:
     /// Method for counting repeating values in the vector.
     /// </summary>
     /// <param name="intensities">Vector of floating point values of intensities.</param>
-    /// <returns>Map in which key represents intensity value while value stores the number of occurrences of this intensity in the input vector.</returns>
-    std::map<double, unsigned int> countRepeatingValues(const gsl::span<double> intensities);
-    /// <summary>
-    /// Method for calculating cumulative distribution.
-    /// </summary>
-    /// <param name="histogramMap">Map containing intensity value as a key and the number of occurrences in the input vector as a value .</param>
-    /// <returns>Map in which key represents intensity value while value stores cumulative distribution.</returns>
-    std::map<double, unsigned int> calculateCumulativeDistribution(std::map<double, unsigned int> histogramMap);
+    /// <returns>Vector which stores the number of occurrences of the intensity representing by index.</returns>
+    std::vector<uint8_t> countRepeatingValues(const gsl::span<double> intensities);
     /// <summary>
     /// Method for calculating new histogram data based on input vector of intensities and cumulative distribution.
     /// </summary>

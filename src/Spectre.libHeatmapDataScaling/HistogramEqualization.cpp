@@ -22,30 +22,27 @@ namespace spectre::visualization
 std::vector<double> HistogramEqualization::scaleData(const gsl::span<const double> intensities)
 {
     std::vector<double> roundedIntensities = spectre::core::functional::transform(intensities, [](double intensity) { return static_cast<int>(intensity + 0.5); });
-    std::map<double, unsigned int> const histogramMap = calculateCumulativeDistribution(countRepeatingValues(roundedIntensities));
-    return calculateNewHistogramData(roundedIntensities, histogramMap);
+    std::vector<uint8_t> intensitiesOccurances = countRepeatingValues(roundedIntensities);
+    
+    std::vector<uint8_t> cumulativeDistribution = std::accumulate(intensitiesOccurances.begin(), intensitiesOccurances.end(), cumulativeDistribution, 
+        [](std::vector<uint8_t> accumulator, uint8_t next) {
+            if (accumulator.size() == 0)
+                accumulator.push_back(next);
+            else accumulator.push_back(accumulator[accumulator.size() - 1] + next);
+            return accumulator;
+        });
+    //return calculateNewHistogramData(roundedIntensities, histogramMap);
+    std::vector<double> returntest;
+    return returntest;
 }
 
-std::map<double, unsigned int> HistogramEqualization::countRepeatingValues(const gsl::span<double> intensities)
+std::vector<uint8_t> HistogramEqualization::countRepeatingValues(const gsl::span<double> intensities)
 {
-    std::map<double, unsigned int> histogramMap;
-    for (auto intensity : intensities)
-    {
-        histogramMap[intensity]++;
+    std::vector<uint8_t> histogram(256);
+    for (int i = 0; i < intensities.size(); ++i) {
+        histogram[static_cast<uint8_t>(intensities[i])]++;
     }
-    return histogramMap;
-}
-
-std::map<double, unsigned int> HistogramEqualization::calculateCumulativeDistribution(std::map<double, unsigned int> histogramMap)
-{
-    std::map<double, unsigned int> cumulativeDistributionMap;
-    unsigned int temporaryDistributionValue = 0;
-    for (const auto singleHistogramMapElement : histogramMap)
-    {
-        temporaryDistributionValue += singleHistogramMapElement.second;
-        cumulativeDistributionMap.emplace(singleHistogramMapElement.first, temporaryDistributionValue);
-    }
-    return cumulativeDistributionMap;
+    return histogram;
 }
 
 std::vector<double> HistogramEqualization::calculateNewHistogramData(const gsl::span<double> intensities, std::map<double, unsigned int> histogramMap)
