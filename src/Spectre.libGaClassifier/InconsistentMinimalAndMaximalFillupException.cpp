@@ -20,7 +20,7 @@ limitations under the License.
 #include <string>
 #include "InconsistentMinimalAndMaximalFillupException.h"
 
-namespace spectre::scenario::gasvm
+namespace spectre::supervised
 {
 InconsistentMinimalAndMaximalFillupException::InconsistentMinimalAndMaximalFillupException(size_t minimal, size_t maximal) :
     ExceptionBase("minimal value of fillup: " + std::to_string(minimal) + " is greater than its maximum value: " + std::to_string(maximal)) { }

@@ -13,30 +13,30 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\IndividualFeasibilityConditions">
-      <UniqueIdentifier>{d8ad4816-5226-4f39-b09c-325e03d5c135}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\IndividualFeasibilityConditions">
-      <UniqueIdentifier>{cb8c700d-f7c2-4b85-9b17-8ec8e340e622}</UniqueIdentifier>
+    <Filter Include="Header Files\Exceptions">
+      <UniqueIdentifier>{79772ca0-59b1-4d1c-ab50-ca07d0551227}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Exceptions">
-      <UniqueIdentifier>{a95634d3-0f29-44e1-8a29-3241a447f1e5}</UniqueIdentifier>
+      <UniqueIdentifier>{5bedc81d-e7c3-4673-8929-c00f71a4ddd9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Exceptions">
-      <UniqueIdentifier>{0b6f67f6-0e2f-4be0-959d-748a1e70bd55}</UniqueIdentifier>
+      <UniqueIdentifier>{e7ef017c-cb25-40a1-9ba7-87fc1d9d6877}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="InconsistentMinimalAndMaximalFillupException.h">
       <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="InconsistentMinimalAndMaximalFillupException.cpp">
       <Filter>Source Files\Exceptions</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>

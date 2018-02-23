@@ -20,7 +20,7 @@ limitations under the License.
 #pragma once
 #include "Spectre.libException/ExceptionBase.h"
 
-namespace spectre::scenario::gasvm
+namespace spectre::supervised
 {
 /// <summary>
 /// Thrown when minimal and maximal fillup values are inconsistent.
