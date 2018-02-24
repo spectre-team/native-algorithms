@@ -19,17 +19,10 @@ limitations under the License.
 #pragma once
 #include "Convolution.h"
 #include "DataTypes.h"
+#include "WaveletCoefficients.h"
 
 namespace spectre::algorithm::wavelet
 {
-constexpr unsigned int WAVELET_LEVELS = 10;
-constexpr unsigned int WAVELET_BASIS = 4;
-
-struct WaveletCoefficients
-{
-    CoefficientsPerLevel data[WAVELET_LEVELS + 1]; // + 1 for lowest frequency
-};
-
 /// <summary>
 /// Decomposes the signal into set of Daubechies coefficients.
 /// </summary>

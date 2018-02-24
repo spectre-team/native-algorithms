@@ -142,9 +142,13 @@
     <ClCompile Include="ConvolutionTest.cpp" />
     <ClCompile Include="SoftThresholderTest.cpp" />
     <ClCompile Include="WaveletDecomposerRefTest.cpp" />
+    <ClCompile Include="WaveletReconstructorRefTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FloatingPointVectorMatcher.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

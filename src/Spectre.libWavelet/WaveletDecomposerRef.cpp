@@ -21,32 +21,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#include "WaveletDecomposerRef.h"
 #include "PrecomputedDaubechiesCoefficients.h"
+#include "WaveletDecomposerRef.h"
+#include "WaveletUtils.h"
 
 namespace spectre::algorithm::wavelet
 {
-static constexpr size_t ComputeScale(unsigned level)
-{
-    return 1ULL << (level + 1); // 2^(L + 1)
-}
-
-static constexpr size_t CeiledDivision(size_t dividend, size_t divisor)
-{
-    return dividend / divisor + (dividend % divisor != 0);
-}
-
-static inline size_t ComputeBlockLength(unsigned level, size_t scale, size_t signalLength)
-{
-    constexpr unsigned BASIS_LENGTH = (WAVELET_BASIS * 2) - 1;
-
-    const size_t numerator = signalLength + ((1 << level) - 1) * BASIS_LENGTH;
-    const size_t denominator = scale;
-    const size_t blockLength = CeiledDivision(numerator, denominator) + BASIS_LENGTH;
-
-    return blockLength;
-}
-
 // The function performs an 'intelligent' downsampling, where every second coefficient is
 // stored as a coefficient of 'new' sample, instead of just being discarded. This allows
 // the decomposition to retain more information about the signal.
@@ -90,7 +70,7 @@ inline void WaveletDecomposerRef::ApplyFilters(WaveletCoefficients& coefficients
     }
 }
 
-WaveletDecomposerRef::WaveletDecomposerRef() : m_Convolution()
+WaveletDecomposerRef::WaveletDecomposerRef()
 {
 };
 
