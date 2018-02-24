@@ -59,9 +59,9 @@ template <class DataType>
 DataType Median(gsl::span<const DataType> data)
 {
     static_assert(std::is_arithmetic_v<DataType>, "DataType: expected arithmetic.");
+    if (data.size() == 0) throw spectre::core::exception::EmptyArgumentException("Median: Provided vector is empty");
     std::vector<std::remove_const<DataType>::type> sortedData(data.begin(), data.end());
     std::sort(sortedData.begin(), sortedData.end());
-    if (data.size() == 0) throw spectre::core::exception::EmptyArgumentException("Median: Provided vector is empty");
     if (data.size() % 2) return sortedData[data.size() / 2];
     else return (sortedData[data.size() / 2] + sortedData[data.size() / 2 - 1]) / 2.0;
 }
