@@ -218,4 +218,11 @@ TEST(AbsTest, returns_absolute_value_of_each_element)
     const auto absolutes = abs(gsl::as_span(data));
     EXPECT_THAT(absolutes, ContainerEq(Data{ 1,2,3,4 }));
 }
+
+TEST(DiffTest, calculates_differential)
+{
+    Data data{ 1, 1, 2, 3, 5, 8, 13 };
+    const auto differential = diff(gsl::as_span(data), 4);
+    EXPECT_THAT(differential, ContainerEq(Data{ 2, -1, 1 }));
+}
 }

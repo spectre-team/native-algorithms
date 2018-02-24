@@ -380,4 +380,30 @@ std::vector<DataType> build(size_t size, Generator generator)
     return result;
 }
 
+/// <summary>
+/// Calculates differences between adjacent elements of given container.
+/// </summary>
+/// <param name="data">The container.</param>
+/// <param name="order">Order of difference operation (how many times the difference is executed).</param>
+/// <returns>Vector of calculated differences.</returns>
+ template <class DataType>
+ std::vector<DataType> diff(gsl::span<const DataType> data, uint16_t order = 1)
+ {
+    size_t length = data.length();
+    std::vector<DataType> result = std::vector<std::remove_const<DataType>::type>(data.begin(), data.end());
+
+    if (order == 0 || length < 2 || order >= length)
+        return result;
+
+    for(auto i = 0u; i < order; ++i)
+    {
+        gsl::span<const DataType> lhs = gsl::as_span(result.data() + 1, result.size() - 1);
+        gsl::span<const DataType> rhs = gsl::as_span(result.data(), result.size() - 1);
+        memcpy(result.data(), std::vector<DataType>(minus(lhs, rhs)).data(), (result.size() - 1) * sizeof(DataType));
+        result.resize(result.size() - 1);
+    }
+    
+    return result;
+ }
+
 }
