@@ -222,7 +222,25 @@ TEST(AbsTest, returns_absolute_value_of_each_element)
 TEST(DiffTest, calculates_differential)
 {
     Data data{ 1, 1, 2, 3, 5, 8, 13 };
-    const auto differential = diff(gsl::as_span(data), 4);
+    const auto differential = differentiate(gsl::as_span(data), 4);
     EXPECT_THAT(differential, ContainerEq(Data{ 2, -1, 1 }));
+}
+
+TEST(DiffTest, throws_on_insufficient_data_length)
+{
+    Data data{ 1 };
+    EXPECT_THROW(differentiate(gsl::as_span(data)), std::invalid_argument);
+}
+
+TEST(DiffTest, throws_on_empty_data)
+{
+    Data data{};
+    EXPECT_THROW(differentiate(gsl::as_span(data)), std::invalid_argument);
+}
+
+TEST(DiffTest, throws_on_too_large_order)
+{
+    Data data{ 1, 2, 3 };
+    EXPECT_THROW(differentiate(gsl::as_span(data), 3), std::invalid_argument);
 }
 }
