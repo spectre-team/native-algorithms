@@ -22,7 +22,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{9FAF96E9-1983-4BD3-8C5C-FB922AC73126}</ProjectGuid>
-    <RootNamespace>SpectrelibClassifier</RootNamespace>
+    <RootNamespace>SpectrelibGaClassifier</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -144,10 +144,18 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AllLabelTypesIncludedCondition.h">
+      <SubType>Header Files</SubType>
+    </ClInclude>
     <ClInclude Include="InconsistentMinimalAndMaximalFillupException.h" />
+    <ClInclude Include="IndividualFeasibilityConditionsFactory.h">
+      <SubType>Header Files</SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AllLabelTypesIncludedCondition.cpp" />
     <ClCompile Include="InconsistentMinimalAndMaximalFillupException.cpp" />
+    <ClCompile Include="IndividualFeasibilityConditionsFactory.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

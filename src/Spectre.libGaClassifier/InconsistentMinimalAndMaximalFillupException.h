@@ -34,5 +34,11 @@ public:
     /// <param name="minimal">The minimal fillup value.</param>
     /// <param name="maximal">The maximal fillup value.</param>
     InconsistentMinimalAndMaximalFillupException(size_t minimal, size_t maximal);
+    /// <summary>
+    /// Initializes a new instance of the <see cref="InconsistentMinimalAndMaximalFillupException"/> class.
+    /// </summary>
+    /// <param name="minimal">The minimal percentage fillup value.</param>
+    /// <param name="maximal">The maximal percentage fillup value.</param>
+    InconsistentMinimalAndMaximalFillupException(double minimal, double maximal);
 };
 }
