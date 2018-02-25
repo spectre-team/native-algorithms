@@ -44,6 +44,6 @@ public:
     /// <param name="intensities">Vector of floating point values of intensities.</param>
     /// <param name="histogramMap">Map containing intensity value as a key and cumulative distribution as a value.</param>
     /// <returns>Vector of scaled floating point values representing intensities for each point on the heatmap.</returns>
-    std::vector<double> calculateNewHistogramData(const gsl::span<double> intensities, std::map<double, unsigned int> histogramMap);
+    std::vector<double> calculateNewHistogramData(const gsl::span<double> intensities, const std::vector<uint8_t> cumulativeDistribution);
 };
 }

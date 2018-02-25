@@ -23,17 +23,14 @@ std::vector<double> HistogramEqualization::scaleData(const gsl::span<const doubl
 {
     std::vector<double> roundedIntensities = spectre::core::functional::transform(intensities, [](double intensity) { return static_cast<int>(intensity + 0.5); });
     std::vector<uint8_t> intensitiesOccurances = countRepeatingValues(roundedIntensities);
-    
-    std::vector<uint8_t> cumulativeDistribution = std::accumulate(intensitiesOccurances.begin(), intensitiesOccurances.end(), cumulativeDistribution, 
-        [](std::vector<uint8_t> accumulator, uint8_t next) {
+    std::vector<uint8_t> cumulativeDistribution = std::accumulate(intensitiesOccurances.begin(), intensitiesOccurances.end(), cumulativeDistribution, [](std::vector<uint8_t> accumulator, uint8_t intensityOccurances)
+    {
             if (accumulator.size() == 0)
-                accumulator.push_back(next);
-            else accumulator.push_back(accumulator[accumulator.size() - 1] + next);
+                accumulator.push_back(intensityOccurances);
+            else accumulator.push_back(accumulator[accumulator.size() - 1] + intensityOccurances);
             return accumulator;
-        });
-    //return calculateNewHistogramData(roundedIntensities, histogramMap);
-    std::vector<double> returntest;
-    return returntest;
+    });
+    return calculateNewHistogramData(roundedIntensities, cumulativeDistribution);
 }
 
 std::vector<uint8_t> HistogramEqualization::countRepeatingValues(const gsl::span<double> intensities)
@@ -45,16 +42,15 @@ std::vector<uint8_t> HistogramEqualization::countRepeatingValues(const gsl::span
     return histogram;
 }
 
-std::vector<double> HistogramEqualization::calculateNewHistogramData(const gsl::span<double> intensities, std::map<double, unsigned int> histogramMap)
+std::vector<double> HistogramEqualization::calculateNewHistogramData(const gsl::span<double> intensities, const std::vector<uint8_t> cumulativeDistribution)
 {
-    int const size = static_cast<int>(intensities.size());
+    size_t const size = intensities.size();
     std::vector<double> newIntensities(size);
-    std::pair<double, unsigned int> const minCumulativeDistributionValue = (*std::min_element(histogramMap.begin(), histogramMap.end(),
-        [](decltype(histogramMap)::value_type& l, decltype(histogramMap)::value_type& r) -> bool { return l.second < r.second; }));
+    const uint8_t minCumulativeDistributionValue = *min_element(std::begin(cumulativeDistribution), std::end(cumulativeDistribution));
     for (auto i = 0; i < size; i++)
     {
-        newIntensities[i] = (round((histogramMap.find(intensities[i])->second - static_cast<double>(minCumulativeDistributionValue.second)) /
-            (size - static_cast<double>(minCumulativeDistributionValue.second)) * 255));
+        newIntensities[i] = round(((static_cast<double>(cumulativeDistribution[static_cast<int>(intensities[i])]) - minCumulativeDistributionValue) /
+            (size - minCumulativeDistributionValue)) * 255);
     }
     return newIntensities;
 }
