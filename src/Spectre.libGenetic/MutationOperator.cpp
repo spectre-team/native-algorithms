@@ -20,34 +20,34 @@ limitations under the License.
 #include <algorithm>
 #include "Spectre.libException/ArgumentOutOfRangeException.h"
 #include "MutationOperator.h"
-#include "Spectre.libGenetic/InconsistentMinimalAndMaximalFillupException.h"
 
 namespace spectre::algorithm::genetic
 {
-MutationOperator::MutationOperator(double mutationRate, double bitSwapRate, Seed rngSeed, size_t minimalFillup, size_t maximalFillup):
+MutationOperator::MutationOperator(double mutationRate, double bitSwapRate, Seed rngSeed, BaseIndividualFeasibilityCondition* condition):
     m_MutationRate(mutationRate),
     m_BitSwapRate(bitSwapRate),
     m_RandomNumberGenerator(rngSeed),
-    m_MinimalFillup(minimalFillup),
-    m_MaximalFillup(maximalFillup)
+    m_IndividualFeasibilityCondition(condition)
 {
-    if (m_MutationRate >= 0 && m_MutationRate <= 1) { }
-    else
+    if (m_MutationRate < 0 || m_MutationRate > 1)
     {
         throw spectre::core::exception::ArgumentOutOfRangeException<double>("mutationRate", 0, 1, m_MutationRate);
     }
-    if (m_BitSwapRate >= 0 && m_BitSwapRate <= 1) { }
-    else
+    if (m_BitSwapRate < 0 || m_BitSwapRate > 1)
     {
         throw spectre::core::exception::ArgumentOutOfRangeException<double>("bitSwapRate", 0, 1, m_BitSwapRate);
-    }
-    if (m_MinimalFillup > m_MaximalFillup)
-    {
-        throw InconsistentMinimalAndMaximalFillupException(m_MinimalFillup, m_MaximalFillup);
     }
 }
 
 Individual MutationOperator::operator()(Individual &&individual)
+{
+    auto original(individual);
+    Individual mutated = mutateWithoutConditions(std::move(original));
+    if (m_IndividualFeasibilityCondition == nullptr || m_IndividualFeasibilityCondition->check(mutated)) return mutated;
+    return individual;
+}
+
+Individual MutationOperator::mutateWithoutConditions(Individual&& individual)
 {
     auto original(individual);
 
@@ -61,20 +61,7 @@ Individual MutationOperator::operator()(Individual &&individual)
         };
         std::transform(individual.begin(), individual.end(), individual.begin(), swap_random_bits);
     }
-
-    auto fillup = 0u;
-    for (auto bit : individual)
-    {
-        fillup += bit;
-    }
-
-    if (fillup >= m_MinimalFillup && fillup <= m_MaximalFillup)
-    {
-        return individual;
-    }
-    else
-    {
-        return original;
-    }
+    return individual;
 }
+
 }

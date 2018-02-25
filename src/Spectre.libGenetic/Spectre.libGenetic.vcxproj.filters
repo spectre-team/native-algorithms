@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Exceptions">
       <UniqueIdentifier>{5308f0bc-e6a5-496a-be75-2ca489526cdc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\IndividualFeasibilityConditions">
+      <UniqueIdentifier>{24d10eec-3e0b-487e-a44c-b7563d7dda4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IndividualFeasibilityConditions">
+      <UniqueIdentifier>{5d093604-2fc2-4631-a960-5ea387aecbdd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Individual.h">
@@ -81,8 +87,17 @@
     <ClInclude Include="GeneticAlgorithmFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="InconsistentMinimalAndMaximalFillupException.h">
-      <Filter>Header Files\Exceptions</Filter>
+    <ClInclude Include="BaseIndividualFeasibilityCondition.h">
+      <Filter>Header Files\IndividualFeasibilityConditions</Filter>
+    </ClInclude>
+    <ClInclude Include="LengthCondition.h">
+      <Filter>Header Files\IndividualFeasibilityConditions</Filter>
+    </ClInclude>
+    <ClInclude Include="MinimalFillupCondition.h">
+      <Filter>Header Files\IndividualFeasibilityConditions</Filter>
+    </ClInclude>
+    <ClInclude Include="MaximalFillupCondition.h">
+      <Filter>Header Files\IndividualFeasibilityConditions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +151,18 @@
     </ClCompile>
     <ClCompile Include="GeneticAlgorithmFactory.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseIndividualFeasibilityCondition.cpp">
+      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
+    </ClCompile>
+    <ClCompile Include="LengthCondition.cpp">
+      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
+    </ClCompile>
+    <ClCompile Include="MinimalFillupCondition.cpp">
+      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
+    </ClCompile>
+    <ClCompile Include="MaximalFillupCondition.cpp">
+      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

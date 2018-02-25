@@ -19,20 +19,14 @@ limitations under the License.
 
 #include "CrossoverOperator.h"
 #include "InconsistentChromosomeLengthException.h"
-#include "InconsistentMinimalAndMaximalFillupException.h"
 #include "Individual.h"
 
 namespace spectre::algorithm::genetic
 {
-CrossoverOperator::CrossoverOperator(Seed rngSeed, size_t minimalFillup, size_t maximalFillup):
+CrossoverOperator::CrossoverOperator(Seed rngSeed, BaseIndividualFeasibilityCondition* individualFeasibilityCondition) :
     m_RandomNumberGenerator(rngSeed),
-    m_MinimalFillup(minimalFillup),
-    m_MaximalFillup(maximalFillup)
+    m_IndividualFeasibilityCondition(individualFeasibilityCondition)
 {
-    if (m_MinimalFillup > m_MaximalFillup)
-    {
-        throw InconsistentMinimalAndMaximalFillupException(m_MinimalFillup, m_MaximalFillup);
-    }
 }
 
 Individual CrossoverOperator::operator()(const Individual &first, const Individual &second)
@@ -41,6 +35,13 @@ Individual CrossoverOperator::operator()(const Individual &first, const Individu
     {
         throw InconsistentChromosomeLengthException(first.size(), second.size());
     }
+    Individual child = crossWithoutConditions(first, second);
+    if (m_IndividualFeasibilityCondition == nullptr || m_IndividualFeasibilityCondition->check(child)) return child;
+    return first;
+}
+
+Individual CrossoverOperator::crossWithoutConditions(const Individual& first, const Individual& second)
+{
     std::uniform_int_distribution<size_t> distribution(0, first.size());
     const auto cuttingPoint = distribution(m_RandomNumberGenerator);
     const auto endOfFirst = first.begin() + cuttingPoint;
@@ -49,20 +50,7 @@ Individual CrossoverOperator::operator()(const Individual &first, const Individu
     phenotype.reserve(first.size());
     phenotype.insert(phenotype.end(), first.begin(), endOfFirst);
     phenotype.insert(phenotype.end(), beginningOfSecond, second.end());
-
-    auto fillup = 0u;
-    for(auto bit: phenotype)
-    {
-        fillup += bit;
-    }
-
-    if (fillup >= m_MinimalFillup && fillup <= m_MaximalFillup)
-    {
-        return Individual(std::move(phenotype));
-    }
-    else
-    {
-        return first;
-    }
+    return Individual(std::move(phenotype));
 }
+
 }

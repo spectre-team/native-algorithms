@@ -23,7 +23,7 @@ limitations under the License.
 #include "Spectre.libGenetic/Individual.h"
 #include "Spectre.libGenetic/CrossoverOperator.h"
 #include "Spectre.libGenetic/InconsistentChromosomeLengthException.h"
-#include "Spectre.libGenetic/InconsistentMinimalAndMaximalFillupException.h"
+#include "MockBaseIndividualFeasibilityCondition.h"
 
 namespace
 {
@@ -32,11 +32,6 @@ using namespace spectre::algorithm::genetic;
 TEST(CrossoverOperatorInitialization, initializes)
 {
     EXPECT_NO_THROW(CrossoverOperator crossover(0));
-}
-
-TEST(CrossoverOperatorInitialization, throws_on_wrong_fillups_arguments)
-{
-    EXPECT_THROW(CrossoverOperator crossover(0, 2, 1), InconsistentMinimalAndMaximalFillupException);
 }
 
 class CrossoverOperatorTest: public ::testing::Test
@@ -80,6 +75,21 @@ TEST_F(CrossoverOperatorTest, crossover_of_same_parents_result_in_copy)
         for (size_t j = 0; j < child.size(); ++j)
         {
             EXPECT_EQ(child[j], singleParent[j]);
+        }
+    }
+}
+
+TEST_F(CrossoverOperatorTest, return_parent_if_condition_failed)
+{
+    auto firstCondition = std::make_unique<Tests::MockBaseIndividualFeasibilityCondition>(nullptr);
+    EXPECT_CALL(*firstCondition, checkCurrentCondition(testing::_)).WillRepeatedly(testing::Return(false));
+    CrossoverOperator first(SEED, firstCondition.get());
+    for (unsigned i = 0; i < NUMBER_OF_TRIALS; ++i)
+    {
+        const auto child = first(true_individual, false_individual);
+        for (size_t j = 0; j < child.size(); ++j)
+        {
+            EXPECT_EQ(child[j], true_individual[j]);
         }
     }
 }
@@ -159,26 +169,6 @@ TEST_F(CrossoverOperatorTest, cuts_are_from_uniform_distribution)
         const auto count = counts[i];
         EXPECT_GT(count, meanCount - allowedCountMiss) << i;
         EXPECT_LT(count, meanCount + allowedCountMiss) << i;
-    }
-}
-
-TEST_F(CrossoverOperatorTest, test_if_return_first_individual_if_fillup_is_too_low)
-{
-    CrossoverOperator crossoverOperator(SEED, 8, 9);
-    const auto child = (*crossover.get())(true_individual, false_individual);
-    for (auto i = 0u; i < child.size(); i++)
-    {
-        EXPECT_EQ(child[i], true_individual[i]);
-    }
-}
-
-TEST_F(CrossoverOperatorTest, test_if_return_first_individual_if_fillup_is_too_high)
-{
-    CrossoverOperator crossoverOperator(SEED, 1, 2);
-    const auto child = (*crossover.get())(true_individual, false_individual);
-    for (auto i = 0u; i < child.size(); i++)
-    {
-        EXPECT_EQ(child[i], true_individual[i]);
     }
 }
 
