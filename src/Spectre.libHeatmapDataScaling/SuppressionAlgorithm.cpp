@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+#include "Spectre.libFunctional/Transform.h"
 #include "Spectre.libHeatmapDataScaling/SuppressionAlgorithm.h"
 
 namespace spectre::visualization
@@ -22,28 +23,19 @@ SuppressionAlgorithm::SuppressionAlgorithm(const double topPercent) : topPercent
 
 std::vector<double> SuppressionAlgorithm::scaleData(const gsl::span<const double> intensities)
 {
-    std::vector<double> newIntensities;
-    newIntensities.reserve(intensities.size());
     const double maxIntensity = *max_element(std::begin(intensities), std::end(intensities));
     const double cutoff = calculateQuantile(intensities, 1 - topPercent);
-    for (int i = 0; i < intensities.size(); i++)
+    const auto linearization = [cutoff, maxIntensity](double intensity)
     {
-        if (intensities[i] > cutoff)
-            newIntensities.push_back(cutoff);
-        else
-            newIntensities.push_back(maxIntensity * intensities[i] / cutoff);
-    }
-    return newIntensities;
+        return intensity > cutoff ? cutoff : maxIntensity * intensity / cutoff;
+    };
+    return spectre::core::functional::transform(intensities, linearization);
 }
 
 double SuppressionAlgorithm::calculateQuantile(gsl::span<const double> intensities, const double probability)
 {
-    const int size = static_cast<int>(intensities.size());
-    std::vector<double> sortedIntensities(size);
-    for (int i = 0; i < size; i++)
-    {
-        sortedIntensities[i] = intensities[i];
-    }
+    size_t const size = intensities.size();
+    std::vector<double> sortedIntensities(intensities.begin(), intensities.end());
     std::sort(sortedIntensities.begin(), sortedIntensities.end());
     const double index = 1 + (size - 1) * probability;
     const int indexFloor = static_cast<int>(floor(index));
