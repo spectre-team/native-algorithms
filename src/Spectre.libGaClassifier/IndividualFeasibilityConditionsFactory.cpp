@@ -39,7 +39,7 @@ IndividualFeasibilityConditionsFactory::IndividualFeasibilityConditionsFactory(g
 {
     if (m_MinimalFillup > m_MaximalFillup)
     {
-        throw InconsistentMinimalAndMaximalFillupException(m_MinimalFillup, m_MaximalFillup);
+        throw algorithm::genetic::InconsistentMinimalAndMaximalFillupException(m_MinimalFillup, m_MaximalFillup);
     }
 }
 
@@ -53,7 +53,7 @@ IndividualFeasibilityConditionsFactory::IndividualFeasibilityConditionsFactory(g
 {
     if (m_MinimalPercentageFillup > m_MaximalPercentageFillup)
     {
-        throw InconsistentMinimalAndMaximalFillupException(m_MinimalPercentageFillup, m_MaximalPercentageFillup);
+        throw algorithm::genetic::InconsistentMinimalAndMaximalFillupException(m_MinimalPercentageFillup, m_MaximalPercentageFillup);
     }
     if (m_MinimalPercentageFillup < 0 || minimalPercentageFillup > 1)
     {

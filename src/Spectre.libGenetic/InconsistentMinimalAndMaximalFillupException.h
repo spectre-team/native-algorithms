@@ -20,7 +20,7 @@ limitations under the License.
 #pragma once
 #include "Spectre.libException/ExceptionBase.h"
 
-namespace spectre::supervised
+namespace spectre::algorithm::genetic
 {
 /// <summary>
 /// Thrown when minimal and maximal fillup values are inconsistent.

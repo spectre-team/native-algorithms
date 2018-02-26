@@ -29,35 +29,46 @@ using namespace spectre::algorithm::genetic;
 
 TEST(IndividualFeasibilityConditionsFactoryInitialization, initializes)
 {
+    size_t length = 0;
     size_t minFillup = 2u;
     const std::vector<spectre::supervised::Label> labels{ true, false, false, true, false };
-    EXPECT_NO_THROW(IndividualFeasibilityConditionsFactory(labels, 1, minFillup));
+    EXPECT_NO_THROW(IndividualFeasibilityConditionsFactory(labels, length, minFillup));
 }
 
 TEST(IndividualFeasibilityConditionsFactoryInitialization, throws_on_wrong_fillups)
 {
+    size_t length = 0;
     size_t minFillup = 3u;
     size_t maxFillup = 2u;
     const std::vector<spectre::supervised::Label> labels{ true, false, false, true, false };
-    EXPECT_THROW(IndividualFeasibilityConditionsFactory(labels, 0, minFillup, maxFillup), InconsistentMinimalAndMaximalFillupException);
+    EXPECT_THROW(IndividualFeasibilityConditionsFactory(labels, length, minFillup, maxFillup), InconsistentMinimalAndMaximalFillupException);
 }
 
 TEST(IndividualFeasibilityConditionsFactoryInitialization, throws_on_wrong_percentage_fillups)
 {
+    size_t length = 0;
+    double minFillup = 0.6;
+    double maxFillup = 0.4;
     const std::vector<spectre::supervised::Label> labels{ true, false, false, true, false };
-    EXPECT_THROW(IndividualFeasibilityConditionsFactory(labels, 0, 0.6, 0.4), InconsistentMinimalAndMaximalFillupException);
+    EXPECT_THROW(IndividualFeasibilityConditionsFactory(labels, length, minFillup, maxFillup), InconsistentMinimalAndMaximalFillupException);
 }
 
 TEST(IndividualFeasibilityConditionsFactoryInitialization, throws_on_too_low_percentage_fillups)
 {
+    size_t length = 0;
+    double minFillup = -1;
+    double maxFillup = 0.4;
     const std::vector<spectre::supervised::Label> labels{ true, false, false, true, false };
-    EXPECT_THROW(IndividualFeasibilityConditionsFactory(labels, 0, -1, 0.4), spectre::core::exception::ArgumentOutOfRangeException<double>);
+    EXPECT_THROW(IndividualFeasibilityConditionsFactory(labels, length, minFillup, maxFillup), spectre::core::exception::ArgumentOutOfRangeException<double>);
 }
 
 TEST(IndividualFeasibilityConditionsFactoryInitialization, throws_on_too_high_percentage_fillups)
 {
+    size_t length = 0;
+    double minFillup = 1.1;
+    double maxFillup = 1.2;
     const std::vector<spectre::supervised::Label> labels{ true, false, false, true, false };
-    EXPECT_THROW(IndividualFeasibilityConditionsFactory(labels, 0, 1.1, 1.2), spectre::core::exception::ArgumentOutOfRangeException<double>);
+    EXPECT_THROW(IndividualFeasibilityConditionsFactory(labels, length, minFillup, maxFillup), spectre::core::exception::ArgumentOutOfRangeException<double>);
 }
 
 class IndividualFeasibilityConditionsFactoryTest : public ::testing::Test
