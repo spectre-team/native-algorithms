@@ -40,7 +40,7 @@ protected:
     const std::vector<spectre::supervised::Label> allFalseLabels{ false, false, false, false, true };
     const std::vector<spectre::supervised::Label> trueFalseLabels{ true, false, true, true, false };
     const std::vector<spectre::supervised::Label> nonBinalyLabels{ 0, 1, 2, 1, 1, 5, 3, 3, 9, 0, 0, 2, 1, 1, 5, 5, 1 };
-    const spectre::algorithm::genetic::Individual nonBinaryIndividualThree = 
+    const spectre::algorithm::genetic::Individual nonBinaryIndividualThree =
         spectre::algorithm::genetic::Individual({ true, false, true, false, false, false, true, true, false, false, false, true, false, false, false, false, false});
     const spectre::algorithm::genetic::Individual nonBinaryIndividualSix =
         spectre::algorithm::genetic::Individual({ true, true, true, false, true, false, true, true, true, false, true, true, true, false, true, false, false });
