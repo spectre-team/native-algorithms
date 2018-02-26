@@ -29,14 +29,17 @@ using namespace spectre::algorithm::genetic;
 
 TEST(IndividualFeasibilityConditionsFactoryInitialization, initializes)
 {
+    size_t minFillup = 2u;
     const std::vector<spectre::supervised::Label> labels{ true, false, false, true, false };
-    EXPECT_NO_THROW(IndividualFeasibilityConditionsFactory(labels, 0, 0u));
+    EXPECT_NO_THROW(IndividualFeasibilityConditionsFactory(labels, 1, minFillup));
 }
 
 TEST(IndividualFeasibilityConditionsFactoryInitialization, throws_on_wrong_fillups)
 {
+    size_t minFillup = 3u;
+    size_t maxFillup = 2u;
     const std::vector<spectre::supervised::Label> labels{ true, false, false, true, false };
-    EXPECT_THROW(IndividualFeasibilityConditionsFactory(labels, 0, 3u, 2u), InconsistentMinimalAndMaximalFillupException);
+    EXPECT_THROW(IndividualFeasibilityConditionsFactory(labels, 0, minFillup, maxFillup), InconsistentMinimalAndMaximalFillupException);
 }
 
 TEST(IndividualFeasibilityConditionsFactoryInitialization, throws_on_wrong_percentage_fillups)

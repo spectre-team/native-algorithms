@@ -14,13 +14,7 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Header Files\Exceptions">
-      <UniqueIdentifier>{79772ca0-59b1-4d1c-ab50-ca07d0551227}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Exceptions">
       <UniqueIdentifier>{5bedc81d-e7c3-4673-8929-c00f71a4ddd9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Exceptions">
-      <UniqueIdentifier>{e7ef017c-cb25-40a1-9ba7-87fc1d9d6877}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\IndividualFeasibilityConditions">
       <UniqueIdentifier>{dcc29e2c-a09f-4fbd-bd9b-706a6797d6a2}</UniqueIdentifier>
@@ -30,9 +24,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="InconsistentMinimalAndMaximalFillupException.h">
-      <Filter>Header Files\Exceptions</Filter>
-    </ClInclude>
     <ClInclude Include="IndividualFeasibilityConditionsFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -44,9 +35,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="InconsistentMinimalAndMaximalFillupException.cpp">
-      <Filter>Source Files\Exceptions</Filter>
-    </ClCompile>
     <ClCompile Include="IndividualFeasibilityConditionsFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

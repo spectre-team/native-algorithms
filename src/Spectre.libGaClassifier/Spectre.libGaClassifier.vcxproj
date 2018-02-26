@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\opencv3.3.0.0.1\build\native\opencv3.props" Condition="Exists('..\packages\opencv3.3.0.0.1\build\native\opencv3.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -22,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{9FAF96E9-1983-4BD3-8C5C-FB922AC73126}</ProjectGuid>
-    <RootNamespace>SpectrelibGaClassifier</RootNamespace>
+    <RootNamespace>Spectre::libGaClassifier</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -57,19 +56,17 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\PropertySheets\NativeProject.props" />
-    <Import Project="..\PropertySheets\OpenCvDependencies.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\PropertySheets\NativeProject.props" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\PropertySheets\NativeProject.props" />
-    <Import Project="..\PropertySheets\OpenCvDependencies.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -147,14 +144,12 @@
     <ClInclude Include="AllLabelTypesIncludedCondition.h">
       <SubType>Header Files</SubType>
     </ClInclude>
-    <ClInclude Include="InconsistentMinimalAndMaximalFillupException.h" />
     <ClInclude Include="IndividualFeasibilityConditionsFactory.h">
       <SubType>Header Files</SubType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllLabelTypesIncludedCondition.cpp" />
-    <ClCompile Include="InconsistentMinimalAndMaximalFillupException.cpp" />
     <ClCompile Include="IndividualFeasibilityConditionsFactory.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
