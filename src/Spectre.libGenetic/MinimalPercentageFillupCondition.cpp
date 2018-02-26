@@ -28,8 +28,8 @@ MinimalPercentageFillupCondition::MinimalPercentageFillupCondition(double minima
 
 bool MinimalPercentageFillupCondition::checkCurrentCondition(const spectre::algorithm::genetic::Individual &individual)
 {
-    float number = std::accumulate(individual.getData().begin(), individual.getData().end(), 0.0f);
-    return (number / individual.size()) >= m_MinimalPercentageFillup;
+    float numberOfTrueValues = std::accumulate(individual.getData().begin(), individual.getData().end(), 0.0f);
+    return (numberOfTrueValues / individual.size()) >= m_MinimalPercentageFillup;
 }
 
 }

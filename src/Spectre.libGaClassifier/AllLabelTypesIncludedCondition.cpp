@@ -26,10 +26,9 @@ namespace spectre::supervised
 {
 AllLabelTypesIncludedCondition::AllLabelTypesIncludedCondition(gsl::span<const supervised::Label> labels, std::unique_ptr<BaseIndividualFeasibilityCondition> condition) :
     BaseIndividualFeasibilityCondition(std::move(condition)),
-    m_Labels(labels)
+    m_Labels(labels),
+    m_LabelTypesAmount(std::set<Label>(labels.begin(), labels.end()).size())
 {
-    std::set<Label> labelTypes(labels.begin(), labels.end());
-    m_LabelTypesAmount = labelTypes.size();
 }
 
 bool AllLabelTypesIncludedCondition::checkCurrentCondition(const spectre::algorithm::genetic::Individual &individual)

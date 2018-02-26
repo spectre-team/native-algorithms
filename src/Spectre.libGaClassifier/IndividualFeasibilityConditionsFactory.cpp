@@ -80,11 +80,11 @@ std::unique_ptr<algorithm::genetic::BaseIndividualFeasibilityCondition> Individu
     {
         condition = std::make_unique<algorithm::genetic::MaximalFillupCondition>(m_MaximalFillup, std::move(condition));
     }
-    if (m_MinimalPercentageFillup != NAN)
+    if (!std::isnan(m_MinimalPercentageFillup))
     {
         condition = std::make_unique<algorithm::genetic::MinimalPercentageFillupCondition>(m_MinimalPercentageFillup, std::move(condition));
     }
-    if (m_MaximalPercentageFillup != NAN)
+    if (!std::isnan(m_MaximalPercentageFillup))
     {
         condition = std::make_unique<algorithm::genetic::MaximalPercentageFillupCondition>(m_MaximalPercentageFillup, std::move(condition));
     }

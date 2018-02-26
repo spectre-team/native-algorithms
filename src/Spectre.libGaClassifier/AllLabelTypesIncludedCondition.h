@@ -1,6 +1,6 @@
 /*
 * AllLabelTypesIncludedCondition.h
-* Checks, if Individual has at least specific amount of true values.
+* Checks, if Individual includes all types of available labels.
 *
 Copyright 2018 Spectre Team
 
@@ -20,12 +20,12 @@ limitations under the License.
 #pragma once
 #include "Spectre.libGenetic/BaseIndividualFeasibilityCondition.h"
 #include "Spectre.libClassifier/NotABinaryLabelException.h"
-#include <packages/Microsoft.Gsl.0.1.2.1/build/native/include/span.h>
+#include <span.h>
 
 namespace spectre::supervised
 {
 /// <summary>
-/// Checks, if Individual has at least specific amount of true values.
+/// Checks, if Individual includes all types of available labels.
 /// </summary>
 class AllLabelTypesIncludedCondition : public algorithm::genetic::BaseIndividualFeasibilityCondition
 {
@@ -50,6 +50,6 @@ private:
     /// <summary>
     /// The amount of label types.
     /// </summary>
-    size_t m_LabelTypesAmount;
+    const size_t m_LabelTypesAmount;
 };
 }

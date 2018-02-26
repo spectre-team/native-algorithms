@@ -44,7 +44,8 @@ public:
     /// <param name="length">The length.</param>
     /// <param name="minimalPercentageFillup">The minimal percentage fillup.</param>
     /// <param name="maximalPercentageFillup">The maximal percentage fillup.</param>
-    IndividualFeasibilityConditionsFactory(gsl::span<const supervised::Label> labels, size_t length = 0, double minimalPercentageFillup = NAN, double maximalPercentageFillup = NAN);
+    IndividualFeasibilityConditionsFactory(gsl::span<const supervised::Label> labels, size_t length = 0, double minimalPercentageFillup = std::numeric_limits<double>::signaling_NaN(),
+        double maximalPercentageFillup = std::numeric_limits<double>::signaling_NaN());
     /// <summary>
     /// Creates Individual Feasibility Condition with given parameter values.
     /// </summary>
