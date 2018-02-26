@@ -19,8 +19,8 @@ limitations under the License.
 
 #include "Spectre.libGaClassifier/IndividualFeasibilityConditionsFactory.h"
 #include <gtest/gtest.h>
-#include "Spectre.libGenetic/InconsistentChromosomeLengthException.h"
-#include "Spectre.libGaClassifier/InconsistentMinimalAndMaximalFillupException.h"
+#include "Spectre.libException/ArgumentOutOfRangeException.h"
+#include "Spectre.libGenetic/InconsistentMinimalAndMaximalFillupException.h"
 
 namespace
 {
@@ -29,17 +29,32 @@ using namespace spectre::algorithm::genetic;
 
 TEST(IndividualFeasibilityConditionsFactoryInitialization, initializes)
 {
-    EXPECT_NO_THROW(IndividualFeasibilityConditionsFactory());
+    const std::vector<spectre::supervised::Label> labels{ true, false, false, true, false };
+    EXPECT_NO_THROW(IndividualFeasibilityConditionsFactory(labels, 0, 0u));
 }
 
 TEST(IndividualFeasibilityConditionsFactoryInitialization, throws_on_wrong_fillups)
 {
-    EXPECT_THROW(IndividualFeasibilityConditionsFactory(0, 3, 2), InconsistentMinimalAndMaximalFillupException);
+    const std::vector<spectre::supervised::Label> labels{ true, false, false, true, false };
+    EXPECT_THROW(IndividualFeasibilityConditionsFactory(labels, 0, 3u, 2u), InconsistentMinimalAndMaximalFillupException);
 }
 
 TEST(IndividualFeasibilityConditionsFactoryInitialization, throws_on_wrong_percentage_fillups)
 {
-    EXPECT_THROW(IndividualFeasibilityConditionsFactory(0, 1, 4, 0.6, 0.4), InconsistentMinimalAndMaximalFillupException);
+    const std::vector<spectre::supervised::Label> labels{ true, false, false, true, false };
+    EXPECT_THROW(IndividualFeasibilityConditionsFactory(labels, 0, 0.6, 0.4), InconsistentMinimalAndMaximalFillupException);
+}
+
+TEST(IndividualFeasibilityConditionsFactoryInitialization, throws_on_too_low_percentage_fillups)
+{
+    const std::vector<spectre::supervised::Label> labels{ true, false, false, true, false };
+    EXPECT_THROW(IndividualFeasibilityConditionsFactory(labels, 0, -1, 0.4), spectre::core::exception::ArgumentOutOfRangeException<double>);
+}
+
+TEST(IndividualFeasibilityConditionsFactoryInitialization, throws_on_too_high_percentage_fillups)
+{
+    const std::vector<spectre::supervised::Label> labels{ true, false, false, true, false };
+    EXPECT_THROW(IndividualFeasibilityConditionsFactory(labels, 0, 1.1, 1.2), spectre::core::exception::ArgumentOutOfRangeException<double>);
 }
 
 class IndividualFeasibilityConditionsFactoryTest : public ::testing::Test
@@ -50,7 +65,8 @@ public:
         tooManyTrueIndividual(std::vector<bool>(tooManyTrueData)),
         toofewTrueIndividual(std::vector<bool>(toofewTrueData)),
         oneLabelIndividual(std::vector<bool>(oneLabelData)),
-        factory(length, minimalFillup, maximalFillup, minimalPercentageFillup, maximalPercentageFillup, allLabel, labels) {}
+        factoryFillup(labels, length, minimalFillup, maximalFillup),
+        factoryPercentageFillup(labels, length, minimalPercentageFillup, maximalPercentageFillup) {}
 
 protected:
     const std::vector<bool> data{ true, false, true, true, false };
@@ -67,36 +83,36 @@ protected:
     size_t maximalFillup = 4;
     double minimalPercentageFillup = 0.6;
     double maximalPercentageFillup = 1;
-    bool allLabel = true;
-    IndividualFeasibilityConditionsFactory factory;
+    IndividualFeasibilityConditionsFactory factoryFillup;
+    IndividualFeasibilityConditionsFactory factoryPercentageFillup;
 };
 
 TEST_F(IndividualFeasibilityConditionsFactoryTest, correct_individual_feasibility_condition_build)
 {
-    EXPECT_NO_THROW(factory.build());
+    EXPECT_NO_THROW(factoryFillup.build());
 }
 
 TEST_F(IndividualFeasibilityConditionsFactoryTest, condition_created_passes)
 {
-    std::unique_ptr<BaseIndividualFeasibilityCondition> condition = factory.build();
+    std::unique_ptr<BaseIndividualFeasibilityCondition> condition = factoryFillup.build();
     EXPECT_TRUE(condition->check(individual));
 }
 
 TEST_F(IndividualFeasibilityConditionsFactoryTest, condition_created_fails_on_too_many_true_data)
 {
-    std::unique_ptr<BaseIndividualFeasibilityCondition> condition = factory.build();
+    std::unique_ptr<BaseIndividualFeasibilityCondition> condition = factoryFillup.build();
     EXPECT_FALSE(condition->check(tooManyTrueIndividual));
 }
 
-TEST_F(IndividualFeasibilityConditionsFactoryTest, condition_created_fails_on_too_many_few_data)
+TEST_F(IndividualFeasibilityConditionsFactoryTest, condition_created_fails_on_too_few_true_data)
 {
-    std::unique_ptr<BaseIndividualFeasibilityCondition> condition = factory.build();
+    std::unique_ptr<BaseIndividualFeasibilityCondition> condition = factoryPercentageFillup.build();
     EXPECT_FALSE(condition->check(toofewTrueIndividual));
 }
 
 TEST_F(IndividualFeasibilityConditionsFactoryTest, condition_created_fails_on_only_one_label)
 {
-    std::unique_ptr<BaseIndividualFeasibilityCondition> condition = factory.build();
+    std::unique_ptr<BaseIndividualFeasibilityCondition> condition = factoryFillup.build();
     EXPECT_FALSE(condition->check(oneLabelIndividual));
 }
 

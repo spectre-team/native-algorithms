@@ -20,26 +20,29 @@ limitations under the License.
 #include <span.h>
 #include "AllLabelTypesIncludedCondition.h"
 #include "Spectre.libClassifier/NotABinaryLabelException.h"
+#include <set>
 
 namespace spectre::supervised
 {
 AllLabelTypesIncludedCondition::AllLabelTypesIncludedCondition(gsl::span<const supervised::Label> labels, std::unique_ptr<BaseIndividualFeasibilityCondition> condition) :
     BaseIndividualFeasibilityCondition(std::move(condition)),
-    m_Labels(labels) {}
+    m_Labels(labels)
+{
+    std::set<Label> labelTypes(labels.begin(), labels.end());
+    m_LabelTypesAmount = labelTypes.size();
+}
 
 bool AllLabelTypesIncludedCondition::checkCurrentCondition(const spectre::algorithm::genetic::Individual &individual)
 {
-    auto valueSum = 0u;
-    auto labelsAmount = 0u;
+    std::set<Label> types;
     for (auto i = 0u; i < individual.size(); ++i)
     {
         if (individual.getData()[i])
         {
-            ++labelsAmount;
-            valueSum += m_Labels[i];
+            types.insert(m_Labels[i]);
         }
     }
-    return (valueSum != 0 && valueSum != labelsAmount);
+    return (types.size() == m_LabelTypesAmount);
 }
 
 }

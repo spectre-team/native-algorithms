@@ -18,6 +18,7 @@ limitations under the License.
 */
 
 #include "MaximalPercentageFillupCondition.h"
+#include <numeric>
 
 namespace spectre::algorithm::genetic
 {
@@ -27,11 +28,7 @@ MaximalPercentageFillupCondition::MaximalPercentageFillupCondition(double minima
 
 bool MaximalPercentageFillupCondition::checkCurrentCondition(const spectre::algorithm::genetic::Individual &individual)
 {
-    float number = 0;
-    for (bool value : individual.getData())
-    {
-        number += value;
-    }
+    float number = std::accumulate(individual.getData().begin(), individual.getData().end(), 0.0f);
     return (number / individual.size()) <= m_MaximalPercentageFillup;
 }
 

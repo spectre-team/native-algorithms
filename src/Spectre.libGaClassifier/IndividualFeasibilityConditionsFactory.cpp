@@ -18,37 +18,54 @@ limitations under the License.
 */
 
 #include "IndividualFeasibilityConditionsFactory.h"
-#include "InconsistentMinimalAndMaximalFillupException.h"
 #include "Spectre.libGenetic/LengthCondition.h"
 #include "Spectre.libGenetic/MinimalFillupCondition.h"
 #include "Spectre.libGenetic/MaximalFillupCondition.h"
 #include "Spectre.libGenetic/MinimalPercentageFillupCondition.h"
 #include "Spectre.libGenetic/MaximalPercentageFillupCondition.h"
 #include "AllLabelTypesIncludedCondition.h"
+#include "Spectre.libException/ArgumentOutOfRangeException.h"
+#include "Spectre.libGenetic/InconsistentMinimalAndMaximalFillupException.h"
 
 namespace spectre::supervised
 {
-IndividualFeasibilityConditionsFactory::IndividualFeasibilityConditionsFactory(size_t length, size_t minimalFillup, size_t maximalFillup, double minimalPercentageFillup,
-                                                                               double maximalPercentageFillup, bool allLabelTypes, gsl::span<const supervised::Label> labels):
+IndividualFeasibilityConditionsFactory::IndividualFeasibilityConditionsFactory(gsl::span<const supervised::Label> labels, size_t length, size_t minimalFillup, size_t maximalFillup):
     m_Length(length),
     m_MinimalFillup(minimalFillup),
     m_MaximalFillup(maximalFillup),
-    m_MinimalPercentageFillup(minimalPercentageFillup),
-    m_MaximalPercentageFillup(maximalPercentageFillup),
-    m_AllLabelTypes(allLabelTypes),
+    m_MinimalPercentageFillup(0),
+    m_MaximalPercentageFillup(1),
     m_Labels(labels)
 {
     if (m_MinimalFillup > m_MaximalFillup)
     {
         throw InconsistentMinimalAndMaximalFillupException(m_MinimalFillup, m_MaximalFillup);
     }
+}
+
+IndividualFeasibilityConditionsFactory::IndividualFeasibilityConditionsFactory(gsl::span<const supervised::Label> labels, size_t length, double minimalPercentageFillup, double maximalPercentageFillup):
+    m_Length(length),
+    m_MinimalFillup(0),
+    m_MaximalFillup(std::numeric_limits<size_t>::max()),
+    m_MinimalPercentageFillup(minimalPercentageFillup),
+    m_MaximalPercentageFillup(maximalPercentageFillup),
+    m_Labels(labels)
+{
     if (m_MinimalPercentageFillup > m_MaximalPercentageFillup)
     {
         throw InconsistentMinimalAndMaximalFillupException(m_MinimalPercentageFillup, m_MaximalPercentageFillup);
     }
+    if (m_MinimalPercentageFillup < 0 || minimalPercentageFillup > 1)
+    {
+        throw core::exception::ArgumentOutOfRangeException<double>("minimalPercentageFillup", 0, 1, m_MinimalPercentageFillup);
+    }
+    if (m_MaximalPercentageFillup < 0 || m_MaximalPercentageFillup > 1)
+    {
+        throw core::exception::ArgumentOutOfRangeException<double>("maximalPercentageFillup", 0, 1, m_MaximalPercentageFillup);
+    }
 }
 
-std::unique_ptr<algorithm::genetic::BaseIndividualFeasibilityCondition> IndividualFeasibilityConditionsFactory::build()
+std::unique_ptr<algorithm::genetic::BaseIndividualFeasibilityCondition> IndividualFeasibilityConditionsFactory::build() const
 {
     std::unique_ptr<algorithm::genetic::BaseIndividualFeasibilityCondition> condition = nullptr;
     if (m_Length != 0)
@@ -59,22 +76,19 @@ std::unique_ptr<algorithm::genetic::BaseIndividualFeasibilityCondition> Individu
     {
         condition = std::make_unique<algorithm::genetic::MinimalFillupCondition>(m_MinimalFillup, std::move(condition));
     }
-    if (m_MaximalFillup != UINT_MAX)
+    if (m_MaximalFillup != std::numeric_limits<size_t>::max())
     {
         condition = std::make_unique<algorithm::genetic::MaximalFillupCondition>(m_MaximalFillup, std::move(condition));
     }
-    if (m_MinimalPercentageFillup != 0)
+    if (m_MinimalPercentageFillup != NAN)
     {
         condition = std::make_unique<algorithm::genetic::MinimalPercentageFillupCondition>(m_MinimalPercentageFillup, std::move(condition));
     }
-    if (m_MaximalPercentageFillup != 1)
+    if (m_MaximalPercentageFillup != NAN)
     {
         condition = std::make_unique<algorithm::genetic::MaximalPercentageFillupCondition>(m_MaximalPercentageFillup, std::move(condition));
     }
-    if (m_AllLabelTypes == true)
-    {
-        condition = std::make_unique<AllLabelTypesIncludedCondition>(m_Labels, std::move(condition));
-    }
+    condition = std::make_unique<AllLabelTypesIncludedCondition>(m_Labels, std::move(condition));
     return condition;
 }
 

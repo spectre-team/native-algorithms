@@ -47,5 +47,9 @@ private:
     /// The labels.
     /// </summary>
     gsl::span<const supervised::Label> m_Labels;
+    /// <summary>
+    /// The amount of label types.
+    /// </summary>
+    size_t m_LabelTypesAmount;
 };
 }

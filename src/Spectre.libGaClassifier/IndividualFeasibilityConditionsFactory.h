@@ -32,47 +32,48 @@ public:
     /// <summary>
     /// Initializes a new instance of the <see cref="IndividualFeasibilityConditionsFactory"/> class.
     /// </summary>
+    /// <param name="labels">The labels.</param>
     /// <param name="length">The length.</param>
     /// <param name="minimalFillup">The minimal fillup.</param>
     /// <param name="maximalFillup">The maximal fillup.</param>
+    IndividualFeasibilityConditionsFactory(gsl::span<const supervised::Label> labels, size_t length = 0, size_t minimalFillup = 0, size_t maximalFillup = std::numeric_limits<size_t>::max());
+    /// <summary>
+    /// Initializes a new instance of the <see cref="IndividualFeasibilityConditionsFactory"/> class.
+    /// </summary>
+    /// <param name="labels">The labels.</param>
+    /// <param name="length">The length.</param>
     /// <param name="minimalPercentageFillup">The minimal percentage fillup.</param>
     /// <param name="maximalPercentageFillup">The maximal percentage fillup.</param>
-    /// <param name="allLabelTypes">if all types of label have to be included.</param>
-    IndividualFeasibilityConditionsFactory(size_t length = 0, size_t minimalFillup = 0, size_t maximalFillup = UINT_MAX, double minimalPercentageFillup = 0,
-                                           double maximalPercentageFillup = 1, bool allLabelTypes = false, gsl::span<const supervised::Label> labels = nullptr);
+    IndividualFeasibilityConditionsFactory(gsl::span<const supervised::Label> labels, size_t length = 0, double minimalPercentageFillup = NAN, double maximalPercentageFillup = NAN);
     /// <summary>
     /// Creates Individual Feasibility Condition with given parameter values.
     /// </summary>
     /// <returns>Individual Feasibility Conditions chain.</returns>
-    std::unique_ptr<spectre::algorithm::genetic::BaseIndividualFeasibilityCondition> build();
+    std::unique_ptr<spectre::algorithm::genetic::BaseIndividualFeasibilityCondition> build() const;
 private:
     /// <summary>
     /// The length.
     /// </summary>
-    size_t m_Length;
+    const size_t m_Length;
     /// <summary>
     /// The minimal fillup.
     /// </summary>
-    size_t m_MinimalFillup;
+    const size_t m_MinimalFillup;
     /// <summary>
     /// The maximal fillup.
     /// </summary>
-    size_t m_MaximalFillup;
+    const size_t m_MaximalFillup;
     /// <summary>
     /// The minimal percentage fillup.
     /// </summary>
-    double m_MinimalPercentageFillup;
+    const double m_MinimalPercentageFillup;
     /// <summary>
     /// The maximal percentage fillup.
     /// </summary>
-    double m_MaximalPercentageFillup;
+    const double m_MaximalPercentageFillup;
     /// <summary>
     /// If all label types have to be included.
     /// </summary>
-    bool m_AllLabelTypes;
-    /// <summary>
-    /// If all label types have to be included.
-    /// </summary>
-    gsl::span<const supervised::Label> m_Labels;
+    const gsl::span<const supervised::Label> m_Labels;
 };
 }
