@@ -415,9 +415,9 @@ std::vector<typename std::remove_const<DataType>::type> differentiate(gsl::span<
 {
     size_t length = data.length();
     if (length < 2)
-        throw std::invalid_argument("Data must have length greater than two in order to perform differentiation.");
+        throw ArgumentOutOfRangeException("data.length()", 2, SIZE_MAX, length)
     if (order >= length)
-        throw std::invalid_argument("Order of differentiation must not exceed length of the data.");
+        throw ArgumentOutOfRangeException("order", 0, length, order)
     return differentiate_unsafe(data, order);
 }
 }
