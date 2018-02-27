@@ -416,9 +416,9 @@ std::vector<typename std::remove_const<DataType>::type> differentiate(gsl::span<
 {
     size_t length = data.length();
     if (length < 2)
-        throw ArgumentOutOfRangeException("data.length()", 2, SIZE_MAX, length);
+        throw spectre::core::exception::ArgumentOutOfRangeException("data.length()", 2, SIZE_MAX, length);
     if (order >= length)
-        throw ArgumentOutOfRangeException("order", 0, length, order);
+        throw spectre::core::exception::ArgumentOutOfRangeException("order", 0, length, order);
     return differentiate_unsafe(data, order);
 }
 }
