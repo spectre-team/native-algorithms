@@ -229,18 +229,18 @@ TEST(DiffTest, calculates_differential)
 TEST(DiffTest, throws_on_insufficient_data_length)
 {
     Data data{ 1 };
-    EXPECT_THROW(differentiate(gsl::as_span(data)), std::invalid_argument);
+    EXPECT_THROW(differentiate(gsl::as_span(data)), spectre::core::exception::ArgumentOutOfRangeException<size_t>);
 }
 
 TEST(DiffTest, throws_on_empty_data)
 {
     Data data{};
-    EXPECT_THROW(differentiate(gsl::as_span(data)), std::invalid_argument);
+    EXPECT_THROW(differentiate(gsl::as_span(data)), spectre::core::exception::ArgumentOutOfRangeException<size_t>);
 }
 
 TEST(DiffTest, throws_on_too_large_order)
 {
     Data data{ 1, 2, 3 };
-    EXPECT_THROW(differentiate(gsl::as_span(data), 3), std::invalid_argument);
+    EXPECT_THROW(differentiate(gsl::as_span(data), 3), spectre::core::exception::ArgumentOutOfRangeException<size_t>);
 }
 }
