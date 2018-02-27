@@ -51,7 +51,7 @@ constexpr DataType Mean(gsl::span<const DataType> data)
 }
 
 /// <summary>
-/// Obtain median of the specified data.
+/// Obtain median of the specified data. Return 0 when the input data is empty.
 /// </summary>
 /// <param name="data">The data.</param>
 /// <returns>Median of the elements.</returns>
@@ -59,7 +59,7 @@ template <class DataType>
 DataType Median(gsl::span<const DataType> data)
 {
     static_assert(std::is_arithmetic_v<DataType>, "DataType: expected arithmetic.");
-    if (data.size() == 0) throw spectre::core::exception::EmptyArgumentException("Median: Provided vector is empty");
+    if (data.size() == 0) return static_cast<DataType>(0.0);
     std::vector<std::remove_const<DataType>::type> sortedData(data.begin(), data.end());
     std::sort(sortedData.begin(), sortedData.end());
     if (data.size() % 2) return sortedData[data.size() / 2];
@@ -115,7 +115,7 @@ DataType MeanAbsoluteDeviation(gsl::span<const DataType> data)
 }
 
 /// <summary>
-/// Find median absolute deviation of the data.
+/// Find median absolute deviation of the data. Return 0 when input data is empty.
 /// </summary>
 /// <param name="data">The data.</param>
 /// <returns>Median absolute deviation of the elements.</returns>

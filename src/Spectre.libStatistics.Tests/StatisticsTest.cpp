@@ -58,9 +58,9 @@ TEST(MedianTest, calculates_vector_median)
     EXPECT_THAT(Median(data), 2.);
 }
 
-TEST(MedianTest, throws_on_empty_vector)
+TEST(MedianTest, median_of_empty_is_zero)
 {
-    EXPECT_THROW(MedianAbsoluteDeviation(empty), spectre::core::exception::EmptyArgumentException);
+    EXPECT_THAT(Median(empty), 0.);
 }
 
 TEST(VarianceTest, calculates_unbiased_vector_variance_by_default)
@@ -110,8 +110,8 @@ TEST(MedianAbsoluteDeviationTest, calculates_median_absolute_deviation_of_vector
     EXPECT_THAT(MedianAbsoluteDeviation(data), DoubleEq(1.0));
 }
 
-TEST(MedianAbsoluteDeviationTest, throws_exception_when_set_is_empty)
+TEST(MedianAbsoluteDeviationTest, median_absolute_deviation_of_empty_is_zero)
 {
-    EXPECT_THROW(MedianAbsoluteDeviation(empty), spectre::core::exception::EmptyArgumentException);
+    EXPECT_THAT(MedianAbsoluteDeviation(empty), 0.);
 }
 }
