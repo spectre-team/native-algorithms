@@ -13,22 +13,33 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\IndividualFeasibilityConditions">
-      <UniqueIdentifier>{1d2bb302-0406-47d0-beb9-592a35eaae1c}</UniqueIdentifier>
+    <Filter Include="Header Files\Exceptions">
+      <UniqueIdentifier>{5bedc81d-e7c3-4673-8929-c00f71a4ddd9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\IndividualFeasibilityConditions">
+      <UniqueIdentifier>{dcc29e2c-a09f-4fbd-bd9b-706a6797d6a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IndividualFeasibilityConditions">
+      <UniqueIdentifier>{f5e374e0-c53e-49f1-b737-6853cba38bcc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="IndividualFeasibilityConditionsFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AllLabelTypesIncludedCondition.h">
+      <Filter>Header Files\IndividualFeasibilityConditions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Common\Main.cpp">
+    <ClCompile Include="IndividualFeasibilityConditionsFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\regis\Documents\GitHub\native-algorithms\src\Spectre.GaSvmNative.Tests\..\..\lib\native\src\gtest\gtest-all.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="C:\Users\regis\Documents\GitHub\native-algorithms\src\Spectre.GaSvmNative.Tests\..\..\lib\native\src\gmock\gmock-all.cc">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="AllLabelTypesIncludedCondition.cpp">
+      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

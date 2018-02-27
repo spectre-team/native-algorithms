@@ -13,27 +13,25 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\IndividualFeasibilityConditions">
-      <UniqueIdentifier>{d8ad4816-5226-4f39-b09c-325e03d5c135}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\IndividualFeasibilityConditions">
-      <UniqueIdentifier>{cb8c700d-f7c2-4b85-9b17-8ec8e340e622}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Exceptions">
-      <UniqueIdentifier>{a95634d3-0f29-44e1-8a29-3241a447f1e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Exceptions">
-      <UniqueIdentifier>{0b6f67f6-0e2f-4be0-959d-748a1e70bd55}</UniqueIdentifier>
+      <UniqueIdentifier>{74f30afc-fce5-4722-af25-efb4e702810f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="InconsistentMinimalAndMaximalFillupException.h">
-      <Filter>Header Files\Exceptions</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="InconsistentMinimalAndMaximalFillupException.cpp">
-      <Filter>Source Files\Exceptions</Filter>
+    <ClCompile Include="..\Common\Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gtest\gtest-all.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IndividualFeasibilityConditionsFactoryTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AllLabelTypesIncludedConditionTest.cpp">
+      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
