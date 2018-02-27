@@ -22,6 +22,7 @@ limitations under the License.
 #include <exception>
 #include <span.h>
 #include "Spectre.libFunctional/Transform.h"
+#include "Spectre.libException/ArgumentOutOfRangeException.h"
 
 namespace spectre::statistics::basic_math
 {
@@ -415,9 +416,9 @@ std::vector<typename std::remove_const<DataType>::type> differentiate(gsl::span<
 {
     size_t length = data.length();
     if (length < 2)
-        throw ArgumentOutOfRangeException("data.length()", 2, SIZE_MAX, length)
+        throw ArgumentOutOfRangeException("data.length()", 2, SIZE_MAX, length);
     if (order >= length)
-        throw ArgumentOutOfRangeException("order", 0, length, order)
+        throw ArgumentOutOfRangeException("order", 0, length, order);
     return differentiate_unsafe(data, order);
 }
 }
