@@ -149,6 +149,9 @@
     </ClInclude>
     <ClInclude Include="InconsistentChromosomeLengthException.h" />
     <ClInclude Include="InconsistentGenerationAndScoresLengthException.h" />
+    <ClInclude Include="InconsistentMinimalAndMaximalFillupException.h">
+      <SubType>Header Files</SubType>
+    </ClInclude>
     <ClInclude Include="IndividualsBuilderStrategy.h" />
     <ClInclude Include="LengthCondition.h">
       <SubType>Header Files</SubType>
@@ -156,7 +159,13 @@
     <ClInclude Include="MaximalFillupCondition.h">
       <SubType>Header Files</SubType>
     </ClInclude>
+    <ClInclude Include="MaximalPercentageFillupCondition.h">
+      <SubType>Header Files</SubType>
+    </ClInclude>
     <ClInclude Include="MinimalFillupCondition.h">
+      <SubType>Header Files</SubType>
+    </ClInclude>
+    <ClInclude Include="MinimalPercentageFillupCondition.h">
       <SubType>Header Files</SubType>
     </ClInclude>
     <ClInclude Include="MutationOperator.h" />
@@ -179,10 +188,13 @@
     <ClCompile Include="GeneticAlgorithmFactory.cpp" />
     <ClCompile Include="InconsistentChromosomeLengthException.cpp" />
     <ClCompile Include="InconsistentGenerationAndScoresLengthException.cpp" />
+    <ClCompile Include="InconsistentMinimalAndMaximalFillupException.cpp" />
     <ClCompile Include="IndividualsBuilderStrategy.cpp" />
     <ClCompile Include="LengthCondition.cpp" />
     <ClCompile Include="MaximalFillupCondition.cpp" />
+    <ClCompile Include="MaximalPercentageFillupCondition.cpp" />
     <ClCompile Include="MinimalFillupCondition.cpp" />
+    <ClCompile Include="MinimalPercentageFillupCondition.cpp" />
     <ClCompile Include="MutationOperator.cpp" />
     <ClCompile Include="Individual.cpp" />
     <ClCompile Include="NegativePreservationRateException.cpp" />

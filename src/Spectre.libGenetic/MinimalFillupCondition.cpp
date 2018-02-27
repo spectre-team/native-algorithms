@@ -18,21 +18,18 @@ limitations under the License.
 */
 
 #include "MinimalFillupCondition.h"
+#include <numeric>
 
 namespace spectre::algorithm::genetic
 {
 MinimalFillupCondition::MinimalFillupCondition(size_t minimalFillup, std::unique_ptr<BaseIndividualFeasibilityCondition> condition):
-BaseIndividualFeasibilityCondition(std::move(condition)),
-m_MinimalFillup(minimalFillup) {}
+    BaseIndividualFeasibilityCondition(std::move(condition)),
+    m_MinimalFillup(minimalFillup) {}
 
 bool MinimalFillupCondition::checkCurrentCondition(const spectre::algorithm::genetic::Individual &individual)
 {
-    auto number = 0u;
-    for (bool value: individual.getData())
-    {
-        number += value;
-    }
-    return number >= m_MinimalFillup;
+    size_t numberOfTrueValues = std::accumulate(individual.getData().begin(), individual.getData().end(), 0u);
+    return numberOfTrueValues >= m_MinimalFillup;
 }
 
 }
