@@ -56,7 +56,7 @@
     <ClCompile Include="GaClassifier.cpp">
       <Filter>Source Files\Classifiers</Filter>
     </ClCompile>
-    <ClCompile Include="GaFitnessClassifier.cpp">
+    <ClCompile Include="GaFitnessFunction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

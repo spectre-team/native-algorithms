@@ -20,14 +20,15 @@ limitations under the License.
 #include "GaClassifier.h"
 #include "Spectre.libClassifier/RandomSplitter.h"
 #include "Spectre.libGenetic/GenerationFactory.h"
-#include "IndividualFeasibilityConditionsFactory.h"
 #include "GaFitnessFunction.h"
+#include "IndividualFeasibilityConditionsFactory.h"
+#include "Spectre.libClassifier/UnsupportedDatasetTypeException.h"
+#include "Spectre.libFunctional/Filter.h"
 
 namespace spectre::supervised
 {
 
-GaClassifier::GaClassifier(std::unique_ptr<IClassifier> classifier,
-                           OpenCvDataset& data,
+GaClassifier::GaClassifier(IClassifier& classifier,
                            double trainingSetSplitRate,
                            double mutationRate,
                            double bitSwapRate,
@@ -38,11 +39,12 @@ GaClassifier::GaClassifier(std::unique_ptr<IClassifier> classifier,
                            spectre::algorithm::genetic::Seed seed,
                            size_t minimalFillup,
                            size_t maximalFillup):
-    m_Classifier(std::move(classifier)),
+    m_Classifier(classifier),
     m_PopulationSize(populationSize),
     m_InitialIndividualFillup(initialFillup),
     m_TrainingDatasetSizeRate(trainingSetSplitRate),
     m_Seed(seed),
+    m_NumberOfGenerations(numberOfGenerations),
     m_GaFactory(mutationRate,
         bitSwapRate,
         preservationRate,
@@ -51,6 +53,11 @@ GaClassifier::GaClassifier(std::unique_ptr<IClassifier> classifier,
     m_MinimalFillup(minimalFillup),
     m_MaximalFillup(maximalFillup)
 {
+}
+
+void GaClassifier::Fit(LabeledDataset dataset)
+{
+    const auto& data = asSupported(dataset);
     RandomSplitter splitter(m_TrainingDatasetSizeRate, m_Seed);
     auto splittedDataset = splitter.split(data);
     auto trainingSetSize = splittedDataset.trainingSet.size();
@@ -58,19 +65,34 @@ GaClassifier::GaClassifier(std::unique_ptr<IClassifier> classifier,
     IndividualFeasibilityConditionsFactory conditionsFactory(splittedDataset.trainingSet.GetSampleMetadata(), splittedDataset.trainingSet.size(), m_MinimalFillup, m_MaximalFillup);
     auto conditions = conditionsFactory.build();
 
-    auto fitnessFunction = std::make_unique<GaFitnessFunction>(std::move(classifier), splittedDataset);
+    auto fitnessFunction = std::make_unique<GaFitnessFunction>(m_Classifier, splittedDataset);
     auto algorithm = m_GaFactory.BuildDefault(std::move(fitnessFunction), m_Seed, std::move(conditions));
-    spectre::algorithm::genetic::GenerationFactory generationFactory(numberOfGenerations, trainingSetSize, initialFillup);
-    spectre::algorithm::genetic::Generation initialGeneration = generationFactory(m_Seed);
+    algorithm::genetic::GenerationFactory generationFactory(m_NumberOfGenerations, trainingSetSize, m_InitialIndividualFillup);
+    algorithm::genetic::Generation initialGeneration = generationFactory(m_Seed);
     auto finalGeneration = algorithm->evolve(std::move(initialGeneration));
-}
+    auto bestIndividual = finalGeneration[0];
 
-void GaClassifier::Fit(LabeledDataset dataset)
-{
+    OpenCvDataset bestDataset = splittedDataset.trainingSet.getFilteredOpenCvDataset(bestIndividual.getData());
+
+    m_Classifier.Fit(bestDataset);
 }
 
 std::vector<Label> GaClassifier::Predict(LabeledDataset dataset) const
 {
+    return m_Classifier.Predict(dataset);
+}
+
+const OpenCvDataset& GaClassifier::asSupported(LabeledDataset dataset)
+{
+    try
+    {
+        const auto& casted = dynamic_cast<const OpenCvDataset&>(dataset);
+        return casted;
+    }
+    catch (const std::bad_cast&)
+    {
+        throw exception::UnsupportedDatasetTypeException(dataset);
+    }
 }
 
 }

@@ -17,7 +17,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 #include <gtest/gtest.h>
 #include "Spectre.libClassifier/Types.h"
 #include "Spectre.libClassifier/SplittedOpevCvDataset.h"
@@ -39,8 +38,8 @@ TEST(GaFitnessFunctionTestInitialization, correct_ga_fitness_function_initializa
     OpenCvDataset trainingSet(std::move(training_data), std::move(training_labels));
     OpenCvDataset testSet(std::move(test_data), std::move(test_labels));
     SplittedOpenCvDataset data(std::move(trainingSet), std::move(testSet));
-    const Svm svm{};
-    EXPECT_NO_THROW(GaFitnessFunction(std::make_unique<Svm>(svm), data));
+    Svm svm{};
+    EXPECT_NO_THROW(GaFitnessFunction(svm, data));
 }
 
 class GaFitnessFunctionTest : public ::testing::Test
@@ -50,7 +49,7 @@ public:
         trainingSet(training_data, training_labels),
         testSet(test_data, test_labels),
         data(std::move(trainingSet), std::move(testSet)),
-        gaFitnessFunction(std::make_unique<Svm>(svm), data)
+        gaFitnessFunction(svm, data)
     {};
 
 protected:
@@ -62,7 +61,7 @@ protected:
     OpenCvDataset trainingSet;
     OpenCvDataset testSet;
     SplittedOpenCvDataset data;
-    const Svm svm{};
+    Svm svm{};
     GaFitnessFunction gaFitnessFunction;
 };
 
