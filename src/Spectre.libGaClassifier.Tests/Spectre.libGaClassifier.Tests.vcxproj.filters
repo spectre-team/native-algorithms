@@ -16,6 +16,9 @@
     <Filter Include="Source Files\IndividualFeasibilityConditions">
       <UniqueIdentifier>{74f30afc-fce5-4722-af25-efb4e702810f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Classifiers">
+      <UniqueIdentifier>{cafa9d25-d6d1-48f5-88b7-00d814469f23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Common\Main.cpp">
@@ -32,6 +35,12 @@
     </ClCompile>
     <ClCompile Include="AllLabelTypesIncludedConditionTest.cpp">
       <Filter>Source Files\IndividualFeasibilityConditions</Filter>
+    </ClCompile>
+    <ClCompile Include="GaClassifierTest.cpp">
+      <Filter>Source Files\Classifiers</Filter>
+    </ClCompile>
+    <ClCompile Include="GaFitnessFunctionTest.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

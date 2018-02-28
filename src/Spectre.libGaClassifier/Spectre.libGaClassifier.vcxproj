@@ -144,12 +144,20 @@
     <ClInclude Include="AllLabelTypesIncludedCondition.h">
       <SubType>Header Files</SubType>
     </ClInclude>
+    <ClInclude Include="GaClassifier.h">
+      <SubType>Header Files</SubType>
+    </ClInclude>
+    <ClInclude Include="GaFitnessFunction.h">
+      <SubType>Header Files</SubType>
+    </ClInclude>
     <ClInclude Include="IndividualFeasibilityConditionsFactory.h">
       <SubType>Header Files</SubType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllLabelTypesIncludedCondition.cpp" />
+    <ClCompile Include="GaClassifier.cpp" />
+    <ClCompile Include="GaFitnessClassifier.cpp" />
     <ClCompile Include="IndividualFeasibilityConditionsFactory.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
