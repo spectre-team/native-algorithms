@@ -25,8 +25,8 @@ limitations under the License.
 namespace spectre::supervised
 {
 
-GaFitnessFunction::GaFitnessFunction(std::unique_ptr<IClassifier> classifier, SplittedOpenCvDataset& data):
-    m_Classifier(std::move(classifier)),
+GaFitnessFunction::GaFitnessFunction(IClassifier& classifier, SplittedOpenCvDataset& data):
+    m_Classifier(classifier),
     m_Data(data)
 {
 }
@@ -38,16 +38,7 @@ algorithm::genetic::ScoreType GaFitnessFunction::operator()(const algorithm::gen
         throw core::exception::InconsistentArgumentSizesException("data", m_Data.trainingSet.size(), "individual", individual.size());
     }
 
-    const auto& dataToFilter = m_Data.trainingSet.GetData();
-    const auto twoDimensionalFilteredData = core::functional::filter(dataToFilter, individual.getData());
-    std::vector<DataType> oneDimensionalFilteredData;
-    oneDimensionalFilteredData.reserve(twoDimensionalFilteredData.size() * twoDimensionalFilteredData[0].size());
-    for (const auto& observation : twoDimensionalFilteredData)
-    {
-        oneDimensionalFilteredData.insert(oneDimensionalFilteredData.end(), observation.begin(), observation.end());
-    }
-    const auto filteredLabels = core::functional::filter(m_Data.trainingSet.GetSampleMetadata(), individual.getData());
-    OpenCvDataset individualDataset(oneDimensionalFilteredData, filteredLabels);
+    OpenCvDataset individualDataset = m_Data.trainingSet.getFilteredOpenCvDataset(individual.getData());
 
     const auto result = getResultMatrix(std::move(individualDataset));
     return result.DiceIndex;
@@ -55,8 +46,8 @@ algorithm::genetic::ScoreType GaFitnessFunction::operator()(const algorithm::gen
 
 ConfusionMatrix GaFitnessFunction::getResultMatrix(const OpenCvDataset& data) const
 {
-    m_Classifier->Fit(data);
-    const auto predictions = m_Classifier->Predict((m_Data.testSet));
+    m_Classifier.Fit(data);
+    const auto predictions = m_Classifier.Predict((m_Data.testSet));
     ConfusionMatrix confusions(predictions, m_Data.testSet.GetSampleMetadata());
     return confusions;
 }
