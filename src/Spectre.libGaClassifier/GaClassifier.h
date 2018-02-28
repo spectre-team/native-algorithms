@@ -37,7 +37,6 @@ public:
     /// Initializes a new instance of the <see cref="GeneticTrainingSetSelectionScenario"/> class.
     /// </summary>
     /// <param name="classifier">The classifier.</param>
-    /// <param name="data">The data.</param>
     /// <param name="trainingSetSplitRate">The training set split rate.</param>
     /// <param name="mutationRate">The mutation rate.</param>
     /// <param name="bitSwapRate">The bit swap rate.</param>
@@ -49,8 +48,7 @@ public:
     /// <param name="seed">The seed.</param>
     /// <param name="minimalFillup">The minimal fillup.</param>
     /// <param name="maximalFillup">The maximal fillup.</param>
-    GaClassifier(std::unique_ptr<IClassifier> classifier,
-        OpenCvDataset& data,
+    GaClassifier(IClassifier& classifier,
         double trainingSetSplitRate,
         double mutationRate,
         double bitSwapRate,
@@ -74,10 +72,11 @@ public:
     /// <returns>vector of labels</returns>
     std::vector<Label> Predict(LabeledDataset dataset) const override;
 private:
+    static const OpenCvDataset& asSupported(LabeledDataset);
     /// <summary>
     /// The population sizes.
     /// </summary>
-    const std::unique_ptr<IClassifier> m_Classifier;
+    IClassifier& m_Classifier;
     /// <summary>
     /// The population sizes.
     /// </summary>
@@ -94,6 +93,10 @@ private:
     /// The seed.
     /// </summary>
     const spectre::algorithm::genetic::Seed m_Seed;
+    /// <summary>
+    /// The number of generations.
+    /// </summary>
+    const unsigned int m_NumberOfGenerations;
     /// <summary>
     /// The genetic algorithm factory.
     /// </summary>

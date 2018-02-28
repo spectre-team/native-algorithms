@@ -37,7 +37,7 @@ public:
     /// </summary>
     /// <param name="classifier">The classifier.</param>
     /// <param name="data">The splitted data.</param>
-    GaFitnessFunction(std::unique_ptr<spectre::supervised::IClassifier> classifier, spectre::supervised::SplittedOpenCvDataset& data);
+    GaFitnessFunction(IClassifier& classifier, SplittedOpenCvDataset& data);
     /// <summary>
     /// operator.
     /// </summary>
@@ -55,7 +55,7 @@ private:
     /// <summary>
     /// The classifier.
     /// </summary>
-    std::unique_ptr<spectre::supervised::IClassifier> m_Classifier;
+    spectre::supervised::IClassifier& m_Classifier;
     /// <summary>
     /// The splitted data.
     /// </summary>

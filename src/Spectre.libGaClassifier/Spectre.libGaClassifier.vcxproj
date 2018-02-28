@@ -157,8 +157,25 @@
   <ItemGroup>
     <ClCompile Include="AllLabelTypesIncludedCondition.cpp" />
     <ClCompile Include="GaClassifier.cpp" />
-    <ClCompile Include="GaFitnessClassifier.cpp" />
+    <ClCompile Include="GaFitnessFunction.cpp" />
     <ClCompile Include="IndividualFeasibilityConditionsFactory.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Spectre.libClassifier\Spectre.libClassifier.vcxproj">
+      <Project>{5419aeeb-98b4-4d79-9fca-a794200073fc}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Spectre.libDataset\Spectre.libDataset.vcxproj">
+      <Project>{b7db309d-3ed6-4771-993d-a1cf3a6436d9}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Spectre.libException\Spectre.libException.vcxproj">
+      <Project>{7417bf00-028b-4797-b58a-6058ca338493}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Spectre.libFunctional\Spectre.libFunctional.vcxproj">
+      <Project>{7eb0161f-4e8a-4c72-ba18-31b554f411f2}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Spectre.libGenetic\Spectre.libGenetic.vcxproj">
+      <Project>{9786751a-6ae1-48d3-938d-4129d0399667}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
