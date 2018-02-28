@@ -20,7 +20,7 @@ limitations under the License.
 #pragma once
 #include "Spectre.libClassifier/OpenCvDataset.h"
 
-namespace spectre::supervised 
+namespace spectre::supervised
 {
 /// <summary>
 /// Class used to create dataset having separated training and test datasets.
