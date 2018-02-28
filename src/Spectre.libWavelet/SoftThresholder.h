@@ -17,7 +17,7 @@
    limitations under the License.
 */
 #pragma once
-#include "DataTypes.h"
+#include "WaveletCoefficients.h"
 
 namespace spectre::algorithm::wavelet
 {
@@ -33,11 +33,11 @@ public:
     /// <param name="threshold">Treshold to be used.</param>
     explicit SoftThresholder(DataType threshold);
     /// <summary>
-    /// Tresholds the signal
+    /// Tresholds the coefficients
     /// </summary>
-    /// <param name="signal">Signal to apply tresholding to.</param>
+    /// <param name="coefficients">Signal to apply tresholding to.</param>
     /// <returns>Tresholded signal.</returns>
-    Signal operator()(const Signal& signal) const;
+    WaveletCoefficients operator()(WaveletCoefficients&& coefficients) const;
 private:
     const DataType m_Threshold;
 };
