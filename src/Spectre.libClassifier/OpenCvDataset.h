@@ -82,6 +82,13 @@ public:
     gsl::span<const Label> GetSampleMetadata() const override;
 
     /// <summary>
+    /// Gets part of dataset based on vector of bool with information
+    /// which observation and label to leave
+    /// </summary>
+    /// <returns></returns>
+    OpenCvDataset getFilteredOpenCvDataset(std::vector<bool> filterPattern) const;
+
+    /// <summary>
     /// Number of elements in dataset.
     /// </summary>
     /// <returns>Size</returns>
