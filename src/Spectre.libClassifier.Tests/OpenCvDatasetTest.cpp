@@ -278,4 +278,31 @@ TEST_F(OpenCvDatasetTest, returns_observation_with_valid_entries_through_square_
         EXPECT_EQ(data[i], observation[i]);
     }
 }
+
+TEST_F(OpenCvDatasetTest, returns_correct_filtered_data)
+{
+    const std::vector<DataType> result_data{ 0.5f, 0.4f, 0.6f, 2.1f, 1.0f, 0.6f };
+    const std::vector<Label> result_labels{ 3, 14 };
+    std::vector<bool> include{ 1, 0, 1 };
+    OpenCvDataset filtered = dataset->getFilteredOpenCvDataset(include);
+    gsl::span<const Observation> filtered_data_gsl = filtered.GetData();
+    std::vector<DataType> filtered_data{};
+    for (Observation observation: filtered_data_gsl)
+    {
+        for (DataType dataType: observation)
+        {
+            filtered_data.push_back(dataType);
+        }
+    }
+    gsl::span<const Label> filtered_labels_gsl = filtered.GetSampleMetadata();
+    std::vector<Label> filtered_labels(filtered_labels_gsl.begin(), filtered_labels_gsl.end());
+    for (int i = 0; i < result_data.size(); i++)
+    {
+        EXPECT_EQ(result_data[i], filtered_data[i]);
+    }
+    for (int i = 0; i < result_labels.size(); i++)
+    {
+        EXPECT_EQ(result_labels[i], filtered_labels[i]);
+    }
+}
 }
