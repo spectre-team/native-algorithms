@@ -296,11 +296,11 @@ TEST_F(OpenCvDatasetTest, returns_correct_filtered_data)
     }
     gsl::span<const Label> filtered_labels_gsl = filtered.GetSampleMetadata();
     std::vector<Label> filtered_labels(filtered_labels_gsl.begin(), filtered_labels_gsl.end());
-    for (int i = 0; i < result_data.size(); i++)
+    for (auto i = 0u; i < result_data.size(); i++)
     {
         EXPECT_EQ(result_data[i], filtered_data[i]);
     }
-    for (int i = 0; i < result_labels.size(); i++)
+    for (auto i = 0u; i < result_labels.size(); i++)
     {
         EXPECT_EQ(result_labels[i], filtered_labels[i]);
     }
