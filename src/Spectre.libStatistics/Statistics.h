@@ -2,7 +2,7 @@
 * Statistics.h
 * Statistics calculated on vectors.
 *
-Copyright 2017 Grzegorz Mrukwa
+Copyright 2017-2018 Grzegorz Mrukwa, Michal Gallus
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,7 +20,9 @@ limitations under the License.
 #pragma once
 #include <numeric>
 #include <span.h>
+#include "Spectre.libException/EmptyArgumentException.h"
 #include "Spectre.libStatistics/Math.h"
+
 
 namespace spectre::statistics::simple_statistics
 {
@@ -46,6 +48,22 @@ constexpr DataType Mean(gsl::span<const DataType> data)
 {
     static_assert(std::is_arithmetic_v<DataType>, "DataType: expected arithmetic.");
     return Sum(data) / (data.size() != 0 ? data.size() : 1);
+}
+
+/// <summary>
+/// Obtain median of the specified data. Return 0 when the input data is empty.
+/// </summary>
+/// <param name="data">The data.</param>
+/// <returns>Median of the elements.</returns>
+template <class DataType>
+DataType Median(gsl::span<const DataType> data)
+{
+    static_assert(std::is_arithmetic_v<DataType>, "DataType: expected arithmetic.");
+    if (data.size() == 0) return static_cast<DataType>(0.0);
+    std::vector<std::remove_const<DataType>::type> sortedData(data.begin(), data.end());
+    std::sort(sortedData.begin(), sortedData.end());
+    if (data.size() % 2) return sortedData[data.size() / 2];
+    else return (sortedData[data.size() / 2] + sortedData[data.size() / 2 - 1]) / 2.0;
 }
 
 /// <summary>
@@ -85,7 +103,7 @@ DataType Variance(gsl::span<const DataType> first, gsl::span<const DataType> sec
 /// Find mean absolute deviation of the data.
 /// </summary>
 /// <param name="data">The data.</param>
-/// <returns>Mean absolute deviation of the elements</returns>
+/// <returns>Mean absolute deviation of the elements.</returns>
 template <class DataType>
 DataType MeanAbsoluteDeviation(gsl::span<const DataType> data)
 {
@@ -94,5 +112,21 @@ DataType MeanAbsoluteDeviation(gsl::span<const DataType> data)
     const auto deviation = basic_math::minus(data, mean);
     const auto absoluteDeviation = basic_math::abs(gsl::as_span(deviation));
     return Mean(gsl::as_span(absoluteDeviation));
+}
+
+/// <summary>
+/// Find median absolute deviation of the data. Return 0 when input data is empty.
+/// </summary>
+/// <param name="data">The data.</param>
+/// <returns>Median absolute deviation of the elements.</returns>
+template <class DataType>
+DataType MedianAbsoluteDeviation(gsl::span<DataType> data)
+{
+    static_assert(std::is_arithmetic_v<DataType>, "DataType: expected arithmetic.");
+    gsl::span<const DataType> constSpan(data);
+    const auto median = Median(constSpan);
+    const auto deviation = basic_math::minus(constSpan, median);
+    const auto absoluteDeviation = basic_math::abs(gsl::as_span(deviation));
+    return Median(gsl::as_span(absoluteDeviation));
 }
 }

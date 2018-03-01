@@ -37,23 +37,20 @@ public:
     /// <param name="preservationRate">The preservation rate.</param>
     /// <param name="generationsNumber">The number of generation.</param>
     /// <param name="numberOfCores">The number of cores.</param>
-    /// <param name="minimalFillup">The minimal fillup.</param>
-    /// <param name="maximalFillup">The maximal fillup.</param>
     GeneticAlgorithmFactory(double mutationRate,
                             double bitSwapRate,
                             double preservationRate,
                             unsigned generationsNumber,
-                            unsigned numberOfCores,
-                            size_t minimalFillup,
-                            size_t maximalFillup);
+                            unsigned numberOfCores);
     /// <summary>
     /// Creates Genetic Algorithm with default parameter values.
     /// </summary>
     /// <param name="fitnessFunction">The fitness function.</param>
     /// <param name="seed">The seed.</param>
+    /// <param name="individualFeasibilityConditions">The individual feasibility conditions.</param>
     /// <returns>The Genetic Algorithm object</returns>
-    std::unique_ptr<GeneticAlgorithm> BuildDefault(std::unique_ptr<FitnessFunction> fitnessFunction,
-                                                   Seed seed=0) const;
+    std::unique_ptr<GeneticAlgorithm> BuildDefault(std::unique_ptr<FitnessFunction> fitnessFunction, Seed seed = 0,
+                               std::unique_ptr<BaseIndividualFeasibilityCondition> individualFeasibilityConditions = nullptr) const;
 private:
     /// <summary>
     /// The mutation rate.
@@ -75,13 +72,5 @@ private:
     /// The number of cores.
     /// </summary>
     const unsigned m_NumberOfCores;
-    /// <summary>
-    /// The minimal fillup.
-    /// </summary>
-    const size_t m_MinimalFillup;
-    /// <summary>
-    /// The maximal fillup.
-    /// </summary>
-    const size_t m_MaximalFillup;
 };
 }

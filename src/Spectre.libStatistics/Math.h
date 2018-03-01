@@ -21,6 +21,7 @@ limitations under the License.
 #include <vector>
 #include <span.h>
 #include "Spectre.libFunctional/Transform.h"
+#include "Spectre.libException/ArgumentOutOfRangeException.h"
 
 namespace spectre::statistics::basic_math
 {
@@ -380,4 +381,43 @@ std::vector<DataType> build(size_t size, Generator generator)
     return result;
 }
 
+/// <summary>
+/// Calculates differences between adjacent elements of given container.
+/// The function is based upon Matlab function diff():
+/// https://www.mathworks.com/help/matlab/ref/diff.html
+/// but it can handle only one dimensional data.
+/// </summary>
+/// <param name="data">The container.</param>
+/// <param name="order">Order of difference operation (how many times the difference is executed).</param>
+/// <returns>Vector of calculated differences, of size: length_of_data - order.</returns>
+template <class DataType>
+std::vector<typename std::remove_const<DataType>::type> differentiate_unsafe(gsl::span<DataType> data, uint16_t order = 1)
+{
+    std::vector<std::remove_const<DataType>::type> result(data.begin(), data.end());
+    for (auto i = 0u; i < order; ++i)
+    {
+        for (auto j = 0u; j < result.size() - 1; ++j)
+            result[j] = result[j + 1] - result[j];
+        result.resize(result.size() - 1);
+    }
+    return result;
+}
+
+/// <summary>
+/// Safe version of <see cref="differentiate_unsafe"/>.
+/// Validates the input before performing algorithm.
+/// </summary>
+/// <param name="data">The container.</param>
+/// <param name="order">Order of difference operation (how many times the difference is executed).</param>
+/// <returns>Vector of calculated differences, of size: length_of_data - order.</returns>
+template <class DataType>
+std::vector<typename std::remove_const<DataType>::type> differentiate(gsl::span<DataType> data, uint16_t order = 1)
+{
+    size_t length = data.length();
+    if (length < 2)
+        throw spectre::core::exception::ArgumentOutOfRangeException<size_t>("data.length()", 2, SIZE_MAX, length);
+    if (order >= length)
+        throw spectre::core::exception::ArgumentOutOfRangeException<size_t>("order", 0, length, size_t(order));
+    return differentiate_unsafe(data, order);
+}
 }

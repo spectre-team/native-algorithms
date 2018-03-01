@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\IndividualFeasibilityConditions">
+      <UniqueIdentifier>{45e56fdb-5e10-4a87-8689-bed3cf0537d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IndividualFeasibilityConditions">
+      <UniqueIdentifier>{d7ef4fae-f3ad-4cf7-9fd6-71ea24c28465}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -44,6 +50,9 @@
     </ClInclude>
     <ClInclude Include="MockStopCondition.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MockBaseIndividualFeasibilityCondition.h">
+      <Filter>Header Files\IndividualFeasibilityConditions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +100,24 @@
     </ClCompile>
     <ClCompile Include="GenerationFactoryTest.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseIndividualFeasibilityConditionTest.cpp">
+      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
+    </ClCompile>
+    <ClCompile Include="LengthConditionTest.cpp">
+      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
+    </ClCompile>
+    <ClCompile Include="MinimalFillupConditionTest.cpp">
+      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
+    </ClCompile>
+    <ClCompile Include="MaximalFillupConditionTest.cpp">
+      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
+    </ClCompile>
+    <ClCompile Include="MaximalPercentageFillupConditionTest.cpp">
+      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
+    </ClCompile>
+    <ClCompile Include="MinimalPercentageFillupConditionTest.cpp">
+      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

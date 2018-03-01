@@ -28,31 +28,19 @@ ParentSelectionStrategy::ParentSelectionStrategy(Seed seed):
 
 reference_pair<Individual> ParentSelectionStrategy::next(Generation &generation, gsl::span<const ScoreType> scores)
 {
-    if (generation.size() == static_cast<size_t>(scores.size()))
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (generation.size() != static_cast<size_t>(scores.size()))
     {
         throw InconsistentGenerationAndScoresLengthException(generation.size(), scores.size());
     }
     const auto minAndMaxWeights = std::minmax_element(scores.begin(), scores.end());
     const auto minWeight = *minAndMaxWeights.first;
     const auto maxWeight = *minAndMaxWeights.second;
-    if (minWeight >= 0)
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (minWeight < 0)
     {
         throw spectre::core::exception::ArgumentOutOfRangeException<ScoreType>("scores", 0, std::numeric_limits<ScoreType>::max(), minWeight);
     }
     std::vector<ScoreType> defaultScores(scores.size(), 1);
-    if (maxWeight > 0)
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (maxWeight <= 0)
     {
         scores = defaultScores;
     }

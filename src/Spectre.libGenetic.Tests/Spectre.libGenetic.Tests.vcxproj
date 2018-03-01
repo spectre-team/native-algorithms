@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="MockCrossoverOperator.h" />
     <ClInclude Include="MockFitnessFunction.h" />
+    <ClInclude Include="MockBaseIndividualFeasibilityCondition.h" />
     <ClInclude Include="MockIndividualsBuilderStrategy.h" />
     <ClInclude Include="MockMutationOperator.h" />
     <ClInclude Include="MockOffspringGenerator.h" />
@@ -160,12 +161,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Common\Main.cpp" />
+    <ClCompile Include="BaseIndividualFeasibilityConditionTest.cpp" />
     <ClCompile Include="CrossoverOperatorTest.cpp" />
     <ClCompile Include="GenerationFactoryTest.cpp" />
     <ClCompile Include="GenerationTest.cpp" />
     <ClCompile Include="GeneticAlgorithmTest.cpp" />
     <ClCompile Include="IndividualsBuilderStrategyTest.cpp" />
     <ClCompile Include="IndividualTest.cpp" />
+    <ClCompile Include="LengthConditionTest.cpp" />
+    <ClCompile Include="MaximalFillupConditionTest.cpp" />
+    <ClCompile Include="MaximalPercentageFillupConditionTest.cpp" />
+    <ClCompile Include="MinimalFillupConditionTest.cpp" />
+    <ClCompile Include="MinimalPercentageFillupConditionTest.cpp" />
     <ClCompile Include="MutationOperatorTest.cpp" />
     <ClCompile Include="OffspringGeneratorTest.cpp" />
     <ClCompile Include="ParentSelectionStrategyTest.cpp" />

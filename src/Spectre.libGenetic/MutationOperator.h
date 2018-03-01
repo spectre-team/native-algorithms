@@ -20,6 +20,7 @@ limitations under the License.
 #pragma once
 #include "Spectre.libGenetic/DataTypes.h"
 #include "Spectre.libGenetic/Individual.h"
+#include "Spectre.libGenetic/BaseIndividualFeasibilityCondition.h"
 
 namespace spectre::algorithm::genetic
 {
@@ -35,13 +36,22 @@ public:
     /// <param name="mutationRate">The mutation rate.</param>
     /// <param name="bitSwapRate">The bit swap rate, in the case of mutation.</param>
     /// <param name="rngSeed">The RNG seed.</param>
-    explicit MutationOperator(double mutationRate, double bitSwapRate, Seed rngSeed = 0, size_t minimalFillup=0, size_t maximalFillup=std::numeric_limits<size_t>::max());
+    /// <param name="minimalFillup">The maximal fillup.</param>
+    /// <param name="maximalFillup">The minimal fillup.</param>
+    /// <param name="individualFeasibilityCondition">The individual feasibility condition.</param>
+    explicit MutationOperator(double mutationRate, double bitSwapRate, Seed rngSeed = 0, BaseIndividualFeasibilityCondition* condition = nullptr);
+    /// <summary>
+    /// Mutates the specified individual until it matches conditions.
+    /// </summary>
+    /// <param name="individual">The individual.</param>
+    /// <returns>Mutated individual fulfilling conditions. Operator mutates individual until all conditions are met</returns>
+    virtual Individual operator()(Individual &&individual);
     /// <summary>
     /// Mutates the specified individual.
     /// </summary>
     /// <param name="individual">The individual.</param>
     /// <returns>Mutated individual.</returns>
-    virtual Individual operator()(Individual &&individual);
+    virtual Individual mutateWithoutConditions(Individual &&individual);
     virtual ~MutationOperator() = default;
 private:
     /// <summary>
@@ -56,7 +66,9 @@ private:
     /// The random number generator.
     /// </summary>
     RandomNumberGenerator m_RandomNumberGenerator;
-    const size_t m_MinimalFillup;
-    const size_t m_MaximalFillup;
+    /// <summary>
+    /// The individual feasibility condition.
+    /// </summary>
+    BaseIndividualFeasibilityCondition* m_IndividualFeasibilityCondition;
 };
 }

@@ -23,32 +23,22 @@ limitations under the License.
 
 namespace spectre::algorithm::genetic
 {
-GeneticAlgorithm::GeneticAlgorithm(std::unique_ptr<OffspringGenerator> offspringGenerator, std::unique_ptr<Scorer> scorer, std::unique_ptr<StopCondition> stopCondition)
+GeneticAlgorithm::GeneticAlgorithm(std::unique_ptr<OffspringGenerator> offspringGenerator, std::unique_ptr<Scorer> scorer, std::unique_ptr<StopCondition> stopCondition,
+                                   std::unique_ptr<BaseIndividualFeasibilityCondition> individualFeasibilityConditions)
     : m_OffspringGenerator(std::move(offspringGenerator)),
       m_Scorer(std::move(scorer)),
-      m_StopCondition(std::move(stopCondition))
+      m_StopCondition(std::move(stopCondition)),
+      m_IndividualFeasibilityConditions(std::move(individualFeasibilityConditions))
 {
-    if (m_OffspringGenerator != nullptr)
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (m_OffspringGenerator == nullptr)
     {
         throw spectre::core::exception::NullPointerException("offspringGenerator");
     }
-    if (m_Scorer != nullptr)
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (m_Scorer == nullptr)
     {
         throw spectre::core::exception::NullPointerException("scorer");
     }
-    if (m_StopCondition != nullptr)
-    {
-        // @gmrukwa: usual empty execution branch
-    }
-    else
+    if (m_StopCondition == nullptr)
     {
         throw spectre::core::exception::NullPointerException("stopCondition");
     }

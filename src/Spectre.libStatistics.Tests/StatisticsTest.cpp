@@ -2,7 +2,7 @@
 * StatisticsTest.cpp
 * Tests basic vector statistics.
 *
-Copyright 2017 Grzegorz Mrukwa
+Copyright 2018 Grzegorz Mrukwa, Michal Gallus
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -53,6 +53,16 @@ TEST(MeanTest, mean_of_empty_is_zero)
     EXPECT_THAT(Mean(empty), 0.);
 }
 
+TEST(MedianTest, calculates_vector_median)
+{
+    EXPECT_THAT(Median(data), 2.);
+}
+
+TEST(MedianTest, median_of_empty_is_zero)
+{
+    EXPECT_THAT(Median(empty), 0.);
+}
+
 TEST(VarianceTest, calculates_unbiased_vector_variance_by_default)
 {
     EXPECT_THAT(Variance(data), DoubleEq(1.0));
@@ -93,5 +103,15 @@ TEST(MeanAbsoluteDeviationTest, calculates_mean_absolute_deviation_of_vector)
 TEST(MeanAbsoluteDeviationTest, mean_absolute_deviation_of_empty_is_zero)
 {
     EXPECT_THAT(MeanAbsoluteDeviation(empty), 0.);
+}
+
+TEST(MedianAbsoluteDeviationTest, calculates_median_absolute_deviation_of_vector)
+{
+    EXPECT_THAT(MedianAbsoluteDeviation(data), DoubleEq(1.0));
+}
+
+TEST(MedianAbsoluteDeviationTest, median_absolute_deviation_of_empty_is_zero)
+{
+    EXPECT_THAT(MedianAbsoluteDeviation(empty), 0.);
 }
 }

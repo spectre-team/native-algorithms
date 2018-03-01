@@ -19,6 +19,7 @@ limitations under the License.
 
 #include <gtest/gtest.h>
 #include "Spectre.libWavelet\Convolution.h"
+#include "Spectre.libFunctional\Range.h"
 
 namespace
 {
@@ -37,10 +38,10 @@ namespace
 
     TEST_F(ConvolutionTest, properly_convolves_the_kernel_over_a_signal)
     {
-        Signal signal = { 1.0, 2.0, 3.0, 4.0 };
-        Signal kernel = { -0.5, 1.0 };
+        Signal signal = spectre::core::functional::range<DataType>(10);
+        Kernel kernel = { 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0 };
         Signal result = convolution.Convolve(kernel, signal);
-        Signal correctResult = { -0.5, 0.0, 0.5, 1.0 };
+        Signal correctResult = { 0.0, 0.0, 1.0, 4.0, 10.0, 20.0, 35.0, 56.0, 84.0, 112.0 };
         ASSERT_EQ(correctResult, result);
     }
 }
