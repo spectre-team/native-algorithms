@@ -23,13 +23,51 @@ limitations under the License.
 
 namespace spectre::algorithm::peakfinder
 {
+    /// <summary>
+    /// Class for calculating locations of full width at half height markers for 
+    /// input peak data.It calculates it in such manner that it finds both left
+    /// and right m / z values of corresponding half - heights to preserve their
+    /// positions.Returned containers are aligned, i.e.
+    /// rightFWHH[i] - leftFWHH[i] = width for the i'th peak.
+    /// </summary>
     class FWHHCalculator
     {
     public:
+        /// <summary>
+        /// Calculates and returns left m/z values for FWHH markers.
+        /// For performance purposes it does not verify the integrity of the data!
+        /// Integrity of the data is assumed to be checked before entering the function:
+        /// 1. Container x is assumed to be the same size as y.
+        /// 2. Container x is assumed to be sorted.
+        /// 3. Container of valley indices is assumed to me of size peaks.size() + 1.
+        /// 4. Indices of both valleys and peaks must be in range of x and y containers.
+        /// 5. Indices of both valleys and peaks are assumed to be reflecting real valleys/peaks.
+        /// </summary>
+        /// <param name="x">Container view of m/z values.</param>
+        /// <param name="y">Container view of intensity values.</param>
+        /// <param name="valleys">Container view of valley indices.</param>
+        /// <param name="peaks">Container view of peak indices.</param>
+        /// <returns>New container of m/z values for left sides of FWHH markers for all peaks.</returns>
         Signal GetLeftFWHH(const SignalView x, const SignalView y, const IndicesView valleys, const IndicesView peaks);
+        
+        /// <summary>
+        /// Calculates and returns right m/z values for FWHH markers.
+        /// For performance purposes it does not verify the integrity of the data!
+        /// Integrity of the data is assumed to be checked before entering the function:
+        /// 1. Container x is assumed to be the same size as y.
+        /// 2. Container x is assumed to be sorted.
+        /// 3. Container of valley indices is assumed to me of size peaks.size() + 1.
+        /// 4. Indices of both valleys and peaks must be in range of x and y containers.
+        /// 5. Indices of both valleys and peaks are assumed to be reflecting real valleys/peaks.
+        /// </summary>
+        /// <param name="x">Container view of m/z values.</param>
+        /// <param name="y">Container view of intensity values.</param>
+        /// <param name="valleys">Container view of valley indices.</param>
+        /// <param name="peaks">Container view of peak indices.</param>
+        /// <returns>New container of m/z values for right sides of FWHH markers for all peaks.</returns>
         Signal GetRightFWHH(const SignalView x, const SignalView y, const IndicesView valleys, const IndicesView peaks);
     private:
-        inline Index GetClosestNeighbourIndex(const SignalView& sorted_x, const DataType value);
-        inline DataType Lerp(DataType x1, DataType x2, DataType y1, DataType y2, DataType x);
+        inline Index GetClosestNeighbourIndex(const SignalView& xSorted, const DataType value);
+        inline DataType Lerp(DataType x1, DataType x2, DataType y1, DataType y2, DataType x);   //TODO(dkuchta): Maybe in the future move it to libStatistics?
     };
 }

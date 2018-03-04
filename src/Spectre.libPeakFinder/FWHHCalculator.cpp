@@ -20,7 +20,7 @@ limitations under the License.
 
 #include "FWHHCalculator.h"
 #include "Spectre.libFunctional/Transform.h"
-#include <gsl.h>
+
 namespace spectre::algorithm::peakfinder
 {
     Signal FWHHCalculator::GetLeftFWHH(const SignalView x, const SignalView y, const IndicesView valleys, const IndicesView peaks)
