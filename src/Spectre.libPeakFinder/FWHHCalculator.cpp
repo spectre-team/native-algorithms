@@ -72,7 +72,7 @@ namespace spectre::algorithm::peakfinder
     {
         Index valueIdx = 0;
 
-        for (unsigned i = 0; i < xSorted.size(); ++i)
+        for (unsigned i = 0; i < unsigned(xSorted.size()); ++i)
         {
             bool isGreater = xSorted[i] < value;
             unsigned cond = unsigned(!isGreater) - 1;
