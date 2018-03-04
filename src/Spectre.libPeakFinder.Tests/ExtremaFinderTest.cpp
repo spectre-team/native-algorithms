@@ -53,6 +53,13 @@ namespace
         Signal steepUphillEndingSignal;
     };
 
+    TEST_F(ExtremaFinderTest, finds_more_valleys_than_peaks)
+    {
+        Indices valleys = finder.FindValleys(signal);
+        Indices peaks = finder.FindPeaks(signal);
+        ASSERT_EQ(valleys.size() - 1, peaks.size());
+    }
+
     TEST_F(ExtremaFinderTest, properly_finds_valleys)
     {
         Indices indices = finder.FindValleys(signal);
