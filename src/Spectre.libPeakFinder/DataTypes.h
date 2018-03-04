@@ -31,4 +31,3 @@ namespace spectre::algorithm::peakfinder
     using SignalView = gsl::span<DataType>;
     using IndicesView = gsl::span<Index>;
 }
-#pragma once
