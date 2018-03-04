@@ -24,7 +24,7 @@ limitations under the License.
 namespace spectre::algorithm::peakfinder
 {
     /// <summary>
-    /// Class for calculating locations of full width at half height markers for 
+    /// Class for calculating locations of full width at half height markers for
     /// input peak data.It calculates it in such manner that it finds both left
     /// and right m / z values of corresponding half - heights to preserve their
     /// positions.Returned containers are aligned, i.e.
@@ -49,7 +49,6 @@ namespace spectre::algorithm::peakfinder
         /// <param name="peaks">Container view of peak indices.</param>
         /// <returns>New container of m/z values for left sides of FWHH markers for all peaks.</returns>
         Signal GetLeftFWHH(const SignalView x, const SignalView y, const IndicesView valleys, const IndicesView peaks);
-        
         /// <summary>
         /// Calculates and returns right m/z values for FWHH markers.
         /// For performance purposes it does not verify the integrity of the data!
