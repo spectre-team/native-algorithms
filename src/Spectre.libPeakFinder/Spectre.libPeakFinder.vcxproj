@@ -128,9 +128,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DataTypes.h" />
+    <ClInclude Include="ExtremaFinder.h" />
     <ClInclude Include="PeakFinder.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ExtremaFinder.cpp" />
     <ClCompile Include="PeakFinder.cpp" />
   </ItemGroup>
   <ItemGroup>
