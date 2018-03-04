@@ -23,28 +23,29 @@ limitations under the License.
 #include <gsl.h>
 namespace spectre::algorithm::peakfinder
 {
-    Signal FWHHCalculator::GetLeftFWHH(const Signal & x, const Signal & y, const Indices & valleys, const Indices & peaks)
+    Signal FWHHCalculator::GetLeftFWHH(const SignalView x, const SignalView y, const IndicesView valleys, const IndicesView peaks)
     {
         Signal result;
         result.reserve(peaks.size());
 
-        for(int i = 0; i < peaks.size(); ++i)
+        for (int i = 0; i < peaks.size(); ++i)
         {
             Index peakIdx = peaks[i];
             Index valleyIdx = valleys[i];
             DataType peakVal = y[peakIdx];
 
-            const SignalView segment = gsl::as_span(y).subspan(valleyIdx, peakIdx - valleyIdx);
-            Index lfwhhNearestIdx = GetClosestNeighbourIndex(segment, peakVal * 0.5) + valleyIdx;
-            DataType lfwhhVal = Lerp(y[lfwhhNearestIdx], y[lfwhhNearestIdx + 1], x[lfwhhNearestIdx], x[lfwhhNearestIdx + 1], peakVal * 0.5);
-            
+            SignalView segment = y.subspan(valleyIdx, peakIdx - valleyIdx);
+            DataType lfwhhPeakVal = peakVal * 0.5;
+            Index lfwhhNearestIdx = GetClosestNeighbourIndex(segment, lfwhhPeakVal) + valleyIdx;
+            DataType lfwhhVal = Lerp(y[lfwhhNearestIdx], y[lfwhhNearestIdx + 1], x[lfwhhNearestIdx], x[lfwhhNearestIdx + 1], lfwhhPeakVal);
+
             result.push_back(lfwhhVal);
         }
 
         return result;
     }
 
-    Signal FWHHCalculator::GetRightFWHH(const Signal & x, const Signal & y, const Indices & valleys, const Indices & peaks)
+    Signal FWHHCalculator::GetRightFWHH(const SignalView x, const SignalView y, const IndicesView valleys, const IndicesView peaks)
     {
         Signal result;
         result.reserve(peaks.size());
@@ -55,11 +56,12 @@ namespace spectre::algorithm::peakfinder
             Index valleyIdx = valleys[i + 1];
             DataType peakVal = y[peakIdx];
 
-            SignalView segment = gsl::as_span(y).subspan(peakIdx, valleyIdx - peakIdx);
+            SignalView segment = y.subspan(peakIdx, valleyIdx - peakIdx);
+            DataType rfwhhPeakVal = peakVal * 0.5;
             Signal segmentInversed = spectre::core::functional::transform<DataType>(segment, [](DataType val) { return -val; });
-            Index rfwhhNearestIdx = GetClosestNeighbourIndex(segmentInversed, peakVal * -0.5) + peakIdx;
-            DataType rfwhhVal = Lerp(y[rfwhhNearestIdx], y[rfwhhNearestIdx + 1], x[rfwhhNearestIdx], x[rfwhhNearestIdx + 1], peakVal * 0.5);
-            
+            Index rfwhhNearestIdx = GetClosestNeighbourIndex(segmentInversed, -rfwhhPeakVal) + peakIdx;
+            DataType rfwhhVal = Lerp(y[rfwhhNearestIdx], y[rfwhhNearestIdx + 1], x[rfwhhNearestIdx], x[rfwhhNearestIdx + 1], rfwhhPeakVal);
+
             result.push_back(rfwhhVal);
         }
 

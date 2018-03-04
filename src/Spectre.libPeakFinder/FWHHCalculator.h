@@ -26,8 +26,8 @@ namespace spectre::algorithm::peakfinder
     class FWHHCalculator
     {
     public:
-        Signal GetLeftFWHH(const Signal& x, const Signal& y, const Indices& valleys, const Indices& peaks);
-        Signal GetRightFWHH(const Signal& x, const Signal& y, const Indices& valleys, const Indices& peaks);
+        Signal GetLeftFWHH(const SignalView x, const SignalView y, const IndicesView valleys, const IndicesView peaks);
+        Signal GetRightFWHH(const SignalView x, const SignalView y, const IndicesView valleys, const IndicesView peaks);
     private:
         inline Index GetClosestNeighbourIndex(const SignalView& sorted_x, const DataType value);
         inline DataType Lerp(DataType x1, DataType x2, DataType y1, DataType y2, DataType x);
