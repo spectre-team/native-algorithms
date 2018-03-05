@@ -47,7 +47,7 @@ std::vector<double> HistogramEqualization::calculateNewHistogramData(const gsl::
     size_t const size = intensities.size();
     std::vector<double> newIntensities(size);
     const uint8_t minCumulativeDistributionValue = *min_element(std::begin(cumulativeDistribution), std::end(cumulativeDistribution));
-    for (auto i = 0; i < size; i++)
+    for (size_t i = 0; i < size; i++)
     {
         newIntensities[i] = round(((static_cast<double>(cumulativeDistribution[static_cast<int>(intensities[i])]) - minCumulativeDistributionValue) /
             (size - minCumulativeDistributionValue)) * 255);
