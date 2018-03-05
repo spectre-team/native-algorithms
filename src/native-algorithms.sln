@@ -77,6 +77,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualization", "visualizat
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libHeatmapDataScaling", "Spectre.libHeatmapDataScaling\Spectre.libHeatmapDataScaling.vcxproj", "{6B7BF168-E96C-44D6-ADB7-CADE77E2A654}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libHeatmapDataScaling.Tests", "Spectre.libHeatmapDataScaling.Tests\Spectre.libHeatmapDataScaling.Tests.vcxproj", "{0DB1FC48-9536-485B-AEFE-1B6B4B29BA8E}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libWavelet", "Spectre.libWavelet\Spectre.libWavelet.vcxproj", "{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libWavelet.Tests", "Spectre.libWavelet.Tests\Spectre.libWavelet.Tests.vcxproj", "{5B426532-B8C6-43BD-807A-CF772C731DC1}"
@@ -314,6 +316,18 @@ Global
 		{6B7BF168-E96C-44D6-ADB7-CADE77E2A654}.Release|x64.Build.0 = Release|x64
 		{6B7BF168-E96C-44D6-ADB7-CADE77E2A654}.Release|x86.ActiveCfg = Release|Win32
 		{6B7BF168-E96C-44D6-ADB7-CADE77E2A654}.Release|x86.Build.0 = Release|Win32
+		{0DB1FC48-9536-485B-AEFE-1B6B4B29BA8E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0DB1FC48-9536-485B-AEFE-1B6B4B29BA8E}.Debug|Win32.Build.0 = Debug|Win32
+		{0DB1FC48-9536-485B-AEFE-1B6B4B29BA8E}.Debug|x64.ActiveCfg = Debug|x64
+		{0DB1FC48-9536-485B-AEFE-1B6B4B29BA8E}.Debug|x64.Build.0 = Debug|x64
+		{0DB1FC48-9536-485B-AEFE-1B6B4B29BA8E}.Debug|x86.ActiveCfg = Debug|Win32
+		{0DB1FC48-9536-485B-AEFE-1B6B4B29BA8E}.Debug|x86.Build.0 = Debug|Win32
+		{0DB1FC48-9536-485B-AEFE-1B6B4B29BA8E}.Release|Win32.ActiveCfg = Release|Win32
+		{0DB1FC48-9536-485B-AEFE-1B6B4B29BA8E}.Release|Win32.Build.0 = Release|Win32
+		{0DB1FC48-9536-485B-AEFE-1B6B4B29BA8E}.Release|x64.ActiveCfg = Release|x64
+		{0DB1FC48-9536-485B-AEFE-1B6B4B29BA8E}.Release|x64.Build.0 = Release|x64
+		{0DB1FC48-9536-485B-AEFE-1B6B4B29BA8E}.Release|x86.ActiveCfg = Release|Win32
+		{0DB1FC48-9536-485B-AEFE-1B6B4B29BA8E}.Release|x86.Build.0 = Release|Win32
 		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Debug|Win32.ActiveCfg = Debug|Win32
 		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Debug|Win32.Build.0 = Debug|Win32
 		{3BD3D898-F14B-4129-BAE5-6E3E83E9D982}.Debug|x64.ActiveCfg = Debug|x64
@@ -383,6 +397,7 @@ Global
 		{5B426532-B8C6-43BD-807A-CF772C731DC1} = {1006E08E-0DB2-4645-961A-1B1C902198C4}
 		{ACC9B0E5-4106-4392-A7B6-A8A050759AFB} = {B326C03D-FD6F-417F-9D92-477BAA7B1559}
 		{268F145F-5CFE-4634-9D59-0688CEBBF340} = {B326C03D-FD6F-417F-9D92-477BAA7B1559}
+		{0DB1FC48-9536-485B-AEFE-1B6B4B29BA8E} = {1ACF6927-D6B8-492B-8386-7FBA7BF70CB5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ED57AF8B-7937-40C6-9764-D313AB08FEC9}
