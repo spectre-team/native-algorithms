@@ -139,6 +139,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ScalingDataUtilsTest.cpp" />
     <ClCompile Include="SuppressionAlgorithmTest.cpp" />
+    <ClCompile Include="HistogramEqualizationTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spectre.libHeatmapDataScaling\Spectre.libHeatmapDataScaling.vcxproj">
