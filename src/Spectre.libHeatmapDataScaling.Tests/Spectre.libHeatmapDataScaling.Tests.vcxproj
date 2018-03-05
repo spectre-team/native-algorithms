@@ -138,6 +138,7 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ScalingDataUtilsTest.cpp" />
+    <ClCompile Include="SuppressionAlgorithmTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spectre.libHeatmapDataScaling\Spectre.libHeatmapDataScaling.vcxproj">
