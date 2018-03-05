@@ -38,13 +38,13 @@ double SuppressionAlgorithm::calculateQuantile(gsl::span<const double> intensiti
     std::vector<double> sortedIntensities(intensities.begin(), intensities.end());
     std::sort(sortedIntensities.begin(), sortedIntensities.end());
     const double index = 1 + (size - 1) * quantileOrder;
-    const int indexFloor = static_cast<int>(floor(index));
-    const int indexCeiling = static_cast<int>(ceil(index));
-    double quantileValue = sortedIntensities[indexFloor - 1];
-    if ((index > indexFloor) && (sortedIntensities[indexCeiling - 1] != quantileValue))
+    const int indexFloor = static_cast<int>(floor(index)) - 1;
+    const int indexCeiling = static_cast<int>(ceil(index)) - 1;
+    double quantileValue = sortedIntensities[indexFloor];
+    if ((index > indexFloor) && (sortedIntensities[indexCeiling] != quantileValue))
     {
-        const double fractionalPart = index - indexFloor;
-        quantileValue = (1 - fractionalPart) * quantileValue + fractionalPart * sortedIntensities[indexCeiling - 1];
+        const double fractionalPart = index - indexFloor + 1;
+        quantileValue = (1 - fractionalPart) * quantileValue + fractionalPart * sortedIntensities[indexCeiling];
     }
     return quantileValue;
 }
