@@ -137,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ScalingDataUtilsTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spectre.libHeatmapDataScaling\Spectre.libHeatmapDataScaling.vcxproj">
