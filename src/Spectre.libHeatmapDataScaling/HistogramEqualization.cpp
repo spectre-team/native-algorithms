@@ -23,11 +23,11 @@ std::vector<double> HistogramEqualization::scaleData(const gsl::span<const doubl
 {
     std::vector<double> roundedIntensities = spectre::core::functional::transform(intensities, [](double intensity) { return static_cast<int>(intensity + 0.5); });
     std::vector<uint8_t> intensitiesOccurances = countRepeatingValues(roundedIntensities);
-    std::vector<uint8_t> cumulativeDistribution = std::accumulate(intensitiesOccurances.begin(), intensitiesOccurances.end(), cumulativeDistribution, [](std::vector<uint8_t> accumulator, uint8_t intensityOccurances)
+    std::vector<uint8_t> cumulativeDistribution = std::accumulate(intensitiesOccurances.begin(), intensitiesOccurances.end(), cumulativeDistribution, [](std::vector<uint8_t> accumulator, uint8_t intensityOccurences)
     {
             if (accumulator.size() == 0)
-                accumulator.push_back(intensityOccurances);
-            else accumulator.push_back(accumulator[accumulator.size() - 1] + intensityOccurances);
+                accumulator.push_back(intensityOccurences);
+            else accumulator.push_back(accumulator[accumulator.size() - 1] + intensityOccurences);
             return accumulator;
     });
     return calculateNewHistogramData(roundedIntensities, cumulativeDistribution);

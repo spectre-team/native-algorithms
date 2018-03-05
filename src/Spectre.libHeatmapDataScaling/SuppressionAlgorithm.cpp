@@ -19,12 +19,12 @@ limitations under the License.
 
 namespace spectre::visualization
 {
-SuppressionAlgorithm::SuppressionAlgorithm(const double topPercent) : topPercent(topPercent) { }
+SuppressionAlgorithm::SuppressionAlgorithm(const double topPercent) : m_topPercent(topPercent) { }
 
 std::vector<double> SuppressionAlgorithm::scaleData(const gsl::span<const double> intensities)
 {
     const double maxIntensity = *max_element(std::begin(intensities), std::end(intensities));
-    const double cutoff = calculateQuantile(intensities, 1 - topPercent);
+    const double cutoff = calculateQuantile(intensities, 1 - m_topPercent);
     const auto linearization = [cutoff, maxIntensity](double intensity)
     {
         return intensity > cutoff ? cutoff : maxIntensity * intensity / cutoff;
@@ -32,12 +32,12 @@ std::vector<double> SuppressionAlgorithm::scaleData(const gsl::span<const double
     return spectre::core::functional::transform(intensities, linearization);
 }
 
-double SuppressionAlgorithm::calculateQuantile(gsl::span<const double> intensities, const double probability)
+double SuppressionAlgorithm::calculateQuantile(gsl::span<const double> intensities, const double quantileOrder)
 {
     size_t const size = intensities.size();
     std::vector<double> sortedIntensities(intensities.begin(), intensities.end());
     std::sort(sortedIntensities.begin(), sortedIntensities.end());
-    const double index = 1 + (size - 1) * probability;
+    const double index = 1 + (size - 1) * quantileOrder;
     const int indexFloor = static_cast<int>(floor(index));
     const int indexCeiling = static_cast<int>(ceil(index));
     double quantileValue = sortedIntensities[indexFloor - 1];

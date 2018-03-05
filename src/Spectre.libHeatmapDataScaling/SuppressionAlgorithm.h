@@ -45,6 +45,6 @@ public:
     /// <returns>Vector of scaled floating point values representing intensities for each point on the heatmap.</returns>
     std::vector<double> scaleData(const gsl::span<const double> intensities) override;
 private:
-    const double topPercent;
+    const double m_topPercent;
 };
 }
