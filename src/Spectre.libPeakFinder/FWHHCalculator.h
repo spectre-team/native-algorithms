@@ -25,9 +25,9 @@ namespace spectre::algorithm::peakfinder
 {
     /// <summary>
     /// Class for calculating locations of full width at half height markers for
-    /// input peak data.It calculates it in such manner that it finds both left
+    /// input peak data. It calculates it in such manner that it finds both left
     /// and right m / z values of corresponding half - heights to preserve their
-    /// positions.Returned containers are aligned, i.e.
+    /// positions. Returned containers are aligned, i.e.
     /// rightFWHH[i] - leftFWHH[i] = width for the i'th peak.
     /// </summary>
     class FWHHCalculator

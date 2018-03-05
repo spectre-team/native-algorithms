@@ -29,6 +29,16 @@ namespace
 
     class FWHHCalculatorTest : public Test
     {
+    public:
+        FWHHCalculatorTest()
+        {
+            x = { 1., 2., 3., 4., 5., 6., 7., 8., 9. };
+
+            sawtoothY = { 0., 1., 2., 1., 0., 1., 2., 1., 0. };
+            sawtoothValleyIdx = { 0, 4, 8 };
+            sawtoothPeakIdx = { 2, 6 };
+        }
+
     protected:
         FWHHCalculator fwhh;
         Signal x;
@@ -36,17 +46,6 @@ namespace
         Signal sawtoothY;
         Indices sawtoothValleyIdx;
         Indices sawtoothPeakIdx;
-
-        void SetUp() override
-        {
-            fwhh = FWHHCalculator();
-
-            x = { 1., 2., 3., 4., 5., 6., 7., 8., 9. };
-
-            sawtoothY = { 0., 1., 2., 1., 0., 1., 2., 1., 0. };
-            sawtoothValleyIdx = { 0, 4, 8 };
-            sawtoothPeakIdx = { 2, 6 };
-        }
     };
 
     TEST_F(FWHHCalculatorTest, sawtooth_correct_left_fwhh)

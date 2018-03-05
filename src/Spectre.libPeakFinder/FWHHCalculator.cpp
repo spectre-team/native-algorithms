@@ -26,7 +26,7 @@ namespace spectre::algorithm::peakfinder
     Signal FWHHCalculator::GetLeftFWHH(const SignalView x, const SignalView y, const IndicesView valleys, const IndicesView peaks)
     {
         Signal result;
-        result.reserve(peaks.size());
+        result.resize(peaks.size());
 
         for (int i = 0; i < peaks.size(); ++i)
         {
@@ -36,10 +36,11 @@ namespace spectre::algorithm::peakfinder
 
             SignalView segment = y.subspan(valleyIdx, peakIdx - valleyIdx);
             DataType lfwhhPeakVal = peakVal * 0.5;
-            Index lfwhhNearestIdx = GetClosestNeighbourIndex(segment, lfwhhPeakVal) + valleyIdx;
+            Signal segmentNegated = spectre::core::functional::transform<DataType>(segment, [](DataType val) { return -val; });
+            Index lfwhhNearestIdx = GetClosestNeighbourIndex(segmentNegated, -lfwhhPeakVal) + valleyIdx;
             DataType lfwhhVal = Lerp(y[lfwhhNearestIdx], y[lfwhhNearestIdx + 1], x[lfwhhNearestIdx], x[lfwhhNearestIdx + 1], lfwhhPeakVal);
 
-            result.push_back(lfwhhVal);
+            result[i] = lfwhhVal;
         }
 
         return result;
@@ -48,7 +49,7 @@ namespace spectre::algorithm::peakfinder
     Signal FWHHCalculator::GetRightFWHH(const SignalView x, const SignalView y, const IndicesView valleys, const IndicesView peaks)
     {
         Signal result;
-        result.reserve(peaks.size());
+        result.resize(peaks.size());
 
         for (int i = 0; i < peaks.size(); ++i)
         {
@@ -58,11 +59,10 @@ namespace spectre::algorithm::peakfinder
 
             SignalView segment = y.subspan(peakIdx, valleyIdx - peakIdx);
             DataType rfwhhPeakVal = peakVal * 0.5;
-            Signal segmentInversed = spectre::core::functional::transform<DataType>(segment, [](DataType val) { return -val; });
-            Index rfwhhNearestIdx = GetClosestNeighbourIndex(segmentInversed, -rfwhhPeakVal) + peakIdx;
+            Index rfwhhNearestIdx = GetClosestNeighbourIndex(segment, rfwhhPeakVal) + peakIdx;
             DataType rfwhhVal = Lerp(y[rfwhhNearestIdx], y[rfwhhNearestIdx + 1], x[rfwhhNearestIdx], x[rfwhhNearestIdx + 1], rfwhhPeakVal);
 
-            result.push_back(rfwhhVal);
+            result[i] = rfwhhVal;
         }
 
         return result;
@@ -76,8 +76,8 @@ namespace spectre::algorithm::peakfinder
         {
             bool isGreater = xSorted[i] < value;
             unsigned cond = unsigned(!isGreater) - 1;
-            i = i + (cond & xSorted.size());
             valueIdx = (i - 1) & cond;
+            i = i + (cond & xSorted.size());
         }
 
         return valueIdx;
