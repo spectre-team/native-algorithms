@@ -74,7 +74,7 @@ public:
     /// Clones an objects.
     /// </summary>
     /// <returns>duplication of an instance.</returns>
-    virtual std::unique_ptr<IClassifier> clone() const override;
+    std::unique_ptr<IClassifier> clone() const override;
 private:
     static const OpenCvDataset& asSupported(LabeledDataset);
     /// <summary>

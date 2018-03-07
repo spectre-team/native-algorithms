@@ -89,7 +89,6 @@ std::vector<Label> GaClassifier::Predict(LabeledDataset dataset) const
 
 std::unique_ptr<IClassifier> GaClassifier::clone() const
 {
-    
     return std::make_unique<GaClassifier>(m_Classifier->clone(), m_TrainingDatasetSizeRate, m_MutationRate, m_BitSwapRate, m_PreservationRate,
         m_NumberOfGenerations, m_PopulationSize, m_InitialIndividualFillup, m_Seed, m_MinimalFillup, m_MaximalFillup);
 }
