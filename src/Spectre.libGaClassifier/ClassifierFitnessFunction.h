@@ -1,5 +1,5 @@
 /*
-* GaFitnessFunction.h
+* ClassifierFitnessFunction.h
 * It is fitness function for any classifier for GaClassifier.
 *
 Copyright 2018 Spectre Team
@@ -20,7 +20,6 @@ limitations under the License.
 #pragma once
 #include "Spectre.libGenetic/FitnessFunction.h"
 #include "Spectre.libClassifier/IClassifier.h"
-#include <memory>
 #include "Spectre.libClassifier/SplittedOpevCvDataset.h"
 #include "Spectre.libClassifier/ConfusionMatrix.h"
 
@@ -29,7 +28,7 @@ namespace spectre::supervised
 /// <summary>
 /// It is fitness function for any classifier for GaClassifier.
 /// </summary>
-class GaFitnessFunction : public spectre::algorithm::genetic::FitnessFunction
+class ClassifierFitnessFunction : public spectre::algorithm::genetic::FitnessFunction
 {
 public:
     /// <summary>
@@ -37,7 +36,7 @@ public:
     /// </summary>
     /// <param name="classifier">The classifier.</param>
     /// <param name="data">The splitted data.</param>
-    GaFitnessFunction(IClassifier& classifier, SplittedOpenCvDataset& data);
+    ClassifierFitnessFunction(const IClassifier& classifier, SplittedOpenCvDataset& data);
     /// <summary>
     /// operator.
     /// </summary>
@@ -50,15 +49,15 @@ public:
     /// <param name="data">The data.</param>
     /// <returns>The confusion matrix.</returns>
     ConfusionMatrix getResultMatrix(const OpenCvDataset& data) const;
-    virtual ~GaFitnessFunction() = default;
+    virtual ~ClassifierFitnessFunction() = default;
 private:
     /// <summary>
     /// The classifier.
     /// </summary>
-    spectre::supervised::IClassifier& m_Classifier;
+    const IClassifier& m_Classifier;
     /// <summary>
     /// The splitted data.
     /// </summary>
-    spectre::supervised::SplittedOpenCvDataset& m_Data;
+    const SplittedOpenCvDataset& m_Data;
 };
 }

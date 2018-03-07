@@ -39,7 +39,7 @@
     <ClInclude Include="GaClassifier.h">
       <Filter>Header Files\Classifiers</Filter>
     </ClInclude>
-    <ClInclude Include="GaFitnessFunction.h">
+    <ClInclude Include="ClassifierFitnessFunction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -56,7 +56,7 @@
     <ClCompile Include="GaClassifier.cpp">
       <Filter>Source Files\Classifiers</Filter>
     </ClCompile>
-    <ClCompile Include="GaFitnessFunction.cpp">
+    <ClCompile Include="ClassifierFitnessFunction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

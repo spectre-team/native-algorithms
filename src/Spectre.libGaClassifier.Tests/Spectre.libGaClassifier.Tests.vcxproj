@@ -162,7 +162,7 @@
     <ClCompile Include="..\Common\Main.cpp" />
     <ClCompile Include="AllLabelTypesIncludedConditionTest.cpp" />
     <ClCompile Include="GaClassifierTest.cpp" />
-    <ClCompile Include="GaFitnessFunctionTest.cpp" />
+    <ClCompile Include="ClassifierFitnessFunctionTest.cpp" />
     <ClCompile Include="IndividualFeasibilityConditionsFactoryTest.cpp" />
   </ItemGroup>
   <ItemGroup>

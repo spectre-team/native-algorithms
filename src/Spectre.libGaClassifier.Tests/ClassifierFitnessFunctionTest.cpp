@@ -1,6 +1,6 @@
 /*
-* GaFitnessFunctionTest.cpp
-* Tests GaFitnessFunction class.
+* ClassifierFitnessFunctionTest.cpp
+* Tests ClassifierFitnessFunction class.
 *
 Copyright 2018 Spectre Team
 
@@ -20,7 +20,7 @@ limitations under the License.
 #include <gtest/gtest.h>
 #include "Spectre.libClassifier/Types.h"
 #include "Spectre.libClassifier/SplittedOpevCvDataset.h"
-#include "Spectre.libGaClassifier/GaFitnessFunction.h"
+#include "Spectre.libGaClassifier/ClassifierFitnessFunction.h"
 #include "Spectre.libClassifier/Svm.h"
 #include "Spectre.libException/InconsistentArgumentSizesException.h"
 
@@ -28,7 +28,7 @@ namespace
 {
 using namespace spectre::supervised;
 
-TEST(GaFitnessFunctionTestInitialization, correct_ga_fitness_function_initialization)
+TEST(ClassifierFitnessFunctionTestInitialization, correct_ga_fitness_function_initialization)
 {
     const std::vector<DataType> training_data{ 0.5f, 0.4f, 0.6f, 1.1f, 1.6f, 0.7f, 2.1f, 1.0f, 0.6f,
         0.4f, 1.6f, 0.9f, 1.2f, 2.2f, 0.7f, 1.3f, 2.0f, 1.4f, 0.7f, 0.7f, 0.9f };
@@ -39,17 +39,17 @@ TEST(GaFitnessFunctionTestInitialization, correct_ga_fitness_function_initializa
     OpenCvDataset testSet(std::move(test_data), std::move(test_labels));
     SplittedOpenCvDataset data(std::move(trainingSet), std::move(testSet));
     Svm svm{};
-    EXPECT_NO_THROW(GaFitnessFunction(svm, data));
+    EXPECT_NO_THROW(ClassifierFitnessFunction(svm, data));
 }
 
-class GaFitnessFunctionTest : public ::testing::Test
+class ClassifierFitnessFunctionTest : public ::testing::Test
 {
 public:
-    GaFitnessFunctionTest() :
+    ClassifierFitnessFunctionTest() :
         trainingSet(training_data, training_labels),
         testSet(test_data, test_labels),
         data(std::move(trainingSet), std::move(testSet)),
-        gaFitnessFunction(svm, data)
+        gaFitnessFunction(std::move(svm), data)
     {};
 
 protected:
@@ -62,16 +62,16 @@ protected:
     OpenCvDataset testSet;
     SplittedOpenCvDataset data;
     Svm svm{};
-    GaFitnessFunction gaFitnessFunction;
+    ClassifierFitnessFunction gaFitnessFunction;
 };
 
-TEST_F(GaFitnessFunctionTest, svm_fit)
+TEST_F(ClassifierFitnessFunctionTest, svm_fit)
 {
     spectre::algorithm::genetic::Individual individual(std::vector<bool> { true, false, true, true, false, false, true });
     EXPECT_NO_THROW(gaFitnessFunction(individual));
 }
 
-TEST_F(GaFitnessFunctionTest, throws_when_fitting_svm_on_inconsistent_size_individual)
+TEST_F(ClassifierFitnessFunctionTest, throws_when_fitting_svm_on_inconsistent_size_individual)
 {
     spectre::algorithm::genetic::Individual too_short_individual({ true, false, true, true, false, true });
     EXPECT_THROW(gaFitnessFunction(too_short_individual), spectre::core::exception::InconsistentArgumentSizesException);

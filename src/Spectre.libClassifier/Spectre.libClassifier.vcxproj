@@ -155,6 +155,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConfusionMatrix.h" />
+    <ClInclude Include="DatasetFilter.h">
+      <SubType>Header Files</SubType>
+    </ClInclude>
     <ClInclude Include="EmptyOpenCvDatasetException.h" />
     <ClInclude Include="ExcessiveTrainingRateException.h" />
     <ClInclude Include="IClassifier.h" />

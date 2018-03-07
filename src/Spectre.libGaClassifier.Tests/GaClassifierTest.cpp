@@ -39,15 +39,14 @@ TEST(GaClassifierInitialization, initializes)
         0.4f, 1.6f, 0.9f, 1.2f, 2.2f, 0.7f, 1.3f, 2.0f, 1.4f, 0.7f, 0.7f, 0.9f };
     const std::vector<Label> labels{ 1, 1, 0, 1, 0, 0, 1 };
     OpenCvDataset dataset(std::move(data), std::move(labels));
-    Svm svm{};
 
-    EXPECT_NO_THROW(GaClassifier gaClassifier(svm,
-        TRAINING_SET_SPLIT_RATE,
-        MUTATION_RATE,
-        BIT_SWAP_RATE,
-        PRESERVATION_RATE,
-        GENERATIONS_NUMBER,
-        POPULATION_SIZE,
+    EXPECT_NO_THROW(GaClassifier(std::make_unique<Svm>(),\
+        TRAINING_SET_SPLIT_RATE,\
+        MUTATION_RATE,\
+        BIT_SWAP_RATE,\
+        PRESERVATION_RATE,\
+        GENERATIONS_NUMBER,\
+        POPULATION_SIZE,\
         INITIAL_FILLUP));
 }
 
@@ -56,7 +55,7 @@ class GaClassifierTest : public ::testing::Test
 public:
     GaClassifierTest():
         dataset(std::move(data), std::move(labels)),
-        gaClassifier(svm,
+        gaClassifier(std::make_unique<Svm>(),
             TRAINING_SET_SPLIT_RATE,
             MUTATION_RATE,
             BIT_SWAP_RATE,
@@ -71,7 +70,6 @@ protected:
         0.4f, 1.6f, 0.9f, 1.2f, 2.2f, 0.7f, 1.3f, 2.0f, 1.4f, 0.7f, 0.7f, 0.9f, 1.6f, 0.7f, 2.1f, 0.7f, 1.3f, 2.0f };
     const std::vector<Label> labels{ 1, 1, 0, 1, 0, 0, 1, 0, 1, 0 };
     OpenCvDataset dataset;
-    Svm svm{};
     GaClassifier gaClassifier;
 };
 

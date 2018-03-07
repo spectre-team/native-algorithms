@@ -122,22 +122,7 @@ gsl::span<const Label> OpenCvDataset::GetSampleMetadata() const
     return m_labels;
 }
 
-OpenCvDataset OpenCvDataset::getFilteredOpenCvDataset(std::vector<bool> filterPattern) const
-{
-    const auto& dataToFilter = this->GetData();
-    const auto twoDimensionalFilteredData = core::functional::filter(dataToFilter, filterPattern);
-    std::vector<DataType> oneDimensionalFilteredData;
-    oneDimensionalFilteredData.reserve(twoDimensionalFilteredData.size() * twoDimensionalFilteredData[0].size());
-    for (const auto& observation : twoDimensionalFilteredData)
-    {
-        oneDimensionalFilteredData.insert(oneDimensionalFilteredData.end(), observation.begin(), observation.end());
-    }
-    const auto filteredLabels = core::functional::filter(this->GetSampleMetadata(), filterPattern);
-    OpenCvDataset individualDataset(oneDimensionalFilteredData, filteredLabels);
-    return individualDataset;
-}
-
-    size_t OpenCvDataset::size() const
+size_t OpenCvDataset::size() const
 {
     return m_labels.size();
 }

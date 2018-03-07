@@ -26,6 +26,8 @@ limitations under the License.
 #include "Spectre.libException/OutOfRangeException.h"
 #include "Spectre.libClassifier/OpenCvDataset.h"
 #include "Spectre.libClassifier/EmptyOpenCvDatasetException.h"
+#include <gmock/gmock-matchers.h>
+#include "Spectre.libClassifier/DatasetFilter.h"
 
 namespace
 {
@@ -284,7 +286,7 @@ TEST_F(OpenCvDatasetTest, returns_observation_with_valid_entries_through_square_
 
 TEST_F(OpenCvDatasetTest, returns_correct_filtered_data)
 {
-    OpenCvDataset filtered = dataset->getFilteredOpenCvDataset(include);
+    OpenCvDataset filtered = getFilteredOpenCvDataset(dataset.get(), include);
     gsl::span<const Observation> filtered_data_gsl = filtered.GetData();
     std::vector<DataType> filtered_data{};
     for (auto observation: filtered_data_gsl)

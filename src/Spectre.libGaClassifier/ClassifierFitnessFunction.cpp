@@ -1,5 +1,5 @@
 /*
-* GaFitnessFunction.cpp
+* ClassifierFitnessFunction.cpp
 * It is fitness function for any classifier for GaClassifier.
 *
 Copyright 2018 Spectre Team
@@ -17,37 +17,39 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "GaFitnessFunction.h"
+#include "ClassifierFitnessFunction.h"
 #include "Spectre.libException/InconsistentArgumentSizesException.h"
 #include "Spectre.libFunctional/Filter.h"
 #include "Spectre.libClassifier/ConfusionMatrix.h"
+#include <memory>
+#include "Spectre.libClassifier/DatasetFilter.h"
 
 namespace spectre::supervised
 {
-
-GaFitnessFunction::GaFitnessFunction(IClassifier& classifier, SplittedOpenCvDataset& data):
+ClassifierFitnessFunction::ClassifierFitnessFunction(const IClassifier& classifier, SplittedOpenCvDataset& data):
     m_Classifier(classifier),
     m_Data(data)
 {
 }
 
-algorithm::genetic::ScoreType GaFitnessFunction::operator()(const algorithm::genetic::Individual& individual)
+algorithm::genetic::ScoreType ClassifierFitnessFunction::operator()(const algorithm::genetic::Individual& individual)
 {
     if (m_Data.trainingSet.size() != individual.size())
     {
         throw core::exception::InconsistentArgumentSizesException("data", m_Data.trainingSet.size(), "individual", individual.size());
     }
-
-    OpenCvDataset individualDataset = m_Data.trainingSet.getFilteredOpenCvDataset(individual.getData());
+    auto individualData = individual.getData();
+    OpenCvDataset individualDataset = getFilteredOpenCvDataset(&m_Data.trainingSet, individualData);
 
     const auto result = getResultMatrix(std::move(individualDataset));
     return result.DiceIndex;
 }
 
-ConfusionMatrix GaFitnessFunction::getResultMatrix(const OpenCvDataset& data) const
+ConfusionMatrix ClassifierFitnessFunction::getResultMatrix(const OpenCvDataset& data) const
 {
-    m_Classifier.Fit(data);
-    const auto predictions = m_Classifier.Predict((m_Data.testSet));
+    std::unique_ptr<IClassifier> classifierDuplicate = m_Classifier.clone();
+    classifierDuplicate->Fit(data);
+    const auto predictions = classifierDuplicate->Predict((m_Data.testSet));
     ConfusionMatrix confusions(predictions, m_Data.testSet.GetSampleMetadata());
     return confusions;
 }

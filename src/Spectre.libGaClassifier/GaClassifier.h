@@ -47,7 +47,7 @@ public:
     /// <param name="seed">The seed.</param>
     /// <param name="minimalFillup">The minimal fillup.</param>
     /// <param name="maximalFillup">The maximal fillup.</param>
-    GaClassifier(IClassifier& classifier,
+    GaClassifier(std::unique_ptr<IClassifier> classifier,
         double trainingSetSplitRate,
         double mutationRate,
         double bitSwapRate,
@@ -70,12 +70,17 @@ public:
     /// <param name="dataset">The dataset.</param>
     /// <returns>vector of labels</returns>
     std::vector<Label> Predict(LabeledDataset dataset) const override;
+    /// <summary>
+    /// Clones an objects.
+    /// </summary>
+    /// <returns>duplication of an instance.</returns>
+    virtual std::unique_ptr<IClassifier> clone() const override;
 private:
     static const OpenCvDataset& asSupported(LabeledDataset);
     /// <summary>
     /// The population sizes.
     /// </summary>
-    IClassifier& m_Classifier;
+    std::unique_ptr<IClassifier> m_Classifier;
     /// <summary>
     /// The population sizes.
     /// </summary>
@@ -108,5 +113,17 @@ private:
     /// The maximal fillup.
     /// </summary>
     const size_t m_MaximalFillup;
+    /// <summary>
+    /// The mutation rate;
+    /// </summary>
+    const double m_MutationRate;
+    /// <summary>
+    /// The bit swap rate;
+    /// </summary>
+    const double m_BitSwapRate;
+    /// <summary>
+    /// The preservation rate.
+    /// </summary>
+    const double m_PreservationRate;
 };
 }
