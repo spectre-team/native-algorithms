@@ -137,6 +137,9 @@ public:
 protected:
     const std::vector<DataType> data { 0.5f, 0.4f, 0.6f, 1.1f, 1.6f, 0.7f, 2.1f, 1.0f, 0.6f };
     const std::vector<Label> labels { 3, 7, 14 };
+    const std::vector<DataType> result_data{ 0.5f, 0.4f, 0.6f, 2.1f, 1.0f, 0.6f };
+    const std::vector<Label> result_labels{ 3, 14 };
+    std::vector<bool> include{ true, false, true };
     const size_t rowSize = data.size() / labels.size();
     std::unique_ptr<OpenCvDataset> dataset;
 
@@ -281,17 +284,14 @@ TEST_F(OpenCvDatasetTest, returns_observation_with_valid_entries_through_square_
 
 TEST_F(OpenCvDatasetTest, returns_correct_filtered_data)
 {
-    const std::vector<DataType> result_data{ 0.5f, 0.4f, 0.6f, 2.1f, 1.0f, 0.6f };
-    const std::vector<Label> result_labels{ 3, 14 };
-    std::vector<bool> include{ 1, 0, 1 };
     OpenCvDataset filtered = dataset->getFilteredOpenCvDataset(include);
     gsl::span<const Observation> filtered_data_gsl = filtered.GetData();
     std::vector<DataType> filtered_data{};
-    for (Observation observation: filtered_data_gsl)
+    for (auto observation: filtered_data_gsl)
     {
-        for (DataType dataType: observation)
+        for (auto dataInObservation: observation)
         {
-            filtered_data.push_back(dataType);
+            filtered_data.push_back(dataInObservation);
         }
     }
     gsl::span<const Label> filtered_labels_gsl = filtered.GetSampleMetadata();

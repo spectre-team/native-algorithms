@@ -34,8 +34,6 @@ public:
     /// Initializes a new instance of the <see cref="CrossoverOperator"/> class.
     /// </summary>
     /// <param name="rngSeed">The RNG seed.</param>
-    /// <param name="minimalFillup">The maximal fillup.</param>
-    /// <param name="maximalFillup">The minimal fillup.</param>
     /// <param name="individualFeasibilityCondition">The individual feasibility condition.</param>
     explicit CrossoverOperator(Seed rngSeed = 0, BaseIndividualFeasibilityCondition* individualFeasibilityCondition = nullptr);
     virtual ~CrossoverOperator() = default;

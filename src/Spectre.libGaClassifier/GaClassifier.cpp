@@ -62,7 +62,7 @@ void GaClassifier::Fit(LabeledDataset dataset)
     auto splittedDataset = splitter.split(data);
     auto trainingSetSize = splittedDataset.trainingSet.size();
 
-    IndividualFeasibilityConditionsFactory conditionsFactory(splittedDataset.trainingSet.GetSampleMetadata(), splittedDataset.trainingSet.size(), m_MinimalFillup, m_MaximalFillup);
+    IndividualFeasibilityConditionsFactory conditionsFactory(splittedDataset.trainingSet.GetSampleMetadata(), trainingSetSize, m_MinimalFillup, m_MaximalFillup);
     auto conditions = conditionsFactory.build();
 
     auto fitnessFunction = std::make_unique<GaFitnessFunction>(m_Classifier, splittedDataset);

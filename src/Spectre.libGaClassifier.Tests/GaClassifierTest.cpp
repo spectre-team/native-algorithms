@@ -24,17 +24,17 @@ limitations under the License.
 
 namespace spectre::supervised
 {
+const double TRAINING_SET_SPLIT_RATE = 0.7;
+const double MUTATION_RATE = 0.5;
+const double BIT_SWAP_RATE = 0.5;
+const double PRESERVATION_RATE = 0.5;
+const unsigned int GENERATIONS_NUMBER = 5u;
+const unsigned int POPULATION_SIZE = 5u;
+const unsigned int INITIAL_FILLUP = 3u;
+const Seed SEED = 1;
 
 TEST(GaClassifierInitialization, initializes)
 {
-    const double TRAINING_SET_SPLIT_RATE = 0.7;
-    const double MUTATION_RATE = 0.5;
-    const double BIT_SWAP_RATE = 0.5;
-    const double PRESERVATION_RATE = 0.5;
-    const unsigned int GENERATIONS_NUMBER = 20u;
-    const unsigned int POPULATION_SIZE = 30u;
-    const unsigned int INITIAL_FILLUP = 3u;
-    const Seed SEED = 1;
     const std::vector<DataType> data{ 0.5f, 0.4f, 0.6f, 1.1f, 1.6f, 0.7f, 2.1f, 1.0f, 0.6f,
         0.4f, 1.6f, 0.9f, 1.2f, 2.2f, 0.7f, 1.3f, 2.0f, 1.4f, 0.7f, 0.7f, 0.9f };
     const std::vector<Label> labels{ 1, 1, 0, 1, 0, 0, 1 };
@@ -67,14 +67,6 @@ public:
             SEED) {}
 
 protected:
-    const double TRAINING_SET_SPLIT_RATE = 0.7;
-    const double MUTATION_RATE = 0.5;
-    const double BIT_SWAP_RATE = 0.5;
-    const double PRESERVATION_RATE = 0.5;
-    const unsigned int GENERATIONS_NUMBER = 5u;
-    const unsigned int POPULATION_SIZE = 5u;
-    const unsigned int INITIAL_FILLUP = 3u;
-    const Seed SEED = 1;
     const std::vector<DataType> data{ 0.5f, 0.4f, 0.6f, 1.1f, 1.6f, 0.7f, 2.1f, 1.0f, 0.6f, 0.4f, 0.6f, 1.1f,
         0.4f, 1.6f, 0.9f, 1.2f, 2.2f, 0.7f, 1.3f, 2.0f, 1.4f, 0.7f, 0.7f, 0.9f, 1.6f, 0.7f, 2.1f, 0.7f, 1.3f, 2.0f };
     const std::vector<Label> labels{ 1, 1, 0, 1, 0, 0, 1, 0, 1, 0 };
