@@ -2,7 +2,7 @@
 * PeakFinder.h
 * Provides functionality for finding peaks in given data.
 *
-Copyright 2018 SpectreTeam
+Copyright 2018 Spectre Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

@@ -100,6 +100,11 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libPeakFinder", "Spectre.libPeakFinder\Spectre.libPeakFinder.vcxproj", "{261E7D9C-0481-4156-BD49-C9EB653083C1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libPeakFinder.Tests", "Spectre.libPeakFinder.Tests\Spectre.libPeakFinder.Tests.vcxproj", "{8FE23410-5BEF-4FED-91BA-A7D73E263324}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7417BF00-028B-4797-B58A-6058CA338493} = {7417BF00-028B-4797-B58A-6058CA338493}
+		{7EB0161F-4E8A-4C72-BA18-31B554F411F2} = {7EB0161F-4E8A-4C72-BA18-31B554F411F2}
+		{261E7D9C-0481-4156-BD49-C9EB653083C1} = {261E7D9C-0481-4156-BD49-C9EB653083C1}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
