@@ -77,7 +77,7 @@ void GaClassifier::Fit(LabeledDataset dataset)
     auto bestIndividual = finalGeneration[0];
 
     auto individualData = bestIndividual.getData();
-    OpenCvDataset bestDataset = getFilteredOpenCvDataset(&splittedDataset.trainingSet, individualData);
+    OpenCvDataset bestDataset = getFilteredOpenCvDataset(splittedDataset.trainingSet, individualData);
 
     m_Classifier->Fit(bestDataset);
 }

@@ -1,6 +1,6 @@
 /*
 * DatasetFilter.h
-* ENTER CLASS DESCRIPTION HERE.
+* Class consisting functions for filtering datasets.
 *
 Copyright 2018 Spectre Team
 
@@ -24,17 +24,23 @@ limitations under the License.
 
 namespace spectre::supervised
 {
-inline OpenCvDataset getFilteredOpenCvDataset(const OpenCvDataset* dataset, std::vector<bool>& filterPattern)
+/// <summary>
+/// Returns OpenCvDataset filtered by vector of bool which tells which parts to leave.
+/// </summary>
+/// <param name="dataset">The dataset.</param>
+/// <param name="filterPattern">The vector of bool consisting information which parts of dataset to leave.</param>
+/// <returns>Filtered dataset.</returns>
+inline OpenCvDataset getFilteredOpenCvDataset(const OpenCvDataset& dataset, const std::vector<bool>& filterPattern)
 {
-    const auto& dataToFilter = dataset->GetData();
+    const auto& dataToFilter = dataset.GetData();
     const auto twoDimensionalFilteredData = core::functional::filter(dataToFilter, filterPattern);
     std::vector<DataType> oneDimensionalFilteredData;
-    oneDimensionalFilteredData.reserve(twoDimensionalFilteredData.size() * twoDimensionalFilteredData[0].size());
+    oneDimensionalFilteredData.reserve(twoDimensionalFilteredData.size() * dataset[0].size());
     for (const auto& observation : twoDimensionalFilteredData)
     {
         oneDimensionalFilteredData.insert(oneDimensionalFilteredData.end(), observation.begin(), observation.end());
     }
-    const auto filteredLabels = core::functional::filter(dataset->GetSampleMetadata(), filterPattern);
+    const auto filteredLabels = core::functional::filter(dataset.GetSampleMetadata(), filterPattern);
     OpenCvDataset individualDataset(oneDimensionalFilteredData, filteredLabels);
     return individualDataset;
 }
