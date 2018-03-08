@@ -1,8 +1,8 @@
 /*
-* PeakFinder.cpp
-* Provides functionality for finding peaks in given data.
+* DataTypes.h
+* Contains data types used among the project
 *
-Copyright 2018 Spectre Team
+Copyright 2018 SpectreTeam
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,9 +16,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
-#include "PeakFinder.h"
+#pragma once
+#include <vector>
+#include <span.h>
 
 namespace spectre::algorithm::peakfinder
 {
+    using DataType = double;
+    using Index = unsigned;
+
+    using Signal = std::vector<DataType>;
+    using Indices = std::vector<Index>;
+
+    using SignalView = gsl::span<DataType>;
+    using IndicesView = gsl::span<Index>;
 }
