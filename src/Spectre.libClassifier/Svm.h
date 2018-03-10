@@ -52,6 +52,11 @@ public:
     /// <returns>vector of labels</returns>
     std::vector<Label> Predict(LabeledDataset dataset) const override;
     /// <summary>
+    /// Clones an objects.
+    /// </summary>
+    /// <returns>duplication of an instance.</returns>
+    std::unique_ptr<IClassifier> clone() const override;
+    /// <summary>
     /// Gets number of support vectors.
     /// </summary>
     /// <returns>unsigned int</returns>

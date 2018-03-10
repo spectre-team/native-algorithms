@@ -102,7 +102,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(OutputPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Spectre.libClassifier.lib;Spectre.libGaClassifier.lib;Spectre.libGenetic.lib;Spectre.libException.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Spectre.libGaClassifier.lib;Spectre.libClassifier.lib;Spectre.libFunctional.lib;Spectre.libException.lib;Spectre.libDataset.lib;Spectre.libGenetic.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -136,7 +136,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(OutputPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Spectre.libClassifier.lib;Spectre.libGaClassifier.lib;Spectre.libGenetic.lib;Spectre.libException.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Spectre.libGaClassifier.lib;Spectre.libClassifier.lib;Spectre.libFunctional.lib;Spectre.libException.lib;Spectre.libDataset.lib;Spectre.libGenetic.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -161,10 +161,17 @@
   <ItemGroup>
     <ClCompile Include="..\Common\Main.cpp" />
     <ClCompile Include="AllLabelTypesIncludedConditionTest.cpp" />
+    <ClCompile Include="GaClassifierTest.cpp" />
+    <ClCompile Include="ClassifierFitnessFunctionTest.cpp" />
     <ClCompile Include="IndividualFeasibilityConditionsFactoryTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Spectre.libGaClassifier\Spectre.libGaClassifier.vcxproj">
+      <Project>{9faf96e9-1983-4bd3-8c5c-fb922ac73126}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

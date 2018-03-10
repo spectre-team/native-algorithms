@@ -22,6 +22,12 @@
     <Filter Include="Source Files\IndividualFeasibilityConditions">
       <UniqueIdentifier>{f5e374e0-c53e-49f1-b737-6853cba38bcc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Classifiers">
+      <UniqueIdentifier>{b2ee96f9-1141-4d25-8a3a-36d420dedd46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classifiers">
+      <UniqueIdentifier>{b585557a-5afe-425d-bbd5-af8623c6572a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IndividualFeasibilityConditionsFactory.h">
@@ -29,6 +35,12 @@
     </ClInclude>
     <ClInclude Include="AllLabelTypesIncludedCondition.h">
       <Filter>Header Files\IndividualFeasibilityConditions</Filter>
+    </ClInclude>
+    <ClInclude Include="GaClassifier.h">
+      <Filter>Header Files\Classifiers</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassifierFitnessFunction.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -40,6 +52,12 @@
     </ClCompile>
     <ClCompile Include="AllLabelTypesIncludedCondition.cpp">
       <Filter>Source Files\IndividualFeasibilityConditions</Filter>
+    </ClCompile>
+    <ClCompile Include="GaClassifier.cpp">
+      <Filter>Source Files\Classifiers</Filter>
+    </ClCompile>
+    <ClCompile Include="ClassifierFitnessFunction.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
