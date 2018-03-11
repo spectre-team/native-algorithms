@@ -34,8 +34,7 @@ class ExpectationMaximizationTest : public ::testing::Test
 {
 protected:
 
-    Data mzs;
-    Data intensities;
+    Spectrum spectrum;
     std::vector<GaussianComponent> gaussianComponents;
 
     virtual void SetUp() override
@@ -43,11 +42,11 @@ protected:
         gaussianComponents = {
             { /*mean =*/-5.0, /*deviation =*/ 3.0, /*weight =*/ 0.25 },
             { /*mean =*/ 5.0, /*deviation =*/ 3.0, /*weight =*/ 0.25 },
-            { /*mean =*/ -2.0,/*deviation =*/ 9.0, /*weight =*/ 0.5 }
+            { /*mean =*/-2.0, /*deviation =*/ 9.0, /*weight =*/ 0.5 }
         };
 
-        mzs = GenerateRange(-20.0, 20.0, 0.5);
-        intensities = GenerateValues(mzs, gaussianComponents);
+        spectrum.mzs = GenerateRange(-20.0, 20.0, 0.5);
+        spectrum.intensities = GenerateValues(spectrum.mzs, gaussianComponents);
     }
 
     Data GenerateRange(DataType start, DataType end, DataType step)
@@ -63,8 +62,7 @@ protected:
         return result;
     }
 
-    Data GenerateValues(Data input,
-                                       const std::vector<GaussianComponent> &components)
+    Data GenerateValues(Data input, const std::vector<GaussianComponent> &components)
     {
         Data output(input.size(), 0.0);
         for (unsigned i = 0; i < input.size(); i++)
@@ -89,16 +87,16 @@ TEST_F(ExpectationMaximizationTest, test_whole_em)
         ExpectationRunnerRef,
         MaximizationRunnerRef,
         LogLikelihoodCalculator
-    > em(&mzs[0], &intensities[0], (unsigned)mzs.size(),
+    > em(SpectrumView(spectrum),
          rngEngine, (unsigned)gaussianComponents.size());
 
     GaussianMixtureModel result = em.EstimateGmm();
-    Data approximates = GenerateValues(mzs, result.components);
+    Data approximates = GenerateValues(spectrum.mzs, result.components);
 
-    Data errors(intensities.size());
-    for (unsigned i = 0; i < intensities.size(); i++)
+    Data errors(spectrum.intensities.size());
+    for (unsigned i = 0; i < spectrum.intensities.size(); i++)
     {
-        errors[i] = pow(intensities[i] - approximates[i], 2) * 10000.0; // scale the errors
+        errors[i] = pow(spectrum.intensities[i] - approximates[i], 2) * 10000.0; // scale the errors
     }
 
     DataType averageError = 0.0;
@@ -120,27 +118,26 @@ TEST_F(ExpectationMaximizationTest, test_em_ref_initialization)
 {
     RandomNumberGenerator rngEngine(0);
     std::vector<GaussianComponent> components(gaussianComponents.size());
-    RandomInitializationRef initialization(&mzs[0], (unsigned)mzs.size(),
-                                           components, rngEngine);
+    RandomInitializationRef initialization(spectrum.mzs, components, rngEngine);
 
     // Check if values of assigned means come from available mz values
     initialization.AssignRandomMeans();
 
     for (size_t i = 0; i < components.size(); i++)
     {
-        EXPECT_NE(std::find(mzs.begin(), mzs.end(), components[i].mean), mzs.end());
+        EXPECT_NE(std::find(spectrum.mzs.begin(), spectrum.mzs.end(), components[i].mean), spectrum.mzs.end());
     }
 
     // Calculate sample variance
     initialization.AssignVariances();
 
-    DataType sampleMean = std::accumulate(mzs.begin(), mzs.end(), 0.0) / (DataType)mzs.size();
+    DataType sampleMean = std::accumulate(spectrum.mzs.begin(), spectrum.mzs.end(), 0.0) / (DataType)spectrum.mzs.size();
     DataType variance = 0.0;
-    for (unsigned i = 0; i < mzs.size(); i++)
+    for (unsigned i = 0; i < spectrum.mzs.size(); i++)
     {
-        variance += pow(mzs[i] - sampleMean, 2);
+        variance += pow(spectrum.mzs[i] - sampleMean, 2);
     }
-    variance /= (DataType)mzs.size();
+    variance /= (DataType)spectrum.mzs.size();
     DataType deviation = sqrt(variance);
 
     // Check if sample variance was properly assigned to all components
@@ -161,25 +158,24 @@ TEST_F(ExpectationMaximizationTest, test_em_ref_initialization)
 
 TEST_F(ExpectationMaximizationTest, test_em_ref_expectation)
 {
-    Matrix affilationMatrix((unsigned)gaussianComponents.size(), (unsigned)mzs.size());
+    Matrix affilationMatrix((unsigned)gaussianComponents.size(), (unsigned)spectrum.mzs.size());
 
-    ExpectationRunnerRef expectation(&mzs[0], (unsigned)mzs.size(),
-                                     affilationMatrix, gaussianComponents);
+    ExpectationRunnerRef expectation(spectrum.mzs, affilationMatrix, gaussianComponents);
     expectation.Expectation();
 
-    for (unsigned i = 0; i < mzs.size(); i++)
+    for (unsigned i = 0; i < spectrum.mzs.size(); i++)
     {
         DataType denominator = 0.0;
         for (unsigned k = 0; k < gaussianComponents.size(); k++)
         {
             denominator += gaussianComponents[k].weight *
-                Gaussian(mzs[i], gaussianComponents[k].mean, gaussianComponents[k].deviation);
+                Gaussian(spectrum.mzs[i], gaussianComponents[k].mean, gaussianComponents[k].deviation);
         }
 
         for (unsigned k = 0; k < gaussianComponents.size(); k++)
         {
             DataType numerator = gaussianComponents[k].weight *
-                Gaussian(mzs[i], gaussianComponents[k].mean, gaussianComponents[k].deviation);
+                Gaussian(spectrum.mzs[i], gaussianComponents[k].mean, gaussianComponents[k].deviation);
             EXPECT_EQ(affilationMatrix[i][k], numerator / denominator);
         }
     }
@@ -187,9 +183,9 @@ TEST_F(ExpectationMaximizationTest, test_em_ref_expectation)
 
 TEST_F(ExpectationMaximizationTest, test_em_ref_maximization)
 {
-    Matrix affilationMatrix((unsigned)gaussianComponents.size(), (unsigned)mzs.size());
+    Matrix affilationMatrix((unsigned)gaussianComponents.size(), (unsigned)spectrum.mzs.size());
 
-    for (unsigned i = 0; i < mzs.size(); i++)
+    for (unsigned i = 0; i < spectrum.mzs.size(); i++)
     {
         for (unsigned k = 0; k < gaussianComponents.size(); k++)
         {
@@ -197,8 +193,7 @@ TEST_F(ExpectationMaximizationTest, test_em_ref_maximization)
         }
     }
 
-    MaximizationRunnerRef maximization(&mzs[0], &intensities[0], (unsigned)mzs.size(),
-                                       affilationMatrix, gaussianComponents);
+    MaximizationRunnerRef maximization(spectrum, affilationMatrix, gaussianComponents);
 
     // Check if means have ben properly updated
     maximization.UpdateMeans();
@@ -207,10 +202,10 @@ TEST_F(ExpectationMaximizationTest, test_em_ref_maximization)
     {
         DataType denominator = 0.0;
         DataType numerator = 0.0;
-        for (unsigned i = 0; i < mzs.size(); i++)
+        for (unsigned i = 0; i < spectrum.mzs.size(); i++)
         {
-            denominator += affilationMatrix[i][k] * intensities[i];
-            numerator += affilationMatrix[i][k] * mzs[i] * intensities[i];
+            denominator += affilationMatrix[i][k] * spectrum.intensities[i];
+            numerator += affilationMatrix[i][k] * spectrum.mzs[i] * spectrum.intensities[i];
         }
         EXPECT_EQ(gaussianComponents[k].mean, numerator / denominator);
     }
@@ -222,10 +217,10 @@ TEST_F(ExpectationMaximizationTest, test_em_ref_maximization)
     {
         DataType denominator = 0.0;
         DataType numerator = 0.0;
-        for (unsigned i = 0; i < mzs.size(); i++)
+        for (unsigned i = 0; i < spectrum.mzs.size(); i++)
         {
-            denominator += affilationMatrix[i][k] * intensities[i];
-            numerator += affilationMatrix[i][k] * pow(mzs[i] - gaussianComponents[k].mean, 2) * intensities[i];
+            denominator += affilationMatrix[i][k] * spectrum.intensities[i];
+            numerator += affilationMatrix[i][k] * pow(spectrum.mzs[i] - gaussianComponents[k].mean, 2) * spectrum.intensities[i];
         }
         EXPECT_EQ(gaussianComponents[k].deviation, sqrt(numerator / denominator));
     }
@@ -234,18 +229,18 @@ TEST_F(ExpectationMaximizationTest, test_em_ref_maximization)
     maximization.UpdateWeights();
 
     DataType totalDataSize = 0.0;
-    for (unsigned i = 0; i < mzs.size(); i++)
+    for (unsigned i = 0; i < spectrum.mzs.size(); i++)
     {
-        totalDataSize += intensities[i];
+        totalDataSize += spectrum.intensities[i];
     }
 
     const unsigned numberOfComponents = (unsigned)gaussianComponents.size();
     for (unsigned k = 0; k < numberOfComponents; k++)
     {
         DataType weight = 0.0;
-        for (unsigned i = 0; i < mzs.size(); i++)
+        for (unsigned i = 0; i < spectrum.mzs.size(); i++)
         {
-            weight += affilationMatrix[i][k] * intensities[i];
+            weight += affilationMatrix[i][k] * spectrum.intensities[i];
         }
         EXPECT_EQ(gaussianComponents[k].weight, weight / totalDataSize);
     }
@@ -253,18 +248,18 @@ TEST_F(ExpectationMaximizationTest, test_em_ref_maximization)
 
 TEST_F(ExpectationMaximizationTest, test_em_ref_loglikelihood)
 {
-    LogLikelihoodCalculator calculator(&mzs[0], &intensities[0], (unsigned)mzs.size(), gaussianComponents);
+    LogLikelihoodCalculator calculator(spectrum, gaussianComponents);
 
     DataType result = calculator.CalculateLikelihood();
 
     DataType sumOfLogs = 0.0;
-    for (unsigned i = 0; i < mzs.size(); i++)
+    for (unsigned i = 0; i < spectrum.mzs.size(); i++)
     {
         DataType sum = 0.0;
         for (unsigned k = 0; k < gaussianComponents.size(); k++)
         {
             auto component = gaussianComponents[k];
-            sum += component.weight * intensities[i] * Gaussian(mzs[i], component.mean, component.deviation);
+            sum += component.weight * spectrum.intensities[i] * Gaussian(spectrum.mzs[i], component.mean, component.deviation);
         }
         sumOfLogs += log(sum);
     }

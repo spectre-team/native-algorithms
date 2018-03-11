@@ -28,6 +28,29 @@ using Index = unsigned;
 using Data = std::vector<DataType>;
 using Indices = std::vector<Index>;
 
-using DataView = gsl::span<DataType>;
-using IndicesView = gsl::span<Index>;
+using DataView = gsl::span<const DataType>;
+using IndicesView = gsl::span<const Index>;
+
+struct Spectrum
+{
+    Spectrum() = default;
+    Spectrum(const Spectrum&) = default;
+    Spectrum(Spectrum&& spectrum) : mzs(std::move(spectrum.mzs))
+                                  , intensities(std::move(spectrum.intensities)) {}
+    Data mzs;
+    Data intensities;
+};
+
+struct SpectrumView
+{
+    SpectrumView() = default;
+    SpectrumView(const SpectrumView&) = default;
+    SpectrumView(const Spectrum& spectrum) : mzs(spectrum.mzs)
+                                           , intensities(spectrum.intensities) {}
+    DataView mzs;
+    DataView intensities;
+};
+
+using Peaks = Spectrum;
+using PeaksView = SpectrumView;
 }

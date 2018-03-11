@@ -58,14 +58,13 @@ struct GaussianMixtureModel
     /// <param name="mzArray">M/z data shared by all spectra.</param>
     /// <param name="intensities">Mean intensities at each point.</param>
     /// <param name="numberOfComponents">Number of Gaussian Components to be set.</param>
-    GaussianMixtureModel(const DataView &mzArray,
-                         const DataView &intensities,
+    GaussianMixtureModel(DataView mzArray, DataView intensities,
                          const std::vector<GaussianComponent> &&components) :
         originalMzArray(mzArray.begin(), mzArray.end()),
         originalMeanSpectrum(intensities.begin(), intensities.end()),
         components(std::move(components)),
         isMerged(), isNoiseReduced(), mzMergingThreshold() // will be used in future.
-    { }
+    {}
 
     /// <summary>
     /// Collection of Gaussian components.
