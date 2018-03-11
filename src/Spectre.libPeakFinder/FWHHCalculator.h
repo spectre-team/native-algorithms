@@ -67,6 +67,6 @@ namespace spectre::algorithm::peakfinder
         Signal GetRightFWHH(const SignalView x, const SignalView y, const IndicesView valleys, const IndicesView peaks);
     private:
         inline Index GetClosestNeighbourIndex(const SignalView& xSorted, const DataType value);
-        inline DataType Lerp(DataType x1, DataType x2, DataType y1, DataType y2, DataType x);   //TODO(dkuchta): Maybe in the future move it to libStatistics?
+        inline DataType LinearInterpolation(DataType x1, DataType x2, DataType y1, DataType y2, DataType x);   //TODO(dkuchta): Maybe in the future move it to libStatistics?
     };
 }
