@@ -19,7 +19,7 @@ limitations under the License.
 */
 
 #pragma once
-#include "DataTypes.h"
+#include "Common\DataTypes.h"
 
 namespace spectre::algorithm::peakfinder
 {
@@ -48,7 +48,7 @@ namespace spectre::algorithm::peakfinder
         /// <param name="valleys">Container view of valley indices.</param>
         /// <param name="peaks">Container view of peak indices.</param>
         /// <returns>New container of m/z values for left sides of FWHH markers for all peaks.</returns>
-        Signal GetLeftFWHH(const SignalView x, const SignalView y, const IndicesView valleys, const IndicesView peaks);
+        Data GetLeftFWHH(const DataView x, const DataView y, const IndicesView valleys, const IndicesView peaks);
         /// <summary>
         /// Calculates and returns right m/z values for FWHH markers.
         /// For performance purposes it does not verify the integrity of the data!
@@ -64,9 +64,9 @@ namespace spectre::algorithm::peakfinder
         /// <param name="valleys">Container view of valley indices.</param>
         /// <param name="peaks">Container view of peak indices.</param>
         /// <returns>New container of m/z values for right sides of FWHH markers for all peaks.</returns>
-        Signal GetRightFWHH(const SignalView x, const SignalView y, const IndicesView valleys, const IndicesView peaks);
+        Data GetRightFWHH(const DataView x, const DataView y, const IndicesView valleys, const IndicesView peaks);
     private:
-        inline Index GetClosestNeighbourIndex(const SignalView& xSorted, const DataType value);
+        inline Index GetClosestNeighbourIndex(const DataView& xSorted, const DataType value);
         inline DataType LinearInterpolation(DataType x1, DataType x2, DataType y1, DataType y2, DataType x);   //TODO(dkuchta): Maybe in the future move it to libStatistics?
     };
 }

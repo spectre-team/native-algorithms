@@ -20,6 +20,7 @@ limitations under the License.
 #pragma once
 #define _USE_MATH_DEFINES // used for M_PI
 #include <math.h>
+#include "DataTypes.h"
 
 namespace spectre::unsupervised::gmm
 {
@@ -27,7 +28,7 @@ namespace spectre::unsupervised::gmm
 /// Computes value of Guassian Function, also known as Normal distribution
 /// based on given mean, standard deviation for a single observation.
 /// </summary>
-inline double Gaussian(double x, double mean, double std)
+inline DataType Gaussian(DataType x, DataType mean, DataType std)
 {
     return (1.0 / sqrt(2.0 * M_PI * std * std)) * exp(-pow(x - mean, 2) / (2.0 * std * std));
 }

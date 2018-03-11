@@ -2,7 +2,7 @@
 * DataTypes.h
 * Contains data types used among the project
 *
-Copyright 2018 SpectreTeam
+Copyright 2018 Michal Gallus
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,17 +17,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 #pragma once
-#include <vector>
-#include <span.h>
+#include <random>
+#include "Common\DataTypes.h"
 
-namespace spectre::algorithm::peakfinder
+namespace spectre::unsupervised::gmm
 {
-    using DataType = double;
-    using Index = unsigned;
-
-    using Signal = std::vector<DataType>;
-    using Indices = std::vector<Index>;
-
-    using SignalView = gsl::span<DataType>;
-    using IndicesView = gsl::span<Index>;
+using RandomNumberGenerator = std::mt19937_64;
 }

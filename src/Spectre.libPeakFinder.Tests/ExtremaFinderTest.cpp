@@ -23,6 +23,7 @@
 namespace
 {
     using namespace spectre::algorithm::peakfinder;
+    using namespace spectre;
 
     TEST(ExtremaFinderInitialization, initializes)
     {
@@ -48,9 +49,9 @@ namespace
         }
     protected:
         ExtremaFinder finder;
-        Signal signal;
-        Signal steepDownhillStartingSignal;
-        Signal steepUphillEndingSignal;
+        Data signal;
+        Data steepDownhillStartingSignal;
+        Data steepUphillEndingSignal;
     };
 
     TEST_F(ExtremaFinderTest, finds_more_valleys_than_peaks)

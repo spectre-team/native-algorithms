@@ -38,7 +38,7 @@ public:
     /// </summary>
     /// <param name="intensities">Signal to be analyzed.</param>
     /// <returns>Estiamte of the noise in the signal.</returns>
-    DataType Estimate(Signal& intensities) const;
+    DataType Estimate(Data& intensities) const;
 private:
     const DataType m_Multiplier;
 };

@@ -27,6 +27,7 @@ limitations under the License.
 namespace
 {
 using namespace spectre::algorithm::wavelet;
+using namespace spectre;
 
 TEST(WaveletReconstructorInitialization, initializes)
 {
@@ -52,10 +53,10 @@ TEST_F(WaveletReconstructorRefTest, reconstructs_the_signal)
     // which would be hard to reproduce both by hand and algoritmically without
     // reimplementing the wavelet decomposer.
 
-    Signal signal = spectre::core::functional::range<DataType>(10);
-    Signal correct = signal; // Copy before the signal get's moved
+    Data signal = spectre::core::functional::range<DataType>(10);
+    Data correct = signal; // Copy before the signal get's moved
     WaveletCoefficients coefficients = decomposer.Decompose(std::move(signal));
-    Signal reconstructed = reconstructor.Reconstruct(std::move(coefficients), correct.size());
+    Data reconstructed = reconstructor.Reconstruct(std::move(coefficients), correct.size());
 
     auto doubleNear = double_near(0.001);
     EXPECT_THAT(correct, testing::Pointwise(doubleNear, reconstructed));

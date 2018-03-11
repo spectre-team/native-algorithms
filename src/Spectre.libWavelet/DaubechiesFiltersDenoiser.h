@@ -31,7 +31,7 @@ class DaubechiesFiltersDenoiser
 {
 public:
     explicit DaubechiesFiltersDenoiser();
-    Signal Denoise(Signal& signal) const;
+    Data Denoise(Data& signal) const;
 private:
     static constexpr unsigned m_Base = 4;
     static constexpr unsigned m_LevelsOfDecomposition = 10;

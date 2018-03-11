@@ -39,7 +39,7 @@ public:
     /// <param name="coefficients">Coefficents used to reconstruct the signal.</param>
     /// <param name="signalLength">Length of signal to be reconstructed.</param>
     /// <returns>Reconstructed signal.</returns>
-    Signal Reconstruct(WaveletCoefficients&& coefficients, size_t signalLength) const;
+    Data Reconstruct(WaveletCoefficients&& coefficients, size_t signalLength) const;
 
 private:
     inline void WaveletReconstructorRef::ApplyFilters(

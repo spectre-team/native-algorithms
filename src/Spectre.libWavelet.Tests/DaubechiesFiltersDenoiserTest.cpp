@@ -26,6 +26,7 @@ limitations under the License.
 namespace
 {
     using namespace spectre::algorithm::wavelet;
+    using namespace spectre;
 
     TEST(DaubechiesFiltersDenoiserInitialization, initializes)
     {
@@ -65,14 +66,14 @@ namespace
             };
         }
     protected:
-        Signal signal;
-        Signal correctResult;
+        Data signal;
+        Data correctResult;
         DaubechiesFiltersDenoiser denoiser;
     };
 
     TEST_F(DaubechiesFiltersDenoiserTest, denoises_signal)
     {
-        Signal denoisedSignal = denoiser.Denoise(signal);
+        Data denoisedSignal = denoiser.Denoise(signal);
         auto doubleNear = double_near(0.001);
         EXPECT_THAT(correctResult, testing::Pointwise(doubleNear, denoisedSignal));
     }

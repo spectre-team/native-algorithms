@@ -27,6 +27,7 @@ limitations under the License.
 namespace
 {
     using namespace spectre::algorithm::wavelet;
+    using namespace spectre;
 
     TEST(SoftThresholderInitialization, initializes)
     {
@@ -130,23 +131,23 @@ namespace
         }
     protected:
         WaveletDecomposerRef decomposer;
-        std::vector<DataType> lastRowLastHighFrequencyResult;
-        std::vector<DataType> firstRowLastHighFrequencyResult;
-        std::vector<DataType> firstHighFrequencyResult;
-        std::vector<DataType> firstLowFrequencyResult;
-        std::vector<DataType> lastLowFrequencyResult;
+        Data lastRowLastHighFrequencyResult;
+        Data firstRowLastHighFrequencyResult;
+        Data firstHighFrequencyResult;
+        Data firstLowFrequencyResult;
+        Data lastLowFrequencyResult;
     };
 
     TEST_F(SoftThresholderTest, properly_tresholds_coefficients)
     {
         constexpr unsigned signalLength = 10;
-        Signal signal = spectre::core::functional::range<DataType>(signalLength);
+        Data signal = spectre::core::functional::range<DataType>(signalLength);
 
         // Decompose signal
         WaveletCoefficients coefficients = decomposer.Decompose(std::move(signal));
 
         // Extract coefficients necessary for noise estimator
-        Signal highFreqCoefficients(signalLength);
+        Data highFreqCoefficients(signalLength);
         highFreqCoefficients.assign(coefficients.data[0][0].begin(),
             coefficients.data[0][0].begin() + signalLength);
 

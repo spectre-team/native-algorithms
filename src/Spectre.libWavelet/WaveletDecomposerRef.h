@@ -38,7 +38,7 @@ public:
     /// </summary>
     /// <param name="signal">Signal to decompose.</param>
     /// <returns>Set of Daubechies wavelet coefficients.</returns>
-    WaveletCoefficients Decompose(Signal&& signal) const;
+    WaveletCoefficients Decompose(Data&& signal) const;
 
 private:
     inline void WaveletDecomposerRef::ApplyFilters(
