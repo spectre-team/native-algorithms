@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Common\DataTypes.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="RandomInitializationRef.h" />
-    <ClInclude Include="DataType.h" />
     <ClInclude Include="ExpectationMaximization.h" />
     <ClInclude Include="ExpectationRunnerRef.h" />
     <ClInclude Include="GaussianDistribution.h" />

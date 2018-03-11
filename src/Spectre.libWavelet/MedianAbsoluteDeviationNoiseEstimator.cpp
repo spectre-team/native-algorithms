@@ -26,7 +26,7 @@ namespace spectre::algorithm::wavelet
 {
 }
 
-DataType MedianAbsoluteDeviationNoiseEstimator::Estimate(Signal& highFreqCoefficients) const
+DataType MedianAbsoluteDeviationNoiseEstimator::Estimate(Data& highFreqCoefficients) const
 {
     constexpr auto inverseOfThirdQuartileInNormalDistribution = static_cast<DataType>(1.0 / .6745);
     return m_Multiplier

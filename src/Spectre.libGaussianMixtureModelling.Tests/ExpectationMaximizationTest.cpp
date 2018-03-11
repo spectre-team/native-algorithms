@@ -34,8 +34,8 @@ class ExpectationMaximizationTest : public ::testing::Test
 {
 protected:
 
-    std::vector<double> mzs;
-    std::vector<double> intensities;
+    Data mzs;
+    Data intensities;
     std::vector<GaussianComponent> gaussianComponents;
 
     virtual void SetUp() override
@@ -50,10 +50,10 @@ protected:
         intensities = GenerateValues(mzs, gaussianComponents);
     }
 
-    std::vector<double> GenerateRange(double start, double end, double step)
+    Data GenerateRange(DataType start, DataType end, DataType step)
     {
         const int size = int((end - start) / step);
-        std::vector<double> result(size, start);
+        Data result(size, start);
 
         for (int i = 0; i < size; i++)
         {
@@ -63,10 +63,10 @@ protected:
         return result;
     }
 
-    std::vector<double> GenerateValues(std::vector<double> input,
+    Data GenerateValues(Data input,
                                        const std::vector<GaussianComponent> &components)
     {
-        std::vector<double> output(input.size(), 0.0);
+        Data output(input.size(), 0.0);
         for (unsigned i = 0; i < input.size(); i++)
         {
             for (unsigned j = 0; j < components.size(); j++)
@@ -93,22 +93,22 @@ TEST_F(ExpectationMaximizationTest, test_whole_em)
          rngEngine, (unsigned)gaussianComponents.size());
 
     GaussianMixtureModel result = em.EstimateGmm();
-    std::vector<double> approximates = GenerateValues(mzs, result.components);
+    Data approximates = GenerateValues(mzs, result.components);
 
-    std::vector<double> errors(intensities.size());
+    Data errors(intensities.size());
     for (unsigned i = 0; i < intensities.size(); i++)
     {
         errors[i] = pow(intensities[i] - approximates[i], 2) * 10000.0; // scale the errors
     }
 
-    double averageError = 0.0;
+    DataType averageError = 0.0;
     for (unsigned i = 0; i < errors.size(); i++)
     {
         averageError += errors[i];
     }
     averageError /= errors.size();
-    double maxError = *std::max_element(errors.begin(), errors.end());
-    double minError = *std::min_element(errors.begin(), errors.end());
+    DataType maxError = *std::max_element(errors.begin(), errors.end());
+    DataType minError = *std::min_element(errors.begin(), errors.end());
     printf("Avg error: %f\n", averageError);
     printf("Max error: %f\n", maxError);
     printf("Min error: %f\n", minError);
@@ -134,14 +134,14 @@ TEST_F(ExpectationMaximizationTest, test_em_ref_initialization)
     // Calculate sample variance
     initialization.AssignVariances();
 
-    double sampleMean = std::accumulate(mzs.begin(), mzs.end(), 0.0) / (double)mzs.size();
-    double variance = 0.0;
+    DataType sampleMean = std::accumulate(mzs.begin(), mzs.end(), 0.0) / (DataType)mzs.size();
+    DataType variance = 0.0;
     for (unsigned i = 0; i < mzs.size(); i++)
     {
         variance += pow(mzs[i] - sampleMean, 2);
     }
-    variance /= (double)mzs.size();
-    double deviation = sqrt(variance);
+    variance /= (DataType)mzs.size();
+    DataType deviation = sqrt(variance);
 
     // Check if sample variance was properly assigned to all components
     for (unsigned i = 0; i < components.size(); i++)
@@ -152,7 +152,7 @@ TEST_F(ExpectationMaximizationTest, test_em_ref_initialization)
     // Check if weights have been assigned uniformly
     initialization.AssignWeights();
 
-    double weight = 1.0 / (double)components.size();
+    DataType weight = 1.0 / (DataType)components.size();
     for (unsigned i = 0; i < components.size(); i++)
     {
         EXPECT_EQ(components[i].weight, weight);

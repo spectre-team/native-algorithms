@@ -25,7 +25,7 @@ DaubechiesFiltersDenoiser::DaubechiesFiltersDenoiser()
 {
 }
 
-static inline void ExtractCoefficientsForNoiseEstimation(Signal& highFrequencyCoeffs,
+static inline void ExtractCoefficientsForNoiseEstimation(Data& highFrequencyCoeffs,
     WaveletCoefficients& coefficients)
 {
     CoefficientList& noiseEstimationCoefficients = coefficients.data[0][0];
@@ -37,7 +37,7 @@ static inline void ExtractCoefficientsForNoiseEstimation(Signal& highFrequencyCo
 static inline WaveletCoefficients TresholdSignal(const NoiseEstimator& noiseEstimator,
     WaveletCoefficients& coefficients, size_t signalLength)
 {
-    Signal highFreqCoefficients(signalLength);
+    Data highFreqCoefficients(signalLength);
     ExtractCoefficientsForNoiseEstimation(highFreqCoefficients, coefficients);
     DataType noiseTreshold = noiseEstimator.Estimate(highFreqCoefficients);
     SoftThresholder tresholder(noiseTreshold);
@@ -45,18 +45,18 @@ static inline WaveletCoefficients TresholdSignal(const NoiseEstimator& noiseEsti
 }
 
 static inline WaveletCoefficients Decompose(const WaveletDecomposerRef& decomposer,
-    Signal& signal)
+    Data& signal)
 {
     return decomposer.Decompose(std::move(signal));
 }
 
-static inline Signal Reconstruct(const WaveletReconstructorRef& reconstructor,
+static inline Data Reconstruct(const WaveletReconstructorRef& reconstructor,
     WaveletCoefficients& coefficients, size_t signalLength)
 {
     return reconstructor.Reconstruct(std::move(coefficients), signalLength);
 }
 
-Signal DaubechiesFiltersDenoiser::Denoise(Signal& signal) const
+Data DaubechiesFiltersDenoiser::Denoise(Data& signal) const
 {
     const size_t signalLength = signal.size();
 
@@ -65,7 +65,7 @@ Signal DaubechiesFiltersDenoiser::Denoise(Signal& signal) const
 
     WaveletCoefficients coefficients = Decompose(m_Decomposer, signal);
     coefficients = TresholdSignal(m_NoiseEstimator, coefficients, signalLength);
-    Signal denoisedSignal = Reconstruct(m_Reconstructor, coefficients, signalLength);
+    Data denoisedSignal = Reconstruct(m_Reconstructor, coefficients, signalLength);
 
     return denoisedSignal;
 }

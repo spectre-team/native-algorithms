@@ -23,6 +23,7 @@ limitations under the License.
 namespace
 {
     using namespace spectre::algorithm::wavelet;
+    using namespace spectre;
 
     TEST(MedianAbsoluteDeviationNoiseEstimatorInitialization, initializes)
     {
@@ -38,7 +39,7 @@ namespace
 
     TEST_F(MedianAbsoluteDeviationNoiseEstimatorTest, estimates_noise_for_regular_input)
     {
-        Signal signal = { 1.0f, 2.0f, 3.0f };
+        Data signal = { 1.0f, 2.0f, 3.0f };
         DataType maxAbsoluteError = 0.0001;
         constexpr DataType result = static_cast<DataType>(2.1976335172238861);
 

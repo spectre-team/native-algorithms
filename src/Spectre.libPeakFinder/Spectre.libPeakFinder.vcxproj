@@ -127,16 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="DataTypes.h" />
+    <ClInclude Include="..\Common\DataTypes.h" />
     <ClInclude Include="ExtremaFinder.h" />
     <ClInclude Include="PeakFinder.h" />
+    <ClInclude Include="FWHHCalculator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ExtremaFinder.cpp" />
-    <ClInclude Include="FWHHCalculator.h" />
-    <ClInclude Include="PeakFinder.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="FWHHCalculator.cpp" />
     <ClCompile Include="PeakFinder.cpp" />
   </ItemGroup>

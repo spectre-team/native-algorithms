@@ -18,11 +18,10 @@
 */
 #pragma once
 #include <vector>
+#include "Common\DataTypes.h"
 
 namespace spectre::algorithm::wavelet
 {
-using DataType = double;
-using Signal = std::vector<DataType>;
 using CoefficientList = std::vector<DataType>;
 using CoefficientsPerLevel = std::vector<CoefficientList>;
 }

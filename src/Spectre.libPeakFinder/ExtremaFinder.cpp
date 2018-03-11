@@ -26,7 +26,7 @@ using namespace spectre::statistics::basic_math;
 using namespace spectre::core::functional;
 
 // Branchless cache-efficient zero filter
-static inline Indices GetNonZeros(const Signal& data)
+static inline Indices GetNonZeros(const Data& data)
 {
     const size_t length = data.size();
     std::vector<unsigned> indices(length + 1);
@@ -46,17 +46,17 @@ static inline Indices GetNonZeros(const Signal& data)
 }
 
 // This function finds indices of intensities that combined together create signal with removed flat lines.
-static inline Indices FilterFlatSegmentIndices(const SignalView& signal)
+static inline Indices FilterFlatSegmentIndices(const DataView& signal)
 {
-    Signal derivatives = differentiate(signal);
+    Data derivatives = differentiate(signal);
     Indices indicesOfNonZeros = GetNonZeros(derivatives);
     indicesOfNonZeros.push_back((unsigned)(signal.size() - 1));
     return indicesOfNonZeros;
 }
 
-static inline Signal DifferentiateFilteredSignal(const SignalView& signal, const Indices& indices)
+static inline Data DifferentiateFilteredSignal(const DataView& signal, const Indices& indices)
 {
-    Signal filteredSignal = filter<DataType, Index>(signal, gsl::as_span(indices));
+    Data filteredSignal = filter<DataType, Index>(signal, gsl::as_span(indices));
     return differentiate_unsafe(gsl::as_span(filteredSignal)); // Unsafe is used here, because the exception
 }                                                              // would've already been thrown in FilterFlatSegmentIndices
 
@@ -64,11 +64,11 @@ static inline Signal DifferentiateFilteredSignal(const SignalView& signal, const
 // skipFirstAndLast is added for the purpose of peak finding, when the peak is
 // assumed to never start or end of the signal.
 using ComparisonOp = std::function<bool(DataType, DataType)>;
-static Indices FindExtrema(const SignalView& signal, ComparisonOp leftComparison,
+static Indices FindExtrema(const DataView& signal, ComparisonOp leftComparison,
     ComparisonOp rightComparison, bool skipFirstAndLast = false)
 {
     Indices filteredIndices = FilterFlatSegmentIndices(signal);
-    Signal derivatives = DifferentiateFilteredSignal(signal, filteredIndices);
+    Data derivatives = DifferentiateFilteredSignal(signal, filteredIndices);
 
     Indices extrema;
     // special case for 0th element
@@ -89,11 +89,11 @@ static Indices FindExtrema(const SignalView& signal, ComparisonOp leftComparison
     return extrema;
 }
 
-Indices ExtremaFinder::FindValleys(const SignalView & signal) const
+Indices ExtremaFinder::FindValleys(const DataView & signal) const
 {
     return FindExtrema(signal, std::less_equal<DataType>(), std::greater_equal<DataType>());
 }
-Indices ExtremaFinder::FindPeaks(const SignalView & signal) const
+Indices ExtremaFinder::FindPeaks(const DataView & signal) const
 {
     return FindExtrema(signal, std::greater_equal<DataType>(), std::less_equal<DataType>(), true);
 }

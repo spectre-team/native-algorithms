@@ -34,7 +34,7 @@ limitations under the License.
 #include <vector>
 #include <random>
 #include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
-#include "Spectre.libGaussianMixtureModelling/DataType.h"
+#include "Common/DataTypes.h"
 
 typedef std::mt19937_64 RandomNumberGenerator;
 

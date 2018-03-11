@@ -18,7 +18,7 @@
 */
 
 #pragma once
-#include "DataTypes.h"
+#include "Common\DataTypes.h"
 #include <vector>
 
 namespace spectre::algorithm::peakfinder
@@ -34,12 +34,12 @@ public:
     /// </summary>
     /// <param name="signal">Signal in which minima shall be found.</param>
     /// <returns>Indices of minima in the signal.</returns>
-    Indices FindValleys(const SignalView& signal) const;
+    Indices FindValleys(const DataView& signal) const;
     /// <summary>
     /// Finds indices of maxima of the signal.
     /// </summary>
     /// <param name="signal">Signal in which maxima shall be found.</param>
     /// <returns>Indices of maxima in the signal.</returns>
-    Indices FindPeaks(const SignalView& signal) const;
+    Indices FindPeaks(const DataView& signal) const;
 };
 }

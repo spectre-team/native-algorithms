@@ -23,9 +23,9 @@ limitations under the License.
 
 namespace spectre::algorithm::peakfinder
 {
-    Signal FWHHCalculator::GetLeftFWHH(const SignalView x, const SignalView y, const IndicesView valleys, const IndicesView peaks)
+    Data FWHHCalculator::GetLeftFWHH(const DataView x, const DataView y, const IndicesView valleys, const IndicesView peaks)
     {
-        Signal result(peaks.size());
+        Data result(peaks.size());
 
         for (int i = 0; i < peaks.size(); ++i)
         {
@@ -33,9 +33,9 @@ namespace spectre::algorithm::peakfinder
             const Index valleyIdx = valleys[i];
             const DataType peakVal = y[peakIdx];
 
-            const SignalView segment = y.subspan(valleyIdx, peakIdx - valleyIdx);
+            const DataView segment = y.subspan(valleyIdx, peakIdx - valleyIdx);
             const DataType lfwhhPeakVal = peakVal * 0.5;
-            Signal segmentNegated = spectre::core::functional::transform<DataType>(segment, [](DataType val) { return -val; });
+            Data segmentNegated = spectre::core::functional::transform<DataType>(segment, [](DataType val) { return -val; });
             const Index lfwhhNearestIdx = GetClosestNeighbourIndex(segmentNegated, -lfwhhPeakVal) + valleyIdx;
             result[i] = LinearInterpolation(y[lfwhhNearestIdx], y[lfwhhNearestIdx + 1], x[lfwhhNearestIdx], x[lfwhhNearestIdx + 1], lfwhhPeakVal);
         }
@@ -43,9 +43,9 @@ namespace spectre::algorithm::peakfinder
         return result;
     }
 
-    Signal FWHHCalculator::GetRightFWHH(const SignalView x, const SignalView y, const IndicesView valleys, const IndicesView peaks)
+    Data FWHHCalculator::GetRightFWHH(const DataView x, const DataView y, const IndicesView valleys, const IndicesView peaks)
     {
-        Signal result(peaks.size());
+        Data result(peaks.size());
 
         for (int i = 0; i < peaks.size(); ++i)
         {
@@ -53,7 +53,7 @@ namespace spectre::algorithm::peakfinder
             const Index valleyIdx = valleys[i + 1];
             const DataType peakVal = y[peakIdx];
 
-            const SignalView segment = y.subspan(peakIdx, valleyIdx - peakIdx);
+            const DataView segment = y.subspan(peakIdx, valleyIdx - peakIdx);
             const DataType rfwhhPeakVal = peakVal * 0.5;
             const Index rfwhhNearestIdx = GetClosestNeighbourIndex(segment, rfwhhPeakVal) + peakIdx;
             result[i] = LinearInterpolation(y[rfwhhNearestIdx], y[rfwhhNearestIdx + 1], x[rfwhhNearestIdx], x[rfwhhNearestIdx + 1], rfwhhPeakVal);
@@ -62,7 +62,7 @@ namespace spectre::algorithm::peakfinder
         return result;
     }
 
-    inline Index FWHHCalculator::GetClosestNeighbourIndex(const SignalView & xSorted, DataType value)
+    inline Index FWHHCalculator::GetClosestNeighbourIndex(const DataView & xSorted, DataType value)
     {
         Index valueIdx = 0;
 

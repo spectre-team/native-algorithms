@@ -20,6 +20,7 @@
 #pragma once
 #include <vector>
 #include <gsl.h>
+#include "../Common/DataTypes.h"
 
 namespace spectre::unsupervised::gmm
 {
@@ -31,17 +32,17 @@ struct GaussianComponent
     /// <summary>
     /// Mean value of the component or peak's location.
     /// </summary>
-    double mean;
+    DataType mean;
 
     /// <summary>
     /// Standard deviation of the component or peak's width.
     /// </summary>
-    double deviation;
+    DataType deviation;
 
     /// <summary>
     /// Weight of the component or peak's height.
     /// </summary>
-    double weight;
+    DataType weight;
 };
 
 /// <summary>
@@ -57,8 +58,8 @@ struct GaussianMixtureModel
     /// <param name="mzArray">M/z data shared by all spectra.</param>
     /// <param name="intensities">Mean intensities at each point.</param>
     /// <param name="numberOfComponents">Number of Gaussian Components to be set.</param>
-    GaussianMixtureModel(const gsl::span<double> &mzArray,
-                         const gsl::span<double> &intensities,
+    GaussianMixtureModel(const DataView &mzArray,
+                         const DataView &intensities,
                          const std::vector<GaussianComponent> &&components) :
         originalMzArray(mzArray.begin(), mzArray.end()),
         originalMeanSpectrum(intensities.begin(), intensities.end()),
@@ -74,17 +75,17 @@ struct GaussianMixtureModel
     /// <summary>
     /// Collection of initially supplied mz values.
     /// </summary>
-    const std::vector<double> originalMzArray;
+    const Data originalMzArray;
 
     /// <summary>
     /// Collection of average supplied spectra.
     /// </summary>
-    const std::vector<double> originalMeanSpectrum;
+    const Data originalMeanSpectrum;
 
     /// <summary>
     /// M/z threshold used in components merging.
     /// </summary>
-    const double mzMergingThreshold;
+    const DataType mzMergingThreshold;
 
     /// <summary>
     /// Value indicating whether this instance is merged.

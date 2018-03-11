@@ -21,7 +21,7 @@ limitations under the License.
 #pragma once
 #include <random>
 #include "Spectre.libException/NullPointerException.h"
-#include "Spectre.libGaussianMixtureModelling/DataType.h"
+#include "Common/DataTypes.h"
 #include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
 #include "Spectre.libGaussianMixtureModelling/Matrix.h"
 
@@ -97,8 +97,8 @@ public:
         while (abs(oldLikelihood - newLikelihood) > MIN_LIKELIHOOD_CHANGE);
 
         return GaussianMixtureModel(
-            gsl::span<DataType>(m_pMzArray, m_DataSize),
-            gsl::span<DataType>(m_pIntensities, m_DataSize),
+            DataView(m_pMzArray, m_DataSize),
+            DataView(m_pIntensities, m_DataSize),
             std::move(m_Components)
         );
     }

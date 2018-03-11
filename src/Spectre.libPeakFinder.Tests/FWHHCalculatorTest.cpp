@@ -24,6 +24,7 @@ limitations under the License.
 namespace
 {
     using namespace spectre::algorithm::peakfinder;
+    using namespace spectre;
     using namespace testing;
     using namespace gsl;
 
@@ -45,42 +46,42 @@ namespace
 
     protected:
         FWHHCalculator fwhh;
-        Signal x;
+        Data x;
 
-        Signal sawtoothY;
+        Data sawtoothY;
         Indices sawtoothValleyIdx;
         Indices sawtoothPeakIdx;
 
-        Signal skewedY;
+        Data skewedY;
         Indices skewedValleyIdx;
         Indices skewedPeakIdx;
     };
 
     TEST_F(FWHHCalculatorTest, sawtooth_correct_left_fwhh)
     {
-        Signal result = fwhh.GetLeftFWHH(as_span(x), as_span(sawtoothY),
+        Data result = fwhh.GetLeftFWHH(as_span(x), as_span(sawtoothY),
             as_span(sawtoothValleyIdx), as_span(sawtoothPeakIdx));
-        EXPECT_THAT(result, ContainerEq(Signal{ 2., 6. }));
+        EXPECT_THAT(result, ContainerEq(Data{ 2., 6. }));
     }
 
     TEST_F(FWHHCalculatorTest, sawtooth_correct_right_fwhh)
     {
-        Signal result = fwhh.GetRightFWHH(as_span(x), as_span(sawtoothY),
+        Data result = fwhh.GetRightFWHH(as_span(x), as_span(sawtoothY),
             as_span(sawtoothValleyIdx), as_span(sawtoothPeakIdx));
-        EXPECT_THAT(result, ContainerEq(Signal{ 4., 8. }));
+        EXPECT_THAT(result, ContainerEq(Data{ 4., 8. }));
     }
 
     TEST_F(FWHHCalculatorTest, skewed_correct_left_fwhh)
     {
-        Signal result = fwhh.GetLeftFWHH(as_span(x), as_span(skewedY),
+        Data result = fwhh.GetLeftFWHH(as_span(x), as_span(skewedY),
             as_span(skewedValleyIdx), as_span(skewedPeakIdx));
-        EXPECT_THAT(result, ContainerEq(Signal{ 4. }));
+        EXPECT_THAT(result, ContainerEq(Data{ 4. }));
     }
 
     TEST_F(FWHHCalculatorTest, skewed_correct_right_fwhh)
     {
-        Signal result = fwhh.GetRightFWHH(as_span(x), as_span(skewedY),
+        Data result = fwhh.GetRightFWHH(as_span(x), as_span(skewedY),
             as_span(skewedValleyIdx), as_span(skewedPeakIdx));
-        EXPECT_THAT(result, ContainerEq(Signal{ 7. }));
+        EXPECT_THAT(result, ContainerEq(Data{ 7. }));
     }
 }

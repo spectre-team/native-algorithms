@@ -32,7 +32,7 @@ limitations under the License.
 #pragma once
 #include <vector>
 #include "Spectre.libException/NullPointerException.h"
-#include "Spectre.libGaussianMixtureModelling/DataType.h"
+#include "Common/DataTypes.h"
 #include "Spectre.libGaussianMixtureModelling/GaussianDistribution.h"
 #include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
 #include "Spectre.libGaussianMixtureModelling/Matrix.h"
