@@ -35,7 +35,7 @@
     <ClInclude Include="Matrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Common\DataTypes.h">
+    <ClInclude Include="DataTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

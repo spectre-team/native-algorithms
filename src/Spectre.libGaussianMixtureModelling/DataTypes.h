@@ -1,8 +1,8 @@
 /*
-* GaussianDistribution.h
-* Provides implementation of Gaussian Distribution function (bell curve).
+* DataTypes.h
+* Contains data types used among the project
 *
-Copyright 2017 Michal Gallus
+Copyright 2018 Michal Gallus
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,20 +16,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
 #pragma once
-#define _USE_MATH_DEFINES // used for M_PI
-#include <math.h>
-#include "DataTypes.h"
+#include <random>
+#include "Common\DataTypes.h"
 
 namespace spectre::unsupervised::gmm
 {
-/// <summary>
-/// Computes value of Guassian Function, also known as Normal distribution
-/// based on given mean, standard deviation for a single observation.
-/// </summary>
-inline DataType Gaussian(DataType x, DataType mean, DataType std)
-{
-    return (1.0 / sqrt(2.0 * M_PI * std * std)) * exp(-pow(x - mean, 2) / (2.0 * std * std));
-}
+using RandomNumberGenerator = std::mt19937_64;
 }

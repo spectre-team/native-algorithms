@@ -32,10 +32,10 @@ limitations under the License.
 #pragma once
 #include <vector>
 #include "Spectre.libException/NullPointerException.h"
-#include "Common/DataTypes.h"
-#include "Spectre.libGaussianMixtureModelling/GaussianDistribution.h"
-#include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
-#include "Spectre.libGaussianMixtureModelling/Matrix.h"
+#include "DataTypes.h"
+#include "GaussianDistribution.h"
+#include "GaussianMixtureModel.h"
+#include "Matrix.h"
 
 namespace spectre::unsupervised::gmm
 {

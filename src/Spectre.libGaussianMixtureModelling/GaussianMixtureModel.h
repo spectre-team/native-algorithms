@@ -20,7 +20,7 @@
 #pragma once
 #include <vector>
 #include <gsl.h>
-#include "../Common/DataTypes.h"
+#include "DataTypes.h"
 
 namespace spectre::unsupervised::gmm
 {

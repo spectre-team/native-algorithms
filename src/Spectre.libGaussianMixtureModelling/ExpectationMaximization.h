@@ -21,11 +21,9 @@ limitations under the License.
 #pragma once
 #include <random>
 #include "Spectre.libException/NullPointerException.h"
-#include "Common/DataTypes.h"
-#include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
-#include "Spectre.libGaussianMixtureModelling/Matrix.h"
-
-typedef std::mt19937_64 RandomNumberGenerator;
+#include "DataTypes.h"
+#include "GaussianMixtureModel.h"
+#include "Matrix.h"
 
 namespace spectre::unsupervised::gmm
 {

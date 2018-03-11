@@ -1,6 +1,6 @@
 /*
  * DataTypes.h
- * Contains data types used among the project
+ * Contains data types used among the solution.
  *
  Copyright 2018 Spectre Team
  
