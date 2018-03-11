@@ -37,6 +37,10 @@ namespace
             sawtoothY = { 0., 1., 2., 1., 0., 1., 2., 1., 0. };
             sawtoothValleyIdx = { 0, 4, 8 };
             sawtoothPeakIdx = { 2, 6 };
+
+            skewedY = { 2., 0., 1., 2., 3., 4., 2., 0., 1. };
+            skewedValleyIdx = { 1, 7 };
+            skewedPeakIdx = { 5 };
         }
 
     protected:
@@ -46,6 +50,10 @@ namespace
         Signal sawtoothY;
         Indices sawtoothValleyIdx;
         Indices sawtoothPeakIdx;
+
+        Signal skewedY;
+        Indices skewedValleyIdx;
+        Indices skewedPeakIdx;
     };
 
     TEST_F(FWHHCalculatorTest, sawtooth_correct_left_fwhh)
@@ -60,5 +68,19 @@ namespace
         Signal result = fwhh.GetRightFWHH(as_span(x), as_span(sawtoothY),
             as_span(sawtoothValleyIdx), as_span(sawtoothPeakIdx));
         EXPECT_THAT(result, ContainerEq(Signal{ 4., 8. }));
+    }
+
+    TEST_F(FWHHCalculatorTest, skewed_correct_left_fwhh)
+    {
+        Signal result = fwhh.GetLeftFWHH(as_span(x), as_span(skewedY),
+            as_span(skewedValleyIdx), as_span(skewedPeakIdx));
+        EXPECT_THAT(result, ContainerEq(Signal{ 4. }));
+    }
+
+    TEST_F(FWHHCalculatorTest, skewed_correct_right_fwhh)
+    {
+        Signal result = fwhh.GetRightFWHH(as_span(x), as_span(skewedY),
+            as_span(skewedValleyIdx), as_span(skewedPeakIdx));
+        EXPECT_THAT(result, ContainerEq(Signal{ 7. }));
     }
 }
