@@ -22,6 +22,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ExtremaFinder.h">
+    <ClInclude Include="FWHHCalculator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -30,6 +31,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ExtremaFinder.cpp">
+    <ClCompile Include="FWHHCalculator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

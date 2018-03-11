@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="..\Common\Main.cpp" />
     <ClCompile Include="ExtremaFinderTest.cpp" />
+    <ClCompile Include="FWHHCalculatorTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
