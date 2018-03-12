@@ -47,6 +47,13 @@ namespace
         EXPECT_EQ(result[5], 1);
     }
 
+	TEST_F(HistogramEqualizationTest, returns_correct_size_of_repeating_values)
+	{
+		std::vector<double> vectorContainingRepeatingValues = { 1.0, 2.0, 1.0, 5.0, 2.0, 1.0 };
+		auto result = histogramEqualization.countRepeatingValues(vectorContainingRepeatingValues);
+		EXPECT_EQ(result.size(), 256);
+	}
+
     TEST_F(HistogramEqualizationTest, returns_scaled_intensities)
     {
         auto result = histogramEqualization.scaleData(testIntensities);
