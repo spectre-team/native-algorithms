@@ -138,7 +138,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Common\Main.cpp" />
-    <ClCompile Include="MeanAbsoluteDeviationNoiseEstimatorTest.cpp" />
+    <ClCompile Include="DaubechiesFiltersDenoiserTest.cpp" />
+    <ClCompile Include="MedianAbsoluteDeviationNoiseEstimatorTest.cpp" />
     <ClCompile Include="ConvolutionTest.cpp" />
     <ClCompile Include="SoftThresholderTest.cpp" />
     <ClCompile Include="WaveletDecomposerRefTest.cpp" />

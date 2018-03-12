@@ -74,7 +74,7 @@ WaveletDecomposerRef::WaveletDecomposerRef()
 {
 };
 
-WaveletCoefficients WaveletDecomposerRef::Decompose(Signal&& signal) const
+WaveletCoefficients WaveletDecomposerRef::Decompose(Data&& signal) const
 {
     const size_t signalLength = signal.size();
 

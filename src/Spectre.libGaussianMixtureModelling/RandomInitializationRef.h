@@ -33,10 +33,8 @@ limitations under the License.
 #pragma once
 #include <vector>
 #include <random>
-#include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
-#include "Spectre.libGaussianMixtureModelling/DataType.h"
-
-typedef std::mt19937_64 RandomNumberGenerator;
+#include "GaussianMixtureModel.h"
+#include "DataTypes.h"
 
 namespace spectre::unsupervised::gmm
 {
@@ -51,20 +49,13 @@ public:
     /// <summary>
     /// Constructor initializing the class with data required during initialization.
     /// </summary>
-    /// <param name="mzArray">Array of m/z values.</param>
-    /// <param name="size">Size of the mzArray and itensities arrays.</param>
+    /// <param name="mzs">Array of m/z values.</param>
     /// <param name="rngEngine">Mersenne-Twister engine to be used during initialization step.</param>
     /// <param name="components">Gaussian components to be initialized.</param>
     /// <exception cref="ArgumentNullException">Thrown when mzArray pointer is null</exception>
-    RandomInitializationRef(DataType *mzArray, unsigned size,
-                            std::vector<GaussianComponent> &components, RandomNumberGenerator &rngEngine) :
-        m_pMzArray(mzArray), m_DataSize(size), m_Components(components),
-        m_RandomNumberGenerator(rngEngine)
+    RandomInitializationRef(DataView mzs, std::vector<GaussianComponent> &components, RandomNumberGenerator &rngEngine):
+        m_Mzs(mzs), m_Components(components), m_RandomNumberGenerator(rngEngine)
     {
-        if (mzArray == nullptr)
-        {
-            throw spectre::core::exception::NullPointerException("mzArray");
-        }
     }
 
     /// <summary>
@@ -78,8 +69,8 @@ public:
         const unsigned numberOfComponents = (unsigned)m_Components.size();
         for (unsigned i = 0; i < numberOfComponents; i++)
         {
-            unsigned randomIndex = m_RandomNumberGenerator() % m_DataSize;
-            m_Components[i].mean = m_pMzArray[randomIndex];
+            unsigned randomIndex = m_RandomNumberGenerator() % (unsigned)m_Mzs.size();
+            m_Components[i].mean = m_Mzs[randomIndex];
         }
     }
 
@@ -123,28 +114,27 @@ private:
     {
         DataType mean = 0.0;
 
-        for (unsigned i = 0; i < m_DataSize; i++)
+        for (unsigned i = 0; i < (unsigned)m_Mzs.size(); i++)
         {
-            mean += m_pMzArray[i];
+            mean += m_Mzs[i];
         }
 
-        return mean / (DataType)m_DataSize;
+        return mean / (DataType)m_Mzs.size();
     }
 
     DataType RandomInitializationRef::CalculateVariance(DataType mean)
     {
         DataType variance = 0.0;
 
-        for (unsigned i = 0; i < m_DataSize; i++)
+        for (unsigned i = 0; i < (unsigned)m_Mzs.size(); i++)
         {
-            variance += pow(m_pMzArray[i] - mean, 2);
+            variance += pow(m_Mzs[i] - mean, 2);
         }
 
-        return variance / (DataType)m_DataSize;
+        return variance / (DataType)m_Mzs.size();
     }
 
-    DataType *m_pMzArray;
-    unsigned m_DataSize;
+    DataView m_Mzs;
     std::vector<GaussianComponent> &m_Components;
     RandomNumberGenerator &m_RandomNumberGenerator;
 };

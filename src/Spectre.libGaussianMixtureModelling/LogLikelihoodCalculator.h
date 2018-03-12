@@ -30,9 +30,9 @@ limitations under the License.
 */
 #pragma once
 #include "Spectre.libException/NullPointerException.h"
-#include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
-#include "Spectre.libGaussianMixtureModelling/GaussianDistribution.h"
-#include "Spectre.libGaussianMixtureModelling/DataType.h"
+#include "GaussianMixtureModel.h"
+#include "GaussianDistribution.h"
+#include "DataTypes.h"
 
 namespace spectre::unsupervised::gmm
 {
@@ -48,25 +48,12 @@ public:
     /// Constructor initializing the class with data required for calculation of 
     /// log likelihood.
     /// </summary>
-    /// <param name="mzArray">Array of m/z values.</param>
-    /// <param name="intensities">Set of corresponding mean intensities values.</param>
-    /// <param name="size">Size of the mzArray and itensities arrays.</param>
+    /// <param name="spectrum">Spectrum to base calculations on.</param>
     /// <param name="components">Gaussian components.</param>
     /// <exception cref="ArgumentNullException">Thrown when either of mzArray or intensities pointers are null</exception>
-    LogLikelihoodCalculator(DataType *mzArray, DataType *intensities,
-                            unsigned size, const std::vector<GaussianComponent> &components)
-        : m_pMzArray(mzArray), m_pIntensities(intensities), m_DataSize(size),
-          m_Components(components)
+    LogLikelihoodCalculator(SpectrumView spectrum, const std::vector<GaussianComponent> &components)
+        : m_Spectrum(spectrum), m_Components(components)
     {
-        if (mzArray == nullptr)
-        {
-            throw spectre::core::exception::NullPointerException("mzArray");
-        }
-
-        if (intensities == nullptr)
-        {
-            throw spectre::core::exception::NullPointerException("intensities");
-        }
     }
 
     /// <summary>
@@ -81,13 +68,14 @@ public:
         // performed with accordance to equation (9.14)
         // presented in the book.
         DataType sumOfLogs = 0.0;
-        for (unsigned i = 0; i < m_DataSize; i++)
+        for (unsigned i = 0; i < (unsigned)m_Spectrum.mzs.size(); i++)
         {
             DataType sum = 0.0;
             for (unsigned k = 0; k < m_Components.size(); k++)
             {
                 auto component = m_Components[k];
-                sum += component.weight * m_pIntensities[i] * Gaussian(m_pMzArray[i], component.mean, component.deviation);
+                sum += component.weight * m_Spectrum.intensities[i] *
+                    Gaussian(m_Spectrum.mzs[i], component.mean, component.deviation);
             }
             sumOfLogs += log(sum);
         }
@@ -95,9 +83,7 @@ public:
     }
 
 private:
-    DataType *m_pMzArray;
-    DataType *m_pIntensities;
-    unsigned m_DataSize;
+    SpectrumView m_Spectrum;
     const std::vector<GaussianComponent> &m_Components;
 };
 };

@@ -1,6 +1,6 @@
 /*
- * MeanAbsoluteDeviationNoiseEstimator.h
- * Estimates mean absolute devation of noise in the signal.
+ * MedianAbsoluteDeviationNoiseEstimator.h
+ * Estimates median absolute devation of noise in the signal.
  *
    Copyright 2018 Michal Gallus
 
@@ -24,21 +24,21 @@ namespace spectre::algorithm::wavelet
 /// <summary>
 /// Estimates the Mean-absolute devaition of the noise in the signal
 /// </summary>
-class MeanAbsoluteDeviationNoiseEstimator
+class MedianAbsoluteDeviationNoiseEstimator
 {
 public:
     /// <summary>
     /// Initializes a new instance of the
-    /// <see cref="MeanAbsoluteDeviationNoiseEstimator"/> class.
+    /// <see cref="MedianAbsoluteDeviationNoiseEstimator"/> class.
     /// </summary>
     /// <param name="multiplier">The multiplier used for computations.</param>
-    explicit MeanAbsoluteDeviationNoiseEstimator(DataType multiplier=1.0);
+    explicit MedianAbsoluteDeviationNoiseEstimator(DataType multiplier=1.0);
     /// <summary>
     /// Estimates the MAD of the noise.
     /// </summary>
     /// <param name="intensities">Signal to be analyzed.</param>
     /// <returns>Estiamte of the noise in the signal.</returns>
-    DataType Estimate(const Signal& intensities) const;
+    DataType Estimate(Data& intensities) const;
 private:
     const DataType m_Multiplier;
 };

@@ -22,6 +22,7 @@ limitations under the License.
 #include "Spectre.libDataset/IReadOnlyDataset.h"
 #include "Spectre.libClassifier/Types.h"
 #include "Spectre.libDataset/Empty.h"
+#include <memory>
 
 namespace spectre::supervised
 {
@@ -44,6 +45,11 @@ public:
     /// <param name="dataset">The dataset.</param>
     /// <returns>vector of labels</returns>
     virtual std::vector<Label> Predict(LabeledDataset dataset) const = 0;
+    /// <summary>
+    /// Clones an objects.
+    /// </summary>
+    /// <returns>duplication of an instance.</returns>
+    virtual std::unique_ptr<IClassifier> clone() const = 0;
     virtual ~IClassifier() = default;
 };
 }

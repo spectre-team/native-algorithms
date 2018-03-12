@@ -30,10 +30,10 @@
 namespace spectre::algorithm::wavelet
 {
 // Average both signals, starting from startIndex and return.
-static inline Signal AverageSignals(Signal& signalOne, Signal& signalTwo, unsigned startIndex)
+static inline Data AverageSignals(Data& signalOne, Data& signalTwo, unsigned startIndex)
 {
     const size_t length = signalOne.size();
-    Signal result(length - startIndex);
+    Data result(length - startIndex);
     for (unsigned i = startIndex; i < length; i++)
     {
         result[i - startIndex] = (signalOne[i] + signalTwo[i]) * 0.5;
@@ -42,7 +42,7 @@ static inline Signal AverageSignals(Signal& signalOne, Signal& signalTwo, unsign
 }
 
 // Copy part of a signal, determined by interval [0;length).
-static inline void CopySelectively(Signal& source, Signal& destination, size_t length)
+static inline void CopySelectively(Data& source, Data& destination, size_t length)
 {
     memcpy(&destination[0], &source[0], length * sizeof(DataType));
 }
@@ -89,11 +89,11 @@ inline void WaveletReconstructorRef::ApplyFilters(WaveletCoefficients& coefficie
     auto& coeffs = coefficients.data;
     for (unsigned i = 0; i < scale; i++)
     {
-        Signal lowFreqCoefficients =
+        Data lowFreqCoefficients =
             m_Convolution.Convolve(ReconstructionLowPassFilter, coeffs[LOW_FREQ_INDEX][i], blockLength);
-        Signal highFreqCoefficients =
+        Data highFreqCoefficients =
             m_Convolution.Convolve(ReconstructionHighPassFilter, coeffs[level][i]);
-        Signal averagedCoefficients =
+        Data averagedCoefficients =
             AverageSignals(lowFreqCoefficients, highFreqCoefficients, BASIS_LENGTH);
         CopySelectively(averagedCoefficients, coeffs[LOW_FREQ_INDEX][i], blockLength - BASIS_LENGTH);
     }
@@ -103,7 +103,7 @@ WaveletReconstructorRef::WaveletReconstructorRef()
 {
 }
 
-Signal WaveletReconstructorRef::Reconstruct(WaveletCoefficients&& coefficients, size_t signalLength) const
+Data WaveletReconstructorRef::Reconstruct(WaveletCoefficients&& coefficients, size_t signalLength) const
 {
     constexpr unsigned LOW_FREQ_INDEX = WAVELET_LEVELS;
     auto& coeffs = coefficients.data;

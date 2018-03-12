@@ -21,6 +21,7 @@ limitations under the License.
 #include "Spectre.libException/OutOfRangeException.h"
 #include "OpenCvDataset.h"
 #include "Spectre.libClassifier/EmptyOpenCvDatasetException.h"
+#include "Spectre.libFunctional/Filter.h"
 
 namespace spectre::supervised {
 

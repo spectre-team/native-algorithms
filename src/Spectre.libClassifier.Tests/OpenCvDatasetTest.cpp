@@ -26,6 +26,8 @@ limitations under the License.
 #include "Spectre.libException/OutOfRangeException.h"
 #include "Spectre.libClassifier/OpenCvDataset.h"
 #include "Spectre.libClassifier/EmptyOpenCvDatasetException.h"
+#include <gmock/gmock-matchers.h>
+#include "Spectre.libClassifier/DatasetFilter.h"
 
 namespace
 {
@@ -137,6 +139,9 @@ public:
 protected:
     const std::vector<DataType> data { 0.5f, 0.4f, 0.6f, 1.1f, 1.6f, 0.7f, 2.1f, 1.0f, 0.6f };
     const std::vector<Label> labels { 3, 7, 14 };
+    const std::vector<DataType> result_data{ 0.5f, 0.4f, 0.6f, 2.1f, 1.0f, 0.6f };
+    const std::vector<Label> result_labels{ 3, 14 };
+    std::vector<bool> include{ true, false, true };
     const size_t rowSize = data.size() / labels.size();
     std::unique_ptr<OpenCvDataset> dataset;
 
@@ -276,6 +281,30 @@ TEST_F(OpenCvDatasetTest, returns_observation_with_valid_entries_through_square_
     for (auto i = 0u; i < rowSize; ++i)
     {
         EXPECT_EQ(data[i], observation[i]);
+    }
+}
+
+TEST_F(OpenCvDatasetTest, returns_correct_filtered_data)
+{
+    OpenCvDataset filtered = getFilteredOpenCvDataset(*dataset.get(), include);
+    gsl::span<const Observation> filtered_data_gsl = filtered.GetData();
+    std::vector<DataType> filtered_data{};
+    for (auto observation: filtered_data_gsl)
+    {
+        for (auto dataInObservation: observation)
+        {
+            filtered_data.push_back(dataInObservation);
+        }
+    }
+    gsl::span<const Label> filtered_labels_gsl = filtered.GetSampleMetadata();
+    std::vector<Label> filtered_labels(filtered_labels_gsl.begin(), filtered_labels_gsl.end());
+    for (auto i = 0u; i < result_data.size(); i++)
+    {
+        EXPECT_EQ(result_data[i], filtered_data[i]);
+    }
+    for (auto i = 0u; i < result_labels.size(); i++)
+    {
+        EXPECT_EQ(result_labels[i], filtered_labels[i]);
     }
 }
 }

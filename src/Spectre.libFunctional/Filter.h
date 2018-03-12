@@ -2,7 +2,7 @@
 * Filter.h
 * Filters content of the iterable.
 *
-Copyright 2017 Grzegorz Mrukwa
+Copyright 2017 Grzegorz Mrukwa, Michal Gallus
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,14 +33,14 @@ namespace spectre::core::functional
 /// <param name="collection">The collection.</param>
 /// <param name="indexes">The indexes.</param>
 /// <returns>Vector consisting of elements under specified indexes in the input collection</returns>
-template <typename DataType>
-std::vector<DataType> filter(gsl::span<const DataType> collection, gsl::span<const size_t> indexes)
+template <typename DataType, typename Index>
+std::vector<DataType> filter(gsl::span<const DataType> collection, gsl::span<const Index> indexes)
 {
     return transform(
         indexes,
-        [&collection](size_t index)
+        [&collection](Index index)
         {
-            if (index < static_cast<size_t>(collection.size()))
+            if (index < static_cast<Index>(collection.size()))
             {
                 return collection[index];
             }
@@ -64,7 +64,7 @@ std::vector<DataType> filter(gsl::span<const DataType> collection, std::vector<b
     if(static_cast<size_t>(collection.size()) == isIncluded.size())
     {
         const auto preservedIndexes = find(isIncluded);
-        return filter(collection, preservedIndexes);
+        return filter<DataType, size_t>(collection, preservedIndexes);
     }
     else
     {
