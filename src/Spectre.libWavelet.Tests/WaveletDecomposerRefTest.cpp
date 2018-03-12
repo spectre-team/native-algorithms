@@ -26,6 +26,7 @@ limitations under the License.
 namespace
 {
 using namespace spectre::algorithm::wavelet;
+using namespace spectre;
 
 TEST(WaveletDecomposerInitialization, initializes)
 {
@@ -128,16 +129,16 @@ public:
 
 protected:
     WaveletDecomposerRef decomposer;
-    std::vector<DataType> lastRowLastHighFrequencyResult;
-    std::vector<DataType> firstRowLastHighFrequencyResult;
-    std::vector<DataType> firstHighFrequencyResult;
-    std::vector<DataType> firstLowFrequencyResult;
-    std::vector<DataType> lastLowFrequencyResult;
+    Data lastRowLastHighFrequencyResult;
+    Data firstRowLastHighFrequencyResult;
+    Data firstHighFrequencyResult;
+    Data firstLowFrequencyResult;
+    Data lastLowFrequencyResult;
 };
 
 TEST_F(WaveletDecomposerRefTest, decomposes_the_signal)
 {
-    Signal signal = spectre::core::functional::range<DataType>(10);
+    Data signal = spectre::core::functional::range<DataType>(10);
     WaveletCoefficients coefficients = decomposer.Decompose(std::move(signal));
 
     // Due to high amount of coefficients generated, only a few sets will be compared

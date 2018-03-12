@@ -170,7 +170,9 @@
     <ClCompile Include="IndividualTest.cpp" />
     <ClCompile Include="LengthConditionTest.cpp" />
     <ClCompile Include="MaximalFillupConditionTest.cpp" />
+    <ClCompile Include="MaximalPercentageFillupConditionTest.cpp" />
     <ClCompile Include="MinimalFillupConditionTest.cpp" />
+    <ClCompile Include="MinimalPercentageFillupConditionTest.cpp" />
     <ClCompile Include="MutationOperatorTest.cpp" />
     <ClCompile Include="OffspringGeneratorTest.cpp" />
     <ClCompile Include="ParentSelectionStrategyTest.cpp" />

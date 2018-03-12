@@ -74,6 +74,11 @@ std::vector<Label> Svm::Predict(LabeledDataset dataset) const
     return labels;
 }
 
+std::unique_ptr<IClassifier> Svm::clone() const
+{
+    return std::make_unique<Svm>(std::move(Svm(*this)));
+}
+
 unsigned int Svm::GetNumberOfSupportVectors() const
 {
     return m_Svm->getSupportVectors().rows;

@@ -21,11 +21,9 @@ limitations under the License.
 #pragma once
 #include <random>
 #include "Spectre.libException/NullPointerException.h"
-#include "Spectre.libGaussianMixtureModelling/DataType.h"
-#include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
-#include "Spectre.libGaussianMixtureModelling/Matrix.h"
-
-typedef std::mt19937_64 RandomNumberGenerator;
+#include "DataTypes.h"
+#include "GaussianMixtureModel.h"
+#include "Matrix.h"
 
 namespace spectre::unsupervised::gmm
 {
@@ -46,30 +44,18 @@ public:
     /// <summary>
     /// Constructor initializing the class with all algorithm necessary data.
     /// </summary>
-    /// <param name="mzArray">Array of m/z values.</param>
-    /// <param name="intensities">Set of corresponding mean intensities values.</param>
-    /// <param name="size">Size of the mzArray and itensities arrays.</param>
+    /// <param name="spectrum">Spectrum to be approximated</param>
     /// <param name="rngEngine">Mersenne-Twister engine to be used during initialization step.</param>
     /// <param name="numberOfComponents">Number of Gaussian components that build up the approximation.</param>
     /// <exception cref="NullPointerException">Thrown when either of mzArray or intensities pointers are null</exception>
-    ExpectationMaximization(DataType *mzArray, DataType *intensities, const unsigned size,
-                            RandomNumberGenerator &rngEngine, const unsigned numberOfComponents = 2)
-        : m_pMzArray(mzArray), m_pIntensities(intensities), m_DataSize(size), m_Components(numberOfComponents)
-          , m_AffilationMatrix(numberOfComponents, size)
-          , m_Initialization(mzArray, size, m_Components, rngEngine)
-          , m_Expectation(mzArray, size, m_AffilationMatrix, m_Components)
-          , m_Maximization(mzArray, intensities, size, m_AffilationMatrix, m_Components)
-          , m_LogLikelihoodCalculator(mzArray, intensities, size, m_Components)
+    ExpectationMaximization(SpectrumView spectrum, RandomNumberGenerator &rngEngine, const unsigned numberOfComponents = 2)
+        : m_Spectrum(std::move(spectrum)), m_Components(numberOfComponents)
+          , m_AffilationMatrix(numberOfComponents, (unsigned)spectrum.mzs.size())
+          , m_Initialization(spectrum.mzs, m_Components, rngEngine)
+          , m_Expectation(spectrum.mzs, m_AffilationMatrix, m_Components)
+          , m_Maximization(spectrum, m_AffilationMatrix, m_Components)
+          , m_LogLikelihoodCalculator(spectrum, m_Components)
     {
-        if (mzArray == nullptr)
-        {
-            throw spectre::core::exception::NullPointerException("mzArray");
-        }
-
-        if (intensities == nullptr)
-        {
-            throw spectre::core::exception::NullPointerException("intensities");
-        }
     }
 
     /// <summary>
@@ -97,8 +83,8 @@ public:
         while (abs(oldLikelihood - newLikelihood) > MIN_LIKELIHOOD_CHANGE);
 
         return GaussianMixtureModel(
-            gsl::span<DataType>(m_pMzArray, m_DataSize),
-            gsl::span<DataType>(m_pIntensities, m_DataSize),
+            m_Spectrum.mzs,
+            m_Spectrum.intensities,
             std::move(m_Components)
         );
     }
@@ -124,9 +110,7 @@ private:
     }
 
     Matrix m_AffilationMatrix;
-    DataType *m_pMzArray;
-    DataType *m_pIntensities;
-    unsigned m_DataSize;
+    SpectrumView m_Spectrum;
     std::vector<GaussianComponent> m_Components;
 
     InitializationRunner m_Initialization;

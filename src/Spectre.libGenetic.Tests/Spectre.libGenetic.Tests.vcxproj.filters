@@ -113,5 +113,11 @@
     <ClCompile Include="MaximalFillupConditionTest.cpp">
       <Filter>Source Files\IndividualFeasibilityConditions</Filter>
     </ClCompile>
+    <ClCompile Include="MaximalPercentageFillupConditionTest.cpp">
+      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
+    </ClCompile>
+    <ClCompile Include="MinimalPercentageFillupConditionTest.cpp">
+      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

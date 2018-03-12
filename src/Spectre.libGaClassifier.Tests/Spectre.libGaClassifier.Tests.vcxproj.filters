@@ -14,21 +14,36 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Source Files\IndividualFeasibilityConditions">
-      <UniqueIdentifier>{1d2bb302-0406-47d0-beb9-592a35eaae1c}</UniqueIdentifier>
+      <UniqueIdentifier>{74f30afc-fce5-4722-af25-efb4e702810f}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <Filter Include="Source Files\Classifiers">
+      <UniqueIdentifier>{cafa9d25-d6d1-48f5-88b7-00d814469f23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Common\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\regis\Documents\GitHub\native-algorithms\src\Spectre.GaSvmNative.Tests\..\..\lib\native\src\gtest\gtest-all.cc">
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gtest\gtest-all.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\regis\Documents\GitHub\native-algorithms\src\Spectre.GaSvmNative.Tests\..\..\lib\native\src\gmock\gmock-all.cc">
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IndividualFeasibilityConditionsFactoryTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AllLabelTypesIncludedConditionTest.cpp">
+      <Filter>Source Files\IndividualFeasibilityConditions</Filter>
+    </ClCompile>
+    <ClCompile Include="GaClassifierTest.cpp">
+      <Filter>Source Files\Classifiers</Filter>
+    </ClCompile>
+    <ClCompile Include="ClassifierFitnessFunctionTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
 /*
-* MeanAbsoluteDeviationNoiseEstimatorTest.cpp
+* MedianAbsoluteDeviationNoiseEstimatorTest.cpp
 * Tests Mean Absolute Deviation noise estimator.
 *
 Copyright 2018 Michal Gallus
@@ -18,29 +18,30 @@ limitations under the License.
 */
 
 #include <gtest/gtest.h>
-#include "Spectre.libWavelet\MeanAbsoluteDeviationNoiseEstimator.h"
+#include "Spectre.libWavelet\MedianAbsoluteDeviationNoiseEstimator.h"
 
 namespace
 {
     using namespace spectre::algorithm::wavelet;
+    using namespace spectre;
 
-    TEST(MeanAbsoluteDeviationNoiseEstimatorInitialization, initializes)
+    TEST(MedianAbsoluteDeviationNoiseEstimatorInitialization, initializes)
     {
-        EXPECT_NO_THROW(MeanAbsoluteDeviationNoiseEstimator(5.0));
-        EXPECT_NO_THROW(MeanAbsoluteDeviationNoiseEstimator());
+        EXPECT_NO_THROW(MedianAbsoluteDeviationNoiseEstimator(5.0));
+        EXPECT_NO_THROW(MedianAbsoluteDeviationNoiseEstimator());
     }
 
-    class MeanAbsoluteDeviationNoiseEstimatorTest : public ::testing::Test
+    class MedianAbsoluteDeviationNoiseEstimatorTest : public ::testing::Test
     {
     protected:
-        MeanAbsoluteDeviationNoiseEstimator estimator;
+        MedianAbsoluteDeviationNoiseEstimator estimator;
     };
 
-    TEST_F(MeanAbsoluteDeviationNoiseEstimatorTest, estimates_noise_for_regular_input)
+    TEST_F(MedianAbsoluteDeviationNoiseEstimatorTest, estimates_noise_for_regular_input)
     {
-        Signal signal = { 1.0f, 2.0f, 3.0f };
+        Data signal = { 1.0f, 2.0f, 3.0f };
         DataType maxAbsoluteError = 0.0001;
-        constexpr DataType result = static_cast<DataType>(1.4650890114825907);
+        constexpr DataType result = static_cast<DataType>(2.1976335172238861);
 
         DataType estimate = estimator.Estimate(signal);
         ASSERT_NEAR(estimate, result, maxAbsoluteError);

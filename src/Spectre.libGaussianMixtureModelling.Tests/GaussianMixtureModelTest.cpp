@@ -30,7 +30,7 @@ class GaussianMixtureModelTest : public ::testing::Test
 {
 protected:
 
-    std::vector<double> testData;
+    Data testData;
     std::vector<GaussianComponent> gaussianComponents;
 
     virtual void SetUp() override

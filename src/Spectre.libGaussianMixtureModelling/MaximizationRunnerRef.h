@@ -41,9 +41,9 @@ limitations under the License.
 #pragma once
 #include <vector>
 #include "Spectre.libException/NullPointerException.h"
-#include "Spectre.libGaussianMixtureModelling/DataType.h"
-#include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
-#include "Spectre.libGaussianMixtureModelling/Matrix.h"
+#include "DataTypes.h"
+#include "GaussianMixtureModel.h"
+#include "Matrix.h"
 
 namespace spectre::unsupervised::gmm
 {
@@ -58,27 +58,14 @@ public:
     /// <summary>
     /// Constructor initializing the class with data required during maximization step.
     /// </summary>
-    /// <param name="mzArray">Array of m/z values.</param>
-    /// <param name="intensities">Set of corresponding mean intensities values.</param>
-    /// <param name="size">Size of the mzArray and itensities arrays.</param>
+    /// <param name="spectrum">Spectrum to base calculations on.</param>
     /// <param name="affilationMatrix">Matrix symbolising the probability of affilation
     /// of each sample to a certain gaussian component.</param>
     /// <param name="components">Gaussian components to be updated</param>
     /// <exception cref="ArgumentNullException">Thrown when either of mzArray or intensities pointers are null</exception>
-    MaximizationRunnerRef(DataType *mzArray, DataType *intensities, unsigned size,
-                          Matrix &affilationMatrix, std::vector<GaussianComponent> &components)
-        : m_pMzArray(mzArray), m_pIntensities(intensities), m_DataSize(size),
-          m_AffilationMatrix(affilationMatrix), m_Components(components)
+    MaximizationRunnerRef(SpectrumView spectrum, Matrix &affilationMatrix, std::vector<GaussianComponent> &components)
+        : m_Spectrum(spectrum), m_AffilationMatrix(affilationMatrix), m_Components(components)
     {
-        if (mzArray == nullptr)
-        {
-            throw spectre::core::exception::NullPointerException("mzArray");
-        }
-
-        if (intensities == nullptr)
-        {
-            throw spectre::core::exception::NullPointerException("intensities");
-        }
     }
 
     /// <summary>
@@ -91,18 +78,18 @@ public:
         // calculate in the following order, for every k: (phi part)"
         // from the document
         DataType totalDataSize = 0.0;
-        for (unsigned i = 0; i < m_DataSize; i++)
+        for (unsigned i = 0; i < (unsigned)m_Spectrum.mzs.size(); i++)
         {
-            totalDataSize += m_pIntensities[i];
+            totalDataSize += m_Spectrum.intensities[i];
         }
 
         const unsigned numberOfComponents = (unsigned)m_Components.size();
         for (unsigned k = 0; k < numberOfComponents; k++)
         {
             DataType weight = 0.0;
-            for (unsigned i = 0; i < m_DataSize; i++)
+            for (unsigned i = 0; i < (unsigned)m_Spectrum.mzs.size(); i++)
             {
-                weight += m_AffilationMatrix[i][k] * m_pIntensities[i];
+                weight += m_AffilationMatrix[i][k] * m_Spectrum.intensities[i];
             }
             m_Components[k].weight = weight / totalDataSize;
         }
@@ -122,10 +109,10 @@ public:
         {
             DataType denominator = 0.0;
             DataType numerator = 0.0;
-            for (unsigned i = 0; i < m_DataSize; i++)
+            for (unsigned i = 0; i < (unsigned)m_Spectrum.mzs.size(); i++)
             {
-                denominator += m_AffilationMatrix[i][k] * m_pIntensities[i];
-                numerator += m_AffilationMatrix[i][k] * m_pMzArray[i] * m_pIntensities[i];
+                denominator += m_AffilationMatrix[i][k] * m_Spectrum.intensities[i];
+                numerator += m_AffilationMatrix[i][k] * m_Spectrum.mzs[i] * m_Spectrum.intensities[i];
             }
             m_Components[k].mean = numerator / denominator;
         }
@@ -151,19 +138,18 @@ public:
         {
             DataType denominator = 0.0;
             DataType numerator = 0.0;
-            for (unsigned i = 0; i < m_DataSize; i++)
+            for (unsigned i = 0; i < (unsigned)m_Spectrum.mzs.size(); i++)
             {
-                denominator += m_AffilationMatrix[i][k] * m_pIntensities[i];
-                numerator += m_AffilationMatrix[i][k] * pow(m_pMzArray[i] - m_Components[k].mean, 2) * m_pIntensities[i];
+                denominator += m_AffilationMatrix[i][k] * m_Spectrum.intensities[i];
+                numerator += m_AffilationMatrix[i][k] *
+                    pow(m_Spectrum.mzs[i] - m_Components[k].mean, 2) * m_Spectrum.intensities[i];
             }
             m_Components[k].deviation = sqrt(numerator / denominator);
         }
     }
 
 private:
-    DataType *m_pMzArray;
-    DataType *m_pIntensities;
-    unsigned m_DataSize;
+    SpectrumView m_Spectrum;
     Matrix &m_AffilationMatrix;
     std::vector<GaussianComponent> &m_Components;
 };

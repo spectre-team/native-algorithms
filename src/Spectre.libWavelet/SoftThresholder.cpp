@@ -26,13 +26,22 @@ SoftThresholder::SoftThresholder(DataType threshold)
 {
 }
 
-Signal SoftThresholder::operator()(const Signal &signal) const
+WaveletCoefficients SoftThresholder::operator()(WaveletCoefficients&& coefficients) const
 {
-    const auto& threshold = m_Threshold;
-    const auto thresholding = [threshold](DataType value)
+    auto& coeffs = coefficients.data;
+    for (unsigned level = 0; level < WAVELET_LEVELS + 1; level++)
     {
-        return std::max(static_cast<DataType>(0), std::abs(value) - threshold) * (value < 0 ? -1 : 1);
-    };
-    return core::functional::transform(gsl::as_span(signal), thresholding);
+        for (unsigned scale = 0; scale < coeffs[level].size(); scale++)
+        {
+            for (unsigned i = 0; i < coeffs[level][scale].size(); i++)
+            {
+                DataType value = coeffs[level][scale][i];
+                coeffs[level][scale][i] = std::max(0.0, std::abs(value) - m_Threshold);
+                coeffs[level][scale][i] = std::copysign(coeffs[level][scale][i], value);
+            }
+        }
+    }
+
+    return coefficients;
 }
 }

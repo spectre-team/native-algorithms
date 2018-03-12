@@ -18,6 +18,7 @@ limitations under the License.
 */
 
 #include "MaximalFillupCondition.h"
+#include <numeric>
 
 namespace spectre::algorithm::genetic
 {
@@ -27,12 +28,8 @@ MaximalFillupCondition::MaximalFillupCondition(size_t minimalFillup, std::unique
 
 bool MaximalFillupCondition::checkCurrentCondition(const spectre::algorithm::genetic::Individual &individual)
 {
-    auto number = 0u;
-    for (bool value : individual.getData())
-    {
-        number += value;
-    }
-    return number <= m_MaximalFillup;
+    size_t numberOfTrueValues = std::accumulate(individual.getData().begin(), individual.getData().end(), 0u);
+    return numberOfTrueValues <= m_MaximalFillup;
 }
 
 }

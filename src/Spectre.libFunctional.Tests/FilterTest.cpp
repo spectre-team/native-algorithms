@@ -2,7 +2,7 @@
 * FilterTest.cpp
 * Tests filter function.
 *
-Copyright 2017 Grzegorz Mrukwa
+Copyright 2017 Grzegorz Mrukwa, Michal Gallus
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -64,34 +64,34 @@ TEST(BoolFilterTest, throws_on_inconsistent_sizes)
 TEST(IndexFilterTest, throws_on_exceeding_index)
 {
     Indexes exceedingIndex{ 3 };
-    EXPECT_THROW(filter(ints, exceedingIndex), OutOfRangeException);
+    EXPECT_THROW((filter<int, size_t>(ints, exceedingIndex)), OutOfRangeException);
 }
 
 TEST(IndexFilterTest, empty_for_no_indexes)
 {
     Indexes none{};
-    const auto filtered = filter(ints, none);
+    const auto filtered = filter<int, size_t>(ints, none);
     EXPECT_EQ(filtered.size(), 0);
 }
 
 TEST(IndexFilterTest, all_for_all_indexes)
 {
     auto all = range(static_cast<size_t>(ints.size()));
-    const auto filtered = filter(ints, all);
+    const auto filtered = filter<int, size_t>(ints, all);
     EXPECT_THAT(filtered, ContainerEq(someInts));
 }
 
 TEST(IndexFilterTest, selected_for_some_indexes)
 {
     Indexes some{ 0, 2 };
-    const auto filtered = filter(ints, some);
+    const auto filtered = filter<int, size_t>(ints, some);
     EXPECT_THAT(filtered, ContainerEq(std::vector<int>{1, 3}));
 }
 
 TEST(IndexFilterTest, allows_duplication)
 {
     Indexes duplicated{ 2, 2 };
-    const auto filtered = filter(ints, duplicated);
+    const auto filtered = filter<int, size_t>(ints, duplicated);
     EXPECT_THAT(filtered, ContainerEq(std::vector<int>{3, 3}));
 }
 }

@@ -18,11 +18,16 @@ limitations under the License.
 */
 
 #include <gtest/gtest.h>
+#include "FloatingPointVectorMatcher.h"
+#include "Spectre.libFunctional\Range.h"
 #include "Spectre.libWavelet\SoftThresholder.h"
+#include "Spectre.libWavelet\WaveletDecomposerRef.h"
+#include "Spectre.libWavelet\MedianAbsoluteDeviationNoiseEstimator.h"
 
 namespace
 {
     using namespace spectre::algorithm::wavelet;
+    using namespace spectre;
 
     TEST(SoftThresholderInitialization, initializes)
     {
@@ -34,16 +39,138 @@ namespace
     class SoftThresholderTest : public ::testing::Test
     {
     public:
-        SoftThresholderTest() : tresholder(1.0) {}
+        SoftThresholderTest()
+        {
+            firstHighFrequencyResult = {
+                0,
+                -0.127493589089253,
+                0.151206719715479,
+                0.00479470902963920,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                2.20089390886932,
+                -4.51142553491165,
+                1.10714493870363,
+                1.53339464355807,
+                0,
+                -0.277842095062875,
+                0
+            };
+            firstRowLastHighFrequencyResult = {
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                -0.459393424585978,
+                1.36777227988842,
+                -1.14551029281067,
+                0,
+                0.267529587033900,
+                0,
+                0,
+                0,
+                0
+            };
+            lastRowLastHighFrequencyResult = {
+                0,
+                0,
+                0,
+                0,
+                0,
+                -0.470784267254399,
+                1.37846580462384,
+                -1.14836949301628,
+                0,
+                0.268272856432259,
+                0,
+                0,
+                0,
+                0,
+                0
+            };
+            firstLowFrequencyResult = {
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                -0.237055466453466,
+                0,
+                1.13010903257345,
+                1.31414453610110,
+                0.359082154861514,
+                0,
+            };
+            lastLowFrequencyResult = {
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                -0.235667100831742,
+                0,
+                1.12788050173993,
+                1.31646362434624,
+                0.360650780643517,
+                0,
+                0,
+            };
+        }
     protected:
-        SoftThresholder tresholder;
+        WaveletDecomposerRef decomposer;
+        Data lastRowLastHighFrequencyResult;
+        Data firstRowLastHighFrequencyResult;
+        Data firstHighFrequencyResult;
+        Data firstLowFrequencyResult;
+        Data lastLowFrequencyResult;
     };
 
-    TEST_F(SoftThresholderTest, properly_tresholds_signal)
+    TEST_F(SoftThresholderTest, properly_tresholds_coefficients)
     {
-        Signal input = { -1.0f, 2.0f, -3.0f, 4.0f };
-        Signal output = tresholder(input);
-        Signal correctOutput = { -0.0f, 1.0f, -2.0f, 3.0f };
-        ASSERT_EQ(correctOutput, output);
+        constexpr unsigned signalLength = 10;
+        Data signal = spectre::core::functional::range<DataType>(signalLength);
+
+        // Decompose signal
+        WaveletCoefficients coefficients = decomposer.Decompose(std::move(signal));
+
+        // Extract coefficients necessary for noise estimator
+        Data highFreqCoefficients(signalLength);
+        highFreqCoefficients.assign(coefficients.data[0][0].begin(),
+            coefficients.data[0][0].begin() + signalLength);
+
+        // Estimate tresholder's treshold value based on extracted coefficients
+        MedianAbsoluteDeviationNoiseEstimator noiseEstimator;
+        DataType treshold = noiseEstimator.Estimate(highFreqCoefficients);
+        SoftThresholder tresholder(treshold);
+
+        // Appply Soft-tresholding
+        WaveletCoefficients output = tresholder(std::move(coefficients));
+        WaveletCoefficients correctOutput;
+
+        // Check if the coefficients have appropriate values
+        auto doubleNear = double_near(0.001);
+        EXPECT_THAT(coefficients.data[0][0],
+            testing::Pointwise(doubleNear, firstHighFrequencyResult));
+        EXPECT_THAT(coefficients.data[WAVELET_LEVELS - 1][0],
+            testing::Pointwise(doubleNear, firstRowLastHighFrequencyResult));
+        EXPECT_THAT(coefficients.data[WAVELET_LEVELS - 1][(1 << (WAVELET_LEVELS - 1)) - 1],
+            testing::Pointwise(doubleNear, lastRowLastHighFrequencyResult));
+        EXPECT_THAT(coefficients.data[WAVELET_LEVELS][0],
+            testing::Pointwise(doubleNear, firstLowFrequencyResult));
+        EXPECT_THAT(coefficients.data[WAVELET_LEVELS][(1 << (WAVELET_LEVELS - 1)) - 1],
+            testing::Pointwise(doubleNear, lastLowFrequencyResult));
     }
 }
