@@ -43,6 +43,7 @@ protected:
     const std::vector<DataType> data_short { 0.5f, 0.4f, 0.6f };
     const std::vector<Label> labels_empty {};
     const std::vector<Label> labels { 3, 7, 14 };
+    const std::vector<Label> labels_short { 2 };
     const std::vector<Label> labels_too_long { 3, 7, 14, 5 };
 };
 
@@ -117,6 +118,31 @@ TEST_F(OpenCvDatasetInitializationTest, move_invalidates_old_instance)
     EXPECT_THROW(oldDataset.GetSampleMetadata(0), OutOfRangeException);
     EXPECT_EQ(0, oldDataset.getMatData().size().area());
     EXPECT_EQ(0, oldDataset.getMatLabels().size().area());
+}
+
+TEST_F(OpenCvDatasetInitializationTest, create_opencvdataset_from_two_opencvdatasets)
+{
+    std::vector<DataType> tmp_data(data_short);
+    std::vector<Label> tmp_labels(labels_short);
+    std::vector<DataType> tmp_data2(data_long);
+    std::vector<Label> tmp_labels2(labels);
+    cv::Mat mat_data(3, 1, CV_TYPE, tmp_data.data());
+    cv::Mat mat_labels(3, 1, CV_LABEL_TYPE, tmp_labels.data());
+    cv::Mat mat_data2(3, 1, CV_TYPE, tmp_data2.data());
+    cv::Mat mat_labels2(3, 1, CV_LABEL_TYPE, tmp_labels2.data());
+    OpenCvDataset firstDataset(mat_data, mat_labels);
+    OpenCvDataset secondDataset(mat_data2, mat_labels2);
+    size_t size = firstDataset.size() + secondDataset.size();
+    size_t getDataSize = firstDataset.GetData().size() + secondDataset.GetData().size();
+    size_t getSampleDataSize = firstDataset.GetSampleMetadata().size() + secondDataset.GetSampleMetadata().size();
+    size_t getMatDataSize = firstDataset.getMatData().size().area() + secondDataset.getMatData().size().area();
+    size_t getMatLabelsSize = firstDataset.getMatLabels().size().area() + secondDataset.getMatLabels().size().area();
+    OpenCvDataset newDataset(std::move(firstDataset), std::move(secondDataset));
+    EXPECT_EQ(newDataset.size(), size);
+    EXPECT_EQ(newDataset.GetData().size(), getDataSize);
+    EXPECT_EQ(newDataset.GetSampleMetadata().size(), getSampleDataSize);
+    EXPECT_EQ(newDataset.getMatData().size().area(), getMatDataSize);
+    EXPECT_EQ(newDataset.getMatLabels().size().area(), getMatLabelsSize);
 }
 
 class OpenCvDatasetTest : public ::testing::Test
