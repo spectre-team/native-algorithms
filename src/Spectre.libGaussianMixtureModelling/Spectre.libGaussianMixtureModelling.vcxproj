@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataTypes.h" />
+    <ClInclude Include="GmmOptions.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="RandomInitializationRef.h" />
     <ClInclude Include="ExpectationMaximization.h" />
