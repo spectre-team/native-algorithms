@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ClearPeakFinder.h" />
     <ClInclude Include="DataTypes.h" />
     <ClInclude Include="GmmOptions.h" />
     <ClInclude Include="Matrix.h" />
@@ -34,6 +35,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ClearPeakFinder.cpp" />
     <ClCompile Include="ExpectationMaximization.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

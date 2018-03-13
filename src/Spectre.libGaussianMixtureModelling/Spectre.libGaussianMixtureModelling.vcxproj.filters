@@ -38,6 +38,9 @@
     <ClInclude Include="DataTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ClearPeakFinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="GmmOptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -47,6 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ExpectationMaximization.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearPeakFinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
