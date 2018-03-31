@@ -42,6 +42,11 @@ public:
     /// <summary>
     /// Initializes a new instance of the <see cref="OpenCvDataset"/> class.
     /// </summary>
+    /// <param name="filename">The filename.</param>
+    OpenCvDataset(std::string filename);
+    /// <summary>
+    /// Initializes a new instance of the <see cref="OpenCvDataset"/> class.
+    /// </summary>
     /// <param name="first">The first dataset.</param>
     /// <param name="second">The second dataset.</param>
     OpenCvDataset(OpenCvDataset &&first, OpenCvDataset &&second) noexcept;
