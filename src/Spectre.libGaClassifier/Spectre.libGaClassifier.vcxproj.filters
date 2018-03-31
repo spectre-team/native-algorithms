@@ -42,6 +42,9 @@
     <ClInclude Include="ClassifierFitnessFunction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ClassifierFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -57,6 +60,9 @@
       <Filter>Source Files\Classifiers</Filter>
     </ClCompile>
     <ClCompile Include="ClassifierFitnessFunction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClassifierFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
