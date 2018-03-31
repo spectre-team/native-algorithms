@@ -18,9 +18,11 @@ limitations under the License.
 */
 #include <stdexcept>
 #include "ClearPeakFinder.h"
+#include "Spectre.libException\EmptyArgumentException.h"
 #include "Spectre.libFunctional\Filter.h"
 
 using namespace spectre::core::functional;
+using namespace spectre::core::exception;
 namespace spectre::unsupervised::gmm
 {
 // Find beginning/end of interval where the clear peaks are searched for.
@@ -62,8 +64,10 @@ static inline Index FindClearestPeak(unsigned currentOffset, unsigned intervalEn
 Indices ClearPeakFinder::FindClearPeaks(const Peaks& peaks, const DataView& peakQualities,
     const GmmOptions& options, DataType resolutionCoeff) const
 {
-    if (peaks.intensities.empty()) throw std::invalid_argument("Empty peak list");
-    if (peakQualities.empty()) throw std::invalid_argument("Empty peak quality list");
+    if (peaks.intensities.empty()) throw EmptyArgumentException("Empty peak list");
+    if (peakQualities.empty()) throw EmptyArgumentException("Empty peak quality list");
+    if (peaks.mzs.size() != (size_t)peakQualities.size()) throw InconsistentArgumentSizesException
+        ("peaks", peaks.mzs.size(), "peakQualities", peakQualities.size());
     const DataView& mzs = peaks.mzs;
     const DataView& intensities = peaks.intensities;
     const DataType  MAX_HEIGHT = *std::max_element(intensities.begin(), intensities.end());
