@@ -167,6 +167,7 @@
     <ClCompile Include="ClearPeakFinderTest.cpp" />
     <ClCompile Include="ExpectationMaximizationTest.cpp" />
     <ClCompile Include="GaussianMixtureModelTest.cpp" />
+    <ClCompile Include="SplitterSegmentExtractorTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
