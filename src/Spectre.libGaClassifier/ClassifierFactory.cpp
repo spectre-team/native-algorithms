@@ -49,7 +49,7 @@ GaClassifier ClassifierFactory::buildGaClassifier(
     std::unique_ptr<IClassifier> classifier;
     if (name == "svm")
     {
-        Svm svm(iterationsLimit, tolerance);
+        Svm svm = this->buildSvm(iterationsLimit, tolerance);
         classifier = std::make_unique<Svm>(svm);
     }
     GaClassifier gaClassifier(std::move(classifier), trainingSetSplitRate, mutationRate, bitSwapRate, preservationRate, generationsNumber,
