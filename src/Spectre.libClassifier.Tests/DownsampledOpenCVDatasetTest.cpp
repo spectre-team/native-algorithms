@@ -26,10 +26,10 @@ namespace
 {
 using namespace spectre::supervised;
 
-class DownscaledOpenCVDatasetInitializationTest : public ::testing::Test
+class DownsampledOpenCVDatasetInitializationTest : public ::testing::Test
 {
 public:
-    DownscaledOpenCVDatasetInitializationTest() :
+    DownsampledOpenCVDatasetInitializationTest() :
         dataset(data, labels) {};
 
 protected:
@@ -46,26 +46,26 @@ protected:
     }
 };
 
-TEST_F(DownscaledOpenCVDatasetInitializationTest, returns_dataset_of_expected_size_with_greater_maximum_subset_size)
+TEST_F(DownsampledOpenCVDatasetInitializationTest, returns_dataset_of_expected_size_with_greater_maximum_subset_size)
 {
     DownsampledOpenCVDataset downscaledOpenCvDataset(std::move(dataset), maximumSubsetSizeGreater, trainingRate);
-    SplittedOpenCvDataset splittedOpenCvDataset = downscaledOpenCvDataset.getLimitedDownSampledOpenCVDataset();
+    SplittedOpenCvDataset splittedOpenCvDataset = downscaledOpenCvDataset.getRandomSubset();
     EXPECT_EQ(splittedOpenCvDataset.trainingSet.size(), 4);
     EXPECT_EQ(splittedOpenCvDataset.testSet.size(), 4);
 }
 
-TEST_F(DownscaledOpenCVDatasetInitializationTest, returns_dataset_of_expected_size_with_greater_maximum_subset_size_with_more_training)
+TEST_F(DownsampledOpenCVDatasetInitializationTest, returns_dataset_of_expected_size_with_greater_maximum_subset_size_with_more_training)
 {
     DownsampledOpenCVDataset downscaledOpenCvDataset(std::move(dataset), maximumSubsetSizeGreater, trainingRateWithMoreTraining);
-    SplittedOpenCvDataset splittedOpenCvDataset = downscaledOpenCvDataset.getLimitedDownSampledOpenCVDataset();
+    SplittedOpenCvDataset splittedOpenCvDataset = downscaledOpenCvDataset.getRandomSubset();
     EXPECT_EQ(splittedOpenCvDataset.trainingSet.size(), 6);
     EXPECT_EQ(splittedOpenCvDataset.testSet.size(), 2);
 }
 
-TEST_F(DownscaledOpenCVDatasetInitializationTest, returns_dataset_of_expected_size_with_lower_maximum_subset_size)
+TEST_F(DownsampledOpenCVDatasetInitializationTest, returns_dataset_of_expected_size_with_lower_maximum_subset_size)
 {
     DownsampledOpenCVDataset downscaledOpenCvDataset(std::move(dataset), maximumSubsetSizeLower, trainingRate);
-    SplittedOpenCvDataset splittedOpenCvDataset = downscaledOpenCvDataset.getLimitedDownSampledOpenCVDataset();
+    SplittedOpenCvDataset splittedOpenCvDataset = downscaledOpenCvDataset.getRandomSubset();
     EXPECT_EQ(splittedOpenCvDataset.trainingSet.size(), 2);
     EXPECT_EQ(splittedOpenCvDataset.testSet.size(), 2);
 }

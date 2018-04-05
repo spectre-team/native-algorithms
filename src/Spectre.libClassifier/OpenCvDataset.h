@@ -86,6 +86,11 @@ public:
     /// </summary>
     /// <returns></returns>
     gsl::span<const Label> GetSampleMetadata() const override;
+    /// <summary>
+    /// Clears values of this object.
+    /// </summary>
+    /// <returns></returns>
+    void Clear();
 
     /// <summary>
     /// Number of elements in dataset.

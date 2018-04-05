@@ -21,6 +21,7 @@ limitations under the License.
 #include <memory>
 #include "OpenCvDataset.h"
 #include "SplittedOpevCvDataset.h"
+#include "ObservationExtractor.h"
 
 namespace spectre::supervised
 {
@@ -41,16 +42,24 @@ public:
     /// </summary>
     /// <param name="seed">The seed.</param>
     /// <returns>SplittedOpenCvDataset</returns>
-    SplittedOpenCvDataset DownsampledOpenCVDataset::getLimitedDownSampledOpenCVDataset(Seed seed = 0) const;
+    SplittedOpenCvDataset DownsampledOpenCVDataset::getRandomSubset(Seed seed = 0) const;
 private:
     /// <summary>
     /// The cancer cells.
     /// </summary>
-    std::unique_ptr<OpenCvDataset> m_CancerCells;
+    std::unique_ptr<OpenCvDataset> m_PositiveLabeledData;
     /// <summary>
     /// The noncancer cells.
     /// </summary>
-    std::unique_ptr<OpenCvDataset> m_NonCancerCells;
+    std::unique_ptr<OpenCvDataset> m_NegativeLabeledData;
+    /// <summary>
+    /// The data extractor for positive labeled data.
+    /// </summary>
+    ObservationExtractor m_PositiveDataExtractor;
+    /// <summary>
+    /// The data extractor for negative labeled data.
+    /// </summary>
+    ObservationExtractor m_NegativeDataExtractor;
     /// <summary>
     /// The maximum subset size.
     /// </summary>
@@ -58,12 +67,12 @@ private:
     /// <summary>
     /// The training rate.
     /// </summary>
-    double m_TrainingRate;
+    const double m_TrainingRate;
     /// <summary>
     /// Creates individual data with m_MaximumSubsetSize true values.
     /// </summary>
     /// <param name="datasetSize">The dataset size.</param>
     /// <returns>vector of bool</returns>
-    std::vector<bool> DownsampledOpenCVDataset::getBinaryDataWithGivenTrueValueAmount(size_t datasetSize, Seed seed) const;
+    std::vector<bool> DownsampledOpenCVDataset::getRandomFilter(size_t datasetSize, Seed seed) const;
 };
 }

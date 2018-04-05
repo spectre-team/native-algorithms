@@ -60,16 +60,8 @@ OpenCvDataset::OpenCvDataset(OpenCvDataset &&first, OpenCvDataset &&second) noex
     m_Mat = cv::Mat(static_cast<int>(m_labels.size()), static_cast<int>(m_Data.size() / m_labels.size()), CV_TYPE, m_Data.data());
     m_MatLabels = cv::Mat(static_cast<int>(m_labels.size()), ColumnMatrixWidth, CV_LABEL_TYPE, m_labels.data());
 
-    first.m_Data.clear();
-    first.m_Mat.release();
-    first.m_labels.clear();
-    first.m_MatLabels.release();
-    first.m_observations.clear();
-    second.m_Data.clear();
-    second.m_Mat.release();
-    second.m_labels.clear();
-    second.m_MatLabels.release();
-    second.m_observations.clear();
+    first.Clear();
+    second.Clear();
 }
 
 OpenCvDataset::OpenCvDataset(gsl::span<const DataType> data, gsl::span<const Label> labels):
@@ -146,7 +138,16 @@ gsl::span<const Label> OpenCvDataset::GetSampleMetadata() const
     return m_labels;
 }
 
-size_t OpenCvDataset::size() const
+void OpenCvDataset::Clear()
+{
+    m_Data.clear();
+    m_Mat.release();
+    m_labels.clear();
+    m_MatLabels.release();
+    m_observations.clear();
+}
+
+    size_t OpenCvDataset::size() const
 {
     return m_labels.size();
 }
