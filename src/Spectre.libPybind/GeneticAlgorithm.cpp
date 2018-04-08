@@ -1,6 +1,7 @@
 #include <pybind11/pybind11.h>
 #include "Spectre.libClassifier/Svm.h"
 #include "Spectre.libGaClassifier/ClassifierFactory.h"
+#include "Spectre.libClassifier/DatasetFactory.h"
 
 namespace py = pybind11;
 
@@ -10,9 +11,12 @@ PYBIND11_MODULE(GeneticAlgorithm, m) {
         .def("Predict", &spectre::supervised::IClassifier::Predict, "Predict the data")
         .def("clone", &spectre::supervised::IClassifier::clone, "Clone the classifier");
 
+    py::class_<spectre::supervised::DatasetFactory> datasetFactory(m, "DatasetFactory");
+    datasetFactory.def(py::init<>())
+        .def("create", &spectre::supervised::DatasetFactory::create, "create openCvDataset");
     
     py::class_<spectre::supervised::ClassifierFactory> gaClassifier(m, "ClassifierFactory");
-    gaClassifier.def(py::init<>());
+    //gaClassifier.def(py::init<>());
         //.def("buildSvm", &spectre::supervised::ClassifierFactory::buildSvm)
         //.def("buildGaClassifier", &spectre::supervised::ClassifierFactory::buildGaClassifier);
 

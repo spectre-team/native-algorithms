@@ -17,8 +17,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include <fstream>
-#include <sstream>
 #include "Spectre.libException/InconsistentArgumentSizesException.h"
 #include "Spectre.libException/OutOfRangeException.h"
 #include "OpenCvDataset.h"
@@ -48,51 +46,6 @@ OpenCvDataset::OpenCvDataset(OpenCvDataset &&other) noexcept
     other.m_labels.clear();
     other.m_MatLabels.release();
     other.m_observations.clear();
-}
-
-OpenCvDataset::OpenCvDataset(std::string filename)
-{
-    std::fstream file;
-    file.open(filename, std::fstream::in);
-    m_Data = {};
-    m_labels = {};
-    {
-        std::string tmp;
-        getline(file, tmp);
-    }
-    while (!file.eof())
-    {
-        std::string data;
-        getline(file, data);
-        std::istringstream ssData(data);
-        DataType num;
-        std::vector<DataType> observation({});
-        while (ssData >> num)
-        {
-            observation.push_back(num);
-            m_Data.push_back(num);
-        }
-        std::string labels;
-        getline(file, labels);
-        std::istringstream ssLabels(labels);
-        DataType label;
-        while (ssLabels >> label) {}
-        m_labels.push_back(static_cast<Label>(label));
-    }
-    m_Mat = cv::Mat(static_cast<int>(m_labels.size()), static_cast<int>(m_Data.size() / m_labels.size()), CV_TYPE, m_Data.data());
-    m_MatLabels = cv::Mat(static_cast<int>(m_labels.size()), ColumnMatrixWidth, CV_LABEL_TYPE, m_labels.data());
-    if (m_Data.size() % m_labels.size() != 0 || m_Mat.rows != static_cast<int>(m_labels.size()))
-    {
-        throw spectre::core::exception::InconsistentArgumentSizesException("data", m_Mat.rows, "labels", static_cast<int>(m_labels.size()));
-    }
-    m_observations = {};
-    const auto numberOfColumns = m_Data.size() / m_labels.size();
-    auto rowBegin = m_Data.data();
-    for (auto i = 0u; i < static_cast<size_t>(m_labels.size()); ++i)
-    {
-        m_observations.push_back(Observation(rowBegin, numberOfColumns));
-        rowBegin += numberOfColumns;
-    }
 }
 
 OpenCvDataset::OpenCvDataset(OpenCvDataset &&first, OpenCvDataset &&second) noexcept

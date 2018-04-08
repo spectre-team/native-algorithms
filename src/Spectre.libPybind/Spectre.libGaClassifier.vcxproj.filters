@@ -13,7 +13,7 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Resource Files\Classifiers">
+    <Filter Include="Source Files\Classifiers">
       <UniqueIdentifier>{b585557a-5afe-425d-bbd5-af8623c6572a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -22,7 +22,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GeneticAlgorithm.cpp">
-      <Filter>Resource Files\Classifiers</Filter>
+      <Filter>Source Files\Classifiers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
