@@ -151,6 +151,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Common\Main.cpp" />
+    <ClCompile Include="DatasetFactoryTest.cpp" />
     <ClCompile Include="DownsampledOpenCVDatasetTest.cpp" />
     <ClCompile Include="ObservationExtractorTest.cpp" />
     <ClCompile Include="OpenCvDatasetTest.cpp" />
@@ -160,6 +161,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Spectre.libClassifier\Spectre.libClassifier.vcxproj">
+      <Project>{5419aeeb-98b4-4d79-9fca-a794200073fc}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

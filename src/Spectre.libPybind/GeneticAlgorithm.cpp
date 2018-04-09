@@ -16,9 +16,9 @@ PYBIND11_MODULE(GeneticAlgorithm, m) {
         .def("create", &spectre::supervised::DatasetFactory::create, "create openCvDataset");
     
     py::class_<spectre::supervised::ClassifierFactory> gaClassifier(m, "ClassifierFactory");
-    //gaClassifier.def(py::init<>());
-        //.def("buildSvm", &spectre::supervised::ClassifierFactory::buildSvm)
-        //.def("buildGaClassifier", &spectre::supervised::ClassifierFactory::buildGaClassifier);
+    gaClassifier.def(py::init<>())
+        .def("buildSvm", &spectre::supervised::ClassifierFactory::buildSvm)
+        .def("buildGaClassifier", &spectre::supervised::ClassifierFactory::buildGaClassifier);
 
     /*
     py::class_<spectre::supervised::Svm> svm(m, "Svm", iClassifier);

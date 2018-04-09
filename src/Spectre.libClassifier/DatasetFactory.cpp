@@ -28,7 +28,7 @@ namespace spectre::supervised
 const int ColumnMatrixWidth = 1;
 
 DatasetFactory::DatasetFactory()
-{    
+{
 }
 
 OpenCvDataset DatasetFactory::create(std::string filename) const
