@@ -66,6 +66,12 @@
     <ClCompile Include="DownsampledOpenCVDataset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DatasetFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileOpenException.cpp">
+      <Filter>Source Files\Exceptions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenCvDataset.h">
@@ -121,6 +127,12 @@
     </ClInclude>
     <ClInclude Include="DownsampledOpenCVDataset.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DatasetFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileOpenException.h">
+      <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
