@@ -144,6 +144,9 @@
     <ClInclude Include="AllLabelTypesIncludedCondition.h">
       <SubType>Header Files</SubType>
     </ClInclude>
+    <ClInclude Include="ClassifierFactory.h">
+      <SubType>Header Files</SubType>
+    </ClInclude>
     <ClInclude Include="GaClassifier.h">
       <SubType>Header Files</SubType>
     </ClInclude>
@@ -156,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllLabelTypesIncludedCondition.cpp" />
+    <ClCompile Include="ClassifierFactory.cpp" />
     <ClCompile Include="GaClassifier.cpp" />
     <ClCompile Include="ClassifierFitnessFunction.cpp" />
     <ClCompile Include="IndividualFeasibilityConditionsFactory.cpp" />
