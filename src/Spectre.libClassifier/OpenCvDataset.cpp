@@ -147,7 +147,7 @@ void OpenCvDataset::Clear()
     m_observations.clear();
 }
 
-    size_t OpenCvDataset::size() const
+size_t OpenCvDataset::size() const
 {
     return m_labels.size();
 }
