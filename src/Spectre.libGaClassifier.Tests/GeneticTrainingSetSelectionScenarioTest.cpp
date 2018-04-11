@@ -33,7 +33,7 @@ const double BIT_SWAP_RATE = 0.5;
 const double PRESERVATION_RATE = 0.5;
 const unsigned int GENERATIONS_NUMBER = 5u;
 const unsigned int POPULATION_SIZE = 5u;
-const unsigned int INITIAL_FILLUP = 1u;
+const unsigned int INITIAL_FILLUP = 10u;
 const spectre::algorithm::genetic::Seed SEED = 1;
 
 TEST(GeneticTrainingSetSelectionScenarioInitialization, initializes)
