@@ -28,6 +28,9 @@
     <Filter Include="Source Files\Classifiers">
       <UniqueIdentifier>{b585557a-5afe-425d-bbd5-af8623c6572a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Pybind">
+      <UniqueIdentifier>{9a7e2c5a-3e77-48e8-a680-ab5ce8ddd41b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IndividualFeasibilityConditionsFactory.h">
@@ -64,6 +67,9 @@
     </ClCompile>
     <ClCompile Include="ClassifierFactory.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneticAlgorithm.cpp">
+      <Filter>Source Files\Pybind</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
