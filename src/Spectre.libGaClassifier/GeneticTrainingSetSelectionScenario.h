@@ -38,10 +38,10 @@ public:
         unsigned populationSize,
         unsigned initialFillup,
         spectre::algorithm::genetic::Seed seed,
-        size_t minimalFillup,
-        size_t maximalFillup,
-        unsigned int iterationsLimit,
-        double tolerance);
+        size_t minimalFillup = 1ul,
+        size_t maximalFillup = std::numeric_limits<size_t>::max(),
+        unsigned int iterationsLimit = 100,
+        double tolerance = 1e-6);
     void execute(std::string filename) const;
 private:
     std::string m_Name;

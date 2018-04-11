@@ -164,6 +164,7 @@
     <ClCompile Include="ClassifierFactoryTest.cpp" />
     <ClCompile Include="GaClassifierTest.cpp" />
     <ClCompile Include="ClassifierFitnessFunctionTest.cpp" />
+    <ClCompile Include="GeneticTrainingSetSelectionScenarioTest.cpp" />
     <ClCompile Include="IndividualFeasibilityConditionsFactoryTest.cpp" />
   </ItemGroup>
   <ItemGroup>

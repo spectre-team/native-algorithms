@@ -17,11 +17,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include <omp.h>
 #include "GeneticTrainingSetSelectionScenario.h"
-#include "Spectre.libException/ArgumentOutOfRangeException.h"
 #include "Spectre.libClassifier/RaportGenerator.h"
-#include "Spectre.libClassifier/RandomSplitter.h"
 #include "ClassifierFactory.h"
 #include "Spectre.libClassifier/DatasetFactory.h"
 #include "Spectre.libClassifier/DownsampledOpenCVDataset.h"
@@ -71,5 +68,7 @@ void GeneticTrainingSetSelectionScenario::execute(std::string filename) const
 
     GaClassifier gaClassifier = classifierFactory.buildGaClassifier(m_Name, m_TrainingSetSplitRate, m_MutationRate, m_BitSwapRate, m_PreservationRate,
         m_GenerationsNumber, m_PopulationSize, m_InitialFillup, m_Seed, m_MinimalFillup, m_MaximalFillup, m_IterationsLimit, m_Tolerance);
+    gaClassifier.Fit(splittedOpenCvDataset.trainingSet);
+    gaClassifier.Predict(splittedOpenCvDataset.testSet);
 }
 }

@@ -45,6 +45,9 @@
     <ClInclude Include="ClassifierFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GeneticTrainingSetSelectionScenario.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -63,6 +66,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ClassifierFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneticTrainingSetSelectionScenario.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

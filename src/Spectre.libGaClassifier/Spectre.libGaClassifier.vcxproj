@@ -153,6 +153,7 @@
     <ClInclude Include="ClassifierFitnessFunction.h">
       <SubType>Header Files</SubType>
     </ClInclude>
+    <ClInclude Include="GeneticTrainingSetSelectionScenario.h" />
     <ClInclude Include="IndividualFeasibilityConditionsFactory.h">
       <SubType>Header Files</SubType>
     </ClInclude>
@@ -162,6 +163,7 @@
     <ClCompile Include="ClassifierFactory.cpp" />
     <ClCompile Include="GaClassifier.cpp" />
     <ClCompile Include="ClassifierFitnessFunction.cpp" />
+    <ClCompile Include="GeneticTrainingSetSelectionScenario.cpp" />
     <ClCompile Include="IndividualFeasibilityConditionsFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
