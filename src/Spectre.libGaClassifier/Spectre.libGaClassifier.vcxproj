@@ -84,7 +84,7 @@
     <TargetExt>.pyd</TargetExt>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <IncludePath>C:\Users\regis\Documents\GitHub\pybind11-master\include;C:\Users\regis\AppData\Local\Programs\Python\Python36-32\include;$(IncludePath)</IncludePath>
-    <TargetName>genetic_algorithm</TargetName>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetExt>.lib</TargetExt>
@@ -93,7 +93,7 @@
     <TargetExt>.pyd</TargetExt>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <IncludePath>C:\Users\regis\Documents\GitHub\pybind11-master\include;C:\Users\regis\AppData\Local\Programs\Python\Python36-32\include;$(IncludePath)</IncludePath>
-    <TargetName>genetic_algorithm</TargetName>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
