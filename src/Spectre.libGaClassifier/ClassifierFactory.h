@@ -41,7 +41,8 @@ public:
     /// <summary>
     /// Gets GaClassifier
     /// </summary>
-    GaClassifier buildGaClassifier(std::string name,
+    GaClassifier buildGaClassifier(std::unique_ptr<RaportGenerator> raport,
+        std::string name,
         double trainingSetSplitRate,
         double mutationRate,
         double bitSwapRate,

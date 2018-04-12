@@ -22,6 +22,7 @@ limitations under the License.
 #include "ClassifierFactory.h"
 #include "Spectre.libClassifier/DatasetFactory.h"
 #include "Spectre.libClassifier/DownsampledOpenCVDataset.h"
+#include "ClassifierFitnessFunction.h"
 
 namespace spectre::supervised
 {
@@ -67,10 +68,13 @@ void GeneticTrainingSetSelectionScenario::execute(std::string filename) const
 
     SplittedOpenCvDataset splittedOpenCvDataset = downsampled.getRandomSubset();
     Svm svm = classifierFactory.buildSvm(m_IterationsLimit, m_Tolerance);
+    std::unique_ptr<RaportGenerator> raportWOGA = std::make_unique <RaportGenerator>(m_RaportwoGA);
+    ClassifierFitnessFunction fitnessFunction(std::move(raportWOGA), svm, splittedOpenCvDataset);
     svm.Fit(splittedOpenCvDataset.trainingSet);
     svm.Predict(splittedOpenCvDataset.testSet);
 
-    GaClassifier gaClassifier = classifierFactory.buildGaClassifier(m_Name, m_TrainingSetSplitRate, m_MutationRate, m_BitSwapRate, m_PreservationRate,
+    std::unique_ptr<RaportGenerator> raportWGA = std::make_unique <RaportGenerator>(m_RaportGA);
+    GaClassifier gaClassifier = classifierFactory.buildGaClassifier(std::move(raportWGA), m_Name, m_TrainingSetSplitRate, m_MutationRate, m_BitSwapRate, m_PreservationRate,
         m_GenerationsNumber, m_PopulationSize, m_InitialFillup, m_Seed, m_MinimalFillup, m_MaximalFillup, m_IterationsLimit, m_Tolerance);
     gaClassifier.Fit(splittedOpenCvDataset.trainingSet);
     gaClassifier.Predict(splittedOpenCvDataset.testSet);

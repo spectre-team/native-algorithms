@@ -29,7 +29,8 @@ limitations under the License.
 namespace spectre::supervised
 {
 
-GaClassifier::GaClassifier(std::unique_ptr<IClassifier> classifier,
+GaClassifier::GaClassifier(std::unique_ptr<RaportGenerator> raport,
+                           std::unique_ptr<IClassifier> classifier,
                            double trainingSetSplitRate,
                            double mutationRate,
                            double bitSwapRate,
@@ -40,6 +41,7 @@ GaClassifier::GaClassifier(std::unique_ptr<IClassifier> classifier,
                            spectre::algorithm::genetic::Seed seed,
                            size_t minimalFillup,
                            size_t maximalFillup):
+    m_Raport(std::move(raport)),
     m_Classifier(std::move(classifier)),
     m_PopulationSize(populationSize),
     m_InitialIndividualFillup(initialFillup),
@@ -69,7 +71,7 @@ void GaClassifier::Fit(LabeledDataset dataset)
     IndividualFeasibilityConditionsFactory conditionsFactory(splittedDataset.trainingSet.GetSampleMetadata(), trainingSetSize, m_MinimalFillup, m_MaximalFillup);
     auto conditions = conditionsFactory.build();
 
-    auto fitnessFunction = std::make_unique<ClassifierFitnessFunction>(*m_Classifier, splittedDataset);
+    auto fitnessFunction = std::make_unique<ClassifierFitnessFunction>(std::move(m_Raport), *m_Classifier, splittedDataset);
     auto algorithm = m_GaFactory.BuildDefault(std::move(fitnessFunction), m_Seed, std::move(conditions));
     algorithm::genetic::GenerationFactory generationFactory(m_NumberOfGenerations, trainingSetSize, m_InitialIndividualFillup);
     algorithm::genetic::Generation initialGeneration = generationFactory(m_Seed);
@@ -89,7 +91,7 @@ std::vector<Label> GaClassifier::Predict(LabeledDataset dataset) const
 
 std::unique_ptr<IClassifier> GaClassifier::clone() const
 {
-    return std::make_unique<GaClassifier>(m_Classifier->clone(), m_TrainingDatasetSizeRate, m_MutationRate, m_BitSwapRate, m_PreservationRate,
+    return std::make_unique<GaClassifier>(m_Raport, m_Classifier->clone(), m_TrainingDatasetSizeRate, m_MutationRate, m_BitSwapRate, m_PreservationRate,
         m_NumberOfGenerations, m_PopulationSize, m_InitialIndividualFillup, m_Seed, m_MinimalFillup, m_MaximalFillup);
 }
 

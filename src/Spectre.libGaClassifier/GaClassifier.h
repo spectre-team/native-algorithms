@@ -26,7 +26,9 @@ limitations under the License.
 
 namespace spectre::supervised
 {
-/// <summary>
+    class RaportGenerator;
+
+    /// <summary>
 /// Class that searches best classifier via Genentic Algorithm.
 /// </summary>
 class GaClassifier : public IClassifier
@@ -47,7 +49,8 @@ public:
     /// <param name="seed">The seed.</param>
     /// <param name="minimalFillup">The minimal fillup.</param>
     /// <param name="maximalFillup">The maximal fillup.</param>
-    GaClassifier(std::unique_ptr<IClassifier> classifier,
+    GaClassifier(std::unique_ptr<RaportGenerator> raport,
+        std::unique_ptr<IClassifier> classifier,
         double trainingSetSplitRate,
         double mutationRate,
         double bitSwapRate,
@@ -125,5 +128,6 @@ private:
     /// The preservation rate.
     /// </summary>
     const double m_PreservationRate;
+    std::unique_ptr<RaportGenerator> m_Raport;
 };
 }

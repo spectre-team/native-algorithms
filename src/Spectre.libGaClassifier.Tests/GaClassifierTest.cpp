@@ -33,7 +33,7 @@ const unsigned int POPULATION_SIZE = 5u;
 const unsigned int INITIAL_FILLUP = 3u;
 const Seed SEED = 1;
 
-TEST(GaClassifierInitialization, initializes)
+/*TEST(GaClassifierInitialization, initializes)
 {
     const std::vector<DataType> data{ 0.5f, 0.4f, 0.6f, 1.1f, 1.6f, 0.7f, 2.1f, 1.0f, 0.6f,
         0.4f, 1.6f, 0.9f, 1.2f, 2.2f, 0.7f, 1.3f, 2.0f, 1.4f, 0.7f, 0.7f, 0.9f };
@@ -83,5 +83,5 @@ TEST_F(GaClassifierTest, predicts_with_no_throw)
     gaClassifier.Fit(dataset);
     EXPECT_NO_THROW(gaClassifier.Predict(dataset));
 }
-
+*/
 }

@@ -27,7 +27,8 @@ limitations under the License.
 
 namespace spectre::supervised
 {
-ClassifierFitnessFunction::ClassifierFitnessFunction(const IClassifier& classifier, SplittedOpenCvDataset& data):
+ClassifierFitnessFunction::ClassifierFitnessFunction(std::unique_ptr<RaportGenerator> raport, const IClassifier& classifier, SplittedOpenCvDataset& data):
+    m_Raport(std::move(raport)),
     m_Classifier(classifier),
     m_Data(data)
 {
@@ -42,19 +43,17 @@ algorithm::genetic::ScoreType ClassifierFitnessFunction::operator()(const algori
     auto individualData = individual.getData();
     OpenCvDataset individualDataset = getFilteredOpenCvDataset(m_Data.trainingSet, individualData);
 
-    const auto result = getResultMatrix(std::move(individualDataset));
+    const auto result = getResultMatrix(individualData, std::move(individualDataset));
     return result.DiceIndex;
 }
 
-ConfusionMatrix ClassifierFitnessFunction::getResultMatrix(const OpenCvDataset& data) const
+ConfusionMatrix ClassifierFitnessFunction::getResultMatrix(std::vector<bool> individualData, const OpenCvDataset& data) const
 {
     std::unique_ptr<IClassifier> classifierDuplicate = m_Classifier.clone();
     classifierDuplicate->Fit(data);
     const auto predictions = classifierDuplicate->Predict((m_Data.testSet));
     ConfusionMatrix confusions(predictions, m_Data.testSet.GetSampleMetadata());
-    m_RaportGenerator.Write(confusions,
-        m_Data.testSet.GetSampleMetadata(),
-        static_cast<Svm>(classifierDuplicate).GetNumberOfSupportVectors());
+    m_Raport->Write(confusions, individualData);
     return confusions;
 }
 

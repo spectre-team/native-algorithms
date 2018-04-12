@@ -19,7 +19,6 @@ limitations under the License.
 
 #pragma once
 #include "Spectre.libGenetic/DataTypes.h"
-#include "Spectre.libGenetic/GeneticAlgorithmFactory.h"
 #include "Spectre.libClassifier/RaportGenerator.h"
 
 namespace spectre::supervised

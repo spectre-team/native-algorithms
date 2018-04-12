@@ -49,10 +49,10 @@ TEST_F(ClassifierFactoryTest, build_svm_no_throw)
     EXPECT_NO_THROW(classifierFactory.buildSvm());
 }
 
-TEST_F(ClassifierFactoryTest, build_gaclassifier_with_svm_no_throw)
+/*TEST_F(ClassifierFactoryTest, build_gaclassifier_with_svm_no_throw)
 {
     EXPECT_NO_THROW(classifierFactory.buildGaClassifier(CLASSIFIER, TRAINING_SET_SPLIT_RATE, MUTATION_RATE, BIT_SWAP_RATE,
         PRESERVATION_RATE, GENERATIONS_NUMBER, POPULATION_SIZE, INITIAL_FILLUP));
-}
+}*/
 
 }

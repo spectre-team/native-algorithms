@@ -22,6 +22,7 @@ limitations under the License.
 #include "Spectre.libClassifier/IClassifier.h"
 #include "Spectre.libClassifier/SplittedOpevCvDataset.h"
 #include "Spectre.libClassifier/ConfusionMatrix.h"
+#include "Spectre.libClassifier/RaportGenerator.h"
 
 namespace spectre::supervised
 {
@@ -36,7 +37,7 @@ public:
     /// </summary>
     /// <param name="classifier">The classifier.</param>
     /// <param name="data">The splitted data.</param>
-    ClassifierFitnessFunction(const IClassifier& classifier, SplittedOpenCvDataset& data);
+    ClassifierFitnessFunction(std::unique_ptr<RaportGenerator> raport, const IClassifier& classifier, SplittedOpenCvDataset& data);
     /// <summary>
     /// operator.
     /// </summary>
@@ -48,7 +49,7 @@ public:
     /// </summary>
     /// <param name="data">The data.</param>
     /// <returns>The confusion matrix.</returns>
-    ConfusionMatrix getResultMatrix(const OpenCvDataset& data) const;
+    ConfusionMatrix getResultMatrix(std::vector<bool> individualData, const OpenCvDataset& data) const;
     virtual ~ClassifierFitnessFunction() = default;
 private:
     /// <summary>
@@ -59,5 +60,6 @@ private:
     /// The splitted data.
     /// </summary>
     const SplittedOpenCvDataset& m_Data;
+    std::unique_ptr<RaportGenerator> m_Raport;
 };
 }

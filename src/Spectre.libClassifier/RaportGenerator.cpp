@@ -37,14 +37,12 @@ RaportGenerator::RaportGenerator(std::string filename, uint populationSize, cons
     m_File << "Dice" << m_Separator;
     m_File << "number of observations used" << m_Separator;
     m_File << "percent of observations used" << m_Separator;
-    m_File << "number of support vectors" << m_Separator;
     m_File.flush();
     omp_init_lock(&m_WriteLock);
 }
 
 void RaportGenerator::Write(const ConfusionMatrix& matrix,
-    const std::vector<bool> individual,
-    unsigned int numberOfSupportVectors)
+    const std::vector<bool> individual)
 {
     auto count = 0u;
     for (auto bit : individual)
@@ -61,7 +59,6 @@ void RaportGenerator::Write(const ConfusionMatrix& matrix,
     m_File << matrix.DiceIndex << m_Separator;
     m_File << count << m_Separator;
     m_File << static_cast<double>(count) / individual.size() << m_Separator;
-    m_File << numberOfSupportVectors << m_Separator;
     m_File << "\n";
     m_File.flush();
     omp_unset_lock(&m_WriteLock);
