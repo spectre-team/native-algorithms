@@ -5,6 +5,11 @@
 
 namespace py = pybind11;
 
+int add(int a, int b)
+{
+    return a + b;
+}
+
 namespace spectre::supervised {
 PYBIND11_MODULE(genetic_algorithm, m) {
     py::class_<IClassifier> iClassifier(m, "IClassifier");
@@ -20,5 +25,9 @@ PYBIND11_MODULE(genetic_algorithm, m) {
     gaClassifier.def(py::init<>())
         .def("buildSvm", &ClassifierFactory::buildSvm)
         .def("buildGaClassifier", &ClassifierFactory::buildGaClassifier);
+}
+
+PYBIND11_MODULE(test, m) {
+    m.def("add", &add, "A function which adds two numbers");
 }
 }
