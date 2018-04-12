@@ -1,7 +1,7 @@
 #include <pybind11/pybind11.h>
 #include "Spectre.libClassifier/IClassifier.h"
 #include "Spectre.libClassifier/DatasetFactory.h"
-#include "ClassifierFactory.h"
+#include "Spectre.libGaClassifier/ClassifierFactory.h"
 
 namespace py = pybind11;
 

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libClustering", "Spectre.libClustering\Spectre.libClustering.vcxproj", "{450F225C-4610-4B20-84AE-2ED5B4C8D7C4}"
 EndProject
@@ -106,6 +106,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libPeakFinder.Tests
 		{7EB0161F-4E8A-4C72-BA18-31B554F411F2} = {7EB0161F-4E8A-4C72-BA18-31B554F411F2}
 		{261E7D9C-0481-4156-BD49-C9EB653083C1} = {261E7D9C-0481-4156-BD49-C9EB653083C1}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spectre.libGaClassifier.Python", "Spectre.libGaClassifier.Python\Spectre.libGaClassifierPython.vcxproj", "{6311B0B3-4222-45CB-A4EB-F11E36EE4760}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -392,6 +394,18 @@ Global
 		{8FE23410-5BEF-4FED-91BA-A7D73E263324}.Release|x64.Build.0 = Release|x64
 		{8FE23410-5BEF-4FED-91BA-A7D73E263324}.Release|x86.ActiveCfg = Release|Win32
 		{8FE23410-5BEF-4FED-91BA-A7D73E263324}.Release|x86.Build.0 = Release|Win32
+		{6311B0B3-4222-45CB-A4EB-F11E36EE4760}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6311B0B3-4222-45CB-A4EB-F11E36EE4760}.Debug|Win32.Build.0 = Debug|Win32
+		{6311B0B3-4222-45CB-A4EB-F11E36EE4760}.Debug|x64.ActiveCfg = Debug|x64
+		{6311B0B3-4222-45CB-A4EB-F11E36EE4760}.Debug|x64.Build.0 = Debug|x64
+		{6311B0B3-4222-45CB-A4EB-F11E36EE4760}.Debug|x86.ActiveCfg = Debug|Win32
+		{6311B0B3-4222-45CB-A4EB-F11E36EE4760}.Debug|x86.Build.0 = Debug|Win32
+		{6311B0B3-4222-45CB-A4EB-F11E36EE4760}.Release|Win32.ActiveCfg = Release|Win32
+		{6311B0B3-4222-45CB-A4EB-F11E36EE4760}.Release|Win32.Build.0 = Release|Win32
+		{6311B0B3-4222-45CB-A4EB-F11E36EE4760}.Release|x64.ActiveCfg = Release|x64
+		{6311B0B3-4222-45CB-A4EB-F11E36EE4760}.Release|x64.Build.0 = Release|x64
+		{6311B0B3-4222-45CB-A4EB-F11E36EE4760}.Release|x86.ActiveCfg = Release|Win32
+		{6311B0B3-4222-45CB-A4EB-F11E36EE4760}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -420,6 +434,7 @@ Global
 		{0D26F2B3-7AA6-452E-80D4-0EED28FF1B7B} = {789D1D78-4C9E-44E8-ADC8-727647813570}
 		{261E7D9C-0481-4156-BD49-C9EB653083C1} = {1006E08E-0DB2-4645-961A-1B1C902198C4}
 		{8FE23410-5BEF-4FED-91BA-A7D73E263324} = {1006E08E-0DB2-4645-961A-1B1C902198C4}
+		{6311B0B3-4222-45CB-A4EB-F11E36EE4760} = {789D1D78-4C9E-44E8-ADC8-727647813570}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ED57AF8B-7937-40C6-9764-D313AB08FEC9}

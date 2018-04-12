@@ -20,9 +20,10 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{9FAF96E9-1983-4BD3-8C5C-FB922AC73126}</ProjectGuid>
+    <ProjectGuid>{6311B0B3-4222-45CB-A4EB-F11E36EE4760}</ProjectGuid>
     <RootNamespace>Spectre::libGaClassifier</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>Spectre.libGaClassifier.Python</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -32,7 +33,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -45,7 +46,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -81,18 +82,18 @@
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <TargetExt>.lib</TargetExt>
+    <TargetExt>.pyd</TargetExt>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\regis\Documents\GitHub\pybind11-master\include;C:\Users\regis\AppData\Local\Programs\Python\Python36-32\include;$(IncludePath)</IncludePath>
     <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <TargetExt>.lib</TargetExt>
+    <TargetExt>.pyd</TargetExt>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\regis\Documents\GitHub\pybind11-master\include;C:\Users\regis\AppData\Local\Programs\Python\Python36-32\include;$(IncludePath)</IncludePath>
     <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -115,7 +116,7 @@
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\Users\regis\AppData\Local\Programs\Python\Python36-32\libs\python36.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -148,51 +149,21 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\Users\regis\AppData\Local\Programs\Python\Python36-32\libs\python36.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AllLabelTypesIncludedCondition.h">
-      <SubType>Header Files</SubType>
-    </ClInclude>
-    <ClInclude Include="ClassifierFactory.h">
-      <SubType>Header Files</SubType>
-    </ClInclude>
-    <ClInclude Include="GaClassifier.h">
-      <SubType>Header Files</SubType>
-    </ClInclude>
-    <ClInclude Include="ClassifierFitnessFunction.h">
-      <SubType>Header Files</SubType>
-    </ClInclude>
-    <ClInclude Include="IndividualFeasibilityConditionsFactory.h">
-      <SubType>Header Files</SubType>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="AllLabelTypesIncludedCondition.cpp" />
-    <ClCompile Include="ClassifierFactory.cpp" />
-    <ClCompile Include="GaClassifier.cpp" />
-    <ClCompile Include="ClassifierFitnessFunction.cpp" />
-    <ClCompile Include="IndividualFeasibilityConditionsFactory.cpp" />
+    <ClCompile Include="GeneticAlgorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spectre.libClassifier\Spectre.libClassifier.vcxproj">
       <Project>{5419aeeb-98b4-4d79-9fca-a794200073fc}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Spectre.libDataset\Spectre.libDataset.vcxproj">
-      <Project>{b7db309d-3ed6-4771-993d-a1cf3a6436d9}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Spectre.libException\Spectre.libException.vcxproj">
-      <Project>{7417bf00-028b-4797-b58a-6058ca338493}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Spectre.libFunctional\Spectre.libFunctional.vcxproj">
-      <Project>{7eb0161f-4e8a-4c72-ba18-31b554f411f2}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Spectre.libGenetic\Spectre.libGenetic.vcxproj">
-      <Project>{9786751a-6ae1-48d3-938d-4129d0399667}</Project>
+    <ProjectReference Include="..\Spectre.libGaClassifier\Spectre.libGaClassifier.vcxproj">
+      <Project>{9faf96e9-1983-4bd3-8c5c-fb922ac73126}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
