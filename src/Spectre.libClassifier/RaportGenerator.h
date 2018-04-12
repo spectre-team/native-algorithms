@@ -31,8 +31,7 @@ public:
         unsigned int populationSize,
         const std::string& separator = ",");
     void Write(const ConfusionMatrix& matrix,
-        const std::vector<bool> individual,
-        unsigned int numberOfSupportVectors);
+        const std::vector<bool> individual);
     ~RaportGenerator();
 private:
     std::ofstream m_File;
