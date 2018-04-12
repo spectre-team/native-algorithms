@@ -37,24 +37,14 @@ RaportGenerator::RaportGenerator(std::string filename, uint populationSize, cons
     m_File << "Dice" << m_Separator;
     m_File << "number of observations used" << m_Separator;
     m_File << "percent of observations used" << m_Separator;
-    m_File << "mean training time [ms]" << m_Separator;
-    m_File << "mean classification time [ms]" << m_Separator;
     m_File << "number of support vectors" << m_Separator;
-    m_File << "independent true positives" << m_Separator;
-    m_File << "independent true negatives" << m_Separator;
-    m_File << "independent false positives" << m_Separator;
-    m_File << "independent false negatives" << m_Separator;
-    m_File << "independent Dice\n";
     m_File.flush();
     omp_init_lock(&m_WriteLock);
 }
 
 void RaportGenerator::Write(const ConfusionMatrix& matrix,
     const std::vector<bool> individual,
-    double trainingTime,
-    double meanClassificationTime,
-    unsigned int numberOfSupportVectors,
-    const ConfusionMatrix* validationResults)
+    unsigned int numberOfSupportVectors)
 {
     auto count = 0u;
     for (auto bit : individual)
@@ -71,25 +61,8 @@ void RaportGenerator::Write(const ConfusionMatrix& matrix,
     m_File << matrix.DiceIndex << m_Separator;
     m_File << count << m_Separator;
     m_File << static_cast<double>(count) / individual.size() << m_Separator;
-    m_File << 1000 * trainingTime << m_Separator;
-    m_File << 1000 * meanClassificationTime << m_Separator;
     m_File << numberOfSupportVectors << m_Separator;
-    if (validationResults != nullptr)
-    {
-        m_File << validationResults->TruePositive << m_Separator;
-        m_File << validationResults->TrueNegative << m_Separator;
-        m_File << validationResults->FalsePositive << m_Separator;
-        m_File << validationResults->FalseNegative << m_Separator;
-        m_File << validationResults->DiceIndex << "\n";
-    }
-    else
-    {
-        for (auto i = 0u; i < 4; ++i)
-        {
-            m_File << m_Separator;
-        }
-        m_File << "\n";
-    }
+    m_File << "\n";
     m_File.flush();
     omp_unset_lock(&m_WriteLock);
 }
@@ -100,4 +73,5 @@ RaportGenerator::~RaportGenerator()
     m_File.close();
     omp_destroy_lock(&m_WriteLock);
 }
+
 }

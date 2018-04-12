@@ -32,10 +32,7 @@ public:
         const std::string& separator = ",");
     void Write(const ConfusionMatrix& matrix,
         const std::vector<bool> individual,
-        double trainingTime,
-        double meanClassificationTime,
-        unsigned int numberOfSupportVectors,
-        const ConfusionMatrix* validationResults);
+        unsigned int numberOfSupportVectors);
     ~RaportGenerator();
 private:
     std::ofstream m_File;

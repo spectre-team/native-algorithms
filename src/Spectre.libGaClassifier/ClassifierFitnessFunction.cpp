@@ -23,6 +23,7 @@ limitations under the License.
 #include "Spectre.libClassifier/ConfusionMatrix.h"
 #include <memory>
 #include "Spectre.libClassifier/DatasetFilter.h"
+#include "Spectre.libClassifier/Svm.h"
 
 namespace spectre::supervised
 {
@@ -51,6 +52,9 @@ ConfusionMatrix ClassifierFitnessFunction::getResultMatrix(const OpenCvDataset& 
     classifierDuplicate->Fit(data);
     const auto predictions = classifierDuplicate->Predict((m_Data.testSet));
     ConfusionMatrix confusions(predictions, m_Data.testSet.GetSampleMetadata());
+    m_RaportGenerator.Write(confusions,
+        m_Data.testSet.GetSampleMetadata(),
+        static_cast<Svm>(classifierDuplicate).GetNumberOfSupportVectors());
     return confusions;
 }
 

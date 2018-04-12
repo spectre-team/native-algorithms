@@ -26,6 +26,7 @@ namespace
 {
 using namespace spectre::supervised;
 
+const std::string RAPORT_NAME = "scenario_test";
 const std::string CLASSIFIER = "svm";
 const double TRAINING_SET_SPLIT_RATE = 0.7;
 const double MUTATION_RATE = 0.5;
@@ -38,7 +39,7 @@ const spectre::algorithm::genetic::Seed SEED = 1;
 
 TEST(GeneticTrainingSetSelectionScenarioInitialization, initializes)
 {
-    EXPECT_NO_THROW(GeneticTrainingSetSelectionScenario(CLASSIFIER, TRAINING_SET_SPLIT_RATE, MUTATION_RATE, BIT_SWAP_RATE,
+    EXPECT_NO_THROW(GeneticTrainingSetSelectionScenario(RAPORT_NAME, CLASSIFIER, TRAINING_SET_SPLIT_RATE, MUTATION_RATE, BIT_SWAP_RATE,
         PRESERVATION_RATE, GENERATIONS_NUMBER, POPULATION_SIZE, INITIAL_FILLUP, SEED));
 }
 
@@ -46,7 +47,7 @@ class GeneticTrainingSetSelectionScenarioTest : public ::testing::Test
 {
 public:
     GeneticTrainingSetSelectionScenarioTest()
-        : scenario(CLASSIFIER, TRAINING_SET_SPLIT_RATE, MUTATION_RATE, BIT_SWAP_RATE,
+        : scenario(RAPORT_NAME, CLASSIFIER, TRAINING_SET_SPLIT_RATE, MUTATION_RATE, BIT_SWAP_RATE,
             PRESERVATION_RATE, GENERATIONS_NUMBER, POPULATION_SIZE, INITIAL_FILLUP, SEED) {}
 protected:
     GeneticTrainingSetSelectionScenario scenario;

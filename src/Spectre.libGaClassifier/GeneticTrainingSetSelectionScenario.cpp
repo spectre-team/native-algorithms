@@ -26,6 +26,7 @@ limitations under the License.
 namespace spectre::supervised
 {
 GeneticTrainingSetSelectionScenario::GeneticTrainingSetSelectionScenario(std::string name,
+    std::string raportFilename,
     double trainingSetSplitRate,
     double mutationRate,
     double bitSwapRate,
@@ -37,7 +38,8 @@ GeneticTrainingSetSelectionScenario::GeneticTrainingSetSelectionScenario(std::st
     size_t minimalFillup,
     size_t maximalFillup,
     unsigned int iterationsLimit,
-    double tolerance) :
+    double tolerance,
+    const std::string& separator) :
     m_Name(name),
     m_TrainingSetSplitRate(trainingSetSplitRate),
     m_MutationRate(mutationRate),
@@ -50,7 +52,9 @@ GeneticTrainingSetSelectionScenario::GeneticTrainingSetSelectionScenario(std::st
     m_MinimalFillup(minimalFillup),
     m_MaximalFillup(maximalFillup),
     m_IterationsLimit(iterationsLimit),
-    m_Tolerance(tolerance)
+    m_Tolerance(tolerance),
+    m_RaportwoGA(raportFilename + "_wo_GA", populationSize, separator),
+    m_RaportGA(raportFilename + "GA", populationSize, separator)
 {
 }
 
