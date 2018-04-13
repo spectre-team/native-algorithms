@@ -33,7 +33,7 @@ const double BIT_SWAP_RATE = 0.5;
 const double PRESERVATION_RATE = 0.5;
 const unsigned int GENERATIONS_NUMBER = 30u;
 const unsigned int POPULATION_SIZE = 20u;
-const unsigned int INITIAL_FILLUP = 1000u;
+const unsigned int INITIAL_FILLUP = 10u;
 const spectre::algorithm::genetic::Seed SEED = 454646;
 
 TEST(GeneticTrainingSetSelectionScenarioInitialization, initializes)
@@ -54,7 +54,7 @@ protected:
 
 TEST_F(GeneticTrainingSetSelectionScenarioTest, executeScenario)
 {
-    EXPECT_NO_THROW(scenario.execute("test_serious.txt", "test_serious_report", POPULATION_SIZE));
+    EXPECT_NO_THROW(scenario.execute("test_scenario_file.txt", "test_serious_report", POPULATION_SIZE));
 }
 
 }
