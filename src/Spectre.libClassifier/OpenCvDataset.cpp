@@ -41,11 +41,7 @@ OpenCvDataset::OpenCvDataset(OpenCvDataset &&other) noexcept
       m_MatLabels(std::move(other.m_MatLabels)),
       m_observations(std::move(other.m_observations))
 {
-    other.m_Data.clear();
-    other.m_Mat.release();
-    other.m_labels.clear();
-    other.m_MatLabels.release();
-    other.m_observations.clear();
+    other.Clear();
 }
 
 OpenCvDataset::OpenCvDataset(OpenCvDataset &&first, OpenCvDataset &&second) noexcept
@@ -147,7 +143,7 @@ void OpenCvDataset::Clear()
     m_observations.clear();
 }
 
-    size_t OpenCvDataset::size() const
+size_t OpenCvDataset::size() const
 {
     return m_labels.size();
 }
