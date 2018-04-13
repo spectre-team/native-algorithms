@@ -37,6 +37,7 @@ RaportGenerator::RaportGenerator(std::string filename, uint populationSize, cons
     m_File << "Dice" << m_Separator;
     m_File << "number of observations used" << m_Separator;
     m_File << "percent of observations used" << m_Separator;
+    m_File << "\n";
     m_File.flush();
     omp_init_lock(&m_WriteLock);
 }

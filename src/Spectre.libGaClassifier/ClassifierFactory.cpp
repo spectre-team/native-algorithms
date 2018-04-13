@@ -31,7 +31,7 @@ Svm ClassifierFactory::buildSvm(unsigned iterationsLimit, double tolerance) cons
 }
 
 GaClassifier ClassifierFactory::buildGaClassifier(
-    std::unique_ptr<RaportGenerator> raport,
+    RaportGenerator& raport,
     std::string name,
     double trainingSetSplitRate,
     double mutationRate,
@@ -52,7 +52,7 @@ GaClassifier ClassifierFactory::buildGaClassifier(
         Svm svm = this->buildSvm(iterationsLimit, tolerance);
         classifier = std::make_unique<Svm>(svm);
     }
-    GaClassifier gaClassifier(std::move(raport), std::move(classifier), trainingSetSplitRate, mutationRate, bitSwapRate, preservationRate, generationsNumber,
+    GaClassifier gaClassifier(raport, std::move(classifier), trainingSetSplitRate, mutationRate, bitSwapRate, preservationRate, generationsNumber,
         populationSize, initialFillup, seed, minimalFillup, maximalFillup);
     return gaClassifier;
 }

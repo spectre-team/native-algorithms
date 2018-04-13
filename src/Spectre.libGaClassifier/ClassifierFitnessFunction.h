@@ -37,7 +37,7 @@ public:
     /// </summary>
     /// <param name="classifier">The classifier.</param>
     /// <param name="data">The splitted data.</param>
-    ClassifierFitnessFunction(std::unique_ptr<RaportGenerator> raport, const IClassifier& classifier, SplittedOpenCvDataset& data);
+    ClassifierFitnessFunction(RaportGenerator& raport, const IClassifier& classifier, SplittedOpenCvDataset& data);
     /// <summary>
     /// operator.
     /// </summary>
@@ -60,6 +60,6 @@ private:
     /// The splitted data.
     /// </summary>
     const SplittedOpenCvDataset& m_Data;
-    std::unique_ptr<RaportGenerator> m_Raport;
+    RaportGenerator& m_Raport;
 };
 }

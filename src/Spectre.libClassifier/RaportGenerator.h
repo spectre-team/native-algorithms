@@ -21,10 +21,11 @@ limitations under the License.
 #include <fstream>
 #include <omp.h>
 #include "ConfusionMatrix.h"
+#include <memory>
 
 namespace spectre::supervised
 {
-class RaportGenerator final
+class RaportGenerator
 {
 public:
     explicit RaportGenerator(std::string filename,

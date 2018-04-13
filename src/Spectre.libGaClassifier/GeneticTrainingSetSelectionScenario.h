@@ -29,7 +29,6 @@ namespace spectre::supervised
 {
 public:
     GeneticTrainingSetSelectionScenario(std::string name,
-        std::string raportFilename,
         double trainingSetSplitRate,
         double mutationRate,
         double bitSwapRate,
@@ -41,9 +40,8 @@ public:
         size_t minimalFillup = 1ul,
         size_t maximalFillup = std::numeric_limits<size_t>::max(),
         unsigned int iterationsLimit = 100,
-        double tolerance = 1e-6,
-        const std::string& separator = ",");
-        void execute(std::string filename) const;
+        double tolerance = 1e-6);
+        void execute(std::string filename, std::string raportFilename, unsigned int populationSize) const;
 private:
     std::string m_Name;
     double m_TrainingSetSplitRate;
@@ -58,7 +56,5 @@ private:
     size_t m_MaximalFillup;
     unsigned int m_IterationsLimit;
     double m_Tolerance;
-    RaportGenerator m_RaportwoGA;
-    RaportGenerator m_RaportGA;
 };
 }
