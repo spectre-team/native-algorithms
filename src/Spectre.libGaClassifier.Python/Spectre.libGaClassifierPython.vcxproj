@@ -108,7 +108,7 @@
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>C:\Users\regis\AppData\Local\Programs\Python\Python36\libs\python36.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\Users\regis\AppData\Local\Programs\Python\Python36\libs\python36.lib;Spectre.libGaClassifier.lib;Spectre.libClassifier.lib;Spectre.libFunctional.lib;Spectre.libException.lib;Spectre.libDataset.lib;Spectre.libGenetic.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -138,7 +138,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>C:\Users\regis\AppData\Local\Programs\Python\Python36\libs\python36.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\Users\regis\AppData\Local\Programs\Python\Python36\libs\python36.lib;Spectre.libGaClassifier.lib;Spectre.libClassifier.lib;Spectre.libFunctional.lib;Spectre.libException.lib;Spectre.libDataset.lib;Spectre.libGenetic.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -168,8 +168,20 @@
     <ProjectReference Include="..\Spectre.libClassifier\Spectre.libClassifier.vcxproj">
       <Project>{5419aeeb-98b4-4d79-9fca-a794200073fc}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\Spectre.libDataset\Spectre.libDataset.vcxproj">
+      <Project>{b7db309d-3ed6-4771-993d-a1cf3a6436d9}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Spectre.libException\Spectre.libException.vcxproj">
+      <Project>{7417bf00-028b-4797-b58a-6058ca338493}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Spectre.libFunctional\Spectre.libFunctional.vcxproj">
+      <Project>{7eb0161f-4e8a-4c72-ba18-31b554f411f2}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Spectre.libGaClassifier\Spectre.libGaClassifier.vcxproj">
       <Project>{9faf96e9-1983-4bd3-8c5c-fb922ac73126}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Spectre.libGenetic\Spectre.libGenetic.vcxproj">
+      <Project>{9786751a-6ae1-48d3-938d-4129d0399667}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
