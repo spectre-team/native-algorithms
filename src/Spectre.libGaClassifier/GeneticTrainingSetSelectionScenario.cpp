@@ -62,7 +62,7 @@ void GeneticTrainingSetSelectionScenario::execute(std::string filename, std::str
     OpenCvDataset dataset = datasetFactory.create(filename);
     DownsampledOpenCVDataset downsampled(std::move(dataset), 1000000, 0.7);
 
-    SplittedOpenCvDataset splittedOpenCvDataset = downsampled.getRandomSubset();
+    auto splittedOpenCvDataset = downsampled.getRandomSubset();
     Svm svm = classifierFactory.buildSvm(m_IterationsLimit, m_Tolerance);
 
     RaportGenerator m_RaportwoGA(raportFilename + "_without_GA"
