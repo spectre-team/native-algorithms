@@ -132,12 +132,14 @@ TEST_F(OpenCvDatasetInitializationTest, create_opencvdataset_from_two_opencvdata
     cv::Mat mat_labels2(3, 1, CV_LABEL_TYPE, tmp_labels2.data());
     OpenCvDataset firstDataset(mat_data, mat_labels);
     OpenCvDataset secondDataset(mat_data2, mat_labels2);
+
     size_t size = firstDataset.size() + secondDataset.size();
     size_t getDataSize = firstDataset.GetData().size() + secondDataset.GetData().size();
     size_t getSampleDataSize = firstDataset.GetSampleMetadata().size() + secondDataset.GetSampleMetadata().size();
     size_t getMatDataSize = firstDataset.getMatData().size().area() + secondDataset.getMatData().size().area();
     size_t getMatLabelsSize = firstDataset.getMatLabels().size().area() + secondDataset.getMatLabels().size().area();
     OpenCvDataset newDataset(std::move(firstDataset), std::move(secondDataset));
+
     EXPECT_EQ(newDataset.size(), size);
     EXPECT_EQ(newDataset.GetData().size(), getDataSize);
     EXPECT_EQ(newDataset.GetSampleMetadata().size(), getSampleDataSize);
