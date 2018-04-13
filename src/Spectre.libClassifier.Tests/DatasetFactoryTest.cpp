@@ -18,6 +18,8 @@ limitations under the License.
 */
 
 #include <gtest/gtest.h>
+#include <fstream>
+#include <sstream>
 #include "Spectre.libClassifier/OpenCvDataset.h"
 #include "Spectre.libClassifier/DatasetFactory.h"
 #include "Spectre.libClassifier/FileOpenException.h"
@@ -40,7 +42,31 @@ protected:
     const std::vector<DataType> data_compare{ 1.1f, 4.5f, 6.7f, 5.0f, 9.5f, 3.9f, 7.1f, 5, 3.2f, 10, 24.5f, 5.756f,
         5.09f, 9.6f, 8.23452f, 2, 5.53f, 3.76f, 6.11234f, 6.9f, 7.0f, };
     const std::vector<Label> labels_compare{ 0, 0, 1, 1, 0, 0, 1 };
+    const std::string filename = "test_file.txt";
+    std::fstream file;
     DatasetFactory datasetFactory;
+
+    void SetUp()
+    {
+        file.open(filename, std::fstream::out);
+        file << "test file" << std::endl;
+        file << "2.6 9.5 1.0" << std::endl;
+        file << "0 0 0 0" << std::endl;
+        file << "1.1 4.5 6.7" << std::endl;
+        file << "1 0 0 0" << std::endl;
+        file << "5.0 9.5 3.9" << std::endl;
+        file << "0 1 0 1" << std::endl;
+        file << "7.1 5 3.2" << std::endl;
+        file << "1 1 0 1" << std::endl;
+        file << "10 24.5 5.756" << std::endl;
+        file << "1 2 0 0" << std::endl;
+        file << "5.09 9.6 8.23452" << std::endl;
+        file << "2 1 0 0" << std::endl;
+        file << "2 5.53 3.76" << std::endl;
+        file << "2 2 0 1" << std::endl;
+        file << "6.11234 6.9 7.0";
+        file.close();
+    }
 };
 
 TEST_F(DatasetFactoryTest, throws_on_non_existant_file)
@@ -51,7 +77,7 @@ TEST_F(DatasetFactoryTest, throws_on_non_existant_file)
 TEST_F(DatasetFactoryTest, compare_dataset_from_file_and_from_data)
 {
     OpenCvDataset datasetCompare(data_compare, labels_compare);
-    OpenCvDataset datasetFromFile = datasetFactory.create("test_file.txt");
+    OpenCvDataset datasetFromFile = datasetFactory.create(filename);
     for (auto i = 0u; i < datasetCompare.size(); i++)
     {
         for (auto j = 0; j < datasetCompare[i].size(); j++)
