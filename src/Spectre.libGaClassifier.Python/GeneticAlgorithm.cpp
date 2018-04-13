@@ -11,7 +11,7 @@ int add(int a, int b)
 }
 
 namespace spectre::supervised {
-PYBIND11_MODULE(genetic_algorithm, m) {
+/*PYBIND11_MODULE(genetic_algorithm, m) {
     py::class_<IClassifier> iClassifier(m, "IClassifier");
     iClassifier.def("Fit", &IClassifier::Fit, "Fit the data")
         .def("Predict", &IClassifier::Predict, "Predict the data")
@@ -25,7 +25,7 @@ PYBIND11_MODULE(genetic_algorithm, m) {
     gaClassifier.def(py::init<>())
         .def("buildSvm", &ClassifierFactory::buildSvm)
         .def("buildGaClassifier", &ClassifierFactory::buildGaClassifier);
-}
+}*/
 
 PYBIND11_MODULE(test, m) {
     m.def("add", &add, "A function which adds two numbers");
