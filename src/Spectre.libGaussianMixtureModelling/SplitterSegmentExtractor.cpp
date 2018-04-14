@@ -117,6 +117,8 @@ static inline Data GetMzsOfLeftMargin(SpectrumView& spectrum, Index intervalStar
     return margin;
 }
 
+constexpr DataType TWO_SQRTS_OF_2_PI = 5.0132565492620005; // precomp., since sqrt is
+                                                           // not a constepxr function
 static inline Data GetMzsOfRightMargin(SpectrumView& spectrum, Index intervalEnd,
     DataType resolutionCoeff)
 {
@@ -142,7 +144,7 @@ static inline Data GetIntensitiesOfLeftMargin(SpectrumView spectrum, DataView ma
 {
     const DataView& mzs = spectrum.mzs;
 
-    const DataType heightScaleFactor = sqrt(2.0 * M_PI) * 2.0 * resolutionCoeff *
+    const DataType heightScaleFactor = TWO_SQRTS_OF_2_PI * resolutionCoeff *
         (mzs[intervalEnd] * spectrum.intensities[intervalEnd]);
     const DataType variance = 2 * resolutionCoeff * mzs[intervalBegin];
     const DataType mean = 0;
@@ -163,7 +165,7 @@ static inline Data GetIntensitiesOfRightMargin(SpectrumView spectrum, DataView m
 {
     const DataView& mzs = spectrum.mzs;
 
-    const DataType heightScaleFactor = sqrt(2.0 * M_PI) * 2.0 * resolutionCoeff *
+    const DataType heightScaleFactor = TWO_SQRTS_OF_2_PI * resolutionCoeff *
         (mzs[intervalBegin] * spectrum.intensities[intervalBegin]);
     const DataType variance = 2 * resolutionCoeff * mzs[intervalEnd];
     const DataType mean = 0;
