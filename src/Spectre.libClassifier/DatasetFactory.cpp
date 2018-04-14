@@ -51,16 +51,18 @@ OpenCvDataset DatasetFactory::create(std::string filename) const
     {
         //get Label
         getline(file, line);
-        std::istringstream ssLabels(line);
-        while (ssLabels >> label) {}
-        m_labels.push_back(label);
+        if (line != "") {
+            std::istringstream ssLabels(line);
+            while (ssLabels >> label) {}
+            m_labels.push_back(label);
 
-        //get DataTypes
-        getline(file, line);
-        std::istringstream ssData(line);
-        while (ssData >> num)
-        {
-            m_Data.push_back(num);
+            //get DataTypes
+            getline(file, line);
+            std::istringstream ssData(line);
+            while (ssData >> num)
+            {
+                m_Data.push_back(num);
+            }
         }
     }
     OpenCvDataset openCvDataset(m_Data, m_labels);
