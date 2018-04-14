@@ -71,7 +71,7 @@ TEST_F(DatasetFactoryTest, compare_dataset_from_file_and_from_data)
     {
         for (auto j = 0; j < datasetCompare[i].size(); j++)
         {
-            EXPECT_EQ(datasetCompare[i][j], datasetFromFile[i][j]);
+            EXPECT_FLOAT_EQ(datasetCompare[i][j], datasetFromFile[i][j]);
         }
         EXPECT_EQ(datasetCompare.GetSampleMetadata(i), datasetFromFile.GetSampleMetadata(i));
     }
