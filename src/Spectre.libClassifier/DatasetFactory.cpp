@@ -38,8 +38,8 @@ OpenCvDataset DatasetFactory::create(std::string filename) const
     {
         throw exception::FileOpenException(filename);
     }
-    std::vector<DataType> m_Data = {};
-    std::vector<Label> m_labels = {};
+    std::vector<DataType> data = {};
+    std::vector<Label> labels = {};
     DataType num;
     Label label;
     std::string line;
@@ -54,18 +54,18 @@ OpenCvDataset DatasetFactory::create(std::string filename) const
         if (line != "") {
             std::istringstream ssLabels(line);
             while (ssLabels >> label) {}
-            m_labels.push_back(label);
+            labels.push_back(label);
 
             //get DataTypes
             getline(file, line);
             std::istringstream ssData(line);
             while (ssData >> num)
             {
-                m_Data.push_back(num);
+                data.push_back(num);
             }
         }
     }
-    OpenCvDataset openCvDataset(m_Data, m_labels);
+    OpenCvDataset openCvDataset(data, labels);
     return openCvDataset;
 }
 }
