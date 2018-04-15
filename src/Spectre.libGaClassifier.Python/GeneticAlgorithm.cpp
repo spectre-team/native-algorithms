@@ -19,7 +19,7 @@ PYBIND11_MODULE(genetic_algorithm, m) {
         .def("clone", &IClassifier::clone, "Clone the classifier");
 
     py::class_<Svm> svm(m, "Svm");
-    svm.def(py::init<unsigned int, double>());
+    //svm.def(py::init<unsigned int, double>());
 
     py::class_<GaClassifier> gaClassifier(m, "GaClassifier");
 
