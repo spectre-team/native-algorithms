@@ -36,6 +36,7 @@ public:
         unsigned generationsNumber,
         unsigned populationSize,
         unsigned initialFillup,
+        unsigned iterationNumber,
         spectre::algorithm::genetic::Seed seed,
         size_t minimalFillup = 1ul,
         size_t maximalFillup = std::numeric_limits<size_t>::max(),
@@ -51,6 +52,7 @@ private:
     unsigned m_GenerationsNumber;
     unsigned m_PopulationSize;
     unsigned m_InitialFillup;
+    unsigned m_IterationNumber;
     spectre::algorithm::genetic::Seed m_Seed;
     size_t m_MinimalFillup;
     size_t m_MaximalFillup;

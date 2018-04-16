@@ -34,6 +34,7 @@ GeneticTrainingSetSelectionScenario::GeneticTrainingSetSelectionScenario(std::st
     unsigned generationsNumber,
     unsigned populationSize,
     unsigned initialFillup,
+    unsigned iterationNumber,
     spectre::algorithm::genetic::Seed seed,
     size_t minimalFillup,
     size_t maximalFillup,
@@ -47,6 +48,7 @@ GeneticTrainingSetSelectionScenario::GeneticTrainingSetSelectionScenario(std::st
     m_GenerationsNumber(generationsNumber),
     m_PopulationSize(populationSize),
     m_InitialFillup(initialFillup),
+    m_IterationNumber(iterationNumber),
     m_Seed(seed),
     m_MinimalFillup(minimalFillup),
     m_MaximalFillup(maximalFillup),
@@ -61,33 +63,35 @@ void GeneticTrainingSetSelectionScenario::execute(std::string filename, std::str
     DatasetFactory datasetFactory{};
     OpenCvDataset dataset = datasetFactory.create(filename);
     DownsampledOpenCVDataset downsampled(std::move(dataset), 1000000, 0.7);
-
-    SplittedOpenCvDataset splittedOpenCvDataset = downsampled.getRandomSubset();
     Svm svm = classifierFactory.buildSvm(m_IterationsLimit, m_Tolerance);
 
-    RaportGenerator m_RaportwoGA(raportFilename + "_without_GA"
-        + "-popsize-" + std::to_string(populationSize), populationSize);
-    ClassifierFitnessFunction fitnessFunction(m_RaportwoGA, svm, splittedOpenCvDataset);
-    std::vector<bool> individualData{};
-    for (auto i = 0u; i < splittedOpenCvDataset.trainingSet.size(); i++)
-    {
-        individualData.push_back(true);
-    }
-    algorithm::genetic::Individual individual(std::move(individualData));
-    fitnessFunction.operator()(individual);
+    for (auto iter = 0u; iter < m_IterationNumber; iter++) {
+        SplittedOpenCvDataset splittedOpenCvDataset = downsampled.getRandomSubset();
+        RaportGenerator m_RaportwoGA(raportFilename + "_without_GA"
+            + "-popsize-" + std::to_string(populationSize) + "-iter-"
+            + std::to_string(iter), populationSize);
+        ClassifierFitnessFunction fitnessFunction(m_RaportwoGA, svm, splittedOpenCvDataset);
+        std::vector<bool> individualData{};
+        for (auto i = 0u; i < splittedOpenCvDataset.trainingSet.size(); i++)
+        {
+            individualData.push_back(true);
+        }
+        algorithm::genetic::Individual individual(std::move(individualData));
+        fitnessFunction.operator()(individual);
 
-    RaportGenerator m_RaportGA(raportFilename + "_with_GA"
-        + "-popsize-" + std::to_string(populationSize), populationSize);
-    GaClassifier gaClassifier = classifierFactory.buildGaClassifier(m_RaportGA, m_Name, m_TrainingSetSplitRate, m_MutationRate, m_BitSwapRate, m_PreservationRate,
-        m_GenerationsNumber, m_PopulationSize, m_InitialFillup, m_Seed, m_MinimalFillup, m_MaximalFillup, m_IterationsLimit, m_Tolerance);
+        RaportGenerator m_RaportGA(raportFilename + "_with_GA"
+            + "-popsize-" + std::to_string(populationSize), populationSize);
+        GaClassifier gaClassifier = classifierFactory.buildGaClassifier(m_RaportGA, m_Name, m_TrainingSetSplitRate, m_MutationRate, m_BitSwapRate, m_PreservationRate,
+            m_GenerationsNumber, m_PopulationSize, m_InitialFillup, m_Seed, m_MinimalFillup, m_MaximalFillup, m_IterationsLimit, m_Tolerance);
 
-    ClassifierFitnessFunction ff(m_RaportGA, gaClassifier, splittedOpenCvDataset);
-    std::vector<bool> individualData2{};
-    for (auto i = 0u; i < splittedOpenCvDataset.trainingSet.size(); i++)
-    {
-        individualData2.push_back(true);
+        ClassifierFitnessFunction ff(m_RaportGA, gaClassifier, splittedOpenCvDataset);
+        std::vector<bool> individualData2{};
+        for (auto i = 0u; i < splittedOpenCvDataset.trainingSet.size(); i++)
+        {
+            individualData2.push_back(true);
+        }
+        algorithm::genetic::Individual individual2(std::move(individualData2));
+        ff.operator()(individual2);
     }
-    algorithm::genetic::Individual individual2(std::move(individualData2));
-    ff.operator()(individual2);
 }
 }
