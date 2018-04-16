@@ -105,9 +105,9 @@ TEST_F(OpenCvDatasetInitializationTest, throws_for_empty_data_from_mat)
 
 TEST_F(OpenCvDatasetInitializationTest, move_invalidates_old_instance)
 {
-    std::vector<DataType> tmp_data(data_short);
+    std::vector<DataType> tmp_data(data_long);
     std::vector<Label> tmp_labels(labels);
-    cv::Mat mat_data(3, 1, CV_TYPE, tmp_data.data());
+    cv::Mat mat_data(3, 3, CV_TYPE, tmp_data.data());
     cv::Mat mat_labels(3, 1, CV_LABEL_TYPE, tmp_labels.data());
     OpenCvDataset oldDataset(mat_data, mat_labels);
     OpenCvDataset newDataset(std::move(oldDataset));
@@ -118,6 +118,17 @@ TEST_F(OpenCvDatasetInitializationTest, move_invalidates_old_instance)
     EXPECT_THROW(oldDataset.GetSampleMetadata(0), OutOfRangeException);
     EXPECT_EQ(0, oldDataset.getMatData().size().area());
     EXPECT_EQ(0, oldDataset.getMatLabels().size().area());
+    EXPECT_EQ(3u, newDataset.size());
+    EXPECT_EQ(3u, newDataset.GetData().size());
+    EXPECT_EQ(3u, newDataset.GetSampleMetadata().size());
+    for (auto i = 0u; i < newDataset.size(); i++)
+    {
+        EXPECT_EQ(newDataset.GetSampleMetadata(i), labels[i]);
+        for (auto j = 0u; j < newDataset[i].size(); j++)
+        {
+            EXPECT_EQ(newDataset[i][j], data_long[i*3+j]);
+        }
+    }
 }
 
 TEST_F(OpenCvDatasetInitializationTest, create_opencvdataset_from_two_opencvdatasets)

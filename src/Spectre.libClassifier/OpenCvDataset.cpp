@@ -39,23 +39,44 @@ OpenCvDataset::OpenCvDataset(OpenCvDataset &&other) noexcept
       m_Mat(std::move(other.m_Mat)),
       m_labels(std::move(other.m_labels)),
       m_MatLabels(std::move(other.m_MatLabels)),
-      m_observations({})
+      m_observations(static_cast<int>(m_labels.size()))
 {
-    m_observations.insert(m_observations.end(), other.m_observations.begin(), other.m_observations.end());
+    const auto numberOfColumns = m_Data.size() / m_labels.size();
+    auto rowBegin = m_Data.data();
+    for (auto i = 0u; i < static_cast<size_t>(m_labels.size()); ++i)
+    {
+        m_observations[i] = Observation(rowBegin, numberOfColumns);
+        rowBegin += numberOfColumns;
+    }
+    //m_observations.insert(m_observations.end(), other.m_observations.begin(), other.m_observations.end());
     other.Clear();
 }
 
 OpenCvDataset::OpenCvDataset(OpenCvDataset &&first, OpenCvDataset &&second) noexcept
     : m_Data({}),
     m_labels({}),
-    m_observations({})
+    m_observations(static_cast<int>(first.m_labels.size()) + static_cast<int>(second.m_labels.size()))
 {
     m_Data.insert(m_Data.end(), first.m_Data.begin(), first.m_Data.end());
     m_Data.insert(m_Data.end(), second.m_Data.begin(), second.m_Data.end());
     m_labels.insert(m_labels.end(), first.m_labels.begin(), first.m_labels.end());
     m_labels.insert(m_labels.end(), second.m_labels.begin(), second.m_labels.end());
-    m_observations.insert(m_observations.end(), first.m_observations.begin(), first.m_observations.end());
-    m_observations.insert(m_observations.end(), second.m_observations.begin(), second.m_observations.end());
+    auto numberOfColumns = first.m_Data.size() / first.m_labels.size();
+    auto rowBegin = first.m_Data.data();
+    for (auto i = 0u; i < static_cast<size_t>(first.m_labels.size()); ++i)
+    {
+        m_observations[i] = Observation(rowBegin, numberOfColumns);
+        rowBegin += numberOfColumns;
+    }
+    numberOfColumns = second.m_Data.size() / second.m_labels.size();
+    rowBegin = second.m_Data.data();
+    for (auto i = 0u; i < static_cast<size_t>(second.m_labels.size()); ++i)
+    {
+        m_observations[first.m_labels.size()+i] = Observation(rowBegin, numberOfColumns);
+        rowBegin += numberOfColumns;
+    }
+    //m_observations.insert(m_observations.end(), first.m_observations.begin(), first.m_observations.end());
+    //m_observations.insert(m_observations.end(), second.m_observations.begin(), second.m_observations.end());
 
     m_Mat = cv::Mat(static_cast<int>(m_labels.size()), static_cast<int>(m_Data.size() / m_labels.size()), CV_TYPE, m_Data.data());
     m_MatLabels = cv::Mat(static_cast<int>(m_labels.size()), ColumnMatrixWidth, CV_LABEL_TYPE, m_labels.data());

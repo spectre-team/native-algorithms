@@ -73,6 +73,9 @@ SplittedOpenCvDataset DownsampledOpenCVDataset::getRandomSubset(Seed seed) const
     OpenCvDataset trainingDataset(std::move(positiveLabeledSplitted.trainingSet), std::move(negativeLabeledSplitted.trainingSet));
     OpenCvDataset testDataset(std::move(positiveLabeledSplitted.testSet), std::move(negativeLabeledSplitted.testSet));
     SplittedOpenCvDataset result(std::move(trainingDataset), std::move(testDataset));
+    RandomSplitter randomSplitter2(m_TrainingRate, seed);
+    SplittedOpenCvDataset positiveLabeledSplitted2 = randomSplitter2.split(positiveLabeledDataset);
+    SplittedOpenCvDataset negativeLabeledSplitted2 = randomSplitter2.split(negativeLabeledDataset);
     return result;
 }
 
