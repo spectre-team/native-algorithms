@@ -19,7 +19,7 @@ limitations under the License.
 
 namespace spectre::visualization
 {
-std::vector<double> HistogramEqualization::scaleData(const gsl::span<const double> intensities)
+std::vector<double> HistogramEqualization::scaleData(const gsl::span<const double> intensities) const
 {
     std::vector<double> roundedIntensities = spectre::core::functional::transform(intensities, [](double intensity) { return static_cast<int>(intensity + 0.5); });
     std::vector<uint8_t> intensitiesOccurances = countRepeatingValues(roundedIntensities);
@@ -33,7 +33,7 @@ std::vector<double> HistogramEqualization::scaleData(const gsl::span<const doubl
     return calculateNewHistogramData(roundedIntensities, cumulativeDistribution);
 }
 
-std::vector<uint8_t> HistogramEqualization::countRepeatingValues(const gsl::span<double> intensities)
+std::vector<uint8_t> HistogramEqualization::countRepeatingValues(const gsl::span<double> intensities) const
 {
     std::vector<uint8_t> histogram(256);
     for (int i = 0; i < intensities.size(); ++i) {
@@ -42,7 +42,7 @@ std::vector<uint8_t> HistogramEqualization::countRepeatingValues(const gsl::span
     return histogram;
 }
 
-std::vector<double> HistogramEqualization::calculateNewHistogramData(const gsl::span<double> intensities, const std::vector<uint8_t> cumulativeDistribution)
+std::vector<double> HistogramEqualization::calculateNewHistogramData(const gsl::span<const double> intensities, const std::vector<uint8_t> &cumulativeDistribution) const
 {
     size_t const size = intensities.size();
     std::vector<double> newIntensities(size);

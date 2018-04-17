@@ -31,19 +31,19 @@ public:
     /// </summary>
     /// <param name="intensities">Vector of floating point values representing intensities for each point on the heatmap.</param>
     /// <returns>Vector of scaled floating point values representing intensities for each point on the heatmap.</returns>
-    std::vector<double> scaleData(const gsl::span<const double> intensities) override;
+    std::vector<double> scaleData(const gsl::span<const double> intensities) const override;
     /// <summary>
     /// Method for counting repeating values in the vector.
     /// </summary>
     /// <param name="intensities">Vector of floating point values of intensities.</param>
     /// <returns>Vector which stores the number of occurrences of the intensity representing by index.</returns>
-    std::vector<uint8_t> countRepeatingValues(const gsl::span<double> intensities);
+    std::vector<uint8_t> countRepeatingValues(const gsl::span<double> intensities) const;
     /// <summary>
     /// Method for calculating new histogram data based on input vector of intensities and cumulative distribution.
     /// </summary>
     /// <param name="intensities">Vector of floating point values of intensities.</param>
     /// <param name="histogramMap">Map containing intensity value as a key and cumulative distribution as a value.</param>
     /// <returns>Vector of scaled floating point values representing intensities for each point on the heatmap.</returns>
-    std::vector<double> calculateNewHistogramData(const gsl::span<double> intensities, const std::vector<uint8_t> cumulativeDistribution);
+    std::vector<double> calculateNewHistogramData(const gsl::span<const double> intensities, const std::vector<uint8_t> &cumulativeDistribution) const;
 };
 }

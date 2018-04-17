@@ -36,14 +36,14 @@ public:
     /// </summary>
     /// <param name="probability">Determines the quantile.</param>
     /// <returns>Quantile value.</returns>
-    double calculateQuantile(const gsl::span<const double> intensities, const double probability);
+    double calculateQuantile(const gsl::span<const double> intensities, const double probability) const;
 
     /// <summary>
     /// Method for scaling data using suppression algorithm for contrast enhancement.
     /// </summary>
     /// <param name="intensities">Vector of floating point values representing intensities for each point on the heatmap.</param>
     /// <returns>Vector of scaled floating point values representing intensities for each point on the heatmap.</returns>
-    std::vector<double> scaleData(const gsl::span<const double> intensities) override;
+    std::vector<double> scaleData(const gsl::span<const double> intensities) const override;
 private:
     const double m_topPercent;
 };
