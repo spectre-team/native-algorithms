@@ -36,6 +36,7 @@ const unsigned int POPULATION_SIZE = 20u;
 const unsigned int INITIAL_FILLUP = 600u;
 const unsigned int ITERATION_NUMBER = 1u;
 const spectre::algorithm::genetic::Seed SEED = 454646;
+const std::string PATH = "C:/Users/regis/Desktop/MAGISTERKA_WYNIKI/with_validation_serious_test_data/";
 
 TEST(GeneticTrainingSetSelectionScenarioInitialization, initializes)
 {
@@ -55,7 +56,7 @@ protected:
 
 TEST_F(GeneticTrainingSetSelectionScenarioTest, executeScenario)
 {
-    EXPECT_NO_THROW(scenario.execute("test_serious.txt", "test_serious_report", POPULATION_SIZE));
+    EXPECT_NO_THROW(scenario.execute(PATH + "peptides-1-norm.txt", PATH + "test/test", POPULATION_SIZE, PATH + "peptides-2-norm.txt"));
 }
 
 }

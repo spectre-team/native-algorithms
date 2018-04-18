@@ -30,9 +30,34 @@ ConfusionMatrix::ConfusionMatrix(unsigned int truePositivesNumber,
     TruePositive(truePositivesNumber),
     TrueNegative(trueNegativesNumber),
     FalsePositive(falsePositivesNumber),
-    FalseNegative(falseNegativesNumber),
-    DiceIndex(2 * TruePositive / (2. * TruePositive + FalsePositive + FalseNegative))
+    FalseNegative(falseNegativesNumber)
 {
+    if (TruePositive + FalsePositive == 0)
+    {
+        FalseDiscoveryRate = 0;
+        PositivePredictiveValue = 0;
+    }
+    else
+    {
+        FalseDiscoveryRate = FalsePositive / double(TruePositive + FalsePositive);
+        PositivePredictiveValue = TruePositive / double(TruePositive + FalsePositive);
+    }
+    if (TruePositive + FalsePositive + FalseNegative == 0)
+    {
+        DiceIndex = 0;
+    }
+    else
+    {
+        DiceIndex = 2 * TruePositive / (2. * TruePositive + FalsePositive + FalseNegative);
+    }
+    if (TruePositive + TrueNegative + FalsePositive + FalseNegative == 0)
+    {
+        Accuracy = 0;
+    }
+    else
+    {
+        Accuracy = double(TruePositive + TrueNegative) / (TruePositive + TrueNegative + FalsePositive + FalseNegative);
+    }
 }
 
 ConfusionMatrix::ConfusionMatrix(const gsl::span<const Label> actual, const gsl::span<const Label> expected): ConfusionMatrix([&]()

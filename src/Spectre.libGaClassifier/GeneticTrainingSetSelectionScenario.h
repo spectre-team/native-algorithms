@@ -42,7 +42,7 @@ public:
         size_t maximalFillup = std::numeric_limits<size_t>::max(),
         unsigned int iterationsLimit = 100,
         double tolerance = 1e-6);
-        void execute(std::string filename, std::string raportFilename, unsigned int populationSize) const;
+    void execute(std::string filename, std::string raportFilename, unsigned int populationSize, std::string validationFilename = "") const;
 private:
     std::string m_Name;
     double m_TrainingSetSplitRate;

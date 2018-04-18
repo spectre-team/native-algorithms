@@ -67,6 +67,9 @@ public:
     /// <summary>
     /// The dice index.
     /// </summary>
-    const double DiceIndex;
+    double DiceIndex;
+    double Accuracy;
+    double FalseDiscoveryRate;
+    double PositivePredictiveValue;
 };
 }

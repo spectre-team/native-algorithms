@@ -60,6 +60,7 @@ DownsampledOpenCVDataset::DownsampledOpenCVDataset(OpenCvDataset data, size_t ma
 
 SplittedOpenCvDataset DownsampledOpenCVDataset::getRandomSubset(Seed seed) const
 {
+    //gets individual data for positive and negative data with the same amount of shuffled true values
     std::vector<bool> positiveLabeledBinaryData = getRandomFilter(m_PositiveLabeledData->size(), seed);
     std::vector<bool> negativeLabeledBinaryData = getRandomFilter(m_NegativeLabeledData->size(), seed);
 
@@ -73,9 +74,6 @@ SplittedOpenCvDataset DownsampledOpenCVDataset::getRandomSubset(Seed seed) const
     OpenCvDataset trainingDataset(std::move(positiveLabeledSplitted.trainingSet), std::move(negativeLabeledSplitted.trainingSet));
     OpenCvDataset testDataset(std::move(positiveLabeledSplitted.testSet), std::move(negativeLabeledSplitted.testSet));
     SplittedOpenCvDataset result(std::move(trainingDataset), std::move(testDataset));
-    RandomSplitter randomSplitter2(m_TrainingRate, seed);
-    SplittedOpenCvDataset positiveLabeledSplitted2 = randomSplitter2.split(positiveLabeledDataset);
-    SplittedOpenCvDataset negativeLabeledSplitted2 = randomSplitter2.split(negativeLabeledDataset);
     return result;
 }
 

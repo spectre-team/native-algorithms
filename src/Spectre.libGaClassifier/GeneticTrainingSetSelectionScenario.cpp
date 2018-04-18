@@ -57,20 +57,29 @@ GeneticTrainingSetSelectionScenario::GeneticTrainingSetSelectionScenario(std::st
 {
 }
 
-void GeneticTrainingSetSelectionScenario::execute(std::string filename, std::string raportFilename, unsigned int populationSize) const
+void GeneticTrainingSetSelectionScenario::execute(std::string filename, std::string raportFilename, unsigned int populationSize, std::string validationFilename) const
 {
+    //created datasets for classifier and for validation
     ClassifierFactory classifierFactory{};
     DatasetFactory datasetFactory{};
     OpenCvDataset dataset = datasetFactory.create(filename);
+    std::unique_ptr<OpenCvDataset> validationDataset;
+    if (validationFilename != "")
+    {
+        validationDataset = std::make_unique<OpenCvDataset>(datasetFactory.create(validationFilename));
+    }
+    //Downsampling of data and creating classifier
     DownsampledOpenCVDataset downsampled(std::move(dataset), 1000000, 0.7);
     Svm svm = classifierFactory.buildSvm(m_IterationsLimit, m_Tolerance);
 
     for (auto iter = 0u; iter < m_IterationNumber; iter++) {
+        //cross validation
         SplittedOpenCvDataset splittedOpenCvDataset = downsampled.getRandomSubset();
         RaportGenerator m_RaportwoGA(raportFilename + "_without_GA"
-            + "-popsize-" + std::to_string(populationSize) + "-iter-"
-            + std::to_string(iter), populationSize);
-        ClassifierFitnessFunction fitnessFunction(m_RaportwoGA, svm, splittedOpenCvDataset);
+            + "-popsize-" + std::to_string(populationSize), populationSize);
+        
+        //creating fitness function for normal classifier and training  + testing it with all the data
+        ClassifierFitnessFunction fitnessFunction(m_RaportwoGA, svm, splittedOpenCvDataset, validationDataset.get());
         std::vector<bool> individualData{};
         for (auto i = 0u; i < splittedOpenCvDataset.trainingSet.size(); i++)
         {
@@ -80,18 +89,22 @@ void GeneticTrainingSetSelectionScenario::execute(std::string filename, std::str
         fitnessFunction.operator()(individual);
 
         RaportGenerator m_RaportGA(raportFilename + "_with_GA"
-            + "-popsize-" + std::to_string(populationSize), populationSize);
+            + "-popsize-" + std::to_string(populationSize) + "-iter-"
+            + std::to_string(iter), populationSize);
+
+        //creating Genetic algorithm classifier
         GaClassifier gaClassifier = classifierFactory.buildGaClassifier(m_RaportGA, m_Name, m_TrainingSetSplitRate, m_MutationRate, m_BitSwapRate, m_PreservationRate,
             m_GenerationsNumber, m_PopulationSize, m_InitialFillup, m_Seed, m_MinimalFillup, m_MaximalFillup, m_IterationsLimit, m_Tolerance);
 
-        ClassifierFitnessFunction ff(m_RaportGA, gaClassifier, splittedOpenCvDataset);
+        //creating fitness function for GA and give all the training dataset to it
+        ClassifierFitnessFunction gaFitnessFunction(m_RaportGA, gaClassifier, splittedOpenCvDataset, validationDataset.get());
         std::vector<bool> individualData2{};
         for (auto i = 0u; i < splittedOpenCvDataset.trainingSet.size(); i++)
         {
             individualData2.push_back(true);
         }
         algorithm::genetic::Individual individual2(std::move(individualData2));
-        ff.operator()(individual2);
+        gaFitnessFunction.operator()(individual2);
     }
 }
 }
