@@ -37,7 +37,8 @@ public:
     /// </summary>
     /// <param name="classifier">The classifier.</param>
     /// <param name="data">The splitted data.</param>
-    ClassifierFitnessFunction(RaportGenerator& raport, const IClassifier& classifier, SplittedOpenCvDataset& data, const OpenCvDataset* independentValidation = nullptr);
+    ClassifierFitnessFunction(RaportGenerator& raport, const IClassifier& classifier, SplittedOpenCvDataset& data,
+        OpenCvDataset* independentValidation = nullptr, std::string dataFilename = "", RaportGenerator* finalRaport = nullptr);
     /// <summary>
     /// operator.
     /// </summary>
@@ -52,6 +53,7 @@ public:
     ConfusionMatrix getResultMatrix(std::vector<bool> individualData, const OpenCvDataset& data) const;
     virtual ~ClassifierFitnessFunction() = default;
 private:
+    RaportGenerator& m_Raport;
     /// <summary>
     /// The classifier.
     /// </summary>
@@ -60,7 +62,8 @@ private:
     /// The splitted data.
     /// </summary>
     const SplittedOpenCvDataset& m_Data;
-    RaportGenerator& m_Raport;
-    const OpenCvDataset* m_IndependentValidation;
+    OpenCvDataset* m_IndependentValidation;
+    RaportGenerator* m_FinalRaport;
+    std::string m_FullDataset;
 };
 }

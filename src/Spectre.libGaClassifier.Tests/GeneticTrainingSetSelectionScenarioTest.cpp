@@ -18,7 +18,6 @@ limitations under the License.
 */
 
 #include <string>
-#include "Spectre.libGenetic/DataTypes.h"
 #include "Spectre.libGaClassifier/GeneticTrainingSetSelectionScenario.h"
 #include <gtest/gtest.h>
 
@@ -35,13 +34,13 @@ const unsigned int GENERATIONS_NUMBER = 30u;
 const unsigned int POPULATION_SIZE = 20u;
 const unsigned int INITIAL_FILLUP = 600u;
 const unsigned int ITERATION_NUMBER = 1u;
-const spectre::algorithm::genetic::Seed SEED = 454646;
+//const spectre::algorithm::genetic::Seed SEED = 454646;
 const std::string PATH = "C:/Users/regis/Desktop/MAGISTERKA_WYNIKI/with_validation_serious_test_data/";
 
 TEST(GeneticTrainingSetSelectionScenarioInitialization, initializes)
 {
     EXPECT_NO_THROW(GeneticTrainingSetSelectionScenario(CLASSIFIER, TRAINING_SET_SPLIT_RATE, MUTATION_RATE, BIT_SWAP_RATE,
-        PRESERVATION_RATE, GENERATIONS_NUMBER, POPULATION_SIZE, INITIAL_FILLUP, ITERATION_NUMBER, SEED));
+        PRESERVATION_RATE, GENERATIONS_NUMBER, POPULATION_SIZE, INITIAL_FILLUP, ITERATION_NUMBER));
 }
 
 class GeneticTrainingSetSelectionScenarioTest : public ::testing::Test
@@ -49,7 +48,7 @@ class GeneticTrainingSetSelectionScenarioTest : public ::testing::Test
 public:
     GeneticTrainingSetSelectionScenarioTest()
         : scenario(CLASSIFIER, TRAINING_SET_SPLIT_RATE, MUTATION_RATE, BIT_SWAP_RATE, PRESERVATION_RATE,
-            GENERATIONS_NUMBER, POPULATION_SIZE, INITIAL_FILLUP, ITERATION_NUMBER, SEED) {}
+            GENERATIONS_NUMBER, POPULATION_SIZE, INITIAL_FILLUP, ITERATION_NUMBER) {}
 protected:
     GeneticTrainingSetSelectionScenario scenario;
 };

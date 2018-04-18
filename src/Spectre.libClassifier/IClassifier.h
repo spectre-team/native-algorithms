@@ -23,6 +23,7 @@ limitations under the License.
 #include "Spectre.libClassifier/Types.h"
 #include "Spectre.libDataset/Empty.h"
 #include <memory>
+#include "OpenCvDataset.h"
 
 namespace spectre::supervised
 {
@@ -38,7 +39,7 @@ public:
     /// </summary>
     /// <param name="dataset">The dataset.</param>
     /// <returns>void</returns>
-    virtual void Fit(LabeledDataset dataset) = 0;
+    virtual std::unique_ptr<OpenCvDataset> Fit(LabeledDataset dataset) = 0;
     /// <summary>
     /// Predicts labels on test set.
     /// </summary>

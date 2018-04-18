@@ -34,7 +34,7 @@ Svm::Svm(unsigned int iterationsLimit, double tolerance)
     m_Svm->setTermCriteria(termination);
 }
 
-void Svm::Fit(LabeledDataset dataset)
+std::unique_ptr<OpenCvDataset> Svm::Fit(LabeledDataset dataset)
 {
     auto sum = 0u;
     const auto positive = 1u;
@@ -55,6 +55,7 @@ void Svm::Fit(LabeledDataset dataset)
     const auto& data = asSupported(dataset);
     m_Svm->clear();
     m_Svm->train(data.getMatData(), cv::ml::ROW_SAMPLE, data.getMatLabels());
+    return nullptr;
 }
 
 std::vector<Label> Svm::Predict(LabeledDataset dataset) const

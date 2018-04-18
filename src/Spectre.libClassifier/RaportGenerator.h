@@ -34,6 +34,7 @@ public:
     void Write(const ConfusionMatrix& matrix,
         const std::vector<bool> individual,
         const ConfusionMatrix* validationResults = nullptr);
+    void WriteFinal(std::vector<bool> individual);
     ~RaportGenerator();
 private:
     std::ofstream m_File;

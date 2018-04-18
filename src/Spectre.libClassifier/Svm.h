@@ -44,7 +44,7 @@ public:
     /// </summary>
     /// <param name="dataset">The dataset.</param>
     /// <returns>void</returns>
-    void Fit(LabeledDataset dataset) override;
+    std::unique_ptr<OpenCvDataset> Fit(LabeledDataset dataset) override;
     /// <summary>
     /// Predicts labels on test set.
     /// </summary>

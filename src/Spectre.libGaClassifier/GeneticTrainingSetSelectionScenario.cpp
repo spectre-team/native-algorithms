@@ -23,6 +23,7 @@ limitations under the License.
 #include "Spectre.libClassifier/DatasetFactory.h"
 #include "Spectre.libClassifier/DownsampledOpenCVDataset.h"
 #include "ClassifierFitnessFunction.h"
+#include <time.h>
 
 namespace spectre::supervised
 {
@@ -59,6 +60,7 @@ GeneticTrainingSetSelectionScenario::GeneticTrainingSetSelectionScenario(std::st
 
 void GeneticTrainingSetSelectionScenario::execute(std::string filename, std::string raportFilename, unsigned int populationSize, std::string validationFilename) const
 {
+    srand(time(NULL));
     //created datasets for classifier and for validation
     ClassifierFactory classifierFactory{};
     DatasetFactory datasetFactory{};
@@ -71,8 +73,10 @@ void GeneticTrainingSetSelectionScenario::execute(std::string filename, std::str
     //Downsampling of data and creating classifier
     DownsampledOpenCVDataset downsampled(std::move(dataset), 1000000, 0.7);
     Svm svm = classifierFactory.buildSvm(m_IterationsLimit, m_Tolerance);
+    //RaportGenerator m_finalRaport(raportFilename + "_final_results", 0);
 
     for (auto iter = 0u; iter < m_IterationNumber; iter++) {
+        algorithm::genetic::Seed SEED = rand();
         //cross validation
         SplittedOpenCvDataset splittedOpenCvDataset = downsampled.getRandomSubset();
         RaportGenerator m_RaportwoGA(raportFilename + "_without_GA"
@@ -94,10 +98,12 @@ void GeneticTrainingSetSelectionScenario::execute(std::string filename, std::str
 
         //creating Genetic algorithm classifier
         GaClassifier gaClassifier = classifierFactory.buildGaClassifier(m_RaportGA, m_Name, m_TrainingSetSplitRate, m_MutationRate, m_BitSwapRate, m_PreservationRate,
-            m_GenerationsNumber, m_PopulationSize, m_InitialFillup, m_Seed, m_MinimalFillup, m_MaximalFillup, m_IterationsLimit, m_Tolerance);
+            m_GenerationsNumber, m_PopulationSize, m_InitialFillup, SEED, m_MinimalFillup, m_MaximalFillup, m_IterationsLimit, m_Tolerance);
 
         //creating fitness function for GA and give all the training dataset to it
         ClassifierFitnessFunction gaFitnessFunction(m_RaportGA, gaClassifier, splittedOpenCvDataset, validationDataset.get());
+
+        //ClassifierFitnessFunction gaFitnessFunction(m_RaportGA, gaClassifier, splittedOpenCvDataset, validationDataset.get(), filename, &m_finalRaport);
         std::vector<bool> individualData2{};
         for (auto i = 0u; i < splittedOpenCvDataset.trainingSet.size(); i++)
         {

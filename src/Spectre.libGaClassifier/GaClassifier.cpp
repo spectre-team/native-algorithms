@@ -61,7 +61,7 @@ GaClassifier::GaClassifier(RaportGenerator& raport,
 {
 }
 
-void GaClassifier::Fit(LabeledDataset dataset)
+std::unique_ptr<OpenCvDataset> GaClassifier::Fit(LabeledDataset dataset)
 {
     const auto& data = asSupported(dataset);
     RandomSplitter splitter(m_TrainingDatasetSizeRate, m_Seed);
@@ -79,9 +79,11 @@ void GaClassifier::Fit(LabeledDataset dataset)
     auto bestIndividual = finalGeneration[0];
 
     auto individualData = bestIndividual.getData();
+    std::unique_ptr<OpenCvDataset> result = std::make_unique<OpenCvDataset>(getFilteredOpenCvDataset(splittedDataset.trainingSet, individualData));
     OpenCvDataset bestDataset = getFilteredOpenCvDataset(splittedDataset.trainingSet, individualData);
 
     m_Classifier->Fit(bestDataset);
+    return result;
 }
 
 std::vector<Label> GaClassifier::Predict(LabeledDataset dataset) const

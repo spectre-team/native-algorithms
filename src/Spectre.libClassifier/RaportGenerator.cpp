@@ -92,8 +92,27 @@ void RaportGenerator::Write(const ConfusionMatrix& matrix,
     omp_unset_lock(&m_WriteLock);
 }
 
+void RaportGenerator::WriteFinal(std::vector<bool> individual)
+{
+    omp_set_lock(&m_WriteLock);
+    for (bool value: individual)
+    {
+        if (value)
+        {
+            m_File << 1 << m_Separator;
+        }
+        else
+        {
+            m_File << 0 << m_Separator;
+        }
+    }
+    m_File << "\n";
+    m_File.flush();
+    omp_unset_lock(&m_WriteLock);
+}
 
-RaportGenerator::~RaportGenerator()
+
+    RaportGenerator::~RaportGenerator()
 {
     m_File.close();
     omp_destroy_lock(&m_WriteLock);
