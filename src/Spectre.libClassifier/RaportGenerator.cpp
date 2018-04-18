@@ -30,20 +30,33 @@ RaportGenerator::RaportGenerator(std::string filename, uint populationSize, cons
 {
     m_File.open(filename + ".csv");
     m_File << "generation" << m_Separator;
+    m_File << "number of observations used" << m_Separator;
+    m_File << "percent of observations used" << m_Separator;
+    m_File << "Dice" << m_Separator;
+    m_File << "Accuracy" << m_Separator;
+    m_File << "False Discovery Rate" << m_Separator;
+    m_File << "Positive Predictive Value" << m_Separator;
     m_File << "true positives" << m_Separator;
     m_File << "true negatives" << m_Separator;
     m_File << "false positives" << m_Separator;
     m_File << "false negatives" << m_Separator;
-    m_File << "Dice" << m_Separator;
-    m_File << "number of observations used" << m_Separator;
-    m_File << "percent of observations used" << m_Separator;
+
+    m_File << "Dice - validation" << m_Separator;
+    m_File << "Accuracy - validation" << m_Separator;
+    m_File << "False Discovery Rate - validation" << m_Separator;
+    m_File << "Positive Predictive Value - validation" << m_Separator;
+    m_File << "true positives - validation" << m_Separator;
+    m_File << "true negatives - validation" << m_Separator;
+    m_File << "false positives - validation" << m_Separator;
+    m_File << "false negatives - validation" << m_Separator;
+
     m_File << "\n";
     m_File.flush();
     omp_init_lock(&m_WriteLock);
 }
 
 void RaportGenerator::Write(const ConfusionMatrix& matrix,
-    const std::vector<bool> individual)
+    const std::vector<bool> individual, const ConfusionMatrix* validationResults)
 {
     auto count = 0u;
     for (auto bit : individual)
@@ -53,13 +66,27 @@ void RaportGenerator::Write(const ConfusionMatrix& matrix,
 
     omp_set_lock(&m_WriteLock);
     m_File << m_IndividualsProcessed++ / m_PopulationSize << m_Separator;
+    m_File << count << m_Separator;
+    m_File << static_cast<double>(count) / individual.size() << m_Separator;
+    m_File << matrix.DiceIndex << m_Separator;
+    m_File << matrix.Accuracy << m_Separator;
+    m_File << matrix.FalseDiscoveryRate << m_Separator;
+    m_File << matrix.PositivePredictiveValue << m_Separator;
     m_File << matrix.TruePositive << m_Separator;
     m_File << matrix.TrueNegative << m_Separator;
     m_File << matrix.FalsePositive << m_Separator;
     m_File << matrix.FalseNegative << m_Separator;
-    m_File << matrix.DiceIndex << m_Separator;
-    m_File << count << m_Separator;
-    m_File << static_cast<double>(count) / individual.size() << m_Separator;
+    if (validationResults != nullptr)
+    {
+        m_File << validationResults->DiceIndex << m_Separator;
+        m_File << validationResults->Accuracy << m_Separator;
+        m_File << validationResults->FalseDiscoveryRate << m_Separator;
+        m_File << validationResults->PositivePredictiveValue << m_Separator;
+        m_File << validationResults->TruePositive << m_Separator;
+        m_File << validationResults->TrueNegative << m_Separator;
+        m_File << validationResults->FalsePositive << m_Separator;
+        m_File << validationResults->FalseNegative << m_Separator;
+    }
     m_File << "\n";
     m_File.flush();
     omp_unset_lock(&m_WriteLock);

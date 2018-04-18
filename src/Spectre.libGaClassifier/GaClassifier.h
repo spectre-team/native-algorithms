@@ -23,12 +23,11 @@ limitations under the License.
 #include "Spectre.libClassifier/IClassifier.h"
 #include "Spectre.libGenetic/GeneticAlgorithmFactory.h"
 #include "Spectre.libClassifier/OpenCvDataset.h"
+#include "Spectre.libClassifier/RaportGenerator.h"
 
 namespace spectre::supervised
 {
-    class RaportGenerator;
-
-    /// <summary>
+/// <summary>
 /// Class that searches best classifier via Genentic Algorithm.
 /// </summary>
 class GaClassifier : public IClassifier

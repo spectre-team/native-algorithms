@@ -37,7 +37,7 @@ public:
     /// </summary>
     /// <param name="classifier">The classifier.</param>
     /// <param name="data">The splitted data.</param>
-    ClassifierFitnessFunction(RaportGenerator& raport, const IClassifier& classifier, SplittedOpenCvDataset& data);
+    ClassifierFitnessFunction(RaportGenerator& raport, const IClassifier& classifier, SplittedOpenCvDataset& data, const OpenCvDataset* independentValidation = nullptr);
     /// <summary>
     /// operator.
     /// </summary>
@@ -61,5 +61,6 @@ private:
     /// </summary>
     const SplittedOpenCvDataset& m_Data;
     RaportGenerator& m_Raport;
+    const OpenCvDataset* m_IndependentValidation;
 };
 }

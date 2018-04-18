@@ -27,10 +27,11 @@ limitations under the License.
 
 namespace spectre::supervised
 {
-ClassifierFitnessFunction::ClassifierFitnessFunction(RaportGenerator& raport, const IClassifier& classifier, SplittedOpenCvDataset& data):
+ClassifierFitnessFunction::ClassifierFitnessFunction(RaportGenerator& raport, const IClassifier& classifier, SplittedOpenCvDataset& data, const OpenCvDataset* independentValidation):
     m_Raport(raport),
     m_Classifier(classifier),
-    m_Data(data)
+    m_Data(data),
+    m_IndependentValidation(independentValidation)
 {
 }
 
@@ -53,7 +54,13 @@ ConfusionMatrix ClassifierFitnessFunction::getResultMatrix(std::vector<bool> ind
     classifierDuplicate->Fit(data);
     const auto predictions = classifierDuplicate->Predict((m_Data.testSet));
     ConfusionMatrix confusions(predictions, m_Data.testSet.GetSampleMetadata());
-    m_Raport.Write(confusions, individualData);
+    std::unique_ptr<ConfusionMatrix> validationConfusions;
+    if (m_IndependentValidation != nullptr)
+    {
+        const auto validationPredictions = classifierDuplicate->Predict(*m_IndependentValidation);
+        validationConfusions = std::make_unique<ConfusionMatrix>(validationPredictions, m_IndependentValidation->GetSampleMetadata());
+    }
+    m_Raport.Write(confusions, individualData, validationConfusions.get());
     return confusions;
 }
 
