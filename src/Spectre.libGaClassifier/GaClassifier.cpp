@@ -73,7 +73,7 @@ std::unique_ptr<OpenCvDataset> GaClassifier::Fit(LabeledDataset dataset)
 
     auto fitnessFunction = std::make_unique<ClassifierFitnessFunction>(m_Raport, *m_Classifier, splittedDataset);
     auto algorithm = m_GaFactory.BuildDefault(std::move(fitnessFunction), m_Seed, std::move(conditions));
-    algorithm::genetic::GenerationFactory generationFactory(m_NumberOfGenerations, trainingSetSize, m_InitialIndividualFillup);
+    algorithm::genetic::GenerationFactory generationFactory(m_PopulationSize, trainingSetSize, m_InitialIndividualFillup);
     algorithm::genetic::Generation initialGeneration = generationFactory(m_Seed);
     auto finalGeneration = algorithm->evolve(std::move(initialGeneration));
     auto bestIndividual = finalGeneration[0];

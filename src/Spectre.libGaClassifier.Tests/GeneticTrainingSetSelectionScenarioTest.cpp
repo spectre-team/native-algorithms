@@ -27,13 +27,14 @@ using namespace spectre::supervised;
 
 const std::string CLASSIFIER = "svm";
 const double TRAINING_SET_SPLIT_RATE = 0.7;
-const double MUTATION_RATE = 0.5;
+//const double MUTATION_RATE = 0.5;
+const double MUTATION_RATE = 0.9;
 const double BIT_SWAP_RATE = 0.5;
 const double PRESERVATION_RATE = 0.5;
-const unsigned int GENERATIONS_NUMBER = 30u;
+const unsigned int GENERATIONS_NUMBER = 50u;
 const unsigned int POPULATION_SIZE = 20u;
-const unsigned int INITIAL_FILLUP = 600u;
-const unsigned int ITERATION_NUMBER = 1u;
+const unsigned int INITIAL_FILLUP = 500u;
+const unsigned int ITERATION_NUMBER = 10u;
 //const spectre::algorithm::genetic::Seed SEED = 454646;
 const std::string PATH = "C:/Users/regis/Desktop/MAGISTERKA_WYNIKI/with_validation_serious_test_data/";
 
@@ -55,7 +56,7 @@ protected:
 
 TEST_F(GeneticTrainingSetSelectionScenarioTest, executeScenario)
 {
-    EXPECT_NO_THROW(scenario.execute(PATH + "peptides-1-norm.txt", PATH + "test/test", POPULATION_SIZE, PATH + "peptides-2-norm.txt"));
+    EXPECT_NO_THROW(scenario.execute(PATH + "peptides-1-norm.txt", PATH + "MUTATION_RATE-0.9/test", POPULATION_SIZE, PATH + "peptides-2-norm.txt"));
 }
 
 }
