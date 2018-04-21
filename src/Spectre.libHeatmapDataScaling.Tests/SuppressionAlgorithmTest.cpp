@@ -26,48 +26,48 @@ using namespace spectre::visualization;
 namespace
 {
     class SuppressionAlgorithmTest : public ::testing::Test
-    {
-    public:
+	{
+	public:
         SuppressionAlgorithmTest() : suppressionAlgorithm(), parametrizedSuppressionAlgorithm(0.05) {}
-    protected:
-        SuppressionAlgorithm suppressionAlgorithm;
-        SuppressionAlgorithm parametrizedSuppressionAlgorithm;
-        std::vector<double> testIntensities;
-        void SetUp() override
-        {
+	protected:
+		SuppressionAlgorithm suppressionAlgorithm;
+		SuppressionAlgorithm parametrizedSuppressionAlgorithm;
+		std::vector<double> testIntensities;
+		void SetUp() override
+		{
             testIntensities = { 3.2, 0.0, 1.23, 1.23 };
-        }
-    };
+		}
+	};
     
-    TEST_F(SuppressionAlgorithmTest, returns_scaled_intensities)
-    {
-        auto result = suppressionAlgorithm.scaleData(testIntensities);
+	TEST_F(SuppressionAlgorithmTest, returns_scaled_intensities)
+	{
+		auto result = suppressionAlgorithm.scaleData(testIntensities);
 		std::vector<double> expected = { 3.14, 0.0, 1.25, 1.25 };
 		for (auto i = 0; i < 4; i++)
 		{
-			EXPECT_NEAR(result[i], expected[i], 2);
+            EXPECT_NEAR(result[i], expected[i], 2);
 		}
 	}
 
-    TEST_F(SuppressionAlgorithmTest, returns_correct_data_size)
-    {
-        EXPECT_EQ(suppressionAlgorithm.scaleData(testIntensities).size(), testIntensities.size());
-        EXPECT_EQ(parametrizedSuppressionAlgorithm.scaleData(testIntensities).size(), testIntensities.size());
-    }
+	TEST_F(SuppressionAlgorithmTest, returns_correct_data_size)
+	{
+		EXPECT_EQ(suppressionAlgorithm.scaleData(testIntensities).size(), testIntensities.size());
+		EXPECT_EQ(parametrizedSuppressionAlgorithm.scaleData(testIntensities).size(), testIntensities.size());
+	}
 
-    TEST_F(SuppressionAlgorithmTest, returns_calculated_quantile)
-    {
-        auto quantile = suppressionAlgorithm.calculateQuantile(testIntensities, 0.99);
+	TEST_F(SuppressionAlgorithmTest, returns_calculated_quantile)
+	{
+		auto quantile = suppressionAlgorithm.calculateQuantile(testIntensities, 0.99);
 		EXPECT_NEAR(quantile, 3.14, 2);
-    }
+	}
 
-    TEST_F(SuppressionAlgorithmTest, results_scaled_data_for_given_top_percent)
-    {
-        auto result = parametrizedSuppressionAlgorithm.scaleData(testIntensities);
+	TEST_F(SuppressionAlgorithmTest, results_scaled_data_for_given_top_percent)
+	{
+		auto result = parametrizedSuppressionAlgorithm.scaleData(testIntensities);
 		std::vector<double> expected = { 2.90, 0.0, 1.35, 1.35 };
 		for(auto i = 0; i < 4; i++)
 		{
-			EXPECT_NEAR(result[i], expected[i], 2);
+            EXPECT_NEAR(result[i], expected[i], 2);
 		}
-    }
+	}
 }
