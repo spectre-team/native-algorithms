@@ -22,6 +22,9 @@ limitations under the License.
 #include "Spectre.libClassifier/ObservationExtractor.h"
 
 namespace spectre::supervised {
+ObservationExtractor::ObservationExtractor(): m_Data(nullptr)
+{
+}
 
 ObservationExtractor::ObservationExtractor(const DataPointer data): m_Data(data)
 {

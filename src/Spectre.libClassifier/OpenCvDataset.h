@@ -42,6 +42,12 @@ public:
     /// <summary>
     /// Initializes a new instance of the <see cref="OpenCvDataset"/> class.
     /// </summary>
+    /// <param name="first">The first dataset.</param>
+    /// <param name="second">The second dataset.</param>
+    OpenCvDataset(OpenCvDataset &&first, OpenCvDataset &&second) noexcept;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="OpenCvDataset"/> class.
+    /// </summary>
     /// <param name="data">The data.</param>
     /// <param name="labels">The labels.</param>
     OpenCvDataset(gsl::span<const DataType> data, gsl::span<const Label> labels);
@@ -80,6 +86,11 @@ public:
     /// </summary>
     /// <returns></returns>
     gsl::span<const Label> GetSampleMetadata() const override;
+    /// <summary>
+    /// Clears values of this object.
+    /// </summary>
+    /// <returns></returns>
+    void Clear();
 
     /// <summary>
     /// Number of elements in dataset.

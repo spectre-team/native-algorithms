@@ -36,6 +36,10 @@ public:
     /// <summary>
     /// Initializes a new instance of the <see cref="ObservationExtractor"/> class.
     /// </summary>
+    explicit ObservationExtractor();
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ObservationExtractor"/> class.
+    /// </summary>
     /// <param name="data">The data.</param>
     explicit ObservationExtractor(const DataPointer data);
     /// <summary>
