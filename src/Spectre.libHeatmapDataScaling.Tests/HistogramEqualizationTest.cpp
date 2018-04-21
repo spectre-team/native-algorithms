@@ -19,8 +19,10 @@ limitations under the License.
 
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
+#include "Spectre.libException/ArgumentOutOfRangeException.h"
 #include "Spectre.libHeatmapDataScaling/HistogramEqualization.h"
 
+using namespace spectre::core::exception;
 using namespace spectre::visualization;
 
 namespace
@@ -36,9 +38,15 @@ namespace
         }
     };
 
+	TEST_F(HistogramEqualizationTest, throw_when_data_out_of_range)
+	{
+		std::vector<double> outOfRangeIntensities = { -3.0, 3.0, 5.0, 260 };
+		EXPECT_THROW(histogramEqualization.scaleData(outOfRangeIntensities), ArgumentOutOfRangeException<double>);
+	}
+
     TEST_F(HistogramEqualizationTest, returns_counted_repeating_values)
     {
-        std::vector<double> vectorContainingRepeatingValues = { 1.0, 2.0, 1.0, 5.0, 2.0, 1.0 };
+        std::vector<uint8_t> vectorContainingRepeatingValues = { 1, 2, 1, 5, 2, 1 };
         auto result = histogramEqualization.countRepeatingValues(vectorContainingRepeatingValues);
         EXPECT_EQ(result[1], 3);
         EXPECT_EQ(result[2], 2);
@@ -49,7 +57,7 @@ namespace
 
 	TEST_F(HistogramEqualizationTest, returns_correct_size_of_repeating_values)
 	{
-		std::vector<double> vectorContainingRepeatingValues = { 1.0, 2.0, 1.0, 5.0, 2.0, 1.0 };
+		std::vector<uint8_t> vectorContainingRepeatingValues = { 1, 2, 1, 5, 2, 1 };
 		auto result = histogramEqualization.countRepeatingValues(vectorContainingRepeatingValues);
 		EXPECT_EQ(result.size(), 256);
 	}
@@ -68,8 +76,8 @@ namespace
 
     TEST_F(HistogramEqualizationTest, calculates_new_histogram_data)
     {
-        std::vector<double> intensitiesForCalculatingNewDataTest = { 0.0, 1.0, 1.0 };
-        std::vector<uint8_t> cumulativeDistribution(256, 3);
+        std::vector<uint8_t> intensitiesForCalculatingNewDataTest = { 0, 1, 1 };
+        std::vector<unsigned int> cumulativeDistribution(256, 3);
         cumulativeDistribution[0] = 1;
         cumulativeDistribution[1] = 3;
         auto result = histogramEqualization.calculateNewHistogramData(intensitiesForCalculatingNewDataTest, cumulativeDistribution);

@@ -42,8 +42,12 @@ namespace
     TEST_F(SuppressionAlgorithmTest, returns_scaled_intensities)
     {
         auto result = suppressionAlgorithm.scaleData(testIntensities);
-        EXPECT_THAT(result, testing::ContainerEq(std::vector<double>{ 3.1408999999999994, 0.0, 1.2531440033111532, 1.2531440033111532 }));
-    }
+		std::vector<double> expected = { 3.14, 0.0, 1.25, 1.25 };
+		for (auto i = 0; i < 4; i++)
+		{
+			EXPECT_NEAR(result[i], expected[i], 2);
+		}
+	}
 
     TEST_F(SuppressionAlgorithmTest, returns_correct_data_size)
     {
@@ -54,12 +58,16 @@ namespace
     TEST_F(SuppressionAlgorithmTest, returns_calculated_quantile)
     {
         auto quantile = suppressionAlgorithm.calculateQuantile(testIntensities, 0.99);
-        EXPECT_EQ(quantile, 3.1408999999999994);
+		EXPECT_NEAR(quantile, 3.14, 2);
     }
 
     TEST_F(SuppressionAlgorithmTest, results_scaled_data_for_given_top_percent)
     {
         auto result = parametrizedSuppressionAlgorithm.scaleData(testIntensities);
-        EXPECT_THAT(result, testing::ContainerEq(std::vector<double>{ 2.9044999999999992, 0.0, 1.3551385780685148, 1.3551385780685148 }));
+		std::vector<double> expected = { 2.90, 0.0, 1.35, 1.35 };
+		for(auto i = 0; i < 4; i++)
+		{
+			EXPECT_NEAR(result[i], expected[i], 2);
+		}
     }
 }
