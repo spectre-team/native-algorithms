@@ -38,10 +38,16 @@ namespace
         }
     };
 
-	TEST_F(HistogramEqualizationTest, throw_when_data_out_of_range)
+	TEST_F(HistogramEqualizationTest, throw_when_data_out_of_max_range)
 	{
-        std::vector<double> outOfRangeIntensities = { -3.0, 3.0, 5.0, 260 };
+        std::vector<double> outOfRangeIntensities = { 0.0, 3.0, 5.0, 260 };
         EXPECT_THROW(histogramEqualization.scaleData(outOfRangeIntensities), ArgumentOutOfRangeException<double>);
+	}
+
+	TEST_F(HistogramEqualizationTest, throw_when_data_out_of_min_range)
+	{
+		std::vector<double> outOfRangeIntensities = { -3.0, 3.0, 5.0, 260 };
+		EXPECT_THROW(histogramEqualization.scaleData(outOfRangeIntensities), ArgumentOutOfRangeException<double>);
 	}
 
 	TEST_F(HistogramEqualizationTest, returns_counted_repeating_values)
