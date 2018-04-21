@@ -48,6 +48,22 @@ OpenCvDataset::OpenCvDataset(OpenCvDataset &&other) noexcept
     other.m_observations.clear();
 }
 
+OpenCvDataset::OpenCvDataset(OpenCvDataset &&first, OpenCvDataset &&second) noexcept
+    : m_Data(std::move(first.m_Data)),
+    m_labels(std::move(first.m_labels)),
+    m_observations(std::move(first.m_observations))
+{
+    m_Data.insert(m_Data.end(), second.m_Data.begin(), second.m_Data.end());
+    m_labels.insert(m_labels.end(), second.m_labels.begin(), second.m_labels.end());
+    m_observations.insert(m_observations.end(), second.m_observations.begin(), second.m_observations.end());
+
+    m_Mat = cv::Mat(static_cast<int>(m_labels.size()), static_cast<int>(m_Data.size() / m_labels.size()), CV_TYPE, m_Data.data());
+    m_MatLabels = cv::Mat(static_cast<int>(m_labels.size()), ColumnMatrixWidth, CV_LABEL_TYPE, m_labels.data());
+
+    first.Clear();
+    second.Clear();
+}
+
 OpenCvDataset::OpenCvDataset(gsl::span<const DataType> data, gsl::span<const Label> labels):
     m_Data(data.begin(), data.end()),
     m_labels(labels.begin(), labels.end()),
@@ -120,6 +136,15 @@ gsl::span<const Observation> OpenCvDataset::GetData() const
 gsl::span<const Label> OpenCvDataset::GetSampleMetadata() const
 {
     return m_labels;
+}
+
+void OpenCvDataset::Clear()
+{
+    m_Data.clear();
+    m_Mat.release();
+    m_labels.clear();
+    m_MatLabels.release();
+    m_observations.clear();
 }
 
 size_t OpenCvDataset::size() const

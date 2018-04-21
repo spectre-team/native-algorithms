@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DownsampledOpenCVDataset.cpp" />
     <ClCompile Include="EmptyOpenCvDatasetException.cpp" />
     <ClCompile Include="ExcessiveTrainingRateException.cpp" />
     <ClCompile Include="InsufficientDataException.cpp" />
@@ -156,6 +157,9 @@
   <ItemGroup>
     <ClInclude Include="ConfusionMatrix.h" />
     <ClInclude Include="DatasetFilter.h">
+      <SubType>Header Files</SubType>
+    </ClInclude>
+    <ClInclude Include="DownsampledOpenCVDataset.h">
       <SubType>Header Files</SubType>
     </ClInclude>
     <ClInclude Include="EmptyOpenCvDatasetException.h" />

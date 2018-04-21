@@ -63,6 +63,9 @@
     <ClCompile Include="InsufficientDataException.cpp">
       <Filter>Source Files\Exceptions</Filter>
     </ClCompile>
+    <ClCompile Include="DownsampledOpenCVDataset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenCvDataset.h">
@@ -114,6 +117,9 @@
       <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="DatasetFilter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DownsampledOpenCVDataset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
