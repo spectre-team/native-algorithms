@@ -142,6 +142,9 @@
     <ClCompile Include="HistogramEqualizationTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Spectre.libException\Spectre.libException.vcxproj">
+      <Project>{7417bf00-028b-4797-b58a-6058ca338493}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Spectre.libHeatmapDataScaling\Spectre.libHeatmapDataScaling.vcxproj">
       <Project>{6b7bf168-e96c-44d6-adb7-cade77e2a654}</Project>
     </ProjectReference>
