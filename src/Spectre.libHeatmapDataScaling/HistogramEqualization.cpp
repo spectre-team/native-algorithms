@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+#include "Spectre.libException/ArgumentOutOfRangeException.h"
 #include "Spectre.libFunctional/Transform.h"
 #include "Spectre.libHeatmapDataScaling/HistogramEqualization.h"
 
@@ -21,11 +22,22 @@ namespace spectre::visualization
 {
 std::vector<double> HistogramEqualization::scaleData(const gsl::span<const double> intensities) const
 {
-    std::vector<double> roundedIntensities = spectre::core::functional::transform(intensities, [](double intensity) { return static_cast<int>(intensity + 0.5); });
-    std::vector<uint8_t> intensitiesOccurances = countRepeatingValues(roundedIntensities);
-    std::vector<uint8_t> cumulativeDistribution = std::accumulate(intensitiesOccurances.begin(), intensitiesOccurances.end(), cumulativeDistribution, [](std::vector<uint8_t> accumulator, uint8_t intensityOccurences)
+	const auto minIntensitiesRange = *min_element(std::begin(intensities), std::end(intensities));
+	const auto maxIntensitiesRange = *max_element(std::begin(intensities), std::end(intensities));
+	if (minIntensitiesRange < 0)
+	{
+		throw core::exception::ArgumentOutOfRangeException<double>("minIntensitiesRange", 0, 255, minIntensitiesRange);
+	}
+	if (maxIntensitiesRange > 255)
+	{
+		throw core::exception::ArgumentOutOfRangeException<double>("maxIntensitiesRange", 0, 255, maxIntensitiesRange);
+	}
+
+	std::vector<uint8_t> roundedIntensities = spectre::core::functional::transform<double, uint8_t>(intensities, [](double intensity) { return static_cast<uint8_t>(intensity + 0.5); });
+    std::vector<unsigned int> intensitiesOccurences = countRepeatingValues(roundedIntensities);
+	const std::vector<unsigned int> cumulativeDistribution = std::accumulate(intensitiesOccurences.begin(), intensitiesOccurences.end(), std::vector<unsigned int>(), [](std::vector<unsigned int> accumulator, unsigned int intensityOccurences)
     {
-            if (accumulator.size() == 0)
+            if (accumulator.empty())
                 accumulator.push_back(intensityOccurences);
             else accumulator.push_back(accumulator[accumulator.size() - 1] + intensityOccurences);
             return accumulator;
@@ -33,24 +45,24 @@ std::vector<double> HistogramEqualization::scaleData(const gsl::span<const doubl
     return calculateNewHistogramData(roundedIntensities, cumulativeDistribution);
 }
 
-std::vector<uint8_t> HistogramEqualization::countRepeatingValues(const gsl::span<double> intensities) const
+std::vector<unsigned int> HistogramEqualization::countRepeatingValues(const gsl::span<uint8_t> intensities) const
 {
-    std::vector<uint8_t> histogram(256);
+    std::vector<unsigned int> histogram(intensitiesRange + 1);
     for (int i = 0; i < intensities.size(); ++i) {
-        histogram[static_cast<uint8_t>(intensities[i])]++;
+        ++histogram[static_cast<unsigned long>(intensities[i])];
     }
     return histogram;
 }
 
-std::vector<double> HistogramEqualization::calculateNewHistogramData(const gsl::span<const double> intensities, const std::vector<uint8_t> &cumulativeDistribution) const
+std::vector<double> HistogramEqualization::calculateNewHistogramData(const gsl::span<const uint8_t> intensities, const std::vector<unsigned int> &cumulativeDistribution) const
 {
-    size_t const size = intensities.size();
+    const size_t size = intensities.size();
     std::vector<double> newIntensities(size);
-    const uint8_t minCumulativeDistributionValue = *min_element(std::begin(cumulativeDistribution), std::end(cumulativeDistribution));
+    const unsigned int minCumulativeDistributionValue = *min_element(std::begin(cumulativeDistribution), std::end(cumulativeDistribution));
     for (size_t i = 0; i < size; i++)
     {
-        newIntensities[i] = round(((static_cast<double>(cumulativeDistribution[static_cast<int>(intensities[i])]) - minCumulativeDistributionValue) /
-            (size - minCumulativeDistributionValue)) * 255);
+	    const double cumulativeDistributionValue = static_cast<double>(cumulativeDistribution[static_cast<int>(intensities[i])]);
+		newIntensities[i] = calculateNewIntensity(cumulativeDistributionValue, minCumulativeDistributionValue, size);
     }
     return newIntensities;
 }
