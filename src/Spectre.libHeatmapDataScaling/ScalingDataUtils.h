@@ -21,9 +21,9 @@ limitations under the License.
 namespace spectre::visualization
 {
 /// <summary>
-/// Method for data normalization to the given ranges.
+/// Method for data scaling data to the given ranges.
 /// </summary>
 /// <param name="intensities">Vector of floating point values representing data for scaling.</param>
-/// <returns>Vector of normalized floating point values representing scaled data.</returns>
-std::vector<double> normalizeData(const gsl::span<double> intensities, const int minIntensityRange = 0, const int maxIntensityRange = 255);
+/// <returns>Vector of floating point values representing scaled data.</returns>
+std::vector<double> scaleDataToRange(const gsl::span<double> intensities, const int minIntensityRange = 0, const int maxIntensityRange = 255);
 }
