@@ -21,7 +21,7 @@ limitations under the License.
 #include "Common/DataTypes.h"
 
 
-namespace spectre::unsupervised::gmm
+namespace spectre::algorithm::peakfinder
 {
     /// <summary>
     /// Calculates qualities of peaks.

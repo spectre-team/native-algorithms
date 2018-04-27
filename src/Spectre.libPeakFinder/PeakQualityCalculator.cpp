@@ -20,7 +20,7 @@ limitations under the License.
 #include "PeakQualityCalculator.h"
 
 
-namespace spectre::unsupervised::gmm
+namespace spectre::algorithm::peakfinder
 {
     Data PeakQualityCalculator::CalculatePeakQualities(const DataView& peaksIntensities, const DataView& valleysIntensities)
     {
