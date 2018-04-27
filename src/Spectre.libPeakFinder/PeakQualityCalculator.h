@@ -32,7 +32,7 @@ namespace spectre::algorithm::peakfinder
         /// <summary>
         /// Determines qualities of peaks.
         /// </summary>
-        /// <param name="peaksIntensities">Container of intensities of peaks.</param> // TODO Adjust this
+        /// <param name="peaksIntensities">Container of intensities of peaks.</param>
         /// <param name="valleysIntensities">Container of intensities of valleys.</param>
         /// <returns>Container of qualities for peaks, index-aligned with container of peak intensities.</returns>
         Data CalculatePeakQualities(const DataView& peaksIntensities, const DataView& valleysIntensities);
