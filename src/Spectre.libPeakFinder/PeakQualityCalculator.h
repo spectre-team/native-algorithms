@@ -23,9 +23,18 @@ limitations under the License.
 
 namespace spectre::unsupervised::gmm
 {
+    /// <summary>
+    /// Calculates qualities of peaks.
+    /// </summary>
     class PeakQualityCalculator
     {
     public:
-        static Data CalculatePeakQualities(const DataView& peaksIntensities, const DataView& valleysIntensities);
+        /// <summary>
+        /// Determines qualities of peaks.
+        /// </summary>
+        /// <param name="peaksIntensities">Container of intensities of peaks.</param> // TODO Adjust this
+        /// <param name="valleysIntensities">Container of intensities of valleys.</param>
+        /// <returns>Container of qualities for peaks, index-aligned with container of peak intensities.</returns>
+        Data CalculatePeakQualities(const DataView& peaksIntensities, const DataView& valleysIntensities);
     };
 }
