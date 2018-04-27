@@ -2,7 +2,7 @@
 * PeakQualityCalculator.cpp
 * Calculates qualities of peaks.
 *
-Copyright 2018 Michal Gallus
+Copyright 2018 Spectre Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ namespace spectre::algorithm::peakfinder
     Data PeakQualityCalculator::CalculatePeakQualities(const DataView& peaksIntensities, const DataView& valleysIntensities)
     {
         Data peakQualities(peaksIntensities.length());
-        for (unsigned i = 0; i < peaksIntensities.length(); ++i)
+        for (unsigned i = 0; i < unsigned(peaksIntensities.length()); ++i)
         {
             DataType maxValleyHeight = 1 + std::max(valleysIntensities[i], valleysIntensities[i + 1]);
             peakQualities[i] = peaksIntensities[i] / maxValleyHeight;
