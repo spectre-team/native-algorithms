@@ -131,11 +131,13 @@
     <ClInclude Include="ExtremaFinder.h" />
     <ClInclude Include="PeakFinder.h" />
     <ClInclude Include="FWHHCalculator.h" />
+    <ClInclude Include="PeakQualityCalculator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ExtremaFinder.cpp" />
     <ClCompile Include="FWHHCalculator.cpp" />
     <ClCompile Include="PeakFinder.cpp" />
+    <ClCompile Include="PeakQualityCalculator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
