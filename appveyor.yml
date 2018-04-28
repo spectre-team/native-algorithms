@@ -13,7 +13,7 @@ environment:
 configuration:
   - Debug
   - Release
-version: 4.3.0.{build}
+version: 4.4.0.{build}
 
 init:
 - cmd: echo Project - %APPVEYOR_PROJECT_NAME%
