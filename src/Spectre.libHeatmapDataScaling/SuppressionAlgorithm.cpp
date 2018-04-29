@@ -41,9 +41,9 @@ double SuppressionAlgorithm::calculateQuantile(gsl::span<const double> intensiti
     const int indexFloor = static_cast<int>(floor(index)) - 1;
     const int indexCeiling = static_cast<int>(ceil(index)) - 1;
     double quantileValue = sortedIntensities[indexFloor];
-    if ((index > indexFloor) && (sortedIntensities[indexCeiling] != quantileValue))
+    if ((index > (indexFloor + 1)) && (sortedIntensities[indexCeiling] != quantileValue))
     {
-        const double fractionalPart = index - indexFloor + 1;
+        const double fractionalPart = index - (indexFloor + 1);
         quantileValue = (1 - fractionalPart) * quantileValue + fractionalPart * sortedIntensities[indexCeiling];
     }
     return quantileValue;
