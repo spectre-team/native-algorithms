@@ -177,7 +177,7 @@ constexpr std::vector<DataType> min(gsl::span<const DataType> first, gsl::span<c
 /// <param name="second">The second.</param>
 /// <returns>Vector, elements of which are true, if corresponding elements in source vectors were equal.</returns>
 template<class DataType>
-constexpr std::vector<bool> equals(gsl::span<const DataType> first, gsl::span<const DataType> second, DataType* /*dummy*/ = static_cast<DataType *>(nullptr))
+std::vector<bool> equals(gsl::span<const DataType> first, gsl::span<const DataType> second, DataType* /*dummy*/ = static_cast<DataType *>(nullptr))
 {
     return spectre::core::functional::transform(first, second, [](DataType left, DataType right) { return left == right; }, static_cast<bool*>(nullptr));
 }
@@ -334,7 +334,7 @@ constexpr std::vector<DataType> min(gsl::span<const DataType> first, DataType se
 /// <param name="second">The second.</param>
 /// <returns>Vector which elements are true where elements of first were second.</returns>
 template<class DataType>
-constexpr std::vector<bool> equals(gsl::span<const DataType> first, DataType second)
+std::vector<bool> equals(gsl::span<const DataType> first, DataType second)
 {
     return spectre::core::functional::transform(first, [second](DataType left) { return left == second; }, static_cast<bool*>(nullptr));
 }
