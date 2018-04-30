@@ -87,13 +87,13 @@ public:
     /// </summary>
     /// <param name="other">The other.</param>
     /// <returns>False, if binary data inside is the same.</returns>
-    bool Individual::operator!=(const Individual &other) const;
+    bool operator!=(const Individual &other) const;
     /// <summary>
     /// Overwrites individual with another object data.
     /// </summary>
     /// <param name="other">The other.</param>
     /// <returns>This instance.</returns>
-    Individual& Individual::operator=(const Individual &other);
+    Individual& operator=(const Individual &other);
     virtual ~Individual() = default;
 
 private:
