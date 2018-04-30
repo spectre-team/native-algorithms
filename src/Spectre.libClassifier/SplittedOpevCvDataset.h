@@ -33,7 +33,7 @@ public:
     /// </summary>
     /// <param name="training">The training dataset.</param>
     /// <param name="test">The test dataset.</param>
-    SplittedOpenCvDataset::SplittedOpenCvDataset(OpenCvDataset&& training, OpenCvDataset&& test);
+    SplittedOpenCvDataset(OpenCvDataset&& training, OpenCvDataset&& test);
     /// <summary>
     /// The training set.
     /// </summary>
