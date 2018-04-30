@@ -20,11 +20,11 @@ limitations under the License.
 #define GTEST_LANG_CXX11 1
 
 #include <gtest/gtest.h>
-#include "ExpectationMaximization.h"
-#include "RandomInitializationRef.h"
-#include "ExpectationRunnerRef.h"
-#include "MaximizationRunnerRef.h"
-#include "LogLikelihoodCalculator.h"
+#include "Spectre.libGaussianMixtureModelling/ExpectationMaximization.h"
+#include "Spectre.libGaussianMixtureModelling/RandomInitializationRef.h"
+#include "Spectre.libGaussianMixtureModelling/ExpectationRunnerRef.h"
+#include "Spectre.libGaussianMixtureModelling/MaximizationRunnerRef.h"
+#include "Spectre.libGaussianMixtureModelling/LogLikelihoodCalculator.h"
 
 typedef std::mt19937_64 RandomNumberGenerator;
 

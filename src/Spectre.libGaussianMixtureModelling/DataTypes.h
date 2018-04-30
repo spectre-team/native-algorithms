@@ -18,7 +18,7 @@ limitations under the License.
 */
 #pragma once
 #include <random>
-#include "Common\DataTypes.h"
+#include "Common/DataTypes.h"
 
 namespace spectre::unsupervised::gmm
 {
