@@ -102,8 +102,8 @@ TEST_F(IndividualTest, iterators_allow_to_iterate_over_const_binary_data)
         ++dataIterator;
     }
 
-    EXPECT_EQ(individualIterator, mixedIndividual.end());
-    EXPECT_EQ(dataIterator, MIXED_DATA.end());
+    EXPECT_TRUE(individualIterator == mixedIndividual.end());
+    EXPECT_TRUE(dataIterator == MIXED_DATA.end());
 }
 
 TEST_F(IndividualTest, iterators_allow_to_read_and_modify_binary_data)
@@ -120,8 +120,8 @@ TEST_F(IndividualTest, iterators_allow_to_read_and_modify_binary_data)
         ++dataIterator;
     }
 
-    EXPECT_EQ(individualIterator, mutableIndividual.end());
-    EXPECT_EQ(dataIterator, MIXED_DATA.end());
+    EXPECT_TRUE(individualIterator == mutableIndividual.end());
+    EXPECT_TRUE(dataIterator == MIXED_DATA.end());
 
     individualIterator = mutableIndividual.begin();
     dataIterator = MIXED_DATA.begin();
