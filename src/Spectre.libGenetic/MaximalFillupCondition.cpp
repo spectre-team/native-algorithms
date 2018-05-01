@@ -28,7 +28,7 @@ MaximalFillupCondition::MaximalFillupCondition(size_t minimalFillup, std::unique
 
 bool MaximalFillupCondition::checkCurrentCondition(const spectre::algorithm::genetic::Individual &individual)
 {
-    size_t numberOfTrueValues = std::accumulate(individual.getData().begin(), individual.getData().end(), 0u);
+    size_t numberOfTrueValues = std::accumulate(individual.begin(), individual.end(), 0u);
     return numberOfTrueValues <= m_MaximalFillup;
 }
 

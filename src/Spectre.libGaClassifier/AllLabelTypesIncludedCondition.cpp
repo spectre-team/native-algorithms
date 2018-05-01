@@ -36,7 +36,7 @@ bool AllLabelTypesIncludedCondition::checkCurrentCondition(const spectre::algori
     std::set<Label> types;
     for (auto i = 0u; i < individual.size(); ++i)
     {
-        if (individual.getData()[i])
+        if (individual[i])
         {
             types.insert(m_Labels[i]);
         }

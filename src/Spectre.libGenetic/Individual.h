@@ -35,11 +35,6 @@ public:
     /// <param name="binaryData">The binary data.</param>
     explicit Individual(std::vector<bool> &&binaryData);
     /// <summary>
-    /// Gets the immutable data.
-    /// </summary>
-    /// <returns>Vector of binary data.</returns>
-    const std::vector<bool>& getData() const;
-    /// <summary>
     /// Compares object with other
     /// </summary>
     /// <param name="other">The other.</param>

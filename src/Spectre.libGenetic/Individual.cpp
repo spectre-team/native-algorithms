@@ -31,11 +31,6 @@ namespace spectre::algorithm::genetic
 Individual::Individual(std::vector<bool> &&binaryData):
     std::vector<bool>(binaryData) { }
 
-const std::vector<bool>& Individual::getData() const
-{
-    return *this;
-}
-
 bool Individual::operator==(const Individual &other) const
 {
     return std::equal(begin(), end(), other.begin(), other.end());

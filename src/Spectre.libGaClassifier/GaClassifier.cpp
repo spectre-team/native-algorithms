@@ -76,8 +76,7 @@ void GaClassifier::Fit(LabeledDataset dataset)
     auto finalGeneration = algorithm->evolve(std::move(initialGeneration));
     auto bestIndividual = finalGeneration[0];
 
-    auto individualData = bestIndividual.getData();
-    OpenCvDataset bestDataset = getFilteredOpenCvDataset(splittedDataset.trainingSet, individualData);
+    OpenCvDataset bestDataset = getFilteredOpenCvDataset(splittedDataset.trainingSet, bestIndividual);
 
     m_Classifier->Fit(bestDataset);
 }

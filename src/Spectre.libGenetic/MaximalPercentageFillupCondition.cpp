@@ -28,7 +28,7 @@ MaximalPercentageFillupCondition::MaximalPercentageFillupCondition(double minima
 
 bool MaximalPercentageFillupCondition::checkCurrentCondition(const spectre::algorithm::genetic::Individual &individual)
 {
-    float numberOfTrueValues = std::accumulate(individual.getData().begin(), individual.getData().end(), 0.0f);
+    float numberOfTrueValues = std::accumulate(individual.begin(), individual.end(), 0.0f);
     return (numberOfTrueValues / individual.size()) <= m_MaximalPercentageFillup;
 }
 
