@@ -393,7 +393,7 @@ std::vector<DataType> build(size_t size, Generator generator)
 template <class DataType>
 std::vector<typename std::remove_const<DataType>::type> differentiate_unsafe(gsl::span<DataType> data, uint16_t order = 1)
 {
-    std::vector<std::remove_const<DataType>::type> result(data.begin(), data.end());
+    std::vector<typename std::remove_const<DataType>::type> result(data.begin(), data.end());
     for (auto i = 0u; i < order; ++i)
     {
         for (auto j = 0u; j < result.size() - 1; ++j)
