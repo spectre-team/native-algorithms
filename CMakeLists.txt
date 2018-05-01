@@ -3,6 +3,9 @@ project(spectre_native_algorithms CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
+find_package(OpenMP REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(GMock REQUIRED)
 
@@ -313,7 +316,7 @@ target_link_libraries(Spectre.libGaClassifier.Tests
         Spectre.libException
         Spectre.libFunctional
         ${OpenCV_LIBS}
-        gomp
+        omp
         gtest
         gtest_main
         )
@@ -369,7 +372,7 @@ add_executable(Spectre.libGenetic.Tests
 target_link_libraries(Spectre.libGenetic.Tests
         Spectre.libGenetic
         Spectre.libException
-        gomp
+        omp
         gmock
         gtest
         gtest_main
@@ -385,7 +388,6 @@ add_executable(Spectre.libPeakFinder.Tests
 target_link_libraries(Spectre.libPeakFinder.Tests
         Spectre.libPeakFinder
         Spectre.libException
-        gomp
         gmock
         gtest
         gtest_main
@@ -405,7 +407,7 @@ target_link_libraries(Spectre.libStatistics.Tests
         Spectre.libStatistics
         Spectre.libDataset
         Spectre.libException
-        gomp
+        omp
         gmock
         gtest
         gtest_main
