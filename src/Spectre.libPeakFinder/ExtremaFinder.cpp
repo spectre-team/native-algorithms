@@ -18,8 +18,8 @@
 */
 #include <functional>
 #include "ExtremaFinder.h"
-#include "Spectre.libStatistics\Math.h"
-#include "Spectre.libFunctional\Filter.h"
+#include "Spectre.libStatistics/Math.h"
+#include "Spectre.libFunctional/Filter.h"
 
 namespace spectre::algorithm::peakfinder
 {
