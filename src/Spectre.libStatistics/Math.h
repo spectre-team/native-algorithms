@@ -18,6 +18,7 @@ limitations under the License.
 */
 
 #pragma once
+#include <cmath>
 #include <vector>
 #include <gsl/span>
 #include "Spectre.libFunctional/Transform.h"
