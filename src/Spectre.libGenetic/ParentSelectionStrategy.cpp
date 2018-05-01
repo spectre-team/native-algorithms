@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "ParentSelectionStrategy.h"
+#include "Spectre.libGenetic/ParentSelectionStrategy.h"
 #include "Spectre.libException/ArgumentOutOfRangeException.h"
 #include "InconsistentGenerationAndScoresLengthException.h"
 
