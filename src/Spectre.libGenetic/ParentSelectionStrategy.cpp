@@ -32,9 +32,8 @@ reference_pair<Individual> ParentSelectionStrategy::next(Generation &generation,
     {
         throw InconsistentGenerationAndScoresLengthException(generation.size(), scores.size());
     }
-    const auto minAndMaxWeights = std::minmax_element(scores.begin(), scores.end());
-    const auto minWeight = *minAndMaxWeights.first;
-    const auto maxWeight = *minAndMaxWeights.second;
+    const auto minWeight = *std::min(scores.begin(), scores.end());
+    const auto maxWeight = *std::max(scores.begin(), scores.end());
     if (minWeight < 0)
     {
         throw spectre::core::exception::ArgumentOutOfRangeException<ScoreType>("scores", 0, std::numeric_limits<ScoreType>::max(), minWeight);
