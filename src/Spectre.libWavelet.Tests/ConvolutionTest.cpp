@@ -18,8 +18,8 @@ limitations under the License.
 */
 
 #include <gtest/gtest.h>
-#include "Spectre.libWavelet\Convolution.h"
-#include "Spectre.libFunctional\Range.h"
+#include "Spectre.libWavelet/Convolution.h"
+#include "Spectre.libFunctional/Range.h"
 
 namespace
 {
