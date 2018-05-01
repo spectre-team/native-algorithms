@@ -249,9 +249,10 @@ add_executable(Spectre.libClassifier.Tests
         src/Spectre.libClassifier.Tests/SvmTest.cpp
         )
 target_link_libraries(Spectre.libClassifier.Tests
-        Spectre.libDataset
-        Spectre.libFunctional
         Spectre.libClassifier
+        Spectre.libDataset
+        Spectre.libException
+        Spectre.libFunctional
         ${OpenCV_LIBS}
         gtest
         gtest_main
@@ -264,6 +265,7 @@ add_executable(Spectre.libClustering.Tests
         )
 target_link_libraries(Spectre.libClustering.Tests
         Spectre.libClustering
+        Spectre.libException
         gtest
         gtest_main
         )
@@ -275,6 +277,7 @@ add_executable(Spectre.libDataset.Tests
         )
 target_link_libraries(Spectre.libDataset.Tests
         Spectre.libDataset
+        Spectre.libException
         gtest
         gtest_main
         )
@@ -289,6 +292,7 @@ add_executable(Spectre.libFunctional.Tests
         )
 target_link_libraries(Spectre.libFunctional.Tests
         Spectre.libFunctional
+        Spectre.libException
         gtest
         gtest_main
         )
@@ -306,6 +310,7 @@ target_link_libraries(Spectre.libGaClassifier.Tests
         Spectre.libGenetic
         Spectre.libClassifier
         Spectre.libDataset
+        Spectre.libException
         Spectre.libFunctional
         ${OpenCV_LIBS}
         gomp
@@ -324,6 +329,7 @@ add_executable(Spectre.libGaussianMixtureModelling.Tests
         )
 target_link_libraries(Spectre.libGaussianMixtureModelling.Tests
         Spectre.libGaussianMixtureModelling
+        Spectre.libException
         gtest
         gtest_main
         )
@@ -362,6 +368,7 @@ add_executable(Spectre.libGenetic.Tests
         )
 target_link_libraries(Spectre.libGenetic.Tests
         Spectre.libGenetic
+        Spectre.libException
         gomp
         gmock
         gtest
@@ -377,6 +384,7 @@ add_executable(Spectre.libPeakFinder.Tests
         )
 target_link_libraries(Spectre.libPeakFinder.Tests
         Spectre.libPeakFinder
+        Spectre.libException
         gomp
         gmock
         gtest
@@ -394,9 +402,9 @@ add_executable(Spectre.libStatistics.Tests
         src/Spectre.libStatistics.Tests/ValuesHomogeneityEstimatorMock.h
         )
 target_link_libraries(Spectre.libStatistics.Tests
-        Spectre.libException
-        Spectre.libDataset
         Spectre.libStatistics
+        Spectre.libDataset
+        Spectre.libException
         gomp
         gmock
         gtest
@@ -415,8 +423,9 @@ add_executable(Spectre.libWavelet.Tests
         src/Spectre.libWavelet.Tests/WaveletReconstructorRefTest.cpp
         )
 target_link_libraries(Spectre.libWavelet.Tests
-        Spectre.libFunctional
         Spectre.libWavelet
+        Spectre.libException
+        Spectre.libFunctional
         gtest
         gtest_main
         )
