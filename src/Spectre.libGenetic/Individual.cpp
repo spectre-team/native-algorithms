@@ -53,4 +53,29 @@ Individual& Individual::operator=(const Individual &other)
         throw InconsistentChromosomeLengthException(size(), other.size());
     }
 }
+
+std::vector<bool>::reference Individual::operator[](size_t index)
+{
+    if (index < size())
+    {
+        return (*this)[index];
+    }
+    else
+    {
+        throw OutOfRangeException(index, size());
+    }
+}
+
+std::vector<bool>::const_reference Individual::operator[](size_t index) const
+{
+    if (index < size())
+    {
+        return (*this)[index];
+    }
+    else
+    {
+        throw OutOfRangeException(index, size());
+    }
+}
+
 }
