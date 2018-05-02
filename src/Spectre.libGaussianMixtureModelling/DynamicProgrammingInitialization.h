@@ -40,7 +40,9 @@ static inline void ComputePartitionSeparators(Indices&, Matrix<Index>&, unsigned
 /// Computes a basic quality of a block based on given block data. Equation (28)
 /// </summary>
 /// <param name="blockData">Spectrum to derive block lengths from. It is assumed
-/// that mzs and intensities have same length which is non-zero. </param>
+/// that mzs and intensities have same length which is non-zero.</param>
+/// <param name="intensitySum">Sum of intensity values in blockData.</param>
+/// <returns>Quality Q1 of the block</returns>
 DataType ComputeBasicQuality(SpectrumView blockData, DataType intensitySum)
 {
     const DataView& mzs = blockData.mzs;
@@ -71,6 +73,7 @@ DataType ComputeBasicQuality(SpectrumView blockData, DataType intensitySum)
 /// <param name="delta">A positive constant from equation (27).</param>
 /// <param name="minStd">Smallest mz range for which calculated
 /// range quality attains a positive finite number.</param>
+/// <returns>Quality Q4 of the block.</returns>
 DataType ComputeBlockQuality(SpectrumView blockData, DataType delta, DataType minStd)
 {
     constexpr DataType MIN_SUMMED_HEIGHT = 0.001;
@@ -107,6 +110,9 @@ DataType ComputeBlockQuality(SpectrumView blockData, DataType delta, DataType mi
 /// greater than signal length - 2.</exception>
 /// <exception cref="std::invalid_argument">Thrown when either delta or minStd
 /// are non-positive numbers.</exception>
+/// <returns>List of block ranges. First index symbolises the beginning of the
+/// first block, while the last - the end of the last block. Every other index
+/// symbolises the end of the block, and the beginning of the next one.</returns>
 Indices ComputeOptimalBlocks(SpectrumView spectrum, unsigned numOfBlocks,
     Matrix<DataType>& qualityOfRange, DataType delta, DataType minStd)
 {
