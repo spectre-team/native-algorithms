@@ -18,7 +18,6 @@ limitations under the License.
 */
 
 #include <gtest/gtest.h>
-#include "Spectre.libException/OutOfRangeException.h"
 #include "Spectre.libGenetic/Individual.h"
 #include "Spectre.libGenetic/InconsistentChromosomeLengthException.h"
 
@@ -60,17 +59,6 @@ TEST_F(IndividualTest, exhibit_proper_size)
 {
     const auto size = trueIndividual.size();
     EXPECT_EQ(size, TRUE_DATA.size());
-}
-
-TEST_F(IndividualTest, const_index_throws_for_exceeded_size)
-{
-    EXPECT_THROW(mixedIndividual[mixedIndividual.size()], spectre::core::exception::OutOfRangeException);
-}
-
-TEST_F(IndividualTest, mutable_index_throws_for_exceeded_size)
-{
-    Individual individual { std::vector<bool>(MIXED_DATA) };
-    EXPECT_THROW(individual[individual.size()] = false, spectre::core::exception::OutOfRangeException);
 }
 
 TEST_F(IndividualTest, index_returns_proper_const_bits)

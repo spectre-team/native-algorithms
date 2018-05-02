@@ -36,20 +36,6 @@ public:
     explicit Individual(std::vector<bool> &&binaryData);
 
     /// <summary>
-    /// Gets the mutable data under specified index.
-    /// </summary>
-    /// <param name="index">The index.</param>
-    /// <returns>Single bit of data.</returns>
-    reference operator[](size_t index);
-
-    /// <summary>
-    /// Gets the immutable data under specified index.
-    /// </summary>
-    /// <param name="index">The index.</param>
-    /// <returns>Single bit of data.</returns>
-    const_reference operator[](size_t index) const;
-
-    /// <summary>
     /// Compares object with other
     /// </summary>
     /// <param name="other">The other.</param>
