@@ -42,7 +42,7 @@ reference_pair<Individual> ParentSelectionStrategy::next(Generation &generation,
     std::vector<ScoreType> defaultScores(scores.size(), 1);
     if (maxWeight <= 0)
     {
-        scores = defaultScores;
+        scores = gsl::make_span(defaultScores);
     }
     std::discrete_distribution<size_t> indexDistribution(scores.begin(), scores.end());
     const auto first = indexDistribution(m_RandomNumberGenerator);
