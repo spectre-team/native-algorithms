@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="ClearPeakFinder.h" />
     <ClInclude Include="DataTypes.h" />
+    <ClInclude Include="DynamicProgrammingInitialization.h" />
     <ClInclude Include="GmmOptions.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="RandomInitializationRef.h" />

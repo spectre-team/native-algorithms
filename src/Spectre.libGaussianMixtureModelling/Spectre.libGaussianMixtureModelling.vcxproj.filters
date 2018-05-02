@@ -47,6 +47,9 @@
     <ClInclude Include="SplitterSegmentExtractor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DynamicProgrammingInitialization.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

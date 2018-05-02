@@ -47,6 +47,11 @@ struct SpectrumView
     SpectrumView(const SpectrumView&) = default;
     SpectrumView(const Spectrum& spectrum) : mzs(spectrum.mzs)
                                            , intensities(spectrum.intensities) {}
+    SpectrumView(const DataView mzs, const DataView intensities) : mzs(mzs)
+        , intensities(intensities) {}
+    SpectrumView subspan(size_t offset, size_t count)
+    { return { mzs.subspan(offset, count), intensities.subspan(offset, count) }; }
+
     DataView mzs;
     DataView intensities;
 };

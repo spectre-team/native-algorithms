@@ -63,7 +63,7 @@ public:
     /// of each sample to a certain gaussian component.</param>
     /// <param name="components">Gaussian components to be updated</param>
     /// <exception cref="ArgumentNullException">Thrown when either of mzArray or intensities pointers are null</exception>
-    MaximizationRunnerRef(SpectrumView spectrum, Matrix &affilationMatrix, std::vector<GaussianComponent> &components)
+    MaximizationRunnerRef(SpectrumView spectrum, Matrix<DataType> &affilationMatrix, std::vector<GaussianComponent> &components)
         : m_Spectrum(spectrum), m_AffilationMatrix(affilationMatrix), m_Components(components)
     {
     }
@@ -150,7 +150,7 @@ public:
 
 private:
     SpectrumView m_Spectrum;
-    Matrix &m_AffilationMatrix;
+    Matrix<DataType> &m_AffilationMatrix;
     std::vector<GaussianComponent> &m_Components;
 };
 }

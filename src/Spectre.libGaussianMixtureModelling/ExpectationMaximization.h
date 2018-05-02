@@ -50,7 +50,7 @@ public:
     /// <exception cref="NullPointerException">Thrown when either of mzArray or intensities pointers are null</exception>
     ExpectationMaximization(SpectrumView spectrum, RandomNumberGenerator &rngEngine, const unsigned numberOfComponents = 2)
         : m_Spectrum(std::move(spectrum)), m_Components(numberOfComponents)
-          , m_AffilationMatrix(numberOfComponents, (unsigned)spectrum.mzs.size())
+          , m_AffilationMatrix((unsigned)spectrum.mzs.size(), numberOfComponents)
           , m_Initialization(spectrum.mzs, m_Components, rngEngine)
           , m_Expectation(spectrum.mzs, m_AffilationMatrix, m_Components)
           , m_Maximization(spectrum, m_AffilationMatrix, m_Components)
@@ -109,7 +109,7 @@ private:
         m_Maximization.UpdateStdDeviations();
     }
 
-    Matrix m_AffilationMatrix;
+    Matrix<DataType> m_AffilationMatrix;
     SpectrumView m_Spectrum;
     std::vector<GaussianComponent> m_Components;
 
