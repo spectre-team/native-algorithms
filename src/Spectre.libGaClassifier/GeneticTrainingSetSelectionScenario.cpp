@@ -78,9 +78,10 @@ void GeneticTrainingSetSelectionScenario::execute(std::string filename, std::str
     for (auto iter = 0u; iter < m_IterationNumber; iter++) {
         algorithm::genetic::Seed SEED = rand();
         //cross validation
-        SplittedOpenCvDataset splittedOpenCvDataset = downsampled.getRandomSubset();
+        SplittedOpenCvDataset splittedOpenCvDataset = downsampled.getRandomSubset(SEED);
         RaportGenerator m_RaportwoGA(raportFilename + "_without_GA"
-            + "-popsize-" + std::to_string(populationSize), populationSize);
+            + "-popsize-" + std::to_string(populationSize) + "-iter-"
+            + std::to_string(iter), populationSize);
         
         //creating fitness function for normal classifier and training  + testing it with all the data
         ClassifierFitnessFunction fitnessFunction(m_RaportwoGA, svm, splittedOpenCvDataset, validationDataset.get());

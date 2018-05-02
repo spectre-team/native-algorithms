@@ -26,9 +26,8 @@ namespace
 using namespace spectre::supervised;
 
 const std::string CLASSIFIER = "svm";
-const double TRAINING_SET_SPLIT_RATE = 0.7;
-//const double MUTATION_RATE = 0.5;
-const double MUTATION_RATE = 0.9;
+const double TRAINING_SET_SPLIT_RATE = 0.9;
+const double MUTATION_RATE = 0.5;
 const double BIT_SWAP_RATE = 0.5;
 const double PRESERVATION_RATE = 0.5;
 const unsigned int GENERATIONS_NUMBER = 50u;
@@ -49,14 +48,14 @@ class GeneticTrainingSetSelectionScenarioTest : public ::testing::Test
 public:
     GeneticTrainingSetSelectionScenarioTest()
         : scenario(CLASSIFIER, TRAINING_SET_SPLIT_RATE, MUTATION_RATE, BIT_SWAP_RATE, PRESERVATION_RATE,
-            GENERATIONS_NUMBER, POPULATION_SIZE, INITIAL_FILLUP, ITERATION_NUMBER) {}
+            GENERATIONS_NUMBER, POPULATION_SIZE, INITIAL_FILLUP, ITERATION_NUMBER, 0, 1, 1000000) {}
 protected:
     GeneticTrainingSetSelectionScenario scenario;
 };
 
 TEST_F(GeneticTrainingSetSelectionScenarioTest, executeScenario)
 {
-    EXPECT_NO_THROW(scenario.execute(PATH + "peptides-1-norm.txt", PATH + "MUTATION_RATE-0.9/test", POPULATION_SIZE, PATH + "peptides-2-norm.txt"));
+    EXPECT_NO_THROW(scenario.execute(PATH + "peptides-1-norm.txt", PATH + "TRAINING_SET_SPLIT_RATE-0.9/test", POPULATION_SIZE, PATH + "peptides-2-norm.txt"));
 }
 
 }
