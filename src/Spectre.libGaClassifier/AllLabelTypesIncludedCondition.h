@@ -20,7 +20,7 @@ limitations under the License.
 #pragma once
 #include "Spectre.libGenetic/BaseIndividualFeasibilityCondition.h"
 #include "Spectre.libClassifier/NotABinaryLabelException.h"
-#include <span.h>
+#include <gsl/span>
 
 namespace spectre::supervised
 {

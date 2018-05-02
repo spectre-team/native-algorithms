@@ -16,6 +16,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 */
+#include <functional>
 #include "ExtremaFinder.h"
 #include "Spectre.libStatistics\Math.h"
 #include "Spectre.libFunctional\Filter.h"
@@ -56,8 +57,8 @@ static inline Indices FilterFlatSegmentIndices(const DataView& signal)
 
 static inline Data DifferentiateFilteredSignal(const DataView& signal, const Indices& indices)
 {
-    Data filteredSignal = filter<DataType, Index>(signal, gsl::as_span(indices));
-    return differentiate_unsafe(gsl::as_span(filteredSignal)); // Unsafe is used here, because the exception
+    Data filteredSignal = filter<DataType, Index>(signal, gsl::make_span(indices));
+    return differentiate_unsafe(gsl::make_span(filteredSignal)); // Unsafe is used here, because the exception
 }                                                              // would've already been thrown in FilterFlatSegmentIndices
 
 // Comparison operations are interchangably std::greater_equal and std::less_equal

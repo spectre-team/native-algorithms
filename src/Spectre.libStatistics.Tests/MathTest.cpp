@@ -65,7 +65,7 @@ TEST(VectorModuloTest, finds_rest_elementwise)
 {
     const std::vector<int> simpleLower{ 1,2,3 };
     const std::vector<int> simpleGreater{ 4,5,6 };
-    const auto remainders = modulo(gsl::as_span(simpleGreater), gsl::as_span(simpleLower));
+    const auto remainders = modulo(gsl::make_span(simpleGreater), gsl::make_span(simpleLower));
     EXPECT_THAT(remainders, ContainerEq(IntData{ 0, 1, 0 }));
 }
 
@@ -73,7 +73,7 @@ TEST(VectorBitwiseAndTest, ands_bits_elementwise)
 {
     const std::vector<int> simpleLower{ 1,2,3 };
     const std::vector<int> simpleGreater{ 4,5,6 };
-    const auto anded = bitwiseAnd(gsl::as_span(simpleLower), gsl::as_span(simpleGreater));
+    const auto anded = bitwiseAnd(gsl::make_span(simpleLower), gsl::make_span(simpleGreater));
     EXPECT_THAT(anded, ContainerEq(IntData{ 0, 0, 2 }));
 }
 
@@ -81,7 +81,7 @@ TEST(VectorLogicalAndTest, ands_logically_elementwise)
 {
     const std::vector<int> simpleLower{ 1,0,3 };
     const std::vector<int> simpleGreater{ 4,5,6 };
-    const auto anded = logicalAnd(gsl::as_span(simpleLower), gsl::as_span(simpleGreater));
+    const auto anded = logicalAnd(gsl::make_span(simpleLower), gsl::make_span(simpleGreater));
     EXPECT_THAT(anded, ContainerEq(IntData{ 1, 0, 1 }));
 }
 
@@ -89,7 +89,7 @@ TEST(VectorBitwiseOrTest, ors_bits_elementwise)
 {
     const std::vector<int> simpleLower{ 1,2,3 };
     const std::vector<int> simpleGreater{ 4,5,6 };
-    const auto ored = bitwiseOr(gsl::as_span(simpleLower), gsl::as_span(simpleGreater));
+    const auto ored = bitwiseOr(gsl::make_span(simpleLower), gsl::make_span(simpleGreater));
     EXPECT_THAT(ored, ContainerEq(IntData{ 5, 7, 7 }));
 }
 
@@ -97,7 +97,7 @@ TEST(VectorLogicalOrTest, ors_logically_elementwise)
 {
     const std::vector<int> simpleLower{ 1,0,2 };
     const std::vector<int> simpleGreater{ 0,0,6 };
-    const auto ored = logicalOr(gsl::as_span(simpleLower), gsl::as_span(simpleGreater));
+    const auto ored = logicalOr(gsl::make_span(simpleLower), gsl::make_span(simpleGreater));
     EXPECT_THAT(ored, ContainerEq(IntData{ 1, 0, 1 }));
 }
 
@@ -105,7 +105,7 @@ TEST(VectorMaxTest, picks_max_elementwise)
 {
     Data mixedLow{ 1,5,2 };
     Data mixedHigh{ 3,0,4 };
-    const auto maxes = max(gsl::as_span(mixedLow), gsl::as_span(mixedHigh));
+    const auto maxes = max(gsl::make_span(mixedLow), gsl::make_span(mixedHigh));
     EXPECT_THAT(maxes, ContainerEq(Data{ 3,5,4 }));
 }
 
@@ -113,7 +113,7 @@ TEST(VectorMinTest, picks_min_elementwise)
 {
     Data mixedLow{ 1,5,2 };
     Data mixedHigh{ 3,0,4 };
-    const auto mins = min(gsl::as_span(mixedLow), gsl::as_span(mixedHigh));
+    const auto mins = min(gsl::make_span(mixedLow), gsl::make_span(mixedHigh));
     EXPECT_THAT(mins, ContainerEq(Data{ 1,0,2 }));
 }
 
@@ -122,7 +122,7 @@ TEST(VectorEqualsTest, finds_equal_elements)
     // @gmrukwa: std::vector<bool> is not convertible to gsl::span<bool> due to std::vector<bool> template specialization
     const std::vector<int> first{ true, false, true };
     const std::vector<int> second{ false, false, true };
-    const auto equalities = equals(gsl::as_span(first), gsl::as_span(second));
+    const auto equalities = equals(gsl::make_span(first), gsl::make_span(second));
     EXPECT_THAT(equalities, ContainerEq(std::vector<bool>{false, true, true}));
 }
 
@@ -155,49 +155,49 @@ TEST(ScalarDivideTest, divides_each_element_by_scalar)
 TEST(ScalarModuloTest, finds_remainder_of_each_element)
 {
     IntData data{ 1,2,3 };
-    const auto remainders = modulo(gsl::as_span(data), 3);
+    const auto remainders = modulo(gsl::make_span(data), 3);
     EXPECT_THAT(remainders, ContainerEq(IntData{ 1,2,0 }));
 }
 
 TEST(ScalarBitwiseAndTest, ands_bits_of_each_element)
 {
     IntData data{ 1,0,7 };
-    const auto anded = bitwiseAnd(gsl::as_span(data), 3);
+    const auto anded = bitwiseAnd(gsl::make_span(data), 3);
     EXPECT_THAT(anded, ContainerEq(IntData{ 1, 0, 3 }));
 }
 
 TEST(ScalarLogicalAndTest, ands_logically_each_element)
 {
     IntData data{ 1,0,7 };
-    const auto anded = logicalAnd(gsl::as_span(data), 3);
+    const auto anded = logicalAnd(gsl::make_span(data), 3);
     EXPECT_THAT(anded, ContainerEq(IntData{ 1, 0, 1 }));
 }
 
 TEST(ScalarBitwiseOrTest, ors_bits_of_each_element)
 {
     IntData data{ 1,0,7 };
-    const auto ored = bitwiseOr(gsl::as_span(data), 2);
+    const auto ored = bitwiseOr(gsl::make_span(data), 2);
     EXPECT_THAT(ored, ContainerEq(IntData{ 3, 2, 7 }));
 }
 
 TEST(ScalarLogicalOrTest, ors_logically_each_element)
 {
     IntData data{ 1,0,7 };
-    const auto ored = logicalOr(gsl::as_span(data), 0);
+    const auto ored = logicalOr(gsl::make_span(data), 0);
     EXPECT_THAT(ored, ContainerEq(IntData{ 1, 0, 1 }));
 }
 
 TEST(ScalarMaxTest, picks_max_of_element_and_scalar)
 {
     IntData data{ 1,0,7 };
-    const auto maxes = max(gsl::as_span(data), 1);
+    const auto maxes = max(gsl::make_span(data), 1);
     EXPECT_THAT(maxes, ContainerEq(IntData{ 1, 1, 7 }));
 }
 
 TEST(ScalarMinTest, picks_min_of_element_and_scalar)
 {
     IntData data{ 1,0,7 };
-    const auto mins = min(gsl::as_span(data), 1);
+    const auto mins = min(gsl::make_span(data), 1);
     EXPECT_THAT(mins, ContainerEq(IntData{ 1, 0, 1 }));
 }
 
@@ -206,7 +206,7 @@ TEST(ScalarEqualsTest, finds_equal_elements)
     // @gmrukwa: std::vector<bool> is not convertible to gsl::span<bool> due to std::vector<bool> template specialization
     const std::vector<int> first{ true, false, true };
     const int second = false;
-    const auto equalities = equals(gsl::as_span(first), second);
+    const auto equalities = equals(gsl::make_span(first), second);
     EXPECT_THAT(equalities, ContainerEq(std::vector<bool>{false, true, false}));
 }
 
@@ -215,32 +215,32 @@ TEST(ScalarEqualsTest, finds_equal_elements)
 TEST(AbsTest, returns_absolute_value_of_each_element)
 {
     Data data{ -1, 2, 3, -4 };
-    const auto absolutes = abs(gsl::as_span(data));
+    const auto absolutes = abs(gsl::make_span(data));
     EXPECT_THAT(absolutes, ContainerEq(Data{ 1,2,3,4 }));
 }
 
 TEST(DiffTest, calculates_differential)
 {
     Data data{ 1, 1, 2, 3, 5, 8, 13 };
-    const auto differential = differentiate(gsl::as_span(data), 4);
+    const auto differential = differentiate(gsl::make_span(data), 4);
     EXPECT_THAT(differential, ContainerEq(Data{ 2, -1, 1 }));
 }
 
 TEST(DiffTest, throws_on_insufficient_data_length)
 {
     Data data{ 1 };
-    EXPECT_THROW(differentiate(gsl::as_span(data)), spectre::core::exception::ArgumentOutOfRangeException<size_t>);
+    EXPECT_THROW(differentiate(gsl::make_span(data)), spectre::core::exception::ArgumentOutOfRangeException<size_t>);
 }
 
 TEST(DiffTest, throws_on_empty_data)
 {
     Data data{};
-    EXPECT_THROW(differentiate(gsl::as_span(data)), spectre::core::exception::ArgumentOutOfRangeException<size_t>);
+    EXPECT_THROW(differentiate(gsl::make_span(data)), spectre::core::exception::ArgumentOutOfRangeException<size_t>);
 }
 
 TEST(DiffTest, throws_on_too_large_order)
 {
     Data data{ 1, 2, 3 };
-    EXPECT_THROW(differentiate(gsl::as_span(data), 3), spectre::core::exception::ArgumentOutOfRangeException<size_t>);
+    EXPECT_THROW(differentiate(gsl::make_span(data), 3), spectre::core::exception::ArgumentOutOfRangeException<size_t>);
 }
 }

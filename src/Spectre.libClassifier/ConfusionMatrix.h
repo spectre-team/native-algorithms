@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 #pragma once
-#include <span.h>
+#include <gsl/span>
 #include "Spectre.libClassifier/Types.h"
 
 namespace spectre::supervised

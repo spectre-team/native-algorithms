@@ -29,9 +29,9 @@ using namespace spectre::statistics::simple_statistics;
 using Data = const std::vector<double>;
 
 Data dataStorage { 1,2,3 };
-auto data = gsl::as_span(dataStorage);
+auto data = gsl::make_span(dataStorage);
 Data emptyStorage {};
-auto empty = gsl::as_span(emptyStorage);
+auto empty = gsl::make_span(emptyStorage);
 
 TEST(SumTest, calculates_vector_sum)
 {
@@ -83,14 +83,14 @@ TEST(TwoSampleVariance, variance_of_but_differing_internally_homogeneous_samples
 {
     const Data first { 1., 1., 1. };
     const Data second { 2., 2., 2., 2. };
-    EXPECT_THAT(Variance(gsl::as_span(first), gsl::as_span(second)), DoubleEq(0.));
+    EXPECT_THAT(Variance(gsl::make_span(first), gsl::make_span(second)), DoubleEq(0.));
 }
 
 TEST(TwoSampleVariance, evaluates_to_proper_value)
 {
     const Data first { 1., 2., 3. };
     const Data second { 4., 6., 8., 10., 12. };
-    const auto two_sample_variance = Variance(gsl::as_span(first), gsl::as_span(second));
+    const auto two_sample_variance = Variance(gsl::make_span(first), gsl::make_span(second));
     const auto expected_variance = ((1.0 + 0.0 + 1.0) * 3.0 / 2.0 + (16.0 + 4.0 + 0.0 + 4.0 + 16.0) * 5.0 / 4.0) / (3. + 5. - 2.);
     EXPECT_THAT(two_sample_variance, DoubleEq(expected_variance));
 }

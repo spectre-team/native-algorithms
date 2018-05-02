@@ -19,7 +19,7 @@ limitations under the License.
 
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
-#include <span.h>
+#include <gsl/span>
 #include "Spectre.libFunctional/Find.h"
 
 namespace
@@ -51,21 +51,21 @@ TEST(BoolFindTest, finds_in_mixed_vector)
 TEST(FindTest, finds_nothing_in_zero_vector)
 {
     const std::vector<int> zeros{ 0, 0, 0 };
-    const auto nonzeroIndexes = find(gsl::as_span(zeros));
+    const auto nonzeroIndexes = find(gsl::make_span(zeros));
     EXPECT_EQ(nonzeroIndexes.size(), 0);
 }
 
 TEST(FindTest, finds_all_in_nonzero_vector)
 {
     const std::vector<int> nonzeros{ 1, 2, 3 };
-    const auto nonzeroIndexes = find(gsl::as_span(nonzeros));
+    const auto nonzeroIndexes = find(gsl::make_span(nonzeros));
     EXPECT_THAT(nonzeroIndexes, ContainerEq(std::vector<size_t>{ 0, 1, 2 }));
 }
 
 TEST(FindTest, finds_in_mixed_vector)
 {
     const std::vector<int> mixed{ 1, 0, 2 };
-    const auto nonzeroIndexes = find(gsl::as_span(mixed));
+    const auto nonzeroIndexes = find(gsl::make_span(mixed));
     EXPECT_THAT(nonzeroIndexes, ContainerEq(std::vector<size_t>{ 0, 2 }));
 }
 }

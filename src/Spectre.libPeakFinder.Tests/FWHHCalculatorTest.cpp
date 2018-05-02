@@ -59,29 +59,29 @@ namespace
 
     TEST_F(FWHHCalculatorTest, sawtooth_correct_left_fwhh)
     {
-        Data result = fwhh.GetLeftFWHH(as_span(x), as_span(sawtoothY),
-            as_span(sawtoothValleyIdx), as_span(sawtoothPeakIdx));
+        Data result = fwhh.GetLeftFWHH(make_span(x), make_span(sawtoothY),
+            make_span(sawtoothValleyIdx), make_span(sawtoothPeakIdx));
         EXPECT_THAT(result, ContainerEq(Data{ 2., 6. }));
     }
 
     TEST_F(FWHHCalculatorTest, sawtooth_correct_right_fwhh)
     {
-        Data result = fwhh.GetRightFWHH(as_span(x), as_span(sawtoothY),
-            as_span(sawtoothValleyIdx), as_span(sawtoothPeakIdx));
+        Data result = fwhh.GetRightFWHH(make_span(x), make_span(sawtoothY),
+            make_span(sawtoothValleyIdx), make_span(sawtoothPeakIdx));
         EXPECT_THAT(result, ContainerEq(Data{ 4., 8. }));
     }
 
     TEST_F(FWHHCalculatorTest, skewed_correct_left_fwhh)
     {
-        Data result = fwhh.GetLeftFWHH(as_span(x), as_span(skewedY),
-            as_span(skewedValleyIdx), as_span(skewedPeakIdx));
+        Data result = fwhh.GetLeftFWHH(make_span(x), make_span(skewedY),
+            make_span(skewedValleyIdx), make_span(skewedPeakIdx));
         EXPECT_THAT(result, ContainerEq(Data{ 4. }));
     }
 
     TEST_F(FWHHCalculatorTest, skewed_correct_right_fwhh)
     {
-        Data result = fwhh.GetRightFWHH(as_span(x), as_span(skewedY),
-            as_span(skewedValleyIdx), as_span(skewedPeakIdx));
+        Data result = fwhh.GetRightFWHH(make_span(x), make_span(skewedY),
+            make_span(skewedValleyIdx), make_span(skewedPeakIdx));
         EXPECT_THAT(result, ContainerEq(Data{ 7. }));
     }
 }

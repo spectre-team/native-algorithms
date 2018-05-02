@@ -110,8 +110,8 @@ DataType MeanAbsoluteDeviation(gsl::span<const DataType> data)
     static_assert(std::is_arithmetic_v<DataType>, "DataType: expected arithmetic.");
     const auto mean = Mean(data);
     const auto deviation = basic_math::minus(data, mean);
-    const auto absoluteDeviation = basic_math::abs(gsl::as_span(deviation));
-    return Mean(gsl::as_span(absoluteDeviation));
+    const auto absoluteDeviation = basic_math::abs(gsl::make_span(deviation));
+    return Mean(gsl::make_span(absoluteDeviation));
 }
 
 /// <summary>
@@ -126,7 +126,7 @@ DataType MedianAbsoluteDeviation(gsl::span<DataType> data)
     gsl::span<const DataType> constSpan(data);
     const auto median = Median(constSpan);
     const auto deviation = basic_math::minus(constSpan, median);
-    const auto absoluteDeviation = basic_math::abs(gsl::as_span(deviation));
-    return Median(gsl::as_span(absoluteDeviation));
+    const auto absoluteDeviation = basic_math::abs(gsl::make_span(deviation));
+    return Median(gsl::make_span(absoluteDeviation));
 }
 }
