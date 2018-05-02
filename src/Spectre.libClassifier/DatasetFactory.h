@@ -36,6 +36,6 @@ public:
     /// Creates new OpenCvDataset from file.
     /// </summary>
     /// <param name="filename">The filename.</param>
-    OpenCvDataset create(std::string filename) const;
+    static OpenCvDataset create(const std::string& filename);
 };
 }

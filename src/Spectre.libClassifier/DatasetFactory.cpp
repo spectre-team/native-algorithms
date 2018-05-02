@@ -30,7 +30,7 @@ DatasetFactory::DatasetFactory()
 {
 }
 
-OpenCvDataset DatasetFactory::create(std::string filename) const
+OpenCvDataset DatasetFactory::create(const std::string& filename)
 {
     std::fstream file;
     file.open(filename, std::fstream::in);

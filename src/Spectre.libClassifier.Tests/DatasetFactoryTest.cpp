@@ -19,7 +19,6 @@ limitations under the License.
 
 #include <gtest/gtest.h>
 #include <fstream>
-#include <sstream>
 #include "Spectre.libClassifier/OpenCvDataset.h"
 #include "Spectre.libClassifier/DatasetFactory.h"
 #include "Spectre.libClassifier/FileOpenException.h"
