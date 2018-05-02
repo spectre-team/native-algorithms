@@ -30,6 +30,7 @@
     <ClInclude Include="GaussianMixtureModel.h" />
     <ClInclude Include="LogLikelihoodCalculator.h" />
     <ClInclude Include="MaximizationRunnerRef.h" />
+    <ClInclude Include="SplitterSegmentExtractor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -37,6 +38,7 @@
   <ItemGroup>
     <ClCompile Include="ClearPeakFinder.cpp" />
     <ClCompile Include="ExpectationMaximization.cpp" />
+    <ClCompile Include="SplitterSegmentExtractor.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{104D9A93-F6D7-4BF4-961F-7C52FEAEA77B}</ProjectGuid>
