@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+#include <algorithm>
 #include "Spectre.libHeatmapDataScaling/Normalization.h"
 
 namespace spectre::visualization
@@ -24,8 +25,8 @@ Normalization::Normalization(const int minIntensityRange, const int maxIntensity
 std::vector<double> Normalization::scaleData(const gsl::span<double> intensities)
 {
     std::vector<double> newIntensities(intensities.size());
-    double const oldMin = *min_element(std::begin(intensities), std::end(intensities));
-    double const oldMax = *max_element(std::begin(intensities), std::end(intensities));
+    double const oldMin = *std::min_element(std::begin(intensities), std::end(intensities));
+    double const oldMax = *std::max_element(std::begin(intensities), std::end(intensities));
     double const oldRange = oldMax - oldMin;
 
     for (int i = 0; i< intensities.size(); i++)
