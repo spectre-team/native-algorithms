@@ -17,6 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+#include <algorithm>
 #include "Spectre.libGenetic/ParentSelectionStrategy.h"
 #include "Spectre.libException/ArgumentOutOfRangeException.h"
 #include "InconsistentGenerationAndScoresLengthException.h"
@@ -32,8 +33,8 @@ reference_pair<Individual> ParentSelectionStrategy::next(Generation &generation,
     {
         throw InconsistentGenerationAndScoresLengthException(generation.size(), scores.size());
     }
-    const auto minWeight = *std::min(scores.begin(), scores.end());
-    const auto maxWeight = *std::max(scores.begin(), scores.end());
+    const auto minWeight = *std::min_element(std::begin(scores), std::end(scores));
+    const auto maxWeight = *std::max_element(std::begin(scores), std::end(scores));
     if (minWeight < 0)
     {
         throw spectre::core::exception::ArgumentOutOfRangeException<ScoreType>("scores", 0, std::numeric_limits<ScoreType>::max(), minWeight);
