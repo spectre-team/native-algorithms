@@ -1,0 +1,11 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+# Upstream does not provide a tarball
+get-orig-source:
+	git clone --depth=1 https://github.com/Microsoft/GSL
+	tar --exclude-vcs -cJf ../ms-gsl_0~git$$(cd GSL && git log -1 \
+		--date="format:%Y%m%d" --format="%cd.%h").orig.tar.xz GSL
+	rm -rf GSL
