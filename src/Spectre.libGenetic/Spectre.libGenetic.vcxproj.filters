@@ -183,7 +183,4 @@
       <Filter>Source Files\Exceptions</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
 </Project>
