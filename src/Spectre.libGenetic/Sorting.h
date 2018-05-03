@@ -19,6 +19,7 @@ limitations under the License.
 
 #pragma once
 #include <gsl/span>
+#include <numeric>
 #include <vector>
 
 namespace spectre::algorithm::genetic
