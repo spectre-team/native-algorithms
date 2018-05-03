@@ -19,7 +19,6 @@ limitations under the License.
 
 #pragma once
 #include <numeric>
-#include <span.h>
 #include "Spectre.libException/EmptyArgumentException.h"
 #include "Spectre.libStatistics/Math.h"
 
