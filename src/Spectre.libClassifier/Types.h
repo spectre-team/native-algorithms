@@ -20,7 +20,7 @@ limitations under the License.
 #pragma once
 #include <random>
 #include <opencv2/core/mat.hpp>
-#include <span.h>
+#include <gsl/span>
 
 namespace spectre::supervised
 {

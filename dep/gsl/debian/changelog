@@ -1,0 +1,19 @@
+ms-gsl (0~git20170602.1f87ef7-2) unstable; urgency=medium
+
+  * Apply patch that fixes tests, from pull request #526 (closes: #871070)
+
+ -- Nicholas Guriev <guriev-ns@ya.ru>  Thu, 17 Aug 2017 22:35:17 +0300
+
+ms-gsl (0~git20170602.1f87ef7-1) unstable; urgency=medium
+
+  * Merge the latest upstream commit
+  * Update a patch, fix build against new unittest++ (closes: #865309)
+  * Bump Standards-Version to 4.0.0, no changes for this
+
+ -- Nicholas Guriev <guriev-ns@ya.ru>  Tue, 04 Jul 2017 14:35:04 +0300
+
+ms-gsl (0~git20170403.ebab8ca-1) unstable; urgency=low
+
+  * Initial upload (closes: #859221)
+
+ -- Nicholas Guriev <guriev-ns@ya.ru>  Thu, 06 Apr 2017 07:12:01 +0300

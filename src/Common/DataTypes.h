@@ -18,7 +18,7 @@
 */
 #pragma once
 #include <vector>
-#include <span.h>
+#include <gsl/span>
 
 namespace spectre
 {

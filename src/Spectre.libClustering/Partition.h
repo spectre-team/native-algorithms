@@ -20,7 +20,7 @@
 #pragma once
 
 #include <vector>
-#include <gsl.h>
+#include <gsl/gsl>
 
 namespace spectre::unsupervised
 {

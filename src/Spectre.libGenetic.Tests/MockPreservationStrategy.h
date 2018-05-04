@@ -19,7 +19,7 @@ limitations under the License.
 
 #pragma once
 #include <gmock/gmock.h>
-#include <span.h>
+#include <gsl/span>
 #include "Spectre.libGenetic/PreservationStrategy.h"
 
 namespace spectre::algorithm::genetic::Tests
