@@ -9,3 +9,5 @@ languages:
     include:
       - /src/.*\.Tests/.*\.h
       - /src/.*\.Tests/.*\.cpp
+exclude:
+- /dep/.*
