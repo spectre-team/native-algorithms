@@ -34,7 +34,7 @@ namespace
         std::vector<double> testIntensities;
         void SetUp() override
         {
-            testIntensities = { 3.2, 2.69, 1.19, 1.23, 8.98, 4.15, 4.15, 0.11, 1.76, 8.8 };
+            testIntensities = { 5.43, 0.00, 67.03, 67.34, 150.73, 220.23, 150.80, 150.51, 255.00, 12.03 };
         }
     };
 
@@ -71,7 +71,7 @@ namespace
     TEST_F(HistogramEqualizationTest, returns_scaled_intensities)
     {
         auto result = histogramEqualization.scaleData(testIntensities);
-        EXPECT_THAT(result, testing::ContainerEq(std::vector<double>{ 142.0, 142.0, 57.0, 57.0, 255.0, 198.0, 198.0, 0.0, 85.0, 255.0 }));
+        EXPECT_THAT(result, testing::ContainerEq(std::vector<double>{ 28.0, 0.0, 113.0, 113.0, 198.0, 227.0, 198.0, 198.0, 255.0, 57.0 }));
     }
 
     TEST_F(HistogramEqualizationTest, returns_correct_data_size)

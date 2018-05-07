@@ -21,7 +21,8 @@ limitations under the License.
 namespace spectre::visualization
 {
 
-constexpr uint8_t intensitiesRange = 255;
+static constexpr uint8_t maxRangeRestriction = std::numeric_limits<uint8_t>::max();
+static constexpr uint8_t minRangeRestriction = std::numeric_limits<uint8_t>::min();
 
 /// <summary>
 /// Class containing histogram equalization algorithm implementation.
@@ -48,16 +49,16 @@ public:
     /// <param name="histogramMap">Map containing intensity value as a key and cumulative distribution as a value.</param>
     /// <returns>Vector of scaled floating point values representing intensities for each point on the heatmap.</returns>
     std::vector<double> calculateNewHistogramData(const gsl::span<const uint8_t> intensities, const std::vector<unsigned int> &cumulativeDistribution) const;
-	/// <summary>
-	/// Inline method for calculating new intensity value.
-	/// </summary>
-	/// <param name="cumulativeDistributionValue">Cumulative distribution value for single intensity.</param>
-	/// <param name="minCumulativeDistributionValue">Minimum cumulative distribution value.</param>
-	/// <param name="size">Size of the intensity vector.</param>
-	/// <returns>New intensity value.</returns>
-	inline double calculateNewIntensity(double cumulativeDistributionValue, unsigned int minCumulativeDistributionValue, size_t size) const
-	{
-		return round(((cumulativeDistributionValue - minCumulativeDistributionValue) / (size - minCumulativeDistributionValue)) * intensitiesRange);
-	}
+    /// <summary>
+    /// Inline method for calculating new intensity value.
+    /// </summary>
+    /// <param name="cumulativeDistributionValue">Cumulative distribution value for single intensity.</param>
+    /// <param name="minCumulativeDistributionValue">Minimum cumulative distribution value.</param>
+    /// <param name="size">Size of the intensity vector.</param>
+    /// <returns>New intensity value.</returns>
+    inline double calculateNewIntensity(double cumulativeDistributionValue, unsigned int minCumulativeDistributionValue, size_t size) const
+    {
+        return round(((cumulativeDistributionValue - minCumulativeDistributionValue) / (size - minCumulativeDistributionValue)) * maxRangeRestriction);
+    }
 };
 }

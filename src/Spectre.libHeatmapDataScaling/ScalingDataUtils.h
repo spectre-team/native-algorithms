@@ -25,5 +25,5 @@ namespace spectre::visualization
 /// </summary>
 /// <param name="intensities">Vector of floating point values representing data for scaling.</param>
 /// <returns>Vector of floating point values representing scaled data.</returns>
-std::vector<double> scaleDataToRange(const gsl::span<double> intensities, const int minIntensityRange = 0, const int maxIntensityRange = 255);
+std::vector<double> scaleDataToRange(const gsl::span<double> intensities, const int minIntensityRange = std::numeric_limits<uint8_t>::min(), const int maxIntensityRange = std::numeric_limits<uint8_t>::max());
 }
