@@ -19,7 +19,7 @@ limitations under the License.
 
 #pragma once
 #include <vector>
-#include <span.h>
+#include <gsl/span>
 #include "Spectre.libFunctional/Transform.h"
 #include "Spectre.libException/ArgumentOutOfRangeException.h"
 

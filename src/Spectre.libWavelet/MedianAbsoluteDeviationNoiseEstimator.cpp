@@ -31,7 +31,7 @@ DataType MedianAbsoluteDeviationNoiseEstimator::Estimate(Data& highFreqCoefficie
     constexpr auto inverseOfThirdQuartileInNormalDistribution = static_cast<DataType>(1.0 / .6745);
     return m_Multiplier
         * sqrt(2 * log(highFreqCoefficients.size()))
-        * statistics::simple_statistics::MedianAbsoluteDeviation(gsl::as_span(highFreqCoefficients))
+        * statistics::simple_statistics::MedianAbsoluteDeviation(gsl::make_span(highFreqCoefficients))
         * inverseOfThirdQuartileInNormalDistribution;
 }
 }

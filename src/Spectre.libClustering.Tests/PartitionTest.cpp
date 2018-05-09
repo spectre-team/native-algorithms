@@ -20,7 +20,7 @@ limitations under the License.
 #define GTEST_LANG_CXX11 1
 
 #include <gtest/gtest.h>
-#include <gsl.h>
+#include <gsl/gsl>
 #include <vector>
 #include <algorithm>
 #include "Partition.h"

@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include <span.h>
+#include <gsl/span>
 #include "Spectre.libException/NullPointerException.h"
 #include "InconsistentGenerationAndScoresLengthException.h"
 #include "IndividualsBuilderStrategy.h"

@@ -158,7 +158,7 @@ TEST_F(ExpectationMaximizationTest, test_em_ref_initialization)
 
 TEST_F(ExpectationMaximizationTest, test_em_ref_expectation)
 {
-    Matrix affilationMatrix((unsigned)gaussianComponents.size(), (unsigned)spectrum.mzs.size());
+    Matrix<DataType> affilationMatrix((unsigned)spectrum.mzs.size(), (unsigned)gaussianComponents.size());
 
     ExpectationRunnerRef expectation(spectrum.mzs, affilationMatrix, gaussianComponents);
     expectation.Expectation();
@@ -183,7 +183,7 @@ TEST_F(ExpectationMaximizationTest, test_em_ref_expectation)
 
 TEST_F(ExpectationMaximizationTest, test_em_ref_maximization)
 {
-    Matrix affilationMatrix((unsigned)gaussianComponents.size(), (unsigned)spectrum.mzs.size());
+    Matrix<DataType> affilationMatrix((unsigned)spectrum.mzs.size(), (unsigned)gaussianComponents.size());
 
     for (unsigned i = 0; i < spectrum.mzs.size(); i++)
     {

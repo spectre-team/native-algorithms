@@ -20,7 +20,7 @@ limitations under the License.
 
 #include <gtest/gtest.h>
 #include <memory>
-#include <span.h>
+#include <gsl/span>
 #include <opencv2/core/mat.hpp>
 #include "Spectre.libException/InconsistentArgumentSizesException.h"
 #include "Spectre.libException/OutOfRangeException.h"
