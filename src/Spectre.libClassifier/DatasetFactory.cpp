@@ -30,7 +30,7 @@ DatasetFactory::DatasetFactory()
 
 //There is no file format validity for now, it will just throw an error during
 //OpenCvDataset creation from wrong read data.
-//Needs to be fixed in the future. 
+//Needs to be fixed in the future.
 OpenCvDataset DatasetFactory::create(const std::string& filename)
 {
     std::fstream file;
@@ -54,10 +54,10 @@ OpenCvDataset DatasetFactory::create(const std::string& filename)
         //get Label
         getline(file, line);
         if (!line.empty()) {
-            //in text files in lines with coordinates and label values, we skip coordinates 
+            //in text files in lines with coordinates and label values, we skip coordinates
             //and only get the last number (label)
             labels.push_back(readLabel(line));
-            
+
             //we push every number in lines in text file containing data to "data" variable
             getline(file, line);
             std::istringstream ssData(line);
