@@ -1,6 +1,6 @@
 /*
 * DatasetFactory.cpp
-* Creates OpenCvDataset from external sources.
+* Creates OpenCvDataset from files.
 *
 Copyright 2018 Spectre Team
 
@@ -24,12 +24,13 @@ limitations under the License.
 
 namespace spectre::supervised
 {
-const int ColumnMatrixWidth = 1;
-
 DatasetFactory::DatasetFactory()
 {
 }
 
+//There is no file format validity for now, it will just throw an error during
+//OpenCvDataset creation from wrong read data.
+//Needs to be fixed in the future. 
 OpenCvDataset DatasetFactory::create(const std::string& filename)
 {
     std::fstream file;
@@ -40,10 +41,11 @@ OpenCvDataset DatasetFactory::create(const std::string& filename)
     }
     std::vector<DataType> data = {};
     std::vector<Label> labels = {};
-    DataType num;
-    Label label;
+    DataType dataType;
     std::string line;
     {
+        //we need to skip metadata line, however I don't know exactly why,
+        //but for it to work, we need 2 getlines
         getline(file, line);
         getline(file, line);
     }
@@ -51,21 +53,28 @@ OpenCvDataset DatasetFactory::create(const std::string& filename)
     {
         //get Label
         getline(file, line);
-        if (line != "") {
-            std::istringstream ssLabels(line);
-            while (ssLabels >> label) {}
-            labels.push_back(label);
-
-            //get DataTypes
+        if (!line.empty()) {
+            //in text files in lines with coordinates and label values, we skip coordinates 
+            //and only get the last number (label)
+            labels.push_back(readLabel(line));
+            
+            //we push every number in lines in text file containing data to "data" variable
             getline(file, line);
             std::istringstream ssData(line);
-            while (ssData >> num)
+            while (ssData >> dataType)
             {
-                data.push_back(num);
+                data.push_back(dataType);
             }
         }
     }
-    OpenCvDataset openCvDataset(data, labels);
-    return openCvDataset;
+    return OpenCvDataset(data, labels);
+}
+
+Label DatasetFactory::readLabel(const std::string& line)
+{
+    Label label;
+    std::istringstream ssLabels(line);
+    while (ssLabels >> label) {}
+    return label;
 }
 }

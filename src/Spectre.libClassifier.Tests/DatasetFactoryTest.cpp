@@ -38,9 +38,9 @@ public:
     DatasetFactoryTest() :
         datasetFactory() {}
 protected:
-    const std::vector<DataType> data_compare{ 1.1f, 4.5f, 6.7f, 5.0f, 9.5f, 3.9f, 7.1f, 5, 3.2f, 10, 24.5f, 5.756f,
+    const std::vector<DataType> dataCompare{ 1.1f, 4.5f, 6.7f, 5.0f, 9.5f, 3.9f, 7.1f, 5, 3.2f, 10, 24.5f, 5.756f,
         5.09f, 9.6f, 8.23452f, 2, 5.53f, 3.76f, 6.11234f, 6.9f, 7.0f, };
-    const std::vector<Label> labels_compare{ 0, 0, 1, 1, 0, 0, 1 };
+    const std::vector<Label> labelsCompare{ 0, 0, 1, 1, 0, 0, 1 };
     const std::string filename = "test_file.txt";
     const std::string nonExistantFilename = "non_existant_file.txt";
     const std::vector<std::string> dataForFile = { "test file", "2.6 9.5 1.0", "0 0 0 0", "1.1 4.5 6.7", "1 0 0 0",
@@ -64,7 +64,7 @@ TEST_F(DatasetFactoryTest, compare_dataset_from_file_and_from_data)
     }
     file.close();
 
-    OpenCvDataset datasetCompare(data_compare, labels_compare);
+    OpenCvDataset datasetCompare(dataCompare, labelsCompare);
     OpenCvDataset datasetFromFile = datasetFactory.create(filename);
     for (auto i = 0u; i < datasetCompare.size(); i++)
     {

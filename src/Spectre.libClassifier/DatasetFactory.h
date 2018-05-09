@@ -1,6 +1,6 @@
 /*
 * DatasetFactory.h
-* Creates OpenCvDataset from external sources.
+* Creates OpenCvDataset from files.
 *
 Copyright 2018 Spectre Team
 
@@ -37,5 +37,11 @@ public:
     /// </summary>
     /// <param name="filename">The filename.</param>
     static OpenCvDataset create(const std::string& filename);
+private:
+    /// <summary>
+    /// Returns label from file line.
+    /// </summary>
+    /// <param name="line">The line of the file.</param>
+    static Label readLabel(const std::string& line);
 };
 }
