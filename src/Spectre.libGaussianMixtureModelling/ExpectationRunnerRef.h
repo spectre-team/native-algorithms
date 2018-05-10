@@ -55,7 +55,7 @@ public:
     /// of each sample to a certain gaussian component.</param>
     /// <param name="components">Gaussian components.</param>
     /// <exception cref="ArgumentNullException">Thrown when mzArray pointer are null</exception>
-    ExpectationRunnerRef(DataView mzs, Matrix &affilationMatrix,
+    ExpectationRunnerRef(DataView mzs, Matrix<DataType> &affilationMatrix,
                          std::vector<GaussianComponent> &components)
         : m_Mzs(mzs), m_Components(components), m_AffilationMatrix(affilationMatrix)
     {
@@ -93,7 +93,7 @@ public:
 
 private:
     DataView m_Mzs;
-    Matrix &m_AffilationMatrix;
+    Matrix<DataType> &m_AffilationMatrix;
     std::vector<GaussianComponent> &m_Components;
 };
 }

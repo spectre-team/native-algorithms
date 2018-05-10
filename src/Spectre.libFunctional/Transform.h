@@ -19,7 +19,7 @@ limitations under the License.
 #pragma once
 #include <algorithm>
 #include <vector>
-#include <span.h>
+#include <gsl/span>
 #include "Spectre.libException/InconsistentArgumentSizesException.h"
 
 namespace spectre::core::functional

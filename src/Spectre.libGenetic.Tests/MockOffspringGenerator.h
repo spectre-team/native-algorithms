@@ -19,7 +19,7 @@ limitations under the License.
 
 #pragma once
 #include <gmock/gmock.h>
-#include <span.h>
+#include <gsl/span>
 #include "Spectre.libGenetic/OffspringGenerator.h"
 #include "Spectre.libGenetic.Tests/MockIndividualsBuilderStrategy.h"
 #include "Spectre.libGenetic.Tests/MockPreservationStrategy.h"

@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 #pragma once
-#include <span.h>
+#include <gsl/span>
 #include "Spectre.libGenetic/DataTypes.h"
 #include "Spectre.libGenetic/Generation.h"
 #include "Spectre.libGenetic/IndividualsBuilderStrategy.h"

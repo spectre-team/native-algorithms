@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+#include <numeric>
 #include "Spectre.libException/ArgumentOutOfRangeException.h"
 #include "Spectre.libFunctional/Transform.h"
 #include "Spectre.libHeatmapDataScaling/HistogramEqualization.h"
@@ -22,8 +23,8 @@ namespace spectre::visualization
 {
 std::vector<double> HistogramEqualization::scaleData(const gsl::span<const double> intensities) const
 {
-    const auto minIntensitiesRange = *min_element(std::begin(intensities), std::end(intensities));
-    const auto maxIntensitiesRange = *max_element(std::begin(intensities), std::end(intensities));
+    const auto minIntensitiesRange = *std::min_element(std::begin(intensities), std::end(intensities));
+    const auto maxIntensitiesRange = *std::max_element(std::begin(intensities), std::end(intensities));
 
     if (minIntensitiesRange < minRangeRestriction)
     {

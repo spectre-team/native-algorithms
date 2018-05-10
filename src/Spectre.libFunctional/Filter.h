@@ -19,7 +19,7 @@ limitations under the License.
 
 #pragma once
 #include <vector>
-#include <span.h>
+#include <gsl/span>
 #include "Spectre.libException/InconsistentArgumentSizesException.h"
 #include "Spectre.libException/OutOfRangeException.h"
 #include "Spectre.libFunctional/Find.h"

@@ -1,0 +1,17 @@
+Description: Remove link to the unittest submodule
+ This package uses unittest++ from the Debian archive
+Forwarded: not-needed
+Author: Nicholas Guriev <guriev-ns@ya.ru>
+Last-Update: 2017-06-21
+
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -13,8 +13,6 @@ if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DI
+     )
+ endif()
+ 
+-add_subdirectory(unittest-cpp)
+-
+ # this interface adds compile options to how the tests are run
+ # please try to keep entries ordered =)
+ add_library(gsl_tests_config INTERFACE)

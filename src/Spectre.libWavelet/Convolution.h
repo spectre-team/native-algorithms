@@ -18,7 +18,7 @@
 */
 #pragma once
 #include <array>
-#include <span.h>
+#include <gsl/span>
 #include "DataTypes.h"
 
 namespace spectre::algorithm::wavelet

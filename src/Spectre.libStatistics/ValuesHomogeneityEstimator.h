@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 #pragma once
-#include <span.h>
+#include <gsl/span>
 #include "Spectre.libStatistics/StatisticalIndex.h"
 
 namespace spectre::statistics::test

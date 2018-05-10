@@ -60,7 +60,7 @@ const SimplestDataset empty(emptyData, emptyMetadata, justNothing);
 const SimplestDataset narrowDataset(narrowData, firstMetadata, justNothing);
 
 const std::string interpretation = "BLAAAAH";
-const spectre::statistics::test::StatisticalIndex index(1.0, 0, interpretation);
+const spectre::statistics::test::StatisticalIndex _index(1.0, 0, interpretation);
 
 TEST(DifferentiatingFeaturesEstimator, initializes)
 {
@@ -72,7 +72,7 @@ TEST(DifferentiatingFeaturesEstimator, estimates_without_throw_for_valid_dataset
 {
     const ValuesHomogeneityEstimatorMock mock;
     DifferentiatingFeaturesEstimator estimator(mock);
-    EXPECT_CALL(mock, Compare(_, _)).WillRepeatedly(Return(index));
+    EXPECT_CALL(mock, Compare(_, _)).WillRepeatedly(Return(_index));
     EXPECT_NO_THROW(estimator.Estimate(firstDataset, secondDataset));
 }
 
@@ -96,7 +96,7 @@ TEST(DifferentiatingFeaturesEstimator, DISABLED_calls_estimator_for_each_feature
 {
     const ValuesHomogeneityEstimatorMock mock;
     DifferentiatingFeaturesEstimator estimator(mock);
-    EXPECT_CALL(mock, Compare(_, _)).Times(static_cast<int>(row1.size())).WillRepeatedly(Return(index));
+    EXPECT_CALL(mock, Compare(_, _)).Times(static_cast<int>(row1.size())).WillRepeatedly(Return(_index));
     estimator.Estimate(firstDataset, secondDataset);
 }
 
@@ -104,7 +104,7 @@ TEST(DifferentiatingFeaturesEstimator, returns_index_values_for_each_feature)
 {
     const ValuesHomogeneityEstimatorMock mock;
     DifferentiatingFeaturesEstimator estimator(mock);
-    EXPECT_CALL(mock, Compare(_, _)).WillRepeatedly(Return(index));
+    EXPECT_CALL(mock, Compare(_, _)).WillRepeatedly(Return(_index));
     EXPECT_THAT(estimator.Estimate(firstDataset, secondDataset).size(), Eq(row1.size()));
 }
 }

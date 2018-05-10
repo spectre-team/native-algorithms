@@ -23,7 +23,7 @@ SuppressionAlgorithm::SuppressionAlgorithm(const double topPercent) : m_topPerce
 
 std::vector<double> SuppressionAlgorithm::scaleData(const gsl::span<const double> intensities) const
 {
-    const double maxIntensity = *max_element(std::begin(intensities), std::end(intensities));
+    const double maxIntensity = *std::max_element(std::begin(intensities), std::end(intensities));
     const double cutoff = calculateQuantile(intensities, 1 - m_topPercent);
     const auto linearization = [cutoff, maxIntensity](double intensity)
     {

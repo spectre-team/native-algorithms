@@ -19,7 +19,7 @@
 
 #pragma once
 #include <vector>
-#include <gsl.h>
+#include <gsl/gsl>
 #include "DataTypes.h"
 
 namespace spectre::unsupervised::gmm

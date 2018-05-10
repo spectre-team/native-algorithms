@@ -64,7 +64,7 @@ namespace
     {
         auto result = scaleDataToRange(testIntensities);
         double const min = *std::min_element(std::begin(result), std::end(result));
-        double const max = *max_element(std::begin(result), std::end(result));
+        double const max = *std::max_element(std::begin(result), std::end(result));
         EXPECT_EQ(min, 0.0);
         EXPECT_EQ(max, 255.0);
     }
