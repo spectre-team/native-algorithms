@@ -19,7 +19,7 @@ limitations under the License.
 */
 
 #pragma once
-#include "Common\DataTypes.h"
+#include "Common/DataTypes.h"
 
 namespace spectre::algorithm::peakfinder
 {

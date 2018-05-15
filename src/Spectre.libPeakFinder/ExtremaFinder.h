@@ -18,7 +18,7 @@
 */
 
 #pragma once
-#include "Common\DataTypes.h"
+#include "Common/DataTypes.h"
 #include <vector>
 
 namespace spectre::algorithm::peakfinder

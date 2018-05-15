@@ -17,9 +17,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 #include <stdexcept>
-#include "ClearPeakFinder.h"
-#include "Spectre.libException\EmptyArgumentException.h"
-#include "Spectre.libFunctional\Filter.h"
+#include "Spectre.libGaussianMixtureModelling/ClearPeakFinder.h"
+#include "Spectre.libException/EmptyArgumentException.h"
+#include "Spectre.libFunctional/Filter.h"
 
 using namespace spectre::core::functional;
 using namespace spectre::core::exception;

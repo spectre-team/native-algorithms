@@ -19,9 +19,9 @@ limitations under the License.
 
 #include <gtest/gtest.h>
 #include "FloatingPointVectorMatcher.h"
-#include "Spectre.libWavelet\DaubechiesFiltersDenoiser.h"
-#include "Spectre.libWavelet\WaveletDecomposerRef.h"
-#include "Spectre.libWavelet\WaveletReconstructorRef.h"
+#include "Spectre.libWavelet/DaubechiesFiltersDenoiser.h"
+#include "Spectre.libWavelet/WaveletDecomposerRef.h"
+#include "Spectre.libWavelet/WaveletReconstructorRef.h"
 
 namespace
 {

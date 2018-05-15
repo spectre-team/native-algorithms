@@ -65,7 +65,7 @@ public:
     /// Fills affilation (gamma) matrix with probabilities of affilation of each sample
     /// to a certain gaussian component.
     /// </summary>
-    void ExpectationRunnerRef::Expectation()
+    void Expectation()
     {
         // This part conducts the instruction:
         // "Calculate gamma for each i and k

@@ -62,7 +62,7 @@ public:
     /// <returns>
     /// Value of log likelihood.
     /// </returns>
-    DataType LogLikelihoodCalculator::CalculateLikelihood()
+    DataType CalculateLikelihood()
     {
         // This part performs calcluation of log likelihood
         // performed with accordance to equation (9.14)

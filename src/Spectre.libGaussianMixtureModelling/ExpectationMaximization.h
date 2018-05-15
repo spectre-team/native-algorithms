@@ -66,7 +66,7 @@ public:
     /// Gaussian Mixture Model containing all the components with their appropriate
     /// parameters.
     /// </returns>
-    GaussianMixtureModel ExpectationMaximization::EstimateGmm()
+    GaussianMixtureModel EstimateGmm()
     {
         constexpr DataType MIN_LIKELIHOOD_CHANGE = 0.00000001;
         Initialization();
@@ -90,19 +90,19 @@ public:
     }
 
 private:
-    void ExpectationMaximization::Initialization()
+    void Initialization()
     {
         m_Initialization.AssignRandomMeans();
         m_Initialization.AssignVariances();
         m_Initialization.AssignWeights();
     }
 
-    void ExpectationMaximization::Expectation()
+    void Expectation()
     {
         m_Expectation.Expectation();
     }
 
-    void ExpectationMaximization::Maximization()
+    void Maximization()
     {
         m_Maximization.UpdateWeights();
         m_Maximization.UpdateMeans();

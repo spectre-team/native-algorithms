@@ -18,7 +18,7 @@
 */
 
 #include <gtest/gtest.h>
-#include "Spectre.libPeakFinder\ExtremaFinder.h"
+#include "Spectre.libPeakFinder/ExtremaFinder.h"
 
 namespace
 {

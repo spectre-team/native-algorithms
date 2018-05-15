@@ -23,7 +23,7 @@ limitations under the License.
 #include <gsl/gsl>
 #include <vector>
 #include <algorithm>
-#include "Partition.h"
+#include "Spectre.libClustering/Partition.h"
 #include "Spectre.libException/NullPointerException.h"
 
 
