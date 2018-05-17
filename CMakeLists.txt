@@ -10,6 +10,13 @@ find_package(OpenMP REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(GMock REQUIRED)
 
+include(CheckIncludeFileCXX)
+check_include_file_cxx(/usr/include/gsl/gsl HAVE_GSL)
+if (NOT HAVE_GSL)
+    include_directories(dep/gsl/include)
+    message(STATUS "Using GSL includes from dep/")
+endif ()
+
 include_directories(src)
 
 
