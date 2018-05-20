@@ -352,7 +352,7 @@ target_link_libraries(Spectre.libGaClassifier.Tests
         Spectre.libException
         Spectre.libFunctional
         ${OpenCV_LIBS}
-        omp
+        ${OpenMP_CXX_FLAGS}
         gtest_main
         )
 add_test(Spectre.libGaClassifier.Tests Spectre.libGaClassifier.Tests)
@@ -406,7 +406,7 @@ add_executable(Spectre.libGenetic.Tests
 target_link_libraries(Spectre.libGenetic.Tests
         Spectre.libGenetic
         Spectre.libException
-        omp
+        ${OpenMP_CXX_FLAGS}
         gmock_main
         )
 add_test(Spectre.libGenetic.Tests Spectre.libGenetic.Tests)
@@ -437,7 +437,7 @@ target_link_libraries(Spectre.libStatistics.Tests
         Spectre.libStatistics
         Spectre.libDataset
         Spectre.libException
-        omp
+        ${OpenMP_CXX_FLAGS}
         gmock_main
         )
 add_test(Spectre.libStatistics.Tests Spectre.libStatistics.Tests)
