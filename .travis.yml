@@ -48,7 +48,7 @@ before_script:
 
 script:
   - cd build
-  - ctest --output-on-failure -j$JOBS
+  - ctest --extra-verbose -j$JOBS
 
 notifications:
   email: false
