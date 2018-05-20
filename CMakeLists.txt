@@ -10,7 +10,37 @@ list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/configs")
 
 find_package(OpenMP REQUIRED)
 find_package(OpenCV REQUIRED)
-find_package(GMock REQUIRED)
+
+# Download and unpack googletest at configure time
+configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
+execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+  RESULT_VARIABLE result
+  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
+if (result)
+  message(FATAL_ERROR "CMake step for googletest failed: ${result}")
+endif ()
+execute_process(COMMAND ${CMAKE_COMMAND} --build .
+  RESULT_VARIABLE result
+  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
+if (result)
+  message(FATAL_ERROR "Build step for googletest failed: ${result}")
+endif ()
+
+# Prevent overriding the parent project's compiler/linker
+# settings on Windows
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+# Add googletest directly to our build. This defines
+# the gtest and gtest_main targets.
+add_subdirectory(${CMAKE_BINARY_DIR}/googletest-src
+                 ${CMAKE_BINARY_DIR}/googletest-build
+                 EXCLUDE_FROM_ALL)
+
+# The gtest/gtest_main targets carry header search path
+# dependencies automatically when using CMake 2.8.11 or
+# later. Otherwise we have to add them here ourselves.
+include_directories(BEFORE SYSTEM
+  "${gtest_SOURCE_DIR}/include" "${gmock_SOURCE_DIR}/include")
 
 include(CheckIncludeFileCXX)
 check_include_file_cxx(/usr/include/gsl/gsl HAVE_GSL)
@@ -267,7 +297,6 @@ target_link_libraries(Spectre.libClassifier.Tests
         Spectre.libException
         Spectre.libFunctional
         ${OpenCV_LIBS}
-        gtest
         gtest_main
         )
 add_test(Spectre.libClassifier.Tests Spectre.libClassifier.Tests)
@@ -279,7 +308,6 @@ add_executable(Spectre.libClustering.Tests
 target_link_libraries(Spectre.libClustering.Tests
         Spectre.libClustering
         Spectre.libException
-        gtest
         gtest_main
         )
 add_test(Spectre.libClustering.Tests Spectre.libClustering.Tests)
@@ -291,7 +319,6 @@ add_executable(Spectre.libDataset.Tests
 target_link_libraries(Spectre.libDataset.Tests
         Spectre.libDataset
         Spectre.libException
-        gtest
         gtest_main
         )
 add_test(Spectre.libDataset.Tests Spectre.libDataset.Tests)
@@ -306,7 +333,6 @@ add_executable(Spectre.libFunctional.Tests
 target_link_libraries(Spectre.libFunctional.Tests
         Spectre.libFunctional
         Spectre.libException
-        gtest
         gtest_main
         )
 add_test(Spectre.libFunctional.Tests Spectre.libFunctional.Tests)
@@ -327,7 +353,6 @@ target_link_libraries(Spectre.libGaClassifier.Tests
         Spectre.libFunctional
         ${OpenCV_LIBS}
         omp
-        gtest
         gtest_main
         )
 add_test(Spectre.libGaClassifier.Tests Spectre.libGaClassifier.Tests)
@@ -343,7 +368,6 @@ add_executable(Spectre.libGaussianMixtureModelling.Tests
 target_link_libraries(Spectre.libGaussianMixtureModelling.Tests
         Spectre.libGaussianMixtureModelling
         Spectre.libException
-        gtest
         gtest_main
         )
 add_test(Spectre.libGaussianMixtureModelling.Tests Spectre.libGaussianMixtureModelling.Tests)
@@ -383,9 +407,7 @@ target_link_libraries(Spectre.libGenetic.Tests
         Spectre.libGenetic
         Spectre.libException
         omp
-        gmock
-        gtest
-        gtest_main
+        gmock_main
         )
 add_test(Spectre.libGenetic.Tests Spectre.libGenetic.Tests)
 
@@ -398,9 +420,7 @@ add_executable(Spectre.libPeakFinder.Tests
 target_link_libraries(Spectre.libPeakFinder.Tests
         Spectre.libPeakFinder
         Spectre.libException
-        gmock
-        gtest
-        gtest_main
+        gmock_main
         )
 add_test(Spectre.libPeakFinder.Tests Spectre.libPeakFinder.Tests)
 
@@ -418,9 +438,7 @@ target_link_libraries(Spectre.libStatistics.Tests
         Spectre.libDataset
         Spectre.libException
         omp
-        gmock
-        gtest
-        gtest_main
+        gmock_main
         )
 add_test(Spectre.libStatistics.Tests Spectre.libStatistics.Tests)
 
@@ -438,7 +456,6 @@ target_link_libraries(Spectre.libWavelet.Tests
         Spectre.libWavelet
         Spectre.libException
         Spectre.libFunctional
-        gtest
         gtest_main
         )
 add_test(Spectre.libWavelet.Tests Spectre.libWavelet.Tests)
