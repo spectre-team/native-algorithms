@@ -18,7 +18,6 @@ limitations under the License.
 */
 
 #include <gtest/gtest.h>
-#include "Spectre.libException/OutOfRangeException.h"
 #include "Spectre.libGenetic/Individual.h"
 #include "Spectre.libGenetic/InconsistentChromosomeLengthException.h"
 
@@ -62,17 +61,6 @@ TEST_F(IndividualTest, exhibit_proper_size)
     EXPECT_EQ(size, TRUE_DATA.size());
 }
 
-TEST_F(IndividualTest, const_index_throws_for_exceeded_size)
-{
-    EXPECT_THROW(mixedIndividual[mixedIndividual.size()], spectre::core::exception::OutOfRangeException);
-}
-
-TEST_F(IndividualTest, mutable_index_throws_for_exceeded_size)
-{
-    Individual individual { std::vector<bool>(MIXED_DATA) };
-    EXPECT_THROW(individual[individual.size()] = false, spectre::core::exception::OutOfRangeException);
-}
-
 TEST_F(IndividualTest, index_returns_proper_const_bits)
 {
     for (auto i = 0u; i < MIXED_DATA.size(); ++i)
@@ -102,8 +90,8 @@ TEST_F(IndividualTest, iterators_allow_to_iterate_over_const_binary_data)
         ++dataIterator;
     }
 
-    EXPECT_EQ(individualIterator, mixedIndividual.end());
-    EXPECT_EQ(dataIterator, MIXED_DATA.end());
+    EXPECT_TRUE(individualIterator == mixedIndividual.end());
+    EXPECT_TRUE(dataIterator == MIXED_DATA.end());
 }
 
 TEST_F(IndividualTest, iterators_allow_to_read_and_modify_binary_data)
@@ -120,8 +108,8 @@ TEST_F(IndividualTest, iterators_allow_to_read_and_modify_binary_data)
         ++dataIterator;
     }
 
-    EXPECT_EQ(individualIterator, mutableIndividual.end());
-    EXPECT_EQ(dataIterator, MIXED_DATA.end());
+    EXPECT_TRUE(individualIterator == mutableIndividual.end());
+    EXPECT_TRUE(dataIterator == MIXED_DATA.end());
 
     individualIterator = mutableIndividual.begin();
     dataIterator = MIXED_DATA.begin();

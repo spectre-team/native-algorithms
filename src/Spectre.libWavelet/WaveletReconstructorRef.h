@@ -42,7 +42,7 @@ public:
     Data Reconstruct(WaveletCoefficients&& coefficients, size_t signalLength) const;
 
 private:
-    inline void WaveletReconstructorRef::ApplyFilters(
+    inline void ApplyFilters(
         WaveletCoefficients& coefficients, size_t scale,
         size_t blockLength, unsigned level) const;
 

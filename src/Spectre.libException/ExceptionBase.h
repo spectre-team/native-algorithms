@@ -39,7 +39,7 @@ public:
     /// Returns error message.
     /// </summary>
     /// <returns>Error message</returns>
-    char const* what() const override;
+    char const* what() const noexcept override;
 private:
     const std::string m_message;
 };

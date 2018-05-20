@@ -17,7 +17,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "ParentSelectionStrategy.h"
+#include <algorithm>
+#include "Spectre.libGenetic/ParentSelectionStrategy.h"
 #include "Spectre.libException/ArgumentOutOfRangeException.h"
 #include "InconsistentGenerationAndScoresLengthException.h"
 
@@ -32,9 +33,8 @@ reference_pair<Individual> ParentSelectionStrategy::next(Generation &generation,
     {
         throw InconsistentGenerationAndScoresLengthException(generation.size(), scores.size());
     }
-    const auto minAndMaxWeights = std::minmax_element(scores.begin(), scores.end());
-    const auto minWeight = *minAndMaxWeights.first;
-    const auto maxWeight = *minAndMaxWeights.second;
+    const auto minWeight = *std::min_element(std::begin(scores), std::end(scores));
+    const auto maxWeight = *std::max_element(std::begin(scores), std::end(scores));
     if (minWeight < 0)
     {
         throw spectre::core::exception::ArgumentOutOfRangeException<ScoreType>("scores", 0, std::numeric_limits<ScoreType>::max(), minWeight);
@@ -42,7 +42,7 @@ reference_pair<Individual> ParentSelectionStrategy::next(Generation &generation,
     std::vector<ScoreType> defaultScores(scores.size(), 1);
     if (maxWeight <= 0)
     {
-        scores = defaultScores;
+        scores = gsl::make_span(defaultScores);
     }
     std::discrete_distribution<size_t> indexDistribution(scores.begin(), scores.end());
     const auto first = indexDistribution(m_RandomNumberGenerator);

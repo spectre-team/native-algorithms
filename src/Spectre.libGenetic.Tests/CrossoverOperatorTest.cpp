@@ -39,7 +39,7 @@ class CrossoverOperatorTest: public ::testing::Test
 public:
     CrossoverOperatorTest() {}
 protected:
-    const unsigned NUMBER_OF_TRIALS = 1000;
+    const unsigned NUMBER_OF_TRIALS = 2000;
     const double ALLOWED_MISS_RATE = 0.05;
     const Seed SEED = 0;
     const Individual true_individual = Individual({ true, true, true, true });
@@ -167,8 +167,8 @@ TEST_F(CrossoverOperatorTest, cuts_are_from_uniform_distribution)
     for (unsigned i = 0; i < counts.size(); ++i)
     {
         const auto count = counts[i];
-        EXPECT_GT(count, meanCount - allowedCountMiss) << i;
-        EXPECT_LT(count, meanCount + allowedCountMiss) << i;
+        EXPECT_GE(count, meanCount - allowedCountMiss) << i;
+        EXPECT_LE(count, meanCount + allowedCountMiss) << i;
     }
 }
 

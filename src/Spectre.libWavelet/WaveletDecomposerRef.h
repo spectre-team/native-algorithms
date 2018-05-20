@@ -41,7 +41,7 @@ public:
     WaveletCoefficients Decompose(Data&& signal) const;
 
 private:
-    inline void WaveletDecomposerRef::ApplyFilters(
+    inline void ApplyFilters(
         WaveletCoefficients& coefficients,
         CoefficientsPerLevel& lowFrequencyCoefficients,
         size_t scale, size_t blockLength, unsigned level) const;

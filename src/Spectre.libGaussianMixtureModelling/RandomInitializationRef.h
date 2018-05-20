@@ -61,7 +61,7 @@ public:
     /// <summary>
     /// Assigns means to gaussian components, by choosing random samples from the dataset.
     /// </summary>
-    void RandomInitializationRef::AssignRandomMeans()
+    void AssignRandomMeans()
     {
         // This part conducts the instruction:
         // "Randomly assign samples without replacement from the dataset"
@@ -78,7 +78,7 @@ public:
     /// Calculates variance of the dataset, and assigns its square root
     /// (standard deviation) to variances of all components.
     /// </summary>
-    void RandomInitializationRef::AssignVariances()
+    void AssignVariances()
     {
         // This part conducts the instruction:
         // "Set all component variance estimates to the sample variance"
@@ -96,7 +96,7 @@ public:
     /// Assigns uniform weight to each component. Each weight equals to
     /// 1 / K, and therefore they all sum to 1.
     /// </summary>
-    void RandomInitializationRef::AssignWeights()
+    void AssignWeights()
     {
         // This part conducts the instruction:
         // "Set all component distribution prior estimates to the uniform distribution"
@@ -110,7 +110,7 @@ public:
     }
 
 private:
-    DataType RandomInitializationRef::CalculateMean()
+    DataType CalculateMean()
     {
         DataType mean = 0.0;
 
@@ -122,7 +122,7 @@ private:
         return mean / (DataType)m_Mzs.size();
     }
 
-    DataType RandomInitializationRef::CalculateVariance(DataType mean)
+    DataType CalculateVariance(DataType mean)
     {
         DataType variance = 0.0;
 

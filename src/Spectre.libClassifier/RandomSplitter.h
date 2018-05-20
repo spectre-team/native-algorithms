@@ -46,7 +46,7 @@ public:
     /// </summary>
     /// <param name="data">The data.</param>
     /// <returns>Dataset splitted into training and validation subsets.</returns>
-    SplittedOpenCvDataset RandomSplitter::split(const OpenCvDataset& data) const;
+    SplittedOpenCvDataset split(const OpenCvDataset& data) const;
 private:
     const double m_trainingRate;
     const Seed m_Seed;

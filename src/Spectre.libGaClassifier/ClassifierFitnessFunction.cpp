@@ -38,8 +38,7 @@ algorithm::genetic::ScoreType ClassifierFitnessFunction::operator()(const algori
     {
         throw core::exception::InconsistentArgumentSizesException("data", m_Data.trainingSet.size(), "individual", individual.size());
     }
-    auto individualData = individual.getData();
-    OpenCvDataset individualDataset = getFilteredOpenCvDataset(m_Data.trainingSet, individualData);
+    OpenCvDataset individualDataset = getFilteredOpenCvDataset(m_Data.trainingSet, individual);
 
     const auto result = getResultMatrix(std::move(individualDataset));
     return result.DiceIndex;

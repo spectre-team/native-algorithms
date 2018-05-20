@@ -19,7 +19,7 @@ limitations under the License.
 #define GTEST_LANG_CXX11 1
 
 #include <gtest/gtest.h>
-#include "Spectre.libGaussianMixtureModelling\SplitterSegmentExtractor.h"
+#include "Spectre.libGaussianMixtureModelling/SplitterSegmentExtractor.h"
 
 namespace spectre::unsupervised::gmm
 {

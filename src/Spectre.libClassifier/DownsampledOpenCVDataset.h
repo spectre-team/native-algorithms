@@ -36,13 +36,13 @@ public:
     /// </summary>
     /// <param name="data">The dataset.</param>
     /// <param name="maximumSubsetSize">The maximum subset size.</param>
-    DownsampledOpenCVDataset::DownsampledOpenCVDataset(OpenCvDataset data, size_t maximumSubsetSize, double trainingRate);
+    DownsampledOpenCVDataset(OpenCvDataset data, size_t maximumSubsetSize, double trainingRate);
     /// <summary>
     /// Gets Splitted training and test dataset having the same amount cancer and noncancer cells.
     /// </summary>
     /// <param name="seed">The seed.</param>
     /// <returns>SplittedOpenCvDataset</returns>
-    SplittedOpenCvDataset DownsampledOpenCVDataset::getRandomSubset(Seed seed = 0) const;
+    SplittedOpenCvDataset getRandomSubset(Seed seed = 0) const;
 private:
     /// <summary>
     /// The cancer cells.
@@ -73,6 +73,6 @@ private:
     /// </summary>
     /// <param name="datasetSize">The dataset size.</param>
     /// <returns>vector of bool</returns>
-    std::vector<bool> DownsampledOpenCVDataset::getRandomFilter(size_t datasetSize, Seed seed) const;
+    std::vector<bool> getRandomFilter(size_t datasetSize, Seed seed) const;
 };
 }

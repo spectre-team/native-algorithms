@@ -19,10 +19,10 @@ limitations under the License.
 
 #include <gtest/gtest.h>
 #include "FloatingPointVectorMatcher.h"
-#include "Spectre.libFunctional\Range.h"
-#include "Spectre.libWavelet\SoftThresholder.h"
-#include "Spectre.libWavelet\WaveletDecomposerRef.h"
-#include "Spectre.libWavelet\MedianAbsoluteDeviationNoiseEstimator.h"
+#include "Spectre.libFunctional/Range.h"
+#include "Spectre.libWavelet/SoftThresholder.h"
+#include "Spectre.libWavelet/WaveletDecomposerRef.h"
+#include "Spectre.libWavelet/MedianAbsoluteDeviationNoiseEstimator.h"
 
 namespace
 {

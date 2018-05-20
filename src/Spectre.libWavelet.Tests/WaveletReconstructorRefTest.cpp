@@ -19,9 +19,9 @@ limitations under the License.
 */
 
 #include <gtest/gtest.h>
-#include "Spectre.libWavelet\WaveletReconstructorRef.h"
-#include "Spectre.libWavelet\WaveletDecomposerRef.h"
-#include "Spectre.libFunctional\Range.h"
+#include "Spectre.libWavelet/WaveletReconstructorRef.h"
+#include "Spectre.libWavelet/WaveletDecomposerRef.h"
+#include "Spectre.libFunctional/Range.h"
 #include "FloatingPointVectorMatcher.h"
 
 namespace

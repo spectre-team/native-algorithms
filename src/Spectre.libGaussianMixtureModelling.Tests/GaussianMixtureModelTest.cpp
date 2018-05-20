@@ -22,7 +22,7 @@ limitations under the License.
 #include <gtest/gtest.h>
 #include <algorithm>
 #include <stdlib.h>
-#include "GaussianMixtureModel.h"
+#include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
 
 namespace spectre::unsupervised::gmm
 {
