@@ -55,6 +55,8 @@ include_directories(src)
 add_library(Spectre.libClassifier STATIC
         src/Spectre.libClassifier/ConfusionMatrix.cpp
         src/Spectre.libClassifier/ConfusionMatrix.h
+        src/Spectre.libClassifier/DatasetFactory.cpp
+        src/Spectre.libClassifier/DatasetFactory.h
         src/Spectre.libClassifier/DatasetFilter.h
         src/Spectre.libClassifier/DownsampledOpenCVDataset.cpp
         src/Spectre.libClassifier/DownsampledOpenCVDataset.h
@@ -62,6 +64,8 @@ add_library(Spectre.libClassifier STATIC
         src/Spectre.libClassifier/EmptyOpenCvDatasetException.h
         src/Spectre.libClassifier/ExcessiveTrainingRateException.cpp
         src/Spectre.libClassifier/ExcessiveTrainingRateException.h
+        src/Spectre.libClassifier/FileOpenException.cpp
+        src/Spectre.libClassifier/FileOpenException.h
         src/Spectre.libClassifier/IClassifier.h
         src/Spectre.libClassifier/InsufficientDataException.cpp
         src/Spectre.libClassifier/InsufficientDataException.h
@@ -284,6 +288,7 @@ add_library(Spectre.libWavelet STATIC
 
 
 add_executable(Spectre.libClassifier.Tests
+        src/Spectre.libClassifier.Tests/DatasetFactoryTest.cpp
         src/Spectre.libClassifier.Tests/DownsampledOpenCVDatasetTest.cpp
         src/Spectre.libClassifier.Tests/ObservationExtractorTest.cpp
         src/Spectre.libClassifier.Tests/OpenCvDatasetTest.cpp
