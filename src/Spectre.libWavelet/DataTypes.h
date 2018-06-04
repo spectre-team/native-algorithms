@@ -18,7 +18,7 @@
 */
 #pragma once
 #include <vector>
-#include "Common\DataTypes.h"
+#include "Common/DataTypes.h"
 
 namespace spectre::algorithm::wavelet
 {

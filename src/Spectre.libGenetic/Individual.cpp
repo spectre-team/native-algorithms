@@ -29,77 +29,23 @@ using namespace spectre::core::exception;
 namespace spectre::algorithm::genetic
 {
 Individual::Individual(std::vector<bool> &&binaryData):
-    m_BinaryData(binaryData) { }
-
-const std::vector<bool>& Individual::getData() const
-{
-    return m_BinaryData;
-}
-
-std::vector<bool>::reference Individual::operator[](size_t index)
-{
-    if (index < m_BinaryData.size())
-    {
-        return m_BinaryData[index];
-    }
-    else
-    {
-        throw OutOfRangeException(index, m_BinaryData.size());
-    }
-}
-
-std::vector<bool>::const_reference Individual::operator[](size_t index) const
-{
-    if (index < m_BinaryData.size())
-    {
-        return m_BinaryData[index];
-    }
-    else
-    {
-        throw OutOfRangeException(index, m_BinaryData.size());
-    }
-}
-
-std::vector<bool>::iterator Individual::begin()
-{
-    return m_BinaryData.begin();
-}
-
-std::vector<bool>::iterator Individual::end()
-{
-    return m_BinaryData.end();
-}
-
-std::vector<bool>::const_iterator Individual::begin() const
-{
-    return m_BinaryData.begin();
-}
-
-std::vector<bool>::const_iterator Individual::end() const
-{
-    return m_BinaryData.end();
-}
-
-size_t Individual::size() const
-{
-    return m_BinaryData.size();
-}
+    std::vector<bool>(binaryData) { }
 
 bool Individual::operator==(const Individual &other) const
 {
-    return m_BinaryData == other.m_BinaryData;
+    return std::equal(begin(), end(), other.begin(), other.end());
 }
 
 bool Individual::operator!=(const Individual &other) const
 {
-    return !(this->operator==(other));
+    return !(*this == other);
 }
 
 Individual& Individual::operator=(const Individual &other)
 {
     if (size() == other.size())
     {
-        m_BinaryData.assign(other.m_BinaryData.begin(), other.m_BinaryData.end());
+        assign(other.begin(), other.end());
         return *this;
     }
     else
@@ -107,4 +53,5 @@ Individual& Individual::operator=(const Individual &other)
         throw InconsistentChromosomeLengthException(size(), other.size());
     }
 }
+
 }

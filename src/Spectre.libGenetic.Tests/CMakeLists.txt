@@ -1,0 +1,39 @@
+add_executable(Spectre.libGenetic.Tests
+        BaseIndividualFeasibilityConditionTest.cpp
+        CrossoverOperatorTest.cpp
+        GenerationFactoryTest.cpp
+        GenerationTest.cpp
+        GeneticAlgorithmTest.cpp
+        IndividualsBuilderStrategyTest.cpp
+        IndividualTest.cpp
+        LengthConditionTest.cpp
+        MaximalFillupConditionTest.cpp
+        MaximalPercentageFillupConditionTest.cpp
+        MinimalFillupConditionTest.cpp
+        MinimalPercentageFillupConditionTest.cpp
+        MockBaseIndividualFeasibilityCondition.h
+        MockCrossoverOperator.h
+        MockFitnessFunction.h
+        MockIndividualsBuilderStrategy.h
+        MockMutationOperator.h
+        MockOffspringGenerator.h
+        MockParentSelectionStrategy.h
+        MockPreservationStrategy.h
+        MockScorer.h
+        MockStopCondition.h
+        MutationOperatorTest.cpp
+        OffspringGeneratorTest.cpp
+        ParentSelectionStrategyTest.cpp
+        PreservationStrategyTest.cpp
+        ScorerTest.cpp
+        StopConditionTest.cpp
+        )
+
+target_link_libraries(Spectre.libGenetic.Tests
+        Spectre.libGenetic
+        Spectre.libException
+        ${OpenMP_CXX_FLAGS}
+        gmock_main
+        )
+
+add_test(Spectre.libGenetic.Tests Spectre.libGenetic.Tests)

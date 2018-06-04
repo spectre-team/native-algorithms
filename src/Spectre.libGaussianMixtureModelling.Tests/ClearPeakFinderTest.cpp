@@ -19,9 +19,9 @@ limitations under the License.
 #define GTEST_LANG_CXX11 1
 
 #include <gtest/gtest.h>
-#include "ClearPeakFinder.h"
-#include "Spectre.libException\EmptyArgumentException.h"
-#include "Spectre.libException\InconsistentArgumentSizesException.h"
+#include "Spectre.libGaussianMixtureModelling/ClearPeakFinder.h"
+#include "Spectre.libException/EmptyArgumentException.h"
+#include "Spectre.libException/InconsistentArgumentSizesException.h"
 
 namespace spectre::unsupervised::gmm
 {

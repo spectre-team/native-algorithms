@@ -23,7 +23,7 @@ namespace spectre::core::exception
 {
 ExceptionBase::ExceptionBase(const std::string message): m_message(message) { }
 
-char const* ExceptionBase::what() const
+char const* ExceptionBase::what() const noexcept
 {
     return m_message.c_str();
 }

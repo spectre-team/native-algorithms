@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 #include <gtest/gtest.h>
-#include "Spectre.libWavelet\MedianAbsoluteDeviationNoiseEstimator.h"
+#include "Spectre.libWavelet/MedianAbsoluteDeviationNoiseEstimator.h"
 
 namespace
 {

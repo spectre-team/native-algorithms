@@ -24,7 +24,7 @@ limitations under the License.
 #include <limits>
 #include "Matrix.h"
 #include <numeric>
-#include "Spectre.libException\OutOfRangeException.h"
+#include "Spectre.libException/OutOfRangeException.h"
 
 
 namespace spectre::unsupervised::gmm

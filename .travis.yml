@@ -1,0 +1,62 @@
+language: cpp
+
+sudo: required
+dist: trusty
+
+matrix:
+  include:
+    - env: CLANG_VERSION=5.0 BUILD_TYPE=Debug
+      addons: &clang50
+        apt:
+          packages:
+            - clang-5.0
+            - libiomp-dev
+            - libstdc++-7-dev
+          sources:
+            - sourceline: 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main'
+              key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
+            - ubuntu-toolchain-r-test
+          update: true
+    - env: CLANG_VERSION=5.0 BUILD_TYPE=Release
+      addons: *clang50
+    - env: GCC_VERSION=7 BUILD_TYPE=Debug
+      addons: &gcc7
+        apt:
+          packages:
+            - g++-7
+            - libiomp-dev
+          sources:
+            - ubuntu-toolchain-r-test
+          update: true
+    - env: GCC_VERSION=7 BUILD_TYPE=Release
+      addons: *gcc7
+
+before_install:
+  - sudo -E add-apt-repository -y ppa:lkoppel/opencv
+  - sudo -E apt-get update -yq
+
+install:
+  - sudo -E apt-get install -yq --no-install-suggests --no-install-recommends libopencv-dev
+  - if [[ -n "$CLANG_VERSION" ]]; then export CXX=clang++-$CLANG_VERSION CC=clang-$CLANG_VERSION; fi
+  - if [[ -n "$GCC_VERSION" ]]; then export CXX=g++-$GCC_VERSION CC=gcc-$GCC_VERSION; fi
+  - JOBS=2
+
+before_script:
+  - cd "${TRAVIS_BUILD_DIR}"
+  - cmake . -Bbuild -DCMAKE_CXX_COMPILER="$CXX" -DCMAKE_C_COMPILER="$CC" -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+  - cmake --build build -- -j$JOBS
+
+script:
+  - cd build
+  - ctest --extra-verbose -j$JOBS
+
+notifications:
+  email: false
+  webhooks:
+    urls:
+      secure: EjXBN1xP3sW0dbqLtSeeh7INAZI3WdEtl201OcPc/bvttJz6rZKnivQpR/esBfLJQQvzUaZQE1lXYUTvYCRMJOhmWnmaQbGNE9ml30jfYURukZSq24du6d+5FvW5G8EVC79+ptBbNs5jV4uHIWcLt4cXR3i7taSG2NB83qfutMtuOf90hLyysmFaVqyfKwLY3i983t/95Tt+G/Grt5/kiDgnU2LL8SQsAUQ2RKR5IkNl+9+xE8gJae6EfgP7xhJMgXEN51sr/GUVw9egktg4NnwpWjIQzECFuhrr6yyQF/JO0yFY3YAwU58BZcmE86KqG0JO0pTyEsY8EfksUtq7blhlPG33yvIhYeyi/6ViO56IMTwDD8u5Mzwl++W0Ht6Uy0jj1FwaGlHncZz58jzYSpEldg/4AntznovAWX/yUTyL96bWYDxrGEasqzpDsFMv/zKgrT+H/ZyaNgyMrk9eKU+pe0FCBZv+3cAuI8YfXEPUGimhHPDtAPbDhLLuDcEt/tLiDgwFf7Sq+fPbZzqUH+OM8k7PGoNX48sQgjVw20cifLd4skecrQGYICNL81dpaViYTHpx+kqmqZEuBTfwZTub8X9jZschDKlFjvHKn1N6OQvFvMbx0kvsUFGVOITC4sppMlKXHddIBwgDzmVJz9CN2iSC0ownRsg+QYP8d+M=
+    on_success: always
+    on_failure: always
+    on_start: never
+    on_cancel: never
+    on_error: always

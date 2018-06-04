@@ -18,6 +18,7 @@ limitations under the License.
 */
 
 #pragma once
+#include <cmath>
 #include <vector>
 #include <gsl/span>
 #include "Spectre.libFunctional/Transform.h"
@@ -177,7 +178,7 @@ constexpr std::vector<DataType> min(gsl::span<const DataType> first, gsl::span<c
 /// <param name="second">The second.</param>
 /// <returns>Vector, elements of which are true, if corresponding elements in source vectors were equal.</returns>
 template<class DataType>
-constexpr std::vector<bool> equals(gsl::span<const DataType> first, gsl::span<const DataType> second, DataType* /*dummy*/ = static_cast<DataType *>(nullptr))
+std::vector<bool> equals(gsl::span<const DataType> first, gsl::span<const DataType> second, DataType* /*dummy*/ = static_cast<DataType *>(nullptr))
 {
     return spectre::core::functional::transform(first, second, [](DataType left, DataType right) { return left == right; }, static_cast<bool*>(nullptr));
 }
@@ -334,7 +335,7 @@ constexpr std::vector<DataType> min(gsl::span<const DataType> first, DataType se
 /// <param name="second">The second.</param>
 /// <returns>Vector which elements are true where elements of first were second.</returns>
 template<class DataType>
-constexpr std::vector<bool> equals(gsl::span<const DataType> first, DataType second)
+std::vector<bool> equals(gsl::span<const DataType> first, DataType second)
 {
     return spectre::core::functional::transform(first, [second](DataType left) { return left == second; }, static_cast<bool*>(nullptr));
 }
@@ -393,7 +394,7 @@ std::vector<DataType> build(size_t size, Generator generator)
 template <class DataType>
 std::vector<typename std::remove_const<DataType>::type> differentiate_unsafe(gsl::span<DataType> data, uint16_t order = 1)
 {
-    std::vector<std::remove_const<DataType>::type> result(data.begin(), data.end());
+    std::vector<typename std::remove_const<DataType>::type> result(data.begin(), data.end());
     for (auto i = 0u; i < order; ++i)
     {
         for (auto j = 0u; j < result.size() - 1; ++j)

@@ -141,9 +141,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DatasetFactory.cpp" />
     <ClCompile Include="DownsampledOpenCVDataset.cpp" />
     <ClCompile Include="EmptyOpenCvDatasetException.cpp" />
     <ClCompile Include="ExcessiveTrainingRateException.cpp" />
+    <ClCompile Include="FileOpenException.cpp" />
     <ClCompile Include="InsufficientDataException.cpp" />
     <ClCompile Include="NegativeTrainingRateException.cpp" />
     <ClCompile Include="NotABinaryLabelException.cpp" />
@@ -156,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConfusionMatrix.h" />
+    <ClInclude Include="DatasetFactory.h" />
     <ClInclude Include="DatasetFilter.h">
       <SubType>Header Files</SubType>
     </ClInclude>
@@ -164,6 +167,9 @@
     </ClInclude>
     <ClInclude Include="EmptyOpenCvDatasetException.h" />
     <ClInclude Include="ExcessiveTrainingRateException.h" />
+    <ClInclude Include="FileOpenException.h">
+      <SubType>Header Files</SubType>
+    </ClInclude>
     <ClInclude Include="IClassifier.h" />
     <ClInclude Include="InsufficientDataException.h" />
     <ClInclude Include="NegativeTrainingRateException.h" />

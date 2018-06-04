@@ -30,5 +30,5 @@ namespace spectre::supervised
     const auto CV_TYPE = CV_32FC1;
     const auto CV_LABEL_TYPE = CV_32SC1;
     using RandomNumberGenerator = std::mt19937_64;
-    using Seed = _ULonglong; // @gmrukwa: from mt19937_64
+    using Seed = unsigned long long; // @gmrukwa: from mt19937_64
 }

@@ -71,7 +71,7 @@ public:
     /// <summary>
     /// Updates weights in gaussian components, based on affilation (gamma) matrix.
     /// </summary>
-    void MaximizationRunnerRef::UpdateWeights()
+    void UpdateWeights()
     {
         // This part conducts the instruction:
         // "Using the gamma calculated in the Expectation step, 
@@ -98,7 +98,7 @@ public:
     /// <summary>
     /// Updates means in gaussian components, based on affilation (gamma) matrix.
     /// </summary>
-    void MaximizationRunnerRef::UpdateMeans()
+    void UpdateMeans()
     {
         // This part conducts the instruction:
         // "Using the gamma calculated in the Expectation step, 
@@ -122,7 +122,7 @@ public:
     /// Updates standard deviations in gaussian components, based on affilation 
     /// (gamma) matrix.
     /// </summary>
-    void MaximizationRunnerRef::UpdateStdDeviations()
+    void UpdateStdDeviations()
     {
         // This part conducts the instruction:
         // "Using the gamma calculated in the Expectation step, 
