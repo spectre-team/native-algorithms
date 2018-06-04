@@ -1,5 +1,9 @@
 add_library(Spectre.libHeatmapDataScaling STATIC
         HeatmapDataScalingAlgorithm.h
-        Normalization.cpp
-        Normalization.h
+        HistogramEqualization.cpp
+        HistogramEqualization.h
+        ScalingDataUtils.cpp
+        ScalingDataUtils.h
+        SuppressionAlgorithm.h
+        SuppressionAlgorithm.cpp
         )
