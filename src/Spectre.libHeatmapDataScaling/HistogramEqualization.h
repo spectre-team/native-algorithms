@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 #pragma once
+#include <cmath>
 #include "Spectre.libHeatmapDataScaling/HeatmapDataScalingAlgorithm.h"
 
 namespace spectre::visualization
