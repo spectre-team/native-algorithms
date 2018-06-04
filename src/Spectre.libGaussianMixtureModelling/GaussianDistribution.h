@@ -28,8 +28,48 @@ namespace spectre::unsupervised::gmm
 /// Computes value of Guassian Function, also known as Normal distribution
 /// based on given mean, standard deviation for a single observation.
 /// </summary>
+/// <param name="x">Argument to compute value for.</param>
+/// <param name="mean">Mean of the distribution.</param>
+/// <param name="std">Standard deviation of the distribution.</param>
 inline DataType Gaussian(DataType x, DataType mean, DataType std)
 {
-    return (1.0 / sqrt(2.0 * M_PI * std * std)) * exp(-pow(x - mean, 2) / (2.0 * std * std));
+    static const DataType inverseOfSqrtTwoPi = 1.0 / sqrt(2.0 * M_PI);
+    DataType twoExpSqrt = (x - mean) / std;
+    return inverseOfSqrtTwoPi * std::exp(-0.5 * twoExpSqrt * twoExpSqrt) / std;
 }
+
+/// <summary>
+/// Serves as a representation of Normal Distribution with fixed parameters.
+/// </summary>
+class GaussianDistribution
+{
+public:
+    /// <summary>
+    /// Constructs a distrubution based on given mean and standard deviation.
+    /// </summary>
+    /// <param name="mean">Mean of the distribution.</param>
+    /// <param name="std">Standard deviation of the distribution.</param>
+    GaussianDistribution(DataType mean, DataType std) : m_Mean(mean),
+        m_Exponent(-0.5 / (std * std))
+    {
+        static const DataType inverseOfSqrtTwoPi = 1.0 / sqrt(2.0 * M_PI);
+        m_Scalar = inverseOfSqrtTwoPi / std;
+    }
+
+    /// <summary>
+    /// Computes the probability based on given argument and current mean
+    /// and standard deviation.
+    /// </summary>
+    /// <param name="x">Argument to compute value for.</param>
+    DataType Compute(DataType x)
+    {
+        DataType diff = (x - m_Mean);
+        return m_Scalar * std::exp(m_Exponent * diff * diff);
+    }
+
+private:
+    DataType m_Mean;
+    DataType m_Scalar;
+    DataType m_Exponent;
+};
 }

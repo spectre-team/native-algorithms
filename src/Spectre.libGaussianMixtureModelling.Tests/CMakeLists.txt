@@ -2,6 +2,7 @@ add_executable(Spectre.libGaussianMixtureModelling.Tests
         ClearPeakFinderTest.cpp
         DynamicProgramminInitializationTest.cpp
         ExpectationMaximizationTest.cpp
+        GaussianDistributionTest.cpp
         GaussianMixtureModelTest.cpp
         SplitterSegmentExtractorTest.cpp
         )

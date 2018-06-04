@@ -50,14 +50,14 @@ public:
     /// <summary>
     /// Constructor initializing the class with data required during expectation step.
     /// </summary>
-    /// <param name="mzs">Array of m/z values.</param>
+    /// <param name="spectrum">Spectrum from which array of m/z values is fetched.</param>
     /// <param name="affilationMatrix">Matrix symbolising the probability of affilation
     /// of each sample to a certain gaussian component.</param>
     /// <param name="components">Gaussian components.</param>
     /// <exception cref="ArgumentNullException">Thrown when mzArray pointer are null</exception>
-    ExpectationRunnerRef(DataView mzs, Matrix<DataType> &affilationMatrix,
+    ExpectationRunnerRef(SpectrumView spectrum, Matrix<DataType> &affilationMatrix,
                          std::vector<GaussianComponent> &components)
-        : m_Mzs(mzs), m_Components(components), m_AffilationMatrix(affilationMatrix)
+        : m_Mzs(spectrum.mzs), m_Components(components), m_AffilationMatrix(affilationMatrix)
     {
     }
 
@@ -86,7 +86,7 @@ public:
             {
                 DataType numerator = m_Components[k].weight *
                     Gaussian(m_Mzs[i], m_Components[k].mean, m_Components[k].deviation);
-                m_AffilationMatrix[i][k] = numerator / denominator;
+                m_AffilationMatrix[k][i] = numerator / denominator;
             }
         }
     }

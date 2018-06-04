@@ -5,12 +5,14 @@ add_library(Spectre.libGaussianMixtureModelling STATIC
         DynamicProgrammingInitialization.h
         ExpectationMaximization.cpp
         ExpectationMaximization.h
+        ExpectationRunnerOpt.h
         ExpectationRunnerRef.h
         GaussianDistribution.h
         GaussianMixtureModel.h
         GmmOptions.h
         LogLikelihoodCalculator.h
         Matrix.h
+        MaximizationRunnerOpt.h
         MaximizationRunnerRef.h
         RandomInitializationRef.h
         SplitterSegmentExtractor.cpp

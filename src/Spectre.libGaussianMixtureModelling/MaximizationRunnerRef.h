@@ -89,7 +89,7 @@ public:
             DataType weight = 0.0;
             for (unsigned i = 0; i < (unsigned)m_Spectrum.mzs.size(); i++)
             {
-                weight += m_AffilationMatrix[i][k] * m_Spectrum.intensities[i];
+                weight += m_AffilationMatrix[k][i] * m_Spectrum.intensities[i];
             }
             m_Components[k].weight = weight / totalDataSize;
         }
@@ -111,8 +111,8 @@ public:
             DataType numerator = 0.0;
             for (unsigned i = 0; i < (unsigned)m_Spectrum.mzs.size(); i++)
             {
-                denominator += m_AffilationMatrix[i][k] * m_Spectrum.intensities[i];
-                numerator += m_AffilationMatrix[i][k] * m_Spectrum.mzs[i] * m_Spectrum.intensities[i];
+                denominator += m_AffilationMatrix[k][i] * m_Spectrum.intensities[i];
+                numerator += m_AffilationMatrix[k][i] * m_Spectrum.mzs[i] * m_Spectrum.intensities[i];
             }
             m_Components[k].mean = numerator / denominator;
         }
@@ -140,8 +140,8 @@ public:
             DataType numerator = 0.0;
             for (unsigned i = 0; i < (unsigned)m_Spectrum.mzs.size(); i++)
             {
-                denominator += m_AffilationMatrix[i][k] * m_Spectrum.intensities[i];
-                numerator += m_AffilationMatrix[i][k] *
+                denominator += m_AffilationMatrix[k][i] * m_Spectrum.intensities[i];
+                numerator += m_AffilationMatrix[k][i] *
                     pow(m_Spectrum.mzs[i] - m_Components[k].mean, 2) * m_Spectrum.intensities[i];
             }
             m_Components[k].deviation = sqrt(numerator / denominator);
