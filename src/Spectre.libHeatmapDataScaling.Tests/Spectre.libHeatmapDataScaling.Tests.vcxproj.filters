@@ -15,27 +15,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="HeatmapDataScalingAlgorithm.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SuppressionAlgorithm.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HistogramEqualization.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ScalingDataUtils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="SuppressionAlgorithm.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gtest\gtest-all.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HistogramEqualization.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ScalingDataUtils.cpp">
+    <ClCompile Include="ScalingDataUtilsTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SuppressionAlgorithmTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HistogramEqualizationTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
