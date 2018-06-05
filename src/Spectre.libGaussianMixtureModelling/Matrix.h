@@ -84,16 +84,6 @@ struct Matrix
     }
 
     /// <summary>
-    /// Move constructor
-    /// </summary>
-    /// <param name="other">Old matrix object.</param>
-    Matrix(Matrix& other)
-    {
-        data = other.data;
-        other.data = nullptr;
-    }
-
-    /// <summary>
     /// Deallocate data and pointers created using constructor.
     /// </summary>
     ~Matrix()
