@@ -74,7 +74,7 @@ namespace spectre::unsupervised::gmm
             DataView intensities = m_Spectrum.intensities;
             std::fill(m_Sums.begin(), m_Sums.end(), 0.0);
             const unsigned numberOfComponents = (unsigned)m_Components.size();
-            for (unsigned k = 0; k < numberOfComponents - 1; k++)
+            for (unsigned k = 0; k < numberOfComponents; k++)
             {
                 for (unsigned i = 0; i < (unsigned)mzs.size(); i++)
                 {
@@ -85,14 +85,12 @@ namespace spectre::unsupervised::gmm
                     m_Sums[i] += probability;
                 }
             }
-            const unsigned lastK = numberOfComponents - 1;
+            DataType minSum = *std::min_element(m_Sums.begin(), m_Sums.end());
+            minSum =
+                minSum > 0.0 ? minSum : std::numeric_limits<DataType>::min();
             for (unsigned i = 0; i < (unsigned)mzs.size(); i++)
             {
-                DataType probability = m_Components[lastK].weight *
-                    Gaussian(mzs[i], m_Components[lastK].mean,
-                        m_Components[lastK].deviation);
-                m_AffilationMatrix[lastK][i] = probability;
-                m_Sums[i] = 1.0 / (m_Sums[i] + probability);
+                m_Sums[i] = 1.0 / std::max(m_Sums[i], minSum);
             }
 
             for (unsigned k = 0; k < numberOfComponents; k++)
