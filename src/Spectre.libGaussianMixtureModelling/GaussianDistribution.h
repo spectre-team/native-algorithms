@@ -43,6 +43,7 @@ inline DataType Gaussian(DataType x, DataType mean, DataType std)
 /// </summary>
 class GaussianDistribution
 {
+static constexpr DataType invSqrtOfTwoPi = 0.3989422804014327; // 1/sqrt(2pi)
 public:
     /// <summary>
     /// Constructs a distrubution based on given mean and standard deviation.
@@ -50,10 +51,8 @@ public:
     /// <param name="mean">Mean of the distribution.</param>
     /// <param name="std">Standard deviation of the distribution.</param>
     GaussianDistribution(DataType mean, DataType std) : m_Mean(mean),
-        m_Exponent(-0.5 / (std * std))
+        m_Exponent(-0.5 / (std * std)), m_Scalar(invSqrtOfTwoPi / std)
     {
-        static const DataType inverseOfSqrtTwoPi = 1.0 / sqrt(2.0 * M_PI);
-        m_Scalar = inverseOfSqrtTwoPi / std;
     }
 
     /// <summary>
@@ -68,8 +67,8 @@ public:
     }
 
 private:
-    DataType m_Mean;
-    DataType m_Scalar;
-    DataType m_Exponent;
+    const DataType m_Mean;
+    const DataType m_Scalar;
+    const DataType m_Exponent;
 };
 }
