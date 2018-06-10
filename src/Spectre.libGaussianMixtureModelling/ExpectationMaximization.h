@@ -74,10 +74,12 @@ static inline DataType CalculateDelta(GaussianMixtureModel& oldModel,
 /// for the purpose of Guassian Mixture Modelling of the
 /// spectral data.
 /// </summary>
-/// <param name="InitializationRunner">Class performing Initialization step of the em algorithm.</param>
-/// <param name="ExpectationRunner">Class performing expectation step of the em algorithm.</param>
-/// <param name="MaximizationRunner">Class performing maximization step of the em algorithm.</param>
-/// <param name="LogLikelihoodCalculator">Class performing log likelihood of resulting calculation.</param>
+/// <param name="ExpectationRunner">
+/// Class performing expectation step of the em algorithm.
+/// </param>
+/// <param name="MaximizationRunner">
+/// Class performing maximization step of the em algorithm.
+/// </param>
 template <typename ExpectationRunner, typename MaximizationRunner>
 class ExpectationMaximization
 {
@@ -85,15 +87,14 @@ public:
     /// <summary>
     /// Constructor initializing the class with all algorithm necessary data.
     /// </summary>
-    /// <param name="spectrum">Spectrum to be approximated</param>
-    /// <param name="rngEngine">Mersenne-Twister engine to be used during initialization step.</param>
-    /// <param name="numberOfComponents">Number of Gaussian components that build up the approximation.</param>
-    /// <exception cref="NullPointerException">Thrown when either of mzArray or intensities pointers are null</exception>
-    ExpectationMaximization(SpectrumView spectrum, GaussianMixtureModel& components)
-        : m_Spectrum(std::move(spectrum)), m_Components(components)
-          , m_AffilationMatrix((unsigned)components.size(), (unsigned)spectrum.mzs.size())
-          , m_Expectation(spectrum, m_AffilationMatrix, m_Components)
-          , m_Maximization(spectrum, m_AffilationMatrix, m_Components)
+    /// <param name="spectrum">Spectrum to be approximated.</param>
+    /// <param name="maxNumOfComponent">Number of Gaussian components
+    /// that build up the approximation.</param>
+    ExpectationMaximization(SpectrumView spectrum,
+                            unsigned maxNumOfComponents)
+          : m_AffilationMatrix(maxNumOfComponents,(unsigned)spectrum.mzs.size())
+          , m_Expectation(spectrum)
+          , m_Maximization(spectrum)
     {
     }
 
@@ -101,50 +102,41 @@ public:
     /// Performs a full algorithm run. Terminates when changes in weights and
     /// heights are below threshold defined by epsilon.
     /// </summary>
-    /// <param name="minStd">Minimal standard deviation a component can have.
+    /// <param name="spectrum">Data to approximate.</param>
+    /// <param name="components">Base components to improve.</param>
+    /// <param name="minStd">
+    /// Minimal standard deviation a component can have.
     /// </param>
-    /// <param name="epsilon">Threshold determining max difference in
-    /// parameters between consecutive iterations.</param>
+    /// <param name="epsilon">
+    /// Threshold determining max difference in parameters between consecutive
+    /// iterations.
+    /// </param>
     /// <returns>
     /// Gaussian Mixture Model containing all the components with their
     /// appropriate parameters.
     /// </returns>
-    GaussianMixtureModel EstimateGmm(DataType minStd,
-        DataType epsilon)
+    GaussianMixtureModel EstimateGmm(SpectrumView spectrum,
+        GaussianMixtureModel& components, DataType minStd, DataType epsilon)
     {
-        SetMinStds(m_Components, minStd);
-        GaussianMixtureModel oldModel(m_Components.size());
+        SetMinStds(components, minStd);
+        GaussianMixtureModel oldModel(components.size());
 
         DataType delta; // How much did the last iteration change the results.
         do
         {
-            FilterLowHeightComponents(m_Components);
-            oldModel.assign(m_Components.begin(), m_Components.end());
-            Expectation();
-            Maximization();
-            delta = CalculateDelta(oldModel, m_Components);
+            FilterLowHeightComponents(components);
+            oldModel.assign(components.begin(), components.end());
+            m_Expectation.Expectation(m_AffilationMatrix, spectrum, components);
+            m_Maximization.Maximization(m_AffilationMatrix, spectrum,
+                components);
+            delta = CalculateDelta(oldModel, components);
         } while (delta > epsilon);
 
-        return m_Components; // Consider sorting before return
+        return components;
     }
 
 private:
-    void Expectation()
-    {
-        m_Expectation.Expectation();
-    }
-
-    void Maximization()
-    {
-        m_Maximization.UpdateWeights();
-        m_Maximization.UpdateMeans();
-        m_Maximization.UpdateStdDeviations();
-    }
-
     Matrix<DataType> m_AffilationMatrix;
-    SpectrumView m_Spectrum;
-    GaussianMixtureModel& m_Components;
-
     ExpectationRunner m_Expectation;
     MaximizationRunner m_Maximization;
 };

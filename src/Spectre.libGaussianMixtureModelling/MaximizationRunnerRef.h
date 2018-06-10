@@ -48,81 +48,114 @@ limitations under the License.
 namespace spectre::unsupervised::gmm
 {
 /// <summary>
-/// Class serves the purpose of maximization step of Expectation Maximization algorithm. 
-/// Serves as a reference to learn from and is purpously not optimized to avoid 
-/// obfuscation of the code.
+/// Class serves the purpose of maximization step of Expectation Maximization
+/// algorithm. Serves as a reference to learn from and is purpously not
+/// optimized to avoid obfuscation of the code.
 /// </summary>
 class MaximizationRunnerRef
 {
 public:
     /// <summary>
-    /// Constructor initializing the class with data required during maximization step.
+    /// Constructor initializing the class with data required during
+    /// maximization step.
     /// </summary>
     /// <param name="spectrum">Spectrum to base calculations on.</param>
-    /// <param name="affilationMatrix">Matrix symbolising the probability of affilation
-    /// of each sample to a certain gaussian component.</param>
-    /// <param name="components">Gaussian components to be updated</param>
-    /// <exception cref="ArgumentNullException">Thrown when either of mzArray or intensities pointers are null</exception>
-    MaximizationRunnerRef(SpectrumView spectrum, Matrix<DataType> &affilationMatrix, std::vector<GaussianComponent> &components)
-        : m_Spectrum(spectrum), m_AffilationMatrix(affilationMatrix), m_Components(components)
+    MaximizationRunnerRef(SpectrumView spectrum)
     {
+        spectrum.mzs.size(); // Needed to avoid warning of unused param.
     }
 
     /// <summary>
-    /// Updates weights in gaussian components, based on affilation (gamma) matrix.
+    /// Updates weights, means and tandard deviations in a single run.
     /// </summary>
-    void UpdateWeights()
+    /// <param name="affilationMatrix">Matrix symbolising the probability
+    /// of affilation of each sample to a certain gaussian component.
+    /// </param>
+    /// <param name="spectrum">Spectrum to base calculations on.</param>
+    /// <param name="components">Gaussian components to be updated</param>
+    void Maximization(Matrix<DataType> &affilationMatrix,
+        SpectrumView spectrum, GaussianMixtureModel& components)
+    {
+        UpdateWeights(affilationMatrix, spectrum, components);
+        UpdateMeans(affilationMatrix, spectrum, components);
+        UpdateStdDeviations(affilationMatrix, spectrum, components);
+    }
+
+private:
+    /// <summary>
+    /// Updates weights in gaussian components, based on affilation matrix.
+    /// </summary>
+    /// <param name="affilationMatrix">Matrix symbolising the probability
+    /// of affilation of each sample to a certain gaussian component.
+    /// </param>
+    /// <param name="spectrum">Spectrum to base calculations on.</param>
+    /// <param name="components">Gaussian components to be updated</param>
+    void UpdateWeights(Matrix<DataType> &affilationMatrix,
+        SpectrumView spectrum, GaussianMixtureModel& components)
     {
         // This part conducts the instruction:
         // "Using the gamma calculated in the Expectation step, 
         // calculate in the following order, for every k: (phi part)"
         // from the document
         DataType totalDataSize = 0.0;
-        for (unsigned i = 0; i < (unsigned)m_Spectrum.mzs.size(); i++)
+        for (unsigned i = 0; i < (unsigned)spectrum.mzs.size(); i++)
         {
-            totalDataSize += m_Spectrum.intensities[i];
+            totalDataSize += spectrum.intensities[i];
         }
 
-        const unsigned numberOfComponents = (unsigned)m_Components.size();
+        const unsigned numberOfComponents = (unsigned)components.size();
         for (unsigned k = 0; k < numberOfComponents; k++)
         {
             DataType weight = 0.0;
-            for (unsigned i = 0; i < (unsigned)m_Spectrum.mzs.size(); i++)
+            for (unsigned i = 0; i < (unsigned)spectrum.mzs.size(); i++)
             {
-                weight += m_AffilationMatrix[k][i] * m_Spectrum.intensities[i];
+                weight += affilationMatrix[k][i] * spectrum.intensities[i];
             }
-            m_Components[k].weight = weight / totalDataSize;
+            components[k].weight = weight / totalDataSize;
         }
     }
 
     /// <summary>
-    /// Updates means in gaussian components, based on affilation (gamma) matrix.
+    /// Updates means in gaussian components, based on affilation matrix.
     /// </summary>
-    void UpdateMeans()
+    /// <param name="affilationMatrix">Matrix symbolising the probability
+    /// of affilation of each sample to a certain gaussian component.
+    /// </param>
+    /// <param name="spectrum">Spectrum to base calculations on.</param>
+    /// <param name="components">Gaussian components to be updated</param>
+    void UpdateMeans(Matrix<DataType> &affilationMatrix,
+        SpectrumView spectrum, GaussianMixtureModel& components)
     {
         // This part conducts the instruction:
         // "Using the gamma calculated in the Expectation step, 
         // calculate in the following order, for every k: (mu part)"
         // from the document
-        const unsigned numberOfComponents = (unsigned)m_Components.size();
+        const unsigned numberOfComponents = (unsigned)components.size();
         for (unsigned k = 0; k < numberOfComponents; k++)
         {
             DataType denominator = 0.0;
             DataType numerator = 0.0;
-            for (unsigned i = 0; i < (unsigned)m_Spectrum.mzs.size(); i++)
+            for (unsigned i = 0; i < (unsigned)spectrum.mzs.size(); i++)
             {
-                denominator += m_AffilationMatrix[k][i] * m_Spectrum.intensities[i];
-                numerator += m_AffilationMatrix[k][i] * m_Spectrum.mzs[i] * m_Spectrum.intensities[i];
+                denominator += affilationMatrix[k][i] * spectrum.intensities[i];
+                numerator += affilationMatrix[k][i] * spectrum.mzs[i] *
+                    spectrum.intensities[i];
             }
-            m_Components[k].mean = numerator / denominator;
+            components[k].mean = numerator / denominator;
         }
     }
 
     /// <summary>
-    /// Updates standard deviations in gaussian components, based on affilation 
+    /// Updates standard deviations in gaussian components, based on affilation
     /// (gamma) matrix.
     /// </summary>
-    void UpdateStdDeviations()
+    /// <param name="affilationMatrix">Matrix symbolising the probability
+    /// of affilation of each sample to a certain gaussian component.
+    /// </param>
+    /// <param name="spectrum">Spectrum to base calculations on.</param>
+    /// <param name="components">Gaussian components to be updated</param>
+    void UpdateStdDeviations(Matrix<DataType> &affilationMatrix,
+        SpectrumView spectrum, GaussianMixtureModel& components)
     {
         // This part conducts the instruction:
         // "Using the gamma calculated in the Expectation step, 
@@ -133,24 +166,20 @@ public:
         // equation is equal to sigma, while in a fact, it should be 
         // equated to sigma^2. Hence the sqrt() is used during the 
         // assignment of the standard deviation.
-        const unsigned numberOfComponents = (unsigned)m_Components.size();
+        const unsigned numberOfComponents = (unsigned)components.size();
         for (unsigned k = 0; k < numberOfComponents; k++)
         {
             DataType denominator = 0.0;
             DataType numerator = 0.0;
-            for (unsigned i = 0; i < (unsigned)m_Spectrum.mzs.size(); i++)
+            for (unsigned i = 0; i < (unsigned)spectrum.mzs.size(); i++)
             {
-                denominator += m_AffilationMatrix[k][i] * m_Spectrum.intensities[i];
-                numerator += m_AffilationMatrix[k][i] *
-                    pow(m_Spectrum.mzs[i] - m_Components[k].mean, 2) * m_Spectrum.intensities[i];
+                denominator += affilationMatrix[k][i] * spectrum.intensities[i];
+                numerator += affilationMatrix[k][i] *
+                    pow(spectrum.mzs[i] - components[k].mean, 2) *
+                    spectrum.intensities[i];
             }
-            m_Components[k].deviation = sqrt(numerator / denominator);
+            components[k].deviation = sqrt(numerator / denominator);
         }
     }
-
-private:
-    SpectrumView m_Spectrum;
-    Matrix<DataType> &m_AffilationMatrix;
-    std::vector<GaussianComponent> &m_Components;
 };
 }

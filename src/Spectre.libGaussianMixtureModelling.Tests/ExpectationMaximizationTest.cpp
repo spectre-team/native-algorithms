@@ -88,7 +88,7 @@ TEST_F(ExpectationMaximizationTest, test_whole_em)
     ExpectationMaximization<
         ExpectationRunnerRef,
         MaximizationRunnerRef>
-    em(SpectrumView(spectrum), model);
+    em(SpectrumView(spectrum), (unsigned)model.size());
 
     RandomInitializationRef Initializer =
         RandomInitializationRef(spectrum.mzs, model, rngEngine);
@@ -96,7 +96,7 @@ TEST_F(ExpectationMaximizationTest, test_whole_em)
     Initializer.AssignVariances();
     Initializer.AssignWeights();
 
-    GaussianMixtureModel result = em.EstimateGmm(0.4635, 0.001);
+    GaussianMixtureModel result = em.EstimateGmm(spectrum, model, 0.4635, 0.001);
     Data approximates = GenerateValues(spectrum.mzs, result);
 
     Data errors(spectrum.intensities.size());
@@ -166,8 +166,8 @@ TEST_F(ExpectationMaximizationTest, test_em_ref_expectation)
 {
     Matrix<DataType> affilationMatrix((unsigned)gaussianComponents.size(), (unsigned)spectrum.mzs.size());
 
-    ExpectationRunnerRef expectation(spectrum, affilationMatrix, gaussianComponents);
-    expectation.Expectation();
+    ExpectationRunnerRef expectation(spectrum);
+    expectation.Expectation(affilationMatrix, spectrum, gaussianComponents);
 
     for (unsigned i = 0; i < spectrum.mzs.size(); i++)
     {
@@ -200,11 +200,10 @@ TEST_F(ExpectationMaximizationTest, test_em_ref_maximization)
         }
     }
 
-    MaximizationRunnerRef maximization(spectrum, affilationMatrix, gaussianComponents);
+    MaximizationRunnerRef maximization(spectrum);
+    maximization.Maximization(affilationMatrix, spectrum, gaussianComponents);
 
     // Check if means have ben properly updated
-    maximization.UpdateMeans();
-
     for (unsigned k = 0; k < gaussianComponents.size(); k++)
     {
         DataType denominator = 0.0;
@@ -218,8 +217,6 @@ TEST_F(ExpectationMaximizationTest, test_em_ref_maximization)
     }
 
     // Check if standard deviations have been properly updated
-    maximization.UpdateStdDeviations();
-
     for (unsigned k = 0; k < gaussianComponents.size(); k++)
     {
         DataType denominator = 0.0;
@@ -233,8 +230,6 @@ TEST_F(ExpectationMaximizationTest, test_em_ref_maximization)
     }
 
     // Check if standard deviations have been properly updated
-    maximization.UpdateWeights();
-
     DataType totalDataSize = 0.0;
     for (unsigned i = 0; i < spectrum.mzs.size(); i++)
     {
@@ -258,9 +253,8 @@ TEST_F(ExpectationMaximizationTest, test_em_opt_expectation)
     constexpr DataType MAX_ERROR = 0.001;
     Matrix<DataType> affilationMatrix((unsigned)gaussianComponents.size(),
         (unsigned)spectrum.mzs.size());
-    ExpectationRunnerRef expectation(spectrum, affilationMatrix,
-        gaussianComponents);
-    expectation.Expectation();
+    ExpectationRunnerRef expectation(spectrum);
+    expectation.Expectation(affilationMatrix, spectrum, gaussianComponents);
 
     std::vector<Data> correctContents = {
         {
@@ -323,13 +317,9 @@ TEST_F(ExpectationMaximizationTest, test_em_opt_maximization)
         }
     }
 
-    MaximizationRunnerRef maximization(spectrum, affilationMatrix,
-        gaussianComponents);
+    MaximizationRunnerRef maximization(spectrum);
 
-    // Check if means have ben properly updated
-    maximization.UpdateMeans();
-    maximization.UpdateStdDeviations();
-    maximization.UpdateWeights();
+    maximization.Maximization(affilationMatrix, spectrum, gaussianComponents);
 
     GaussianMixtureModel validComponents = {
     /*      mean       std      weight      */

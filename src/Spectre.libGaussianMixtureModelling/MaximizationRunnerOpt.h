@@ -58,68 +58,49 @@ namespace spectre::unsupervised::gmm
         /// maximization step.
         /// </summary>
         /// <param name="spectrum">Spectrum to base calculations on.</param>
-        /// <param name="affilationMatrix">Matrix symbolising the probability
-        /// of affilation of each sample to a certain gaussian component.
-        /// </param>
-        /// <param name="components">Gaussian components to be updated</param>
-        MaximizationRunnerOpt(SpectrumView spectrum,
-            Matrix<DataType> &affilationMatrix,
-            std::vector<GaussianComponent> &components)
-            : m_Spectrum(spectrum), m_AffilationMatrix(affilationMatrix)
-            , m_Components(components)
-            , m_SummedIntensities(std::accumulate(spectrum.intensities.begin(),
-                spectrum.intensities.end(), 0.0))
+        MaximizationRunnerOpt(SpectrumView spectrum) : m_SummedIntensities(
+            std::accumulate(
+                spectrum.intensities.begin(), spectrum.intensities.end(), 0.0
+                )
+            )
         {
         }
 
         /// <summary>
-        /// Contratry to what name indicates, it updates weights, means and
-        /// standard deviations in a single run.
+        /// Updates weights, means and tandard deviations in a single run.
         /// </summary>
-        void UpdateWeights()
+        /// <param name="affilationMatrix">Matrix symbolising the probability
+        /// of affilation of each sample to a certain gaussian component.
+        /// </param>
+        /// <param name="spectrum">Spectrum to base calculations on.</param>
+        /// <param name="components">Gaussian components to be updated</param>
+        void Maximization(Matrix<DataType> &affilationMatrix,
+            SpectrumView spectrum, GaussianMixtureModel& components)
         {
-            const unsigned numberOfComponents = (unsigned)m_Components.size();
-            const unsigned dataSize = (unsigned)m_Spectrum.mzs.size();
-            DataView mzs = m_Spectrum.mzs;
+            const unsigned numberOfComponents = (unsigned)components.size();
+            const unsigned dataSize = (unsigned)spectrum.mzs.size();
+            DataView mzs = spectrum.mzs;
             for (unsigned k = 0; k < numberOfComponents; k++)
             {
                 DataType probabilitySum = 0.0;
                 DataType meanNumerator = 0.0;
-                for (unsigned i = 0; i < (unsigned)m_Spectrum.mzs.size(); i++)
+                for (unsigned i = 0; i < (unsigned)mzs.size(); i++)
                 {
-                    probabilitySum += m_AffilationMatrix[k][i];
-                    meanNumerator += m_AffilationMatrix[k][i] * mzs[i];
+                    probabilitySum += affilationMatrix[k][i];
+                    meanNumerator += affilationMatrix[k][i] * mzs[i];
                 }
-                m_Components[k].weight = probabilitySum / m_SummedIntensities;
-                m_Components[k].mean = meanNumerator / probabilitySum;
+                components[k].weight = probabilitySum / m_SummedIntensities;
+                components[k].mean = meanNumerator / probabilitySum;
                 DataType stdNumerator = 0.0;
-                for (unsigned i = 0; i < (unsigned)m_Spectrum.mzs.size(); i++)
+                for (unsigned i = 0; i < (unsigned)mzs.size(); i++)
                 {
-                    DataType diff = mzs[i] - m_Components[k].mean;
-                    stdNumerator += m_AffilationMatrix[k][i] * diff * diff;
+                    DataType diff = mzs[i] - components[k].mean;
+                    stdNumerator += affilationMatrix[k][i] * diff * diff;
                 }
-                m_Components[k].deviation = sqrt(stdNumerator/probabilitySum);
+                components[k].deviation = sqrt(stdNumerator/probabilitySum);
             }
         }
-
-        /// <summary>
-        /// Empty function made to conform with interface.
-        /// </summary>
-        void UpdateMeans()
-        {
-        }
-
-        /// <summary>
-        /// Empty function made to conform with interface.
-        /// </summary>
-        void UpdateStdDeviations()
-        {
-        }
-
     private:
-        SpectrumView m_Spectrum;
-        Matrix<DataType> &m_AffilationMatrix;
-        std::vector<GaussianComponent> &m_Components;
         DataType m_SummedIntensities;
     };
 }
