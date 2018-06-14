@@ -3,7 +3,6 @@ add_library(Spectre.libGaussianMixtureModelling STATIC
         ClearPeakFinder.h
         DataTypes.h
         DynamicProgrammingInitialization.h
-        ExpectationMaximization.cpp
         ExpectationMaximization.h
         ExpectationRunnerOpt.h
         ExpectationRunnerRef.h

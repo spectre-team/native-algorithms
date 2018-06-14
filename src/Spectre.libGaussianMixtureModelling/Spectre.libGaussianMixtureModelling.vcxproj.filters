@@ -58,9 +58,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ExpectationMaximization.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ClearPeakFinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
