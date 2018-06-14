@@ -60,9 +60,8 @@ public:
     /// maximization step.
     /// </summary>
     /// <param name="spectrum">Spectrum to base calculations on.</param>
-    MaximizationRunnerRef(SpectrumView spectrum)
+    MaximizationRunnerRef(SpectrumView)
     {
-        spectrum.mzs.size(); // Needed to avoid warning of unused param.
     }
 
     /// <summary>

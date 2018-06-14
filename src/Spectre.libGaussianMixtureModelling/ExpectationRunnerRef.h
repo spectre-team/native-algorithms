@@ -52,9 +52,8 @@ public:
     /// </summary>
     /// <param name="spectrum">Spectrum from which array of m/z values is
     /// fetched.</param>
-    ExpectationRunnerRef(SpectrumView spectrum)
+    ExpectationRunnerRef(SpectrumView)
     {
-        spectrum.mzs.size(); // Needed to avoid warning of unused param.
     }
 
     /// <summary>
