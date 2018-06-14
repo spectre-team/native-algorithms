@@ -20,7 +20,7 @@ limitations under the License.
 #pragma once
 #define _USE_MATH_DEFINES // used for M_PI
 #include <math.h>
-#include "DataTypes.h"
+#include "Spectre.libGaussianMixtureModelling/DataTypes.h"
 
 namespace spectre::unsupervised::gmm
 {

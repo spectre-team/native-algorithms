@@ -15,15 +15,6 @@
 *      Algorithm for Univariate Gaussian Mixture Models
 *           Maximization (M) Step
 *
-* Note: throught reading of the document, you may notice that each
-* time usage of affiliation matrix occurs it is multiplied by
-* corresponding intesity, to increase the probability *intensity*
-* times that a certain mz belongs to a given component. This is
-* because the spectra we are given are histograms, and therefore
-* a single mz value with intensity e.g. 500 indicates that
-* there are de facto 500 of entities holding that certain mz value
-* that are stored in the dataset.
-*
 Copyright 2018 Michal Gallus
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -40,9 +31,9 @@ limitations under the License.
 */
 #pragma once
 #include <vector>
-#include "DataTypes.h"
-#include "GaussianMixtureModel.h"
-#include "Matrix.h"
+#include "Spectre.libGaussianMixtureModelling/DataTypes.h"
+#include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
+#include "Spectre.libGaussianMixtureModelling/Matrix.h"
 
 namespace spectre::unsupervised::gmm
 {

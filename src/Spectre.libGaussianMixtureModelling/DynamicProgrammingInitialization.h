@@ -20,9 +20,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 #pragma once
-#include "DataTypes.h"
+#include "Spectre.libGaussianMixtureModelling/DataTypes.h"
 #include <limits>
-#include "Matrix.h"
+#include "Spectre.libGaussianMixtureModelling/Matrix.h"
 #include <numeric>
 #include "Spectre.libException/OutOfRangeException.h"
 

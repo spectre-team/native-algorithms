@@ -17,8 +17,8 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 */
-#include "SplitterSegmentExtractor.h"
-#include "GaussianDistribution.h"
+#include "Spectre.libGaussianMixtureModelling/SplitterSegmentExtractor.h"
+#include "Spectre.libGaussianMixtureModelling/GaussianDistribution.h"
 
 namespace spectre::unsupervised::gmm
 {
