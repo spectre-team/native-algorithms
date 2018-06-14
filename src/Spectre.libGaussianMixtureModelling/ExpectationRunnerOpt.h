@@ -73,13 +73,19 @@ public:
         const unsigned numberOfComponents = (unsigned)components.size();
         for (unsigned k = 0; k < numberOfComponents; k++)
         {
+            // Using Kahan summation algorithm for improved accuracy
+            DataType correction = 0.0;
             for (unsigned i = 0; i < (unsigned)mzs.size(); i++)
             {
                 DataType probability = components[k].weight *
                     Gaussian(mzs[i], components[k].mean,
                         components[k].deviation);
                 affilationMatrix[k][i] = probability;
-                m_Sums[i] += probability;
+                probability -= correction;
+                DataType sum = m_Sums[i];
+                DataType newSum = sum + probability;
+                correction = (newSum - sum) - probability;
+                m_Sums[i] = newSum;
             }
         }
         DataType minSum = *std::min_element(m_Sums.begin(), m_Sums.end());

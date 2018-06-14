@@ -81,21 +81,35 @@ namespace spectre::unsupervised::gmm
             const unsigned dataSize = (unsigned)spectrum.mzs.size();
             DataView mzs = spectrum.mzs;
             for (unsigned k = 0; k < numberOfComponents; k++)
-            {
+            { 
+                // Using Kahan summation algorithm for improved accuracy
                 DataType probabilitySum = 0.0;
                 DataType meanNumerator = 0.0;
+                DataType probCorrection = 0.0;
+                DataType meanCorrection = 0.0;
                 for (unsigned i = 0; i < (unsigned)mzs.size(); i++)
                 {
-                    probabilitySum += affilationMatrix[k][i];
-                    meanNumerator += affilationMatrix[k][i] * mzs[i];
+                    DataType corrected = affilationMatrix[k][i] - probCorrection;
+                    DataType newSum = probabilitySum + corrected;
+                    probCorrection = (newSum - probabilitySum) - corrected;
+                    probabilitySum = newSum;
+                    corrected = affilationMatrix[k][i] * mzs[i] - meanCorrection;
+                    newSum = meanNumerator + corrected;
+                    meanCorrection = (newSum - meanNumerator) - corrected;
+                    meanNumerator = newSum;
                 }
                 components[k].weight = probabilitySum / m_SummedIntensities;
                 components[k].mean = meanNumerator / probabilitySum;
+                probCorrection = 0.0;
                 DataType stdNumerator = 0.0;
                 for (unsigned i = 0; i < (unsigned)mzs.size(); i++)
                 {
                     DataType diff = mzs[i] - components[k].mean;
-                    stdNumerator += affilationMatrix[k][i] * diff * diff;
+                    DataType corrected = affilationMatrix[k][i] * diff * diff
+                        - probCorrection;
+                    DataType newSum = stdNumerator + corrected;
+                    probCorrection = (newSum - stdNumerator) - corrected;
+                    stdNumerator = newSum;
                 }
                 components[k].deviation = sqrt(stdNumerator/probabilitySum);
             }
