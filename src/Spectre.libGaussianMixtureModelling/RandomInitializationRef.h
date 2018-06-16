@@ -33,8 +33,8 @@ limitations under the License.
 #pragma once
 #include <vector>
 #include <random>
-#include "GaussianMixtureModel.h"
-#include "DataTypes.h"
+#include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
+#include "Spectre.libGaussianMixtureModelling/DataTypes.h"
 
 namespace spectre::unsupervised::gmm
 {

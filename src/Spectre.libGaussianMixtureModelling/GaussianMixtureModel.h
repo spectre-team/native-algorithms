@@ -20,7 +20,7 @@
 #pragma once
 #include <vector>
 #include <gsl/gsl>
-#include "DataTypes.h"
+#include "Spectre.libGaussianMixtureModelling/DataTypes.h"
 
 namespace spectre::unsupervised::gmm
 {
@@ -45,11 +45,13 @@ struct GaussianComponent
     DataType weight;
 };
 
+using GaussianMixtureModel = std::vector<GaussianComponent>;
+
 /// <summary>
 /// Represents a composite of gaussian distribution components 
 /// that build up a Gaussian Mixture Model.
 /// </summary>
-struct GaussianMixtureModel
+struct GmmResult
 {
     /// <summary>
     /// Constructor used for initialization of m/z, intesities and gaussian components
@@ -58,7 +60,7 @@ struct GaussianMixtureModel
     /// <param name="mzArray">M/z data shared by all spectra.</param>
     /// <param name="intensities">Mean intensities at each point.</param>
     /// <param name="numberOfComponents">Number of Gaussian Components to be set.</param>
-    GaussianMixtureModel(DataView mzArray, DataView intensities,
+    GmmResult(DataView mzArray, DataView intensities,
                          const std::vector<GaussianComponent> &&components) :
         originalMzArray(mzArray.begin(), mzArray.end()),
         originalMeanSpectrum(intensities.begin(), intensities.end()),

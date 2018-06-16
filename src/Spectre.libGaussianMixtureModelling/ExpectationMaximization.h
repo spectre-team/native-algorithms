@@ -19,103 +19,124 @@ limitations under the License.
 */
 
 #pragma once
+#include <cmath>
 #include <random>
-#include "Spectre.libException/NullPointerException.h"
-#include "DataTypes.h"
-#include "GaussianMixtureModel.h"
-#include "Matrix.h"
+#include "Spectre.libStatistics/Math.h"
+#include "Spectre.libGaussianMixtureModelling/DataTypes.h"
+#include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
+#include "Spectre.libGaussianMixtureModelling/Matrix.h"
 
 namespace spectre::unsupervised::gmm
 {
+static inline void SetMinStds(GaussianMixtureModel& components, DataType minStd)
+{
+    for (Index i = 0; i < components.size(); i++)
+    {
+        components[i].deviation = std::max(components[i].deviation, minStd);
+    }
+}
+
+static inline void FilterLowHeightComponents(GaussianMixtureModel& components)
+{
+    constexpr DataType MIN_WEIGHT = 1.0e-3; // Height, weight are interchangable
+
+    GaussianMixtureModel::iterator pastEndIter =
+        std::remove_if(components.begin(), components.end(),
+            [MIN_WEIGHT](GaussianComponent& component)
+            { return component.weight < MIN_WEIGHT; });
+    size_t newSize = pastEndIter - components.begin();
+    components.resize(newSize);
+}
+
+static inline DataType CalculateDelta(GaussianMixtureModel& oldModel,
+    GaussianMixtureModel& newModel)
+{
+    DataType sumOfHeightDifferences = 0.0;
+    DataType sumOfScaledVarianceDifferences = 0.0;
+    DataType justASum = 0.0;
+    for (Index i = 0; i < oldModel.size(); i++)
+    {
+        justASum += newModel[i].weight;
+        sumOfHeightDifferences += abs(newModel[i].weight - oldModel[i].weight);
+        sumOfScaledVarianceDifferences +=
+            abs(newModel[i].deviation * newModel[i].deviation -
+                oldModel[i].deviation * oldModel[i].deviation) /
+               (newModel[i].deviation * newModel[i].deviation);
+    }
+    sumOfScaledVarianceDifferences /= (DataType)oldModel.size();
+    return sumOfHeightDifferences + sumOfScaledVarianceDifferences;
+}
+
 /// <summary>
 /// Class serves as the container for all data required by
 /// A. P. Dempster's Expectation Maximization algorithm used
 /// for the purpose of Guassian Mixture Modelling of the
 /// spectral data.
 /// </summary>
-/// <param name="InitializationRunner">Class performing Initialization step of the em algorithm.</param>
-/// <param name="ExpectationRunner">Class performing expectation step of the em algorithm.</param>
-/// <param name="MaximizationRunner">Class performing maximization step of the em algorithm.</param>
-/// <param name="LogLikelihoodCalculator">Class performing log likelihood of resulting calculation.</param>
-template <typename InitializationRunner, typename ExpectationRunner, typename MaximizationRunner, typename LogLikelihoodCalculator>
+/// <param name="ExpectationRunner">
+/// Class performing expectation step of the em algorithm.
+/// </param>
+/// <param name="MaximizationRunner">
+/// Class performing maximization step of the em algorithm.
+/// </param>
+template <typename ExpectationRunner, typename MaximizationRunner>
 class ExpectationMaximization
 {
 public:
     /// <summary>
     /// Constructor initializing the class with all algorithm necessary data.
     /// </summary>
-    /// <param name="spectrum">Spectrum to be approximated</param>
-    /// <param name="rngEngine">Mersenne-Twister engine to be used during initialization step.</param>
-    /// <param name="numberOfComponents">Number of Gaussian components that build up the approximation.</param>
-    /// <exception cref="NullPointerException">Thrown when either of mzArray or intensities pointers are null</exception>
-    ExpectationMaximization(SpectrumView spectrum, RandomNumberGenerator &rngEngine, const unsigned numberOfComponents = 2)
-        : m_Spectrum(std::move(spectrum)), m_Components(numberOfComponents)
-          , m_AffilationMatrix((unsigned)spectrum.mzs.size(), numberOfComponents)
-          , m_Initialization(spectrum.mzs, m_Components, rngEngine)
-          , m_Expectation(spectrum.mzs, m_AffilationMatrix, m_Components)
-          , m_Maximization(spectrum, m_AffilationMatrix, m_Components)
-          , m_LogLikelihoodCalculator(spectrum, m_Components)
+    /// <param name="spectrum">Spectrum to be approximated.</param>
+    /// <param name="maxNumOfComponent">Number of Gaussian components
+    /// that build up the approximation.</param>
+    ExpectationMaximization(SpectrumView spectrum,
+                            unsigned maxNumOfComponents)
+          : m_AffilationMatrix(maxNumOfComponents,(unsigned)spectrum.mzs.size())
+          , m_Expectation(spectrum)
+          , m_Maximization(spectrum)
     {
     }
 
     /// <summary>
-    /// Performs a full algorithm run. Terminates when change in log likelihood
-    /// is sufficiently small (lower than  0.00000001).
+    /// Performs a full algorithm run. Terminates when changes in weights and
+    /// heights are below threshold defined by epsilon.
     /// </summary>
+    /// <param name="spectrum">Data to approximate.</param>
+    /// <param name="components">Base components to improve.</param>
+    /// <param name="minStd">
+    /// Minimal standard deviation a component can have.
+    /// </param>
+    /// <param name="epsilon">
+    /// Threshold determining max difference in parameters between consecutive
+    /// iterations.
+    /// </param>
     /// <returns>
-    /// Gaussian Mixture Model containing all the components with their appropriate
-    /// parameters.
+    /// Gaussian Mixture Model containing all the components with their
+    /// appropriate parameters.
     /// </returns>
-    GaussianMixtureModel EstimateGmm()
+    GaussianMixtureModel EstimateGmm(SpectrumView spectrum,
+        GaussianMixtureModel& components, DataType minStd, DataType epsilon)
     {
-        constexpr DataType MIN_LIKELIHOOD_CHANGE = 0.00000001;
-        Initialization();
+        SetMinStds(components, minStd);
+        GaussianMixtureModel oldModel(components.size());
 
-        DataType oldLikelihood; // used as iterations terminator
-        DataType newLikelihood = m_LogLikelihoodCalculator.CalculateLikelihood();
+        DataType delta; // How much did the last iteration change the results.
         do
         {
-            Expectation();
-            oldLikelihood = newLikelihood;
-            Maximization();
-            newLikelihood = m_LogLikelihoodCalculator.CalculateLikelihood();
-        }
-        while (abs(oldLikelihood - newLikelihood) > MIN_LIKELIHOOD_CHANGE);
+            FilterLowHeightComponents(components);
+            oldModel.assign(components.begin(), components.end());
+            m_Expectation.Expectation(m_AffilationMatrix, spectrum, components);
+            m_Maximization.Maximization(m_AffilationMatrix, spectrum,
+                components);
+            delta = CalculateDelta(oldModel, components);
+        } while (delta > epsilon);
 
-        return GaussianMixtureModel(
-            m_Spectrum.mzs,
-            m_Spectrum.intensities,
-            std::move(m_Components)
-        );
+        return components;
     }
 
 private:
-    void Initialization()
-    {
-        m_Initialization.AssignRandomMeans();
-        m_Initialization.AssignVariances();
-        m_Initialization.AssignWeights();
-    }
-
-    void Expectation()
-    {
-        m_Expectation.Expectation();
-    }
-
-    void Maximization()
-    {
-        m_Maximization.UpdateWeights();
-        m_Maximization.UpdateMeans();
-        m_Maximization.UpdateStdDeviations();
-    }
-
     Matrix<DataType> m_AffilationMatrix;
-    SpectrumView m_Spectrum;
-    std::vector<GaussianComponent> m_Components;
-
-    InitializationRunner m_Initialization;
     ExpectationRunner m_Expectation;
     MaximizationRunner m_Maximization;
-    LogLikelihoodCalculator m_LogLikelihoodCalculator;
 };
 }

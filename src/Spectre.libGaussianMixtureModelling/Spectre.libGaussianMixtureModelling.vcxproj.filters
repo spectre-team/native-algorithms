@@ -50,11 +50,14 @@
     <ClInclude Include="DynamicProgrammingInitialization.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ExpectationRunnerOpt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MaximizationRunnerOpt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ExpectationMaximization.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ClearPeakFinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

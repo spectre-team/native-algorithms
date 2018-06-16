@@ -3,7 +3,7 @@
 * Provides implementation of tests for the purpose of testing
 * Gaussian Mixture Modelling.
 *
-Copyright 2017 Michal Gallus
+Copyright 2017-2018 Michal Gallus
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ class GaussianMixtureModelTest : public ::testing::Test
 protected:
 
     Data testData;
-    std::vector<GaussianComponent> gaussianComponents;
+    GaussianMixtureModel gaussianComponents;
 
     virtual void SetUp() override
     {
@@ -46,7 +46,7 @@ protected:
 
 TEST_F(GaussianMixtureModelTest, test_data_sizes)
 {
-    GaussianMixtureModel model(testData, testData, std::move(gaussianComponents));
+    GmmResult model(testData, testData, std::move(gaussianComponents));
     EXPECT_EQ(model.components.size(), gaussianComponents.size());
     EXPECT_EQ(model.originalMeanSpectrum.size(), testData.size());
     EXPECT_EQ(model.originalMzArray.size(), testData.size());
@@ -54,7 +54,7 @@ TEST_F(GaussianMixtureModelTest, test_data_sizes)
 
 TEST_F(GaussianMixtureModelTest, test_original_data_correctness)
 {
-    GaussianMixtureModel model(testData, testData, std::move(gaussianComponents));
+    GmmResult model(testData, testData, std::move(gaussianComponents));
     for (size_t i = 0; i < testData.size(); i++)
     {
         EXPECT_EQ(model.originalMeanSpectrum[i], testData[i]);

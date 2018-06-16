@@ -22,8 +22,10 @@
     <ClInclude Include="ClearPeakFinder.h" />
     <ClInclude Include="DataTypes.h" />
     <ClInclude Include="DynamicProgrammingInitialization.h" />
+    <ClInclude Include="ExpectationRunnerOpt.h" />
     <ClInclude Include="GmmOptions.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="MaximizationRunnerOpt.h" />
     <ClInclude Include="RandomInitializationRef.h" />
     <ClInclude Include="ExpectationMaximization.h" />
     <ClInclude Include="ExpectationRunnerRef.h" />
@@ -35,7 +37,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ClearPeakFinder.cpp" />
-    <ClCompile Include="ExpectationMaximization.cpp" />
     <ClCompile Include="SplitterSegmentExtractor.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
