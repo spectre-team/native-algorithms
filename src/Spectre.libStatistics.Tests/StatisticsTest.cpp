@@ -20,6 +20,7 @@ limitations under the License.
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
 #include "Spectre.libStatistics/Statistics.h"
+#include "Spectre.libFunctional/Range.h"
 
 namespace
 {
@@ -32,6 +33,15 @@ Data dataStorage { 1,2,3 };
 auto data = gsl::make_span(dataStorage);
 Data emptyStorage {};
 auto empty = gsl::make_span(emptyStorage);
+std::vector<float> bigFloatData = spectre::core::functional::range(0.0f, 1000000.0f, 1.0f);
+std::vector<double> bigDoubleData = spectre::core::functional::range(0.0, 1000000.0, 1.0);
+
+// Used for the purposes of benchmarking
+TEST(SumTest, DISABLED_calculates_vector_sum2)
+{
+    constexpr float MAX_ERROR = 59146241.0f;
+    ASSERT_NEAR(Sum<float>(bigFloatData), 499999500000.0f, MAX_ERROR);
+}
 
 TEST(SumTest, calculates_vector_sum)
 {
@@ -41,6 +51,23 @@ TEST(SumTest, calculates_vector_sum)
 TEST(SumTest, sum_of_empty_is_zero)
 {
     EXPECT_THAT(Sum(empty), 0.);
+}
+
+TEST(AccurateSumTest, calculates_float_vector_sum)
+{
+    constexpr float MAX_ERROR = 0.0000001f;
+    ASSERT_NEAR(AccurateSum(bigFloatData), 499999500000.0f, MAX_ERROR);
+}
+
+TEST(AccurateSumTest, calculates_double_vector_sum)
+{
+    constexpr double MAX_ERROR = 0.0000001;
+    ASSERT_NEAR(AccurateSum(bigDoubleData), 499999500000.0, MAX_ERROR);
+}
+
+TEST(AccurateSumTest, sum_of_empty_is_zero)
+{
+    ASSERT_EQ(AccurateSum(empty), 0.0);
 }
 
 TEST(MeanTest, calculates_vector_mean)
