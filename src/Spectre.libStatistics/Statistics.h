@@ -18,6 +18,7 @@ limitations under the License.
 */
 
 #pragma once
+#include <immintrin.h>
 #include <numeric>
 #include "Spectre.libStatistics/Math.h"
 
