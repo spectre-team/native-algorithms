@@ -20,6 +20,7 @@ limitations under the License.
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
 #include "Spectre.libStatistics/Statistics.h"
+#include "Spectre.libStatistics/AlignedAllocator.h"
 #include "Spectre.libFunctional/Range.h"
 
 namespace
@@ -33,8 +34,12 @@ Data dataStorage { 1,2,3 };
 auto data = gsl::make_span(dataStorage);
 Data emptyStorage {};
 auto empty = gsl::make_span(emptyStorage);
-std::vector<float> bigFloatData = spectre::core::functional::range(0.0f, 1000000.0f, 1.0f);
-std::vector<double> bigDoubleData = spectre::core::functional::range(0.0, 1000000.0, 1.0);
+typedef std::vector<float, aligned_allocator<float, sizeof(__m256)>> AlignedFloatVector;
+AlignedFloatVector bigFloatData =
+    spectre::core::functional::range<float, aligned_allocator<float, sizeof(__m256)>>(0.0f, 1000000.0f, 1.0f);
+typedef std::vector<double, aligned_allocator<double, sizeof(__m256)>> AlignedDoubleVector;
+AlignedDoubleVector bigDoubleData =
+spectre::core::functional::range<double, aligned_allocator<double, sizeof(__m256)>>(0.0, 1000000.0, 1.0);
 
 // Used for the purposes of benchmarking
 TEST(SumTest, DISABLED_calculates_vector_sum2)
