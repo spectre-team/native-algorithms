@@ -18,6 +18,7 @@ limitations under the License.
 */
 
 #pragma once
+#include <memory>
 #include <vector>
 #include "Spectre.libFunctional/ZeroStepException.h"
 
@@ -30,14 +31,14 @@ namespace spectre::core::functional
 /// <param name="upperBound">The upper bound.</param>
 /// <param name="step">The step of range.</param>
 /// <returns>Vector of consecutive values</returns>
-template <class NumericType>
-std::vector<NumericType> range(NumericType lowerBound, NumericType upperBound, NumericType step)
+template <class NumericType, class Allocator=std::allocator<NumericType>>
+std::vector<NumericType, Allocator> range(NumericType lowerBound, NumericType upperBound, NumericType step)
 {
     static_assert(std::is_arithmetic_v<NumericType>, "NumericType: expected arithmetic.");
     if (step != 0)
     {
         const auto size = static_cast<size_t>((upperBound - lowerBound) / step);
-        std::vector<NumericType> result(size);
+        std::vector<NumericType, Allocator> result(size);
         for (size_t i = 0; i < size; ++i)
         {
             result[i] = lowerBound + static_cast<NumericType>(i) * step;

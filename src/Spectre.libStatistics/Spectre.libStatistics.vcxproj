@@ -134,6 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AlignedAllocator.h" />
     <ClInclude Include="CohenEffectSize.h">
       <SubType>Header Files</SubType>
     </ClInclude>
