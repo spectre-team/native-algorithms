@@ -20,21 +20,84 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 #pragma once
-#include "Spectre.libGaussianMixtureModelling/DataTypes.h"
-#include <limits>
-#include "Spectre.libGaussianMixtureModelling/Matrix.h"
 #include <numeric>
+#include <limits>
+#include <vector>
 #include "Spectre.libException/OutOfRangeException.h"
-
+#include "Spectre.libGaussianMixtureModelling/DataTypes.h"
+#include "Spectre.libGaussianMixtureModelling/ExpectationMaximization.h"
+#include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
+#include "Spectre.libGaussianMixtureModelling/Matrix.h"
+#include "Spectre.libStatistics/Statistics.h"
 
 namespace spectre::unsupervised::gmm
 {
-using namespace spectre::core::exception;
-static inline Data InitRightmostBlockQualities(SpectrumView, DataType, DataType);
-static inline void ComputeOptimalBlockRanges(Data&, Data&, Matrix<Index>&,
+using namespace core::exception;
+using namespace core::functional;
+using namespace statistics::simple_statistics;
+using namespace statistics::basic_math;
+
+typedef std::vector<GaussianComponent> MixtureModel;
+
+static Data InitRightmostBlockQualities(SpectrumView, DataType, DataType);
+static void ComputeOptimalBlockRanges(Data&, Data&, Matrix<Index>&,
     Matrix<DataType>&, unsigned);
-static inline void ComputePartitionSeparators(Indices&, Matrix<Index>&, unsigned,
+static void ComputePartitionSeparators(Indices&, Matrix<Index>&, unsigned,
     unsigned);
+Matrix<DataType> ComputeQualityMatrix(SpectrumView, DataType, DataType);
+Indices ComputeOptimalBlocks(SpectrumView, unsigned, Matrix<DataType>&,
+    DataType, DataType);
+MixtureModel ComputeGaussiansFromBlocks(SpectrumView, Indices);
+
+/// <summary>
+/// Initializes gaussian components for ExpectationMaximization algorithm.
+/// </summary>
+class DynProgInitialization
+{
+public:
+    /// <summary>
+    /// Initializes the Quality Matrix, later used for block computation.
+    /// </summary>
+    /// <param name="view">Signal to initialize components of.</param>
+    /// <param name="delta">Parameter used for quality function computation
+    /// in equation (27).</param>
+    /// <param name="minStd">Smallest acceptable standard deviation assigned
+    /// to each component.</param>
+    DynProgInitialization(SpectrumView view, DataType delta, DataType minStd)
+        : m_QualityOfRange(ComputeQualityMatrix(view, delta, minStd))
+        , m_Delta(delta)
+        , m_MinStd(minStd)
+    {
+    }
+
+    /// <summary>
+    /// Returns the initial parameter set for desired signal decomposition.
+    /// </summary>
+    /// <param name="view">Signal to initialize components of.</param>
+    /// <param name="numOfComponents">Desired number of components</param>
+    MixtureModel Initialize(SpectrumView view, unsigned numOfComponents)
+    {
+        const Indices partitions = ComputeOptimalBlocks(view, numOfComponents,
+            m_QualityOfRange, m_Delta, m_MinStd);
+        return ComputeGaussiansFromBlocks(view, partitions);
+    }
+
+private:
+    Matrix<DataType> m_QualityOfRange;
+    const DataType m_Delta;
+    const DataType m_MinStd;
+};
+
+/// <summary>
+/// Compute the mass range of given signal
+/// </summary>
+/// <param name="mzs">Mzs of signal to compute range of.</param>
+inline DataType ComputeMzRange(DataView mzs)
+{
+    const DataType first = *mzs.begin();
+    const DataType last = *(mzs.end() - 1);
+    return last - first;
+}
 
 /// <summary>
 /// Computes a basic quality of a block based on given block data. Equation (28)
@@ -43,7 +106,7 @@ static inline void ComputePartitionSeparators(Indices&, Matrix<Index>&, unsigned
 /// that mzs and intensities have same length which is non-zero.</param>
 /// <param name="intensitySum">Sum of intensity values in blockData.</param>
 /// <returns>Quality Q1 of the block</returns>
-DataType ComputeBasicQuality(SpectrumView blockData, DataType intensitySum)
+inline DataType ComputeBasicQuality(SpectrumView blockData, DataType intensitySum)
 {
     const DataView& mzs = blockData.mzs;
     const DataView& intensities = blockData.intensities;
@@ -74,13 +137,14 @@ DataType ComputeBasicQuality(SpectrumView blockData, DataType intensitySum)
 /// <param name="minStd">Smallest mz range for which calculated
 /// range quality attains a positive finite number.</param>
 /// <returns>Quality Q4 of the block.</returns>
-DataType ComputeBlockQuality(SpectrumView blockData, DataType delta, DataType minStd)
+inline  DataType ComputeBlockQuality(SpectrumView blockData, DataType delta,
+    DataType minStd)
 {
     constexpr DataType MIN_SUMMED_HEIGHT = 0.001;
     const DataView mzs = blockData.mzs;
     const DataView intensities = blockData.intensities;
 
-    DataType mzRange = *(mzs.end() - 1) - *(mzs.begin());
+    DataType mzRange = ComputeMzRange(mzs);
     bool failsWidthRequirement = mzRange <= minStd;
     DataType sum = std::accumulate(intensities.begin(), intensities.end(), 0.0);
     bool failsSummedHeightRequirement = sum <= MIN_SUMMED_HEIGHT;
@@ -113,7 +177,7 @@ DataType ComputeBlockQuality(SpectrumView blockData, DataType delta, DataType mi
 /// <returns>List of block ranges. First index symbolises the beginning of the
 /// first block, while the last - the end of the last block. Every other index
 /// symbolises the end of the block, and the beginning of the next one.</returns>
-Indices ComputeOptimalBlocks(SpectrumView spectrum, unsigned numOfBlocks,
+inline Indices ComputeOptimalBlocks(SpectrumView spectrum, unsigned numOfBlocks,
     Matrix<DataType>& qualityOfRange, DataType delta, DataType minStd)
 {
     if (numOfBlocks > unsigned(spectrum.mzs.size() - 2))
@@ -135,7 +199,79 @@ Indices ComputeOptimalBlocks(SpectrumView spectrum, unsigned numOfBlocks,
     return partitionSeparators;
 }
 
-static inline Data InitRightmostBlockQualities(SpectrumView spectrum, DataType delta,
+/// <summary>
+/// Computes initial gaussian mixture model parameters, based on provided
+/// optimal block intervals.
+/// </summary>
+/// <param name="spectrum">Spectrum to derive block lengths from. It is assumed
+/// that mzs and intensities have same length which is non-zero. </param>
+/// <exception cref="OutOfRangeException">Thrown when number of blocks is
+/// greater than signal length - 2.</exception>
+/// <returns>List of block ranges. First index symbolises the beginning of the
+/// first block, while the last - the end of the last block. Every other index
+/// symbolises the end of the block, and the beginning of the next one.</returns>
+inline MixtureModel ComputeGaussiansFromBlocks(SpectrumView spectrum,
+    Indices blockPartitions)
+{
+    unsigned numOfBlocks = (unsigned)blockPartitions.size() - 1;
+    MixtureModel components(numOfBlocks);
+
+    for (unsigned i = 0; i < numOfBlocks; i++)
+    {
+        Index blockStart = blockPartitions[i];
+        Index blockEnd = blockPartitions[i + 1];
+        unsigned blockLength = blockEnd - blockStart;
+        SpectrumView block = spectrum.subspan(blockStart, blockLength);
+        Data normalizedHeights = Normalize(block.intensities);
+        Data scaledMzs = multiplyBy(block.mzs, DataView(normalizedHeights));
+        components[i].mean = Sum(DataView(scaledMzs));
+        components[i].weight = Sum(block.intensities) / Sum(spectrum.intensities);
+        components[i].deviation = 0.5 * ComputeMzRange(block.mzs);
+    }
+
+    return components;
+}
+
+/// <summary>
+/// Computes the qualities of all possible block intervals, and save them to
+/// matrix, where matrix(start, end) returns a quality for interval [start, end).
+/// </summary>
+/// <param name="view">Spectrum to base computation of qualities on.</param>
+/// <param name="delta">A positive constant from equation (27).</param>
+/// <param name="minStd">Smallest mz range for which calculated
+/// range quality attains a positive finite number.</param>
+/// <returns>Matrix of qualities as described in the summary.</returns>
+inline Matrix<DataType> ComputeQualityMatrix(SpectrumView view, DataType delta,
+    DataType minStd)
+{
+    const unsigned mzCount = (unsigned)view.mzs.size();
+    Matrix<DataType> qualities(mzCount, mzCount);
+    for (unsigned i = 0; i < mzCount - 1; i++)
+    {
+        for (unsigned j = i + 1; j < mzCount; j++)
+        {
+            qualities[i][j] = ComputeBlockQuality(view.subspan(i, j - i), delta, minStd);
+        }
+    }
+    return qualities;
+}
+
+static void ComputePartitionSeparators(Indices& partitionSeparators,
+    Matrix<Index>& indicesOfOptimalBlockRanges, unsigned numOfBlocks, unsigned mzCount)
+{
+    partitionSeparators[0] = 0;
+    partitionSeparators[1] = indicesOfOptimalBlockRanges[numOfBlocks - 1][0];
+    for (unsigned blockIndex = 2; blockIndex < numOfBlocks + 1; blockIndex++)
+    {
+        partitionSeparators[blockIndex] =
+            indicesOfOptimalBlockRanges[numOfBlocks - blockIndex][
+                partitionSeparators[blockIndex - 1]
+            ];
+    }
+    partitionSeparators.back() = mzCount - 1;
+}
+
+static Data InitRightmostBlockQualities(SpectrumView spectrum, DataType delta,
     DataType minStd)
 {
     const unsigned mzCount = (unsigned)spectrum.mzs.size();
@@ -149,7 +285,7 @@ static inline Data InitRightmostBlockQualities(SpectrumView spectrum, DataType d
     return qualities;
 }
 
-static inline void ComputeOptimalBlockRanges(Data& currentOptimalQuality,
+static void ComputeOptimalBlockRanges(Data& currentOptimalQuality,
     Data& qualitySums, Matrix<Index>& indicesOfOptimalBlockRanges,
     Matrix<DataType>& qualityOfRange, unsigned numOfBlocks)
 {
@@ -175,20 +311,5 @@ static inline void ComputeOptimalBlockRanges(Data& currentOptimalQuality,
             indicesOfOptimalBlockRanges[blockIndex][mzAnchor] = minPos;
         }
     }
-}
-
-static inline void ComputePartitionSeparators(Indices& partitionSeparators,
-    Matrix<Index>& indicesOfOptimalBlockRanges, unsigned numOfBlocks, unsigned mzCount)
-{
-    partitionSeparators[0] = 0;
-    partitionSeparators[1] = indicesOfOptimalBlockRanges[numOfBlocks - 1][0];
-    for (unsigned blockIndex = 2; blockIndex < numOfBlocks + 1; blockIndex++)
-    {
-        partitionSeparators[blockIndex] =
-            indicesOfOptimalBlockRanges[numOfBlocks - blockIndex][
-                partitionSeparators[blockIndex - 1]
-            ];
-    }
-    partitionSeparators.back() = mzCount - 1;
 }
 }

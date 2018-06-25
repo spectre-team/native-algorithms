@@ -38,6 +38,18 @@ constexpr DataType Sum(gsl::span<const DataType> data)
 }
 
 /// <summary>
+/// Normalize a given vector.
+/// </summary>
+/// <param name="data">The data.</param>
+/// <returns>Normalized elements.</returns>
+template <class DataType>
+constexpr std::vector<DataType> Normalize(gsl::span<const DataType> data)
+{
+    static_assert(std::is_arithmetic_v<DataType>, "DataType: expected arithmetic.");
+    return basic_math::divideBy(data, Sum(data));
+}
+
+/// <summary>
 /// Calculate mean of the specified data.
 /// </summary>
 /// <param name="data">The data.</param>

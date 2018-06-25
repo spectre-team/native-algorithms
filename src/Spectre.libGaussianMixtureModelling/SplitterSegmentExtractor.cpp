@@ -220,7 +220,6 @@ Spectrum SplitterSegmentExtractor::ExtractSplitterSegment(const Peaks & peaks,
     Spectrum splitSegment = CombineSplitterSegment(leftMzMargin, leftIntensitiesMargin,
         spectrum, rightMzMargin, rightIntensitiesMargin, intervalStart,
         intervalEnd);
-
     return splitSegment;
 }
 }
