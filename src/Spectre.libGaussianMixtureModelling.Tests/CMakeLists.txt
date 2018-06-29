@@ -4,12 +4,15 @@ add_executable(Spectre.libGaussianMixtureModelling.Tests
         ExpectationMaximizationTest.cpp
         GaussianDistributionTest.cpp
         GaussianMixtureModelTest.cpp
+        SignalDecomposerTest.cpp
         SplitterSegmentExtractorTest.cpp
         )
 
 target_link_libraries(Spectre.libGaussianMixtureModelling.Tests
         Spectre.libGaussianMixtureModelling
+	Spectre.libFunctional
         Spectre.libException
+        Spectre.libStatistics
         gtest_main
         )
 
