@@ -35,6 +35,7 @@ limitations under the License.
 #include "Spectre.libGaussianMixtureModelling/GaussianDistribution.h"
 #include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
 #include "Spectre.libGaussianMixtureModelling/Matrix.h"
+#include "Spectre.libStatistics/Math.h"
 
 namespace spectre::unsupervised::gmm
 {
@@ -67,6 +68,7 @@ public:
     void Expectation(Matrix<DataType> &affilationMatrix,
         SpectrumView spectrum, GaussianMixtureModel& components)
     {
+        using namespace statistics::basic_math;
         DataView mzs = spectrum.mzs;
         DataView intensities = spectrum.intensities;
         std::fill(m_Sums.begin(), m_Sums.end(), 0.0);
@@ -81,11 +83,7 @@ public:
                     Gaussian(mzs[i], components[k].mean,
                         components[k].deviation);
                 affilationMatrix[k][i] = probability;
-                probability -= correction;
-                DataType sum = m_Sums[i];
-                DataType newSum = sum + probability;
-                correction = (newSum - sum) - probability;
-                m_Sums[i] = newSum;
+                m_Sums[i] = accurate_add(m_Sums[i], probability, correction);
             }
         }
         DataType minSum = *std::min_element(m_Sums.begin(), m_Sums.end());

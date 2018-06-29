@@ -421,4 +421,27 @@ std::vector<typename std::remove_const<DataType>::type> differentiate(gsl::span<
         throw spectre::core::exception::ArgumentOutOfRangeException<size_t>("order", 0, length, size_t(order));
     return differentiate_unsafe(data, order);
 }
+
+/// <summary>
+/// Peroforms an accurate summation according to Kahan summation scheme.
+///
+/// https://en.wikipedia.org/wiki/Kahan_summation_algorithm#The_algorithm
+///
+/// The function performs operations corresponding to the inside of the
+/// loop. The variable 'c' in the example above corresponds to the 'corrrection'
+/// parameter of the function. 
+/// </summary>
+/// <param name="sum">Current sum to be added to.</param>
+/// <param name="value">Number to be added.</param>
+/// <param name="correction">Variable assuring the correct precision.</param>
+/// <returns>.</returns>
+template <class DataType>
+static DataType accurate_add(DataType sum, DataType value, DataType& correction)
+{
+    static_assert(std::is_arithmetic_v<DataType>, "DataType: expected arithmetic.");
+    value -= correction;
+    DataType newSum = sum + value;
+    correction = (newSum - sum) - value;
+    return newSum;
+}
 }

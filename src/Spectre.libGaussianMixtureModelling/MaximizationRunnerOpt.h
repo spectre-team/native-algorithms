@@ -34,6 +34,7 @@ limitations under the License.
 #include "Spectre.libGaussianMixtureModelling/DataTypes.h"
 #include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
 #include "Spectre.libGaussianMixtureModelling/Matrix.h"
+#include "Spectre.libStatistics/Math.h"
 
 namespace spectre::unsupervised::gmm
 {
@@ -68,26 +69,22 @@ namespace spectre::unsupervised::gmm
         void Maximization(Matrix<DataType> &affilationMatrix,
             SpectrumView spectrum, GaussianMixtureModel& components)
         {
+            using namespace statistics::basic_math;
             const unsigned numberOfComponents = (unsigned)components.size();
             const unsigned dataSize = (unsigned)spectrum.mzs.size();
             DataView mzs = spectrum.mzs;
             for (unsigned k = 0; k < numberOfComponents; k++)
             { 
                 // Using Kahan summation algorithm for improved accuracy
-                DataType probabilitySum = 0.0;
-                DataType meanNumerator = 0.0;
-                DataType probCorrection = 0.0;
-                DataType meanCorrection = 0.0;
+                DataType probabilitySum = 0.0, meanNumerator  = 0.0,
+                         probCorrection = 0.0, meanCorrection = 0.0;
                 for (unsigned i = 0; i < (unsigned)mzs.size(); i++)
                 {
-                    DataType corrected = affilationMatrix[k][i] - probCorrection;
-                    DataType newSum = probabilitySum + corrected;
-                    probCorrection = (newSum - probabilitySum) - corrected;
-                    probabilitySum = newSum;
-                    corrected = affilationMatrix[k][i] * mzs[i] - meanCorrection;
-                    newSum = meanNumerator + corrected;
-                    meanCorrection = (newSum - meanNumerator) - corrected;
-                    meanNumerator = newSum;
+                    probabilitySum = accurate_add(probabilitySum,
+                        affilationMatrix[k][i], probCorrection);
+                    meanNumerator = accurate_add(meanNumerator,
+                        affilationMatrix[k][i] * mzs[i] - meanCorrection,
+                        meanCorrection);
                 }
                 components[k].weight = probabilitySum / m_SummedIntensities;
                 components[k].mean = meanNumerator / probabilitySum;
@@ -96,11 +93,8 @@ namespace spectre::unsupervised::gmm
                 for (unsigned i = 0; i < (unsigned)mzs.size(); i++)
                 {
                     DataType diff = mzs[i] - components[k].mean;
-                    DataType corrected = affilationMatrix[k][i] * diff * diff
-                        - probCorrection;
-                    DataType newSum = stdNumerator + corrected;
-                    probCorrection = (newSum - stdNumerator) - corrected;
-                    stdNumerator = newSum;
+                    stdNumerator = accurate_add(stdNumerator,
+                        affilationMatrix[k][i] * diff * diff, probCorrection);
                 }
                 components[k].deviation = sqrt(stdNumerator/probabilitySum);
             }
