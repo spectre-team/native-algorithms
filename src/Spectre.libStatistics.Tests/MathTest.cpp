@@ -26,7 +26,8 @@ namespace
 using namespace testing;
 using namespace spectre::statistics::basic_math;
 
-using Data = const std::vector<double>;
+using DataType = double;
+using Data = const std::vector<DataType>;
 using IntData = const std::vector<int>;
 
 Data lowerData{ 1,2,3 };
@@ -242,5 +243,17 @@ TEST(DiffTest, throws_on_too_large_order)
 {
     Data data{ 1, 2, 3 };
     EXPECT_THROW(differentiate(gsl::make_span(data), 3), spectre::core::exception::ArgumentOutOfRangeException<size_t>);
+}
+
+TEST(AccurateAddTest, correctly_adds)
+{
+    constexpr DataType MAX_ERROR = 0.000000000000001;
+    Data data{ 1.0e10, 5.0, 2.0e15 }; // Data suspectible to floating point errors during summation.
+    DataType sum = 0.0;
+    DataType correction = 0.0;
+    for (const DataType& element : data)
+        sum = accurate_add(sum, element, correction);
+    DataType expected = 2.000010000000005e15;
+    ASSERT_NEAR(expected, sum, MAX_ERROR);
 }
 }

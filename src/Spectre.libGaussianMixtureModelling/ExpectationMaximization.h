@@ -51,17 +51,22 @@ static inline void FilterLowHeightComponents(GaussianMixtureModel& components)
 static inline DataType CalculateDelta(GaussianMixtureModel& oldModel,
     GaussianMixtureModel& newModel)
 {
-    DataType sumOfHeightDifferences = 0.0;
-    DataType sumOfScaledVarianceDifferences = 0.0;
-    DataType justASum = 0.0;
+    using namespace statistics::basic_math;
+    DataType weightCorrection = 0.0, heightCorrection = 0.0,
+    varianceCorrection = 0.0, sumOfHeightDifferences = 0.0,
+    sumOfScaledVarianceDifferences = 0.0, justASum = 0.0;
+
     for (Index i = 0; i < oldModel.size(); i++)
     {
-        justASum += newModel[i].weight;
-        sumOfHeightDifferences += abs(newModel[i].weight - oldModel[i].weight);
-        sumOfScaledVarianceDifferences +=
-            abs(newModel[i].deviation * newModel[i].deviation -
-                oldModel[i].deviation * oldModel[i].deviation) /
-               (newModel[i].deviation * newModel[i].deviation);
+        justASum = accurate_add(justASum, newModel[i].weight, weightCorrection);
+        sumOfHeightDifferences = accurate_add(sumOfHeightDifferences,
+           std::abs(newModel[i].weight - oldModel[i].weight), heightCorrection);
+        sumOfScaledVarianceDifferences =
+            accurate_add(sumOfScaledVarianceDifferences,
+              std::abs(newModel[i].deviation * newModel[i].deviation -
+                       oldModel[i].deviation * oldModel[i].deviation) /
+                      (newModel[i].deviation * newModel[i].deviation),
+                varianceCorrection);
     }
     sumOfScaledVarianceDifferences /= (DataType)oldModel.size();
     return sumOfHeightDifferences + sumOfScaledVarianceDifferences;
@@ -128,6 +133,7 @@ public:
             m_Expectation.Expectation(m_AffilationMatrix, spectrum, components);
             m_Maximization.Maximization(m_AffilationMatrix, spectrum,
                 components);
+            SetMinStds(components, minStd);
             delta = CalculateDelta(oldModel, components);
         } while (delta > epsilon);
 
