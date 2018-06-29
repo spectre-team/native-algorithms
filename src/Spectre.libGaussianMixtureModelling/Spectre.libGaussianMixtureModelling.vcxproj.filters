@@ -56,6 +56,12 @@
     <ClInclude Include="MaximizationRunnerOpt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SplitterSegmentDecomposer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SignalDecomposer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ClearPeakFinder.cpp">

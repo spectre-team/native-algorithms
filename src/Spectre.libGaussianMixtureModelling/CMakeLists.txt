@@ -14,6 +14,8 @@ add_library(Spectre.libGaussianMixtureModelling STATIC
         MaximizationRunnerOpt.h
         MaximizationRunnerRef.h
         RandomInitializationRef.h
+        SignalDecomposer.h
+        SplitterSegmentDecomposer.h
         SplitterSegmentExtractor.cpp
         SplitterSegmentExtractor.h
         )
