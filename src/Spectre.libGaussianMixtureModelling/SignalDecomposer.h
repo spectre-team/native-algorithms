@@ -105,7 +105,7 @@ static SpectrumView CompressSignal(SpectrumView signal,
     compressedSignal.intensities = BinData(compressedSignal.mzs, signal.mzs,
         signal.intensities);
     SpectrumView view(compressedSignal);
-    view.mzs = view.mzs.subspan(0, view.mzs.length() - 1); // Remove last mz to match 
+    view.mzs = view.mzs.subspan(0, view.mzs.length() - 1); // Remove last mz to match
     return view;                                           // intensities size.
 }
 
@@ -191,7 +191,7 @@ static GaussianMixtureModel DecomposeSplitterSignal(SpectrumView original,
     const unsigned maxNumOfBlocks = 2 * (startNumOfBlocks + maxViableBlocks);
     auto expectationMaximization = ExpectationMaximization<ExpectationRunnerOpt,
         MaximizationRunnerOpt>(original, maxNumOfBlocks);
-    for (unsigned blockNum = startNumOfBlocks; blockNum < maxNumOfBlocks; blockNum++) 
+    for (unsigned blockNum = startNumOfBlocks; blockNum < maxNumOfBlocks; blockNum++)
     {
         GaussianMixtureModel components = init.Initialize(processed, blockNum);
         expectationMaximization.EstimateGmm(original, components, minStd,

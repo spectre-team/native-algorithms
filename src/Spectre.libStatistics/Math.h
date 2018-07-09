@@ -429,7 +429,7 @@ std::vector<typename std::remove_const<DataType>::type> differentiate(gsl::span<
 ///
 /// The function performs operations corresponding to the inside of the
 /// loop. The variable 'c' in the example above corresponds to the 'corrrection'
-/// parameter of the function. 
+/// parameter of the function.
 /// </summary>
 /// <param name="sum">Current sum to be added to.</param>
 /// <param name="value">Number to be added.</param>
