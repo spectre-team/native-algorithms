@@ -33,6 +33,7 @@
     <ClInclude Include="GaussianMixtureModel.h" />
     <ClInclude Include="LogLikelihoodCalculator.h" />
     <ClInclude Include="MaximizationRunnerRef.h" />
+    <ClInclude Include="SegmentExtractor.h" />
     <ClInclude Include="SignalDecomposer.h" />
     <ClInclude Include="SplitterSegmentDecomposer.h" />
     <ClInclude Include="SplitterSegmentExtractor.h" />

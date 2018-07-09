@@ -39,7 +39,7 @@ struct Spectrum
                                   , intensities(std::move(spectrum.intensities)) {}
     Spectrum(DataView mzs, DataView intensities) : mzs(mzs.begin(), mzs.end())
                            , intensities(intensities.begin(), intensities.end()) {}
-    Spectrum& operator=(Spectrum&& spectrum) noexcept { mzs = std::move(spectrum.mzs); 
+    Spectrum& operator=(Spectrum&& spectrum) noexcept { mzs = std::move(spectrum.mzs);
     intensities = std::move(spectrum.intensities); return *this; }
 
     Data mzs;
