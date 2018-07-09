@@ -20,7 +20,7 @@
 #pragma once
 #include <vector>
 #include <gsl/gsl>
-#include "Spectre.libGaussianMixtureModelling/DataTypes.h"
+#include "Common/DataTypes.h"
 
 namespace spectre::unsupervised::gmm
 {
