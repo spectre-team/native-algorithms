@@ -171,6 +171,7 @@
     <ClCompile Include="ExpectationMaximizationTest.cpp" />
     <ClCompile Include="GaussianDistributionTest.cpp" />
     <ClCompile Include="GaussianMixtureModelTest.cpp" />
+    <ClCompile Include="SegmentExtractorTest.cpp" />
     <ClCompile Include="SignalDecomposerTest.cpp" />
     <ClCompile Include="SplitterSegmentExtractorTest.cpp" />
   </ItemGroup>
