@@ -78,7 +78,7 @@ inline Spectrum ExtractSegment(SpectrumView spectrum, IndicesView peakIndices,
 }
 
 // We probably don't need this step, but I've left it here
-// just in case.
+// just in case. 
 static void RemoveInsignificantComponents(Splitter& splitter)
 {
     const unsigned componentsNum = (unsigned)splitter.size();
