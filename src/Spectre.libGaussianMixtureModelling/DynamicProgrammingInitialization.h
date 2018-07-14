@@ -268,7 +268,7 @@ static void ComputePartitionSeparators(Indices& partitionSeparators,
                 partitionSeparators[blockIndex - 1]
             ];
     }
-    partitionSeparators.back() = mzCount - 1;
+    partitionSeparators.back() = mzCount;
 }
 
 static Data InitRightmostBlockQualities(SpectrumView spectrum, DataType delta,
