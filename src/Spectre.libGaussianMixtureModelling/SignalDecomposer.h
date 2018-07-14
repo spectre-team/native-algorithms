@@ -18,6 +18,8 @@ static SpectrumView CompressDataIfNecessary(SpectrumView, Spectrum&);
 static GaussianComponent ComputeComponentForASingleBlock(SpectrumView);
 static GaussianMixtureModel DecomposeSplitterSignal(SpectrumView,
     SpectrumView, GmmOptions&, DataType, DataType, int, int);
+static GaussianMixtureModel DecomposeSegment(SpectrumView, SpectrumView,
+    const GmmOptions&, DataType, DataType, int, int);
 
 /// <summary>
 /// Performs initialization for Gaussian Mixture Modelling Expectation Maximization
@@ -53,7 +55,8 @@ inline GaussianMixtureModel DecomposeSignal(SpectrumView segment,
     }
     else
     {
-        throw std::runtime_error("Not Implemented Yet");
+        return DecomposeSegment(segment, processedData, options, minStd,
+            penaltyCoefficient, approxNumOfBlocks, startNumOfBlocks);
     }
 }
 
@@ -213,5 +216,49 @@ static GaussianMixtureModel DecomposeSplitterSignal(SpectrumView original,
     }
     ScaleComponents(bestComponents, scale);
     return bestComponents;
+}
+static GaussianMixtureModel DecomposeSegment(SpectrumView original,
+    SpectrumView processed, const GmmOptions& options, DataType minStd,
+    DataType penaltyCoefficient, int approxNumOfBlocks, int startNumOfBlocks)
+{
+    if(original.mzs.size() < 3)
+    {
+        return GaussianMixtureModel();
+    }
+    GaussianMixtureModel bestComponents;
+    const DataType delta = options.qualityFunctionParam;
+    DataType scale = 0.0;
+    DynProgInitialization init(processed, delta, minStd);
+    DataType minApproximationQuality = std::numeric_limits<DataType>::infinity();
+    const unsigned maxViableBlocks = std::min((unsigned)original.mzs.size() / 4u,
+        std::min(options.minComponentSearchIterations, (unsigned)approxNumOfBlocks));
+    const unsigned maxNumOfBlocks = options.maxComponentsNumForSegment;
+    auto expectationMaximization = ExpectationMaximization<ExpectationRunnerOpt,
+        MaximizationRunnerOpt>(original, maxNumOfBlocks);
+    GaussianMixtureModel components;
+    for (unsigned blockNum = startNumOfBlocks; blockNum < maxNumOfBlocks; blockNum++)
+    {
+        components =
+            init.Initialize(processed, original.intensities, blockNum);
+        expectationMaximization.EstimateGmm(original, components, minStd,
+            options.emEpsilon);
+        const Data mixture = ComputeGaussianMixture(original.mzs, components);
+        scale = ComputeModelScale(original.intensities, mixture);
+        const DataType quality = ComputeModelQuality(original.intensities, mixture,
+            scale);
+        const DataType penalisedQuality = quality + penaltyCoefficient * blockNum;
+        if (penalisedQuality < minApproximationQuality)
+        {
+            minApproximationQuality = penalisedQuality;
+            bestComponents = std::move(components);
+        } // If the quality no longer improves, and we're beyond viable num of blocks,
+        else if ((blockNum - startNumOfBlocks) > maxViableBlocks) // - terminate.
+        {
+            components = std::move(bestComponents);
+            break;
+        }
+    } // It is unsure if the author of the ref version really meant returning
+    ScaleComponents(components, scale); // components and not bestComponents here.
+    return components;
 }
 }

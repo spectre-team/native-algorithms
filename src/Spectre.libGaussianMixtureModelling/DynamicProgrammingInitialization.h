@@ -44,10 +44,13 @@ static void ComputeOptimalBlockRanges(Data&, Data&, Matrix<Index>&,
     Matrix<DataType>&, unsigned);
 static void ComputePartitionSeparators(Indices&, Matrix<Index>&, unsigned,
     unsigned);
+static MixtureModel ComputeGaussiansFromBlocksImpl(SpectrumView, DataType,
+    Indices);
 Matrix<DataType> ComputeQualityMatrix(SpectrumView, DataType, DataType);
 Indices ComputeOptimalBlocks(SpectrumView, unsigned, Matrix<DataType>&,
     DataType, DataType);
 MixtureModel ComputeGaussiansFromBlocks(SpectrumView, Indices);
+MixtureModel ComputeGaussiansFromBlocks(SpectrumView, DataView, Indices);
 
 /// <summary>
 /// Initializes gaussian components for ExpectationMaximization algorithm.
@@ -80,6 +83,21 @@ public:
         const Indices partitions = ComputeOptimalBlocks(view, numOfComponents,
             m_QualityOfRange, m_Delta, m_MinStd);
         return ComputeGaussiansFromBlocks(view, partitions);
+    }
+
+    /// <summary>
+    /// Returns the initial parameter set for desired signal decomposition.
+    /// Used for segment decomposition.
+    /// </summary>
+    /// <param name="view">Signal to initialize components of.</param>
+    /// <param name="intensities">Intensities of the segment</param>
+    /// <param name="numOfComponents">Desired number of components</param>
+    MixtureModel Initialize(SpectrumView view, DataView intensities,
+        unsigned numOfComponents)
+    {
+        const Indices partitions = ComputeOptimalBlocks(view, numOfComponents,
+            m_QualityOfRange, m_Delta, m_MinStd);
+        return ComputeGaussiansFromBlocks(view, intensities, partitions);
     }
 
 private:
@@ -205,6 +223,7 @@ inline Indices ComputeOptimalBlocks(SpectrumView spectrum, unsigned numOfBlocks,
 /// </summary>
 /// <param name="spectrum">Spectrum to derive block lengths from. It is assumed
 /// that mzs and intensities have same length which is non-zero. </param>
+/// <param name="blockPartitions">Indices determining partitions.</param>
 /// <exception cref="OutOfRangeException">Thrown when number of blocks is
 /// greater than signal length - 2.</exception>
 /// <returns>List of block ranges. First index symbolises the beginning of the
@@ -213,23 +232,30 @@ inline Indices ComputeOptimalBlocks(SpectrumView spectrum, unsigned numOfBlocks,
 inline MixtureModel ComputeGaussiansFromBlocks(SpectrumView spectrum,
     Indices blockPartitions)
 {
-    unsigned numOfBlocks = (unsigned)blockPartitions.size() - 1;
-    MixtureModel components(numOfBlocks);
+    const DataType sum = Sum(spectrum.intensities);
+    return ComputeGaussiansFromBlocksImpl(spectrum, sum, blockPartitions);
+}
 
-    for (unsigned i = 0; i < numOfBlocks; i++)
-    {
-        Index blockStart = blockPartitions[i];
-        Index blockEnd = blockPartitions[i + 1];
-        unsigned blockLength = blockEnd - blockStart;
-        SpectrumView block = spectrum.subspan(blockStart, blockLength);
-        Data normalizedHeights = Normalize(block.intensities);
-        Data scaledMzs = multiplyBy(block.mzs, DataView(normalizedHeights));
-        components[i].mean = Sum(DataView(scaledMzs));
-        components[i].weight = Sum(block.intensities) / Sum(spectrum.intensities);
-        components[i].deviation = 0.5 * ComputeMzRange(block.mzs);
-    }
-
-    return components;
+/// <summary>
+/// Computes initial gaussian mixture model parameters, based on provided
+/// optimal block intervals.
+/// </summary>
+/// <param name="spectrum">Spectrum to derive block lengths from. It is assumed
+/// that mzs and intensities have same length which is non-zero. </param>
+/// <param name="intensities">Intensities for computing height components.
+/// </param>
+/// <param name="blockPartitions">Indices determining partitions.</param>
+/// <exception cref="OutOfRangeException">Thrown when number of blocks is
+/// greater than signal length - 2.</exception>
+/// <returns>List of block ranges. First index symbolises the beginning of the
+/// first block, while the last - the end of the last block. Every other index
+/// symbolises the end of the block, and the beginning of the next one.
+/// </returns>
+inline MixtureModel ComputeGaussiansFromBlocks(SpectrumView spectrum,
+    DataView intensities, Indices blockPartitions)
+{
+    const DataType sum = Sum(intensities);
+    return ComputeGaussiansFromBlocksImpl(spectrum, sum, blockPartitions);
 }
 
 /// <summary>
@@ -254,6 +280,28 @@ inline Matrix<DataType> ComputeQualityMatrix(SpectrumView view, DataType delta,
         }
     }
     return qualities;
+}
+
+static MixtureModel ComputeGaussiansFromBlocksImpl(SpectrumView spectrum,
+    DataType intensitySum, Indices blockPartitions)
+{
+    unsigned numOfBlocks = (unsigned)blockPartitions.size() - 1;
+    MixtureModel components(numOfBlocks);
+
+    for (unsigned i = 0; i < numOfBlocks; i++)
+    {
+        Index blockStart = blockPartitions[i];
+        Index blockEnd = blockPartitions[i + 1];
+        unsigned blockLength = blockEnd - blockStart;
+        SpectrumView block = spectrum.subspan(blockStart, blockLength);
+        Data normalizedHeights = Normalize(block.intensities);
+        Data scaledMzs = multiplyBy(block.mzs, DataView(normalizedHeights));
+        components[i].mean = Sum(DataView(scaledMzs));
+        components[i].weight = Sum(block.intensities) / intensitySum;
+        components[i].deviation = 0.5 * ComputeMzRange(block.mzs);
+    }
+
+    return components;
 }
 
 static void ComputePartitionSeparators(Indices& partitionSeparators,
