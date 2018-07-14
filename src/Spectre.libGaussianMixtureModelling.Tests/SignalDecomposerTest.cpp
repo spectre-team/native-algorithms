@@ -101,8 +101,8 @@ TEST_F(SignalDecomposerTest, decomposes_signal_correctly)
         resolutionCoefficient, options, minNumOfBlocks, decomposingSplitter);
     MixtureModel validComponents = {
         /*       mean        std      weight        */
-            { 2058.349253, 0.443776, 0.257386 },
             { 2058.349253, 0.443776, 0.133505 },
+            { 2058.349253, 0.443776, 0.257386 },
             { 2060.720187, 0.443776, 0.463778 },
             { 2062.085898, 0.443776, 0.101032 },
             { 2064.280051, 0.970573, 0.477677 },
