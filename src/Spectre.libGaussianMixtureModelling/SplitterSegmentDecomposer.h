@@ -15,7 +15,7 @@ static MixtureModel ExtractSplitter(MixtureModel&, DataType);
 /// <param name="splittingPeakMz">Mz location of a splitter.</param>
 /// <param name="resolutionCoefficient">Signal resolution.</param>
 /// <param name="options">GaussianMixtureModelling options set.</param>
-/// <returns>Matrix of qualities as described in the summary.</returns>
+/// <returns>Gaussian Mixture Model of given splitter.</returns>
 inline MixtureModel DecomposeSplitterSegment(SpectrumView segment,
     DataType splittingPeakMz, DataType resolutionCoefficient,
     GmmOptions& options)
