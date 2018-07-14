@@ -72,6 +72,16 @@ static inline DataType CalculateDelta(GaussianMixtureModel& oldModel,
     return sumOfHeightDifferences + sumOfScaledVarianceDifferences;
 }
 
+static inline void Sort(GaussianMixtureModel& model)
+{
+    std::sort(model.begin(), model.end(),
+        [](const GaussianComponent& first, const GaussianComponent& second)
+        {
+        return first.mean < second.mean;
+        }
+    );
+}
+
 /// <summary>
 /// Class serves as the container for all data required by
 /// A. P. Dempster's Expectation Maximization algorithm used
@@ -137,6 +147,7 @@ public:
             delta = CalculateDelta(oldModel, components);
         } while (delta > epsilon);
 
+        Sort(components);
         return components;
     }
 
