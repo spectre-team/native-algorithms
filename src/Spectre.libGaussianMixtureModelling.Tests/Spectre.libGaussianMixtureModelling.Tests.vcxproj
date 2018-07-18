@@ -96,6 +96,7 @@
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(SolutionDir)Spectre.libGaussianMixtureModelling;$(SolutionDir)Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <FloatingPointExceptions>true</FloatingPointExceptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,6 +133,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)Spectre.libGaussianMixtureModelling;$(SolutionDir)Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
+      <FloatingPointExceptions>true</FloatingPointExceptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -169,6 +171,7 @@
     <ClCompile Include="ExpectationMaximizationTest.cpp" />
     <ClCompile Include="GaussianDistributionTest.cpp" />
     <ClCompile Include="GaussianMixtureModelTest.cpp" />
+    <ClCompile Include="SignalDecomposerTest.cpp" />
     <ClCompile Include="SplitterSegmentExtractorTest.cpp" />
   </ItemGroup>
   <ItemGroup>
