@@ -20,8 +20,8 @@ limitations under the License.
 
 #pragma once
 #include "Spectre.libGaussianMixtureModelling/DataTypes.h"
-#include "GaussianMixtureModel.h"
-#include "GaussianDistribution.h"
+#include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
+#include "Spectre.libGaussianMixtureModelling/ModelUtils.h"
 
 namespace spectre::unsupervised::gmm
 {
@@ -30,7 +30,6 @@ static Splitter GetRightSplitter(Index, SplittersView, unsigned);
 static Index GetLeftMz(Index, IndicesView, IndicesView);
 static Index GetRightMz(Index, IndicesView, SpectrumView, IndicesView);
 static Spectrum SliceNewSpectrum(SpectrumView, Index, Index);
-static Data ComputeIntensitiesFromModel(DataView, const GaussianMixtureModel&);
 static void SubtractSplittersFromSegment(Spectrum&, const Data&, const Data&);
 static Index GetNewMzBoundaryIndex(Index, SpectrumView, const Data&, unsigned,
     bool);
@@ -60,9 +59,9 @@ inline Spectrum ExtractSegment(SpectrumView spectrum, IndicesView peakIndices,
     Spectrum segment = SliceNewSpectrum(spectrum, leftMzIndex, rightMzIndex);
 
     const Data leftSplitterIntensities =
-        ComputeIntensitiesFromModel(segment.mzs, leftSplitter);
+        ComputeIntensitiesFor(segment.mzs, leftSplitter);
     const Data rightSplitterIntensities =
-        ComputeIntensitiesFromModel(segment.mzs, rightSplitter);
+        ComputeIntensitiesFor(segment.mzs, rightSplitter);
 
     SubtractSplittersFromSegment(segment, leftSplitterIntensities,
         rightSplitterIntensities);
@@ -152,21 +151,6 @@ static Index GetRightMz(Index segmentIndex, IndicesView peakIndices,
     }
 
     return index;
-}
-
-static Data ComputeIntensitiesFromModel(DataView mzs,
-    const GaussianMixtureModel& components)
-{
-    Data mixture(mzs.size());
-    for (Index i = 0; i < components.size(); i++)
-    {
-        for (Index j = 0; j < mixture.size(); j++)
-        {
-            mixture[j] += components[i].weight *
-                Gaussian(mzs[j], components[i].mean, components[i].deviation);
-        }
-    }
-    return mixture;
 }
 
 static void SubtractSplittersFromSegment(Spectrum& segment,

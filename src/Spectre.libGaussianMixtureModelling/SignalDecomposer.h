@@ -24,6 +24,7 @@ limitations under the License.
 #include "Spectre.libGaussianMixtureModelling/ExpectationRunnerOpt.h"
 #include "Spectre.libGaussianMixtureModelling/GmmOptions.h"
 #include "Spectre.libGaussianMixtureModelling/MaximizationRunnerOpt.h"
+#include "Spectre.libGaussianMixtureModelling/ModelUtils.h"
 #include "Spectre.libFunctional/Range.h"
 #include "Spectre.libStatistics/Statistics.h"
 #include "Spectre.libStatistics/Types.h"
@@ -164,11 +165,6 @@ static GaussianComponent ComputeComponentForASingleBlock(SpectrumView segment)
     return component;
 }
 
-static DataType ComputeModelScale(DataView intensities, DataView mixture)
-{
-    return Sum(intensities) / Sum(mixture);
-}
-
 static DataType ComputeModelQuality(DataView intensities, DataView mixture,
     DataType scale)
 {
@@ -176,28 +172,6 @@ static DataType ComputeModelQuality(DataView intensities, DataView mixture,
     Data approximationErrors = minus(DataView(scaledIntensities), mixture);
     Data moduleOfErrors = abs(DataView(approximationErrors));
     return Sum(DataView(moduleOfErrors)) / Sum(mixture);
-}
-
-static Data ComputeGaussianMixture(DataView mzs, GaussianMixtureModel& components)
-{
-    Data mixture(mzs.size());
-    for (Index i = 0; i < components.size(); i++)
-    {
-        for (Index j = 0; j < mixture.size(); j++)
-        {
-            mixture[j] += components[i].weight *
-                Gaussian(mzs[j], components[i].mean, components[i].deviation);
-        }
-    }
-    return mixture;
-}
-
-static void ScaleComponents(GaussianMixtureModel& components, DataType scale)
-{
-    for (unsigned i = 0; i < components.size(); i++)
-    {
-        components[i].weight *= scale;
-    }
 }
 
 static GaussianMixtureModel DecomposeSplitterSignal(SpectrumView original,
@@ -219,7 +193,7 @@ static GaussianMixtureModel DecomposeSplitterSignal(SpectrumView original,
         GaussianMixtureModel components = init.Initialize(processed, blockNum);
         expectationMaximization.EstimateGmm(original, components, minStd,
             options.emEpsilon);
-        const Data mixture = ComputeGaussianMixture(original.mzs, components);
+        const Data mixture = ComputeIntensitiesFor(original.mzs, components);
         scale = ComputeModelScale(original.intensities, mixture);
         const DataType quality = ComputeModelQuality(original.intensities, mixture,
             scale);
@@ -262,7 +236,7 @@ static GaussianMixtureModel DecomposeSegment(SpectrumView original,
             init.Initialize(processed, original.intensities, blockNum);
         expectationMaximization.EstimateGmm(original, components, minStd,
             options.emEpsilon);
-        const Data mixture = ComputeGaussianMixture(original.mzs, components);
+        const Data mixture = ComputeIntensitiesFor(original.mzs, components);
         scale = ComputeModelScale(original.intensities, mixture);
         const DataType quality = ComputeModelQuality(original.intensities, mixture,
             scale);
