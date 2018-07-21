@@ -68,6 +68,9 @@
     <ClInclude Include="SegmentDecomposer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EmergencyCorrection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="ModelUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>

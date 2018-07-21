@@ -22,6 +22,7 @@
     <ClInclude Include="ClearPeakFinder.h" />
     <ClInclude Include="DataTypes.h" />
     <ClInclude Include="DynamicProgrammingInitialization.h" />
+    <ClInclude Include="EmergencyCorrection.h" />
     <ClInclude Include="ExpectationRunnerOpt.h" />
     <ClInclude Include="GmmOptions.h" />
     <ClInclude Include="Matrix.h" />
