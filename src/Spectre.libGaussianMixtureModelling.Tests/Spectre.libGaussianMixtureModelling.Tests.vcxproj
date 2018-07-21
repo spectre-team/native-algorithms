@@ -168,6 +168,7 @@
     <ClCompile Include="..\Common\Main.cpp" />
     <ClCompile Include="ClearPeakFinderTest.cpp" />
     <ClCompile Include="DynamicProgramminInitializationTest.cpp" />
+    <ClCompile Include="EmergencyCorrectionTest.cpp" />
     <ClCompile Include="ExpectationMaximizationTest.cpp" />
     <ClCompile Include="GaussianDistributionTest.cpp" />
     <ClCompile Include="GaussianMixtureModelTest.cpp" />
