@@ -8,6 +8,7 @@ add_executable(Spectre.libStatistics.Tests
         )
 
 target_link_libraries(Spectre.libStatistics.Tests
+        Spectre.libFunctional
         Spectre.libStatistics
         Spectre.libDataset
         Spectre.libException

@@ -25,6 +25,9 @@
     <Filter Include="Header Files\test">
       <UniqueIdentifier>{aad0855b-e88b-40a8-9b01-1b65866e2bdc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\memory">
+      <UniqueIdentifier>{337674ba-764a-4edd-9868-11918c27d2bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math.h">
@@ -50,6 +53,9 @@
     </ClInclude>
     <ClInclude Include="CohenEffectSize.h">
       <Filter>Header Files\test</Filter>
+    </ClInclude>
+    <ClInclude Include="AlignedAllocator.h">
+      <Filter>Header Files\memory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
