@@ -74,6 +74,9 @@
     <ClInclude Include="ModelUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DynamicProgrammingInitializationPar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ClearPeakFinder.cpp">
