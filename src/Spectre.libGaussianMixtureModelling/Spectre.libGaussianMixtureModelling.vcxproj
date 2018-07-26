@@ -41,10 +41,12 @@
     <ClInclude Include="SignalDecomposer.h" />
     <ClInclude Include="SplitterSegmentDecomposer.h" />
     <ClInclude Include="SplitterSegmentExtractor.h" />
+    <ClInclude Include="SplitterSegmentExtractorPar.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ClearPeakFinder.cpp" />
     <ClCompile Include="SplitterSegmentExtractor.cpp" />
+    <ClCompile Include="SplitterSegmentExtractorPar.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{104D9A93-F6D7-4BF4-961F-7C52FEAEA77B}</ProjectGuid>

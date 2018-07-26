@@ -77,12 +77,18 @@
     <ClInclude Include="DynamicProgrammingInitializationPar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SplitterSegmentExtractorPar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ClearPeakFinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SplitterSegmentExtractor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SplitterSegmentExtractorPar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

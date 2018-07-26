@@ -20,6 +20,7 @@ limitations under the License.
 
 #include <gtest/gtest.h>
 #include "Spectre.libGaussianMixtureModelling/SplitterSegmentExtractor.h"
+#include "Spectre.libGaussianMixtureModelling/SplitterSegmentExtractorPar.h"
 
 namespace spectre::unsupervised::gmm
 {
@@ -206,8 +207,34 @@ public:
             0.429546547626444, 0.320665320914516, 131.956108781198
         };
     }
+
+    template<typename T>
+    void TestExtraction()
+    {
+        T extractor;
+        constexpr DataType MAX_ERROR = 0.0001;
+        constexpr Index SPLITTING_PEAK_INDEX = 8;
+        constexpr DataType RESOLUTION_COEFF = 0.00214166770575118;
+        Spectrum splitterSegment = extractor.ExtractSplitterSegment(peaks, signal,
+            valleyIndices, SPLITTING_PEAK_INDEX, RESOLUTION_COEFF);
+
+        EXPECT_NEAR(2056.439080921610, splitterSegment.mzs[0], MAX_ERROR);
+        EXPECT_NEAR(2083.208320832080, splitterSegment.mzs[33], MAX_ERROR);
+        EXPECT_NEAR(2084.008400840080, splitterSegment.mzs[34], MAX_ERROR);
+        EXPECT_NEAR(2241.624162416240, splitterSegment.mzs[231], MAX_ERROR);
+        EXPECT_NEAR(2242.424242424240, splitterSegment.mzs[232], MAX_ERROR);
+        EXPECT_NEAR(2271.227122712270, splitterSegment.mzs[268], MAX_ERROR);
+
+        EXPECT_NEAR(0.000000000000000, splitterSegment.intensities[0], MAX_ERROR);
+        EXPECT_NEAR(0.000000000000000, splitterSegment.intensities[33], MAX_ERROR);
+        EXPECT_NEAR(0.298585462364539, splitterSegment.intensities[34], MAX_ERROR);
+        EXPECT_NEAR(0.617869601781809, splitterSegment.intensities[231], MAX_ERROR);
+        EXPECT_NEAR(0.000000000000000, splitterSegment.intensities[232], MAX_ERROR);
+        EXPECT_NEAR(0.000000000000000, splitterSegment.intensities[268], MAX_ERROR);
+    }
+
 protected:
-    SplitterSegmentExtractor extractor;
+    
     Spectrum signal;
     Indices valleyIndices;
     Peaks peaks;
@@ -215,24 +242,11 @@ protected:
 
 TEST_F(SplitterSegmentExtractorTest, check_if_properly_extracts_splitter_segment)
 {
-    constexpr DataType MAX_ERROR = 0.0001;
-    constexpr Index SPLITTING_PEAK_INDEX = 8;
-    constexpr DataType RESOLUTION_COEFF = 0.00214166770575118;
-    Spectrum splitterSegment = extractor.ExtractSplitterSegment(peaks, signal,
-        valleyIndices, SPLITTING_PEAK_INDEX, RESOLUTION_COEFF);
+    TestExtraction<SplitterSegmentExtractor>();
+}
 
-    EXPECT_NEAR(2056.439080921610, splitterSegment.mzs[0], MAX_ERROR);
-    EXPECT_NEAR(2083.208320832080, splitterSegment.mzs[33], MAX_ERROR);
-    EXPECT_NEAR(2084.008400840080, splitterSegment.mzs[34], MAX_ERROR);
-    EXPECT_NEAR(2241.624162416240, splitterSegment.mzs[231], MAX_ERROR);
-    EXPECT_NEAR(2242.424242424240, splitterSegment.mzs[232], MAX_ERROR);
-    EXPECT_NEAR(2271.227122712270, splitterSegment.mzs[268], MAX_ERROR);
-
-    EXPECT_NEAR(0.000000000000000, splitterSegment.intensities[0], MAX_ERROR);
-    EXPECT_NEAR(0.000000000000000, splitterSegment.intensities[33], MAX_ERROR);
-    EXPECT_NEAR(0.298585462364539, splitterSegment.intensities[34], MAX_ERROR);
-    EXPECT_NEAR(0.617869601781809, splitterSegment.intensities[231], MAX_ERROR);
-    EXPECT_NEAR(0.000000000000000, splitterSegment.intensities[232], MAX_ERROR);
-    EXPECT_NEAR(0.000000000000000, splitterSegment.intensities[268], MAX_ERROR);
+TEST_F(SplitterSegmentExtractorTest, check_if_properly_extracts_splitter_segment_par)
+{
+    TestExtraction<SplitterSegmentExtractorPar>();
 }
 }

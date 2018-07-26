@@ -3,9 +3,11 @@ add_library(Spectre.libGaussianMixtureModelling STATIC
         ClearPeakFinder.h
         DataTypes.h
         DynamicProgrammingInitialization.h
+	DynamicProgrammingInitializationPar.h
         ExpectationMaximization.h
         ExpectationRunnerOpt.h
         ExpectationRunnerRef.h
+	EmergencyCorrection.h
         GaussianDistribution.h
         GaussianMixtureModel.h
         GmmOptions.h
@@ -18,4 +20,6 @@ add_library(Spectre.libGaussianMixtureModelling STATIC
         SplitterSegmentDecomposer.h
         SplitterSegmentExtractor.cpp
         SplitterSegmentExtractor.h
+	SplitterSegmentExtractorPar.h
+	SplitterSegmentExtractorPar.cpp
         )
