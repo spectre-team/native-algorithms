@@ -3,7 +3,7 @@
 * Provides implementation of tests for the purpose of testing
 * Gaussian Mixture Modelling Expectation Maximization algorithm.
 *
-Copyright 2017 Michal Gallus
+Copyright 2017-2018 Michal Gallus
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ limitations under the License.
 
 #include <gtest/gtest.h>
 #include "Spectre.libGaussianMixtureModelling/ExpectationMaximization.h"
+#include "Spectre.libGaussianMixtureModelling/ExpectationMaximizationPar.h"
 #include "Spectre.libGaussianMixtureModelling/RandomInitializationRef.h"
 #include "Spectre.libGaussianMixtureModelling/ExpectationRunnerRef.h"
 #include "Spectre.libGaussianMixtureModelling/MaximizationRunnerRef.h"
@@ -77,49 +78,58 @@ protected:
         }
         return output;
     }
+
+    template<typename T>
+    void IntegrationTest()
+    {
+        RandomNumberGenerator rngEngine(0);
+
+        GaussianMixtureModel model(3);
+        T em(SpectrumView(spectrum), (unsigned)model.size());
+
+        RandomInitializationRef Initializer =
+            RandomInitializationRef(spectrum.mzs, model, rngEngine);
+        Initializer.AssignRandomMeans();
+        Initializer.AssignVariances();
+        Initializer.AssignWeights();
+
+        GaussianMixtureModel result = em.EstimateGmm(spectrum, model, 0.4635, 0.001);
+        Data approximates = GenerateValues(spectrum.mzs, result);
+
+        Data errors(spectrum.intensities.size());
+        for (unsigned i = 0; i < spectrum.intensities.size(); i++)
+        {
+            errors[i] = pow(spectrum.intensities[i] - approximates[i], 2) * 10000.0; // scale the errors
+        }
+
+        DataType averageError = 0.0;
+        for (unsigned i = 0; i < errors.size(); i++)
+        {
+            averageError += errors[i];
+        }
+        averageError /= errors.size();
+        DataType maxError = *std::max_element(errors.begin(), errors.end());
+        DataType minError = *std::min_element(errors.begin(), errors.end());
+        printf("Avg error: %f\n", averageError);
+        printf("Max error: %f\n", maxError);
+        printf("Min error: %f\n", minError);
+
+        EXPECT_LE(averageError, 0.1);
+    }
 };
 
-// Integration test
+// Integration tests
 TEST_F(ExpectationMaximizationTest, test_whole_em)
 {
-    RandomNumberGenerator rngEngine(0);
-
-    GaussianMixtureModel model(3);
-    ExpectationMaximization<
-        ExpectationRunnerRef,
-        MaximizationRunnerRef>
-    em(SpectrumView(spectrum), (unsigned)model.size());
-
-    RandomInitializationRef Initializer =
-        RandomInitializationRef(spectrum.mzs, model, rngEngine);
-    Initializer.AssignRandomMeans();
-    Initializer.AssignVariances();
-    Initializer.AssignWeights();
-
-    GaussianMixtureModel result = em.EstimateGmm(spectrum, model, 0.4635, 0.001);
-    Data approximates = GenerateValues(spectrum.mzs, result);
-
-    Data errors(spectrum.intensities.size());
-    for (unsigned i = 0; i < spectrum.intensities.size(); i++)
-    {
-        errors[i] = pow(spectrum.intensities[i] - approximates[i], 2) * 10000.0; // scale the errors
-    }
-
-    DataType averageError = 0.0;
-    for (unsigned i = 0; i < errors.size(); i++)
-    {
-        averageError += errors[i];
-    }
-    averageError /= errors.size();
-    DataType maxError = *std::max_element(errors.begin(), errors.end());
-    DataType minError = *std::min_element(errors.begin(), errors.end());
-    printf("Avg error: %f\n", averageError);
-    printf("Max error: %f\n", maxError);
-    printf("Min error: %f\n", minError);
-
-    EXPECT_LE(averageError, 0.1);
+    IntegrationTest<ExpectationMaximization<ExpectationRunnerRef, MaximizationRunnerRef>>();
 }
 
+TEST_F(ExpectationMaximizationTest, test_whole_em_par)
+{
+    IntegrationTest<ExpectationMaximizationPar<ExpectationRunnerRef, MaximizationRunnerRef>>();
+}
+
+// Unit tests
 TEST_F(ExpectationMaximizationTest, test_em_ref_initialization)
 {
     RandomNumberGenerator rngEngine(0);
@@ -317,16 +327,17 @@ TEST_F(ExpectationMaximizationTest, test_em_opt_maximization)
         }
     }
 
-    MaximizationRunnerRef maximization(spectrum);
+    MaximizationRunnerOpt maximization(spectrum);
 
     maximization.Maximization(affilationMatrix, spectrum, gaussianComponents);
 
     GaussianMixtureModel validComponents = {
-    /*      mean       std      weight      */
-        { -0.850374, 7.174315, 0.100000 },
-        { -0.850374, 7.174315, 0.100000 },
-        { -0.850374, 7.174315, 0.100000 }
+    /*        mean         std         weight      */
+        { -0.249999999, 11.54610323, 4.059066419 },
+        { -0.249999999, 11.54610323, 4.059066419 },
+        { -0.249999999, 11.54610323, 4.059066419 },
     };
+
     ASSERT_EQ(validComponents.size(), gaussianComponents.size());
     for (Index i = 0; i < validComponents.size(); i++)
     {

@@ -80,6 +80,9 @@
     <ClInclude Include="SplitterSegmentExtractorPar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ExpectationMaximizationPar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ClearPeakFinder.cpp">

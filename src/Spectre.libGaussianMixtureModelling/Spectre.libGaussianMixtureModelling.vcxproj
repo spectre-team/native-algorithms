@@ -24,6 +24,7 @@
     <ClInclude Include="DynamicProgrammingInitialization.h" />
     <ClInclude Include="DynamicProgrammingInitializationPar.h" />
     <ClInclude Include="EmergencyCorrection.h" />
+    <ClInclude Include="ExpectationMaximizationPar.h" />
     <ClInclude Include="ExpectationRunnerOpt.h" />
     <ClInclude Include="GmmOptions.h" />
     <ClInclude Include="Matrix.h" />

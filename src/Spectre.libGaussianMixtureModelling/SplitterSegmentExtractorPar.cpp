@@ -151,7 +151,7 @@ static inline Data GetIntensitiesOfLeftMargin(SpectrumView spectrum, DataView ma
 
     Data marginIntensities(margin.size());
 #pragma omp parallel for
-    for (Index i = 0; i < (unsigned)margin.size(); i++)
+    for (int i = 0; i < (int)margin.size(); i++)
     {
         marginIntensities[i] = heightScaleFactor *
             Gaussian(margin[i] - mzs[intervalBegin], mean, variance);
@@ -172,7 +172,7 @@ static inline Data GetIntensitiesOfRightMargin(SpectrumView spectrum, DataView m
 
     Data marginIntensities(margin.size());
 #pragma omp parallel for
-    for (Index i = 0; i < (unsigned)margin.size(); i++)
+    for (int i = 0; i < (int)margin.size(); i++)
     {
         marginIntensities[i] = heightScaleFactor *
             Gaussian(margin[i] - mzs[intervalEnd], mean, variance);
