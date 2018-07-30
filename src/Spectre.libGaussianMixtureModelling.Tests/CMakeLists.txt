@@ -5,6 +5,7 @@ add_executable(Spectre.libGaussianMixtureModelling.Tests
         GaussianDistributionTest.cpp
         GaussianMixtureModelTest.cpp
         SignalDecomposerTest.cpp
+	SegmentExtractorTest.cpp
         SplitterSegmentExtractorTest.cpp
         )
 

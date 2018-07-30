@@ -19,8 +19,12 @@ limitations under the License.
 #pragma once
 #include <random>
 #include "Common/DataTypes.h"
+#include "GaussianMixtureModel.h"
 
 namespace spectre::unsupervised::gmm
 {
 using RandomNumberGenerator = std::mt19937_64;
+using Splitter = GaussianMixtureModel;
+using Splitters = std::vector<Splitter>;
+using SplittersView = gsl::span<Splitter>;
 }

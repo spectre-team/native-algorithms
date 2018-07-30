@@ -37,6 +37,11 @@ struct Spectrum
     Spectrum(const Spectrum&) = default;
     Spectrum(Spectrum&& spectrum) : mzs(std::move(spectrum.mzs))
                                   , intensities(std::move(spectrum.intensities)) {}
+    Spectrum(DataView mzs, DataView intensities) : mzs(mzs.begin(), mzs.end())
+                           , intensities(intensities.begin(), intensities.end()) {}
+    Spectrum& operator=(Spectrum&& spectrum) noexcept { mzs = std::move(spectrum.mzs);
+    intensities = std::move(spectrum.intensities); return *this; }
+
     Data mzs;
     Data intensities;
 };
@@ -51,6 +56,8 @@ struct SpectrumView
                                                      , intensities(intensities) {}
     SpectrumView subspan(size_t offset, size_t count)
     { return { mzs.subspan(offset, count), intensities.subspan(offset, count) }; }
+
+    Spectrum ToSpectrum() const { return Spectrum(mzs, intensities); }
 
     DataView mzs;
     DataView intensities;
