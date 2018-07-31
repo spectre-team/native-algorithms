@@ -85,7 +85,7 @@ TEST_F(DynamicProgrammingInitializationTest, optimal_blocks_return_optimal_resul
         }
     }
     Indices partitions = ComputeOptimalBlocks(view, 3, qualityOfRange, 0.5, 0.4635);
-    Indices correctResult = { 0u, 3u, 5u, 7u, 8u };
+    Indices correctResult = { 0u, 3u, 5u, 7u, 9u };
     ASSERT_EQ(partitions, correctResult);
 }
 

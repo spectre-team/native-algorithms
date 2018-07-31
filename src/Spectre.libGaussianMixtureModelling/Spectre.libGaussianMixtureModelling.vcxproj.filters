@@ -65,6 +65,9 @@
     <ClInclude Include="SegmentExtractor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SegmentDecomposer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ClearPeakFinder.cpp">
