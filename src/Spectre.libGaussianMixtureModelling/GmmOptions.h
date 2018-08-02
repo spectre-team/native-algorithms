@@ -45,7 +45,7 @@ struct GmmOptions
     /// Used for finding split peaks. Split peaks must have
     /// a higher quality value than this parameter to be accepted.
     ///</summary>
-    DataType qualityThreshold = 1.3;
+    DataType qualityThreshold = 0.3;
 
     ///<summary>
     /// Determines an initial offset from peak list during clear peaks search.

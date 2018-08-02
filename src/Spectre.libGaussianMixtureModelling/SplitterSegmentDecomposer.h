@@ -18,7 +18,7 @@ static MixtureModel ExtractSplitter(MixtureModel&, DataType);
 /// <returns>Gaussian Mixture Model of given splitter.</returns>
 inline MixtureModel DecomposeSplitterSegment(SpectrumView segment,
     DataType splittingPeakMz, DataType resolutionCoefficient,
-    GmmOptions& options)
+    const GmmOptions& options)
 {
     constexpr int minNumOfBlocks = 2;
     const DataType penaltyCoefficient = options.splittingPenaltyCoefficient;

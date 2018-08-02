@@ -79,7 +79,8 @@ static Indices FindExtrema(const DataView& signal, ComparisonOp leftComparison,
     // regular processsing for finding extrema
     for (unsigned i = 1; i < derivatives.size(); i++)
     {
-        if (leftComparison(derivatives[i - 1], 0.0) && rightComparison(derivatives[i], 0.0))
+        if (leftComparison(derivatives[i - 1], 0.0) && rightComparison(derivatives[i], 0.0)
+            && std::max(signal[filteredIndices[i - 1]], signal[filteredIndices[i]]) > 0.0)
             extrema.push_back(filteredIndices[i]);
     }
 
@@ -88,6 +89,23 @@ static Indices FindExtrema(const DataView& signal, ComparisonOp leftComparison,
         extrema.push_back(filteredIndices[derivatives.size()]);
 
     return extrema;
+}
+
+Indices ExtremaFinder::FindValleys(const DataView& signal, const IndicesView peakIndices) const
+{
+    Indices valleys(peakIndices.size() + 1);
+    valleys[0] = 0;
+    for(Index i = 1; i < peakIndices.size(); i++)
+    {
+        // Block is a fragment of spectrum between neighbouring peaks
+        const Index blockStart = peakIndices[i - 1];
+        const unsigned blockLength = peakIndices[i] - peakIndices[i - 1] + 1;
+        const DataView block = signal.subspan(blockStart, blockLength);
+        const Index minimum = (Index)(std::min_element(block.begin(), block.end()) - block.begin());
+        valleys[i] = blockStart + minimum;
+    } // TOOD: fixnac bo cos tu zjebane jest i zle indexy zwraca.
+    valleys.back() = (Index)(signal.size() - 1);
+    return valleys;
 }
 
 Indices ExtremaFinder::FindValleys(const DataView & signal) const

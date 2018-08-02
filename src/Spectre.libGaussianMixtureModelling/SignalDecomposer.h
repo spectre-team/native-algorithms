@@ -18,7 +18,7 @@ using namespace core::functional;
 static SpectrumView CompressDataIfNecessary(SpectrumView, Spectrum&);
 static GaussianComponent ComputeComponentForASingleBlock(SpectrumView);
 static GaussianMixtureModel DecomposeSplitterSignal(SpectrumView,
-    SpectrumView, GmmOptions&, DataType, DataType, int, int);
+    SpectrumView, const GmmOptions&, DataType, DataType, int, int);
 static GaussianMixtureModel DecomposeSegment(SpectrumView, SpectrumView,
     const GmmOptions&, DataType, DataType, int, int);
 
@@ -36,8 +36,8 @@ static GaussianMixtureModel DecomposeSegment(SpectrumView, SpectrumView,
 /// </param>
 /// <returns>Initial parameters in a form of Gaussian Mixture Model.</returns>
 inline GaussianMixtureModel DecomposeSignal(SpectrumView segment,
-    DataType penaltyCoefficient, DataType resolutionCoefficient, GmmOptions& options,
-    int minNumOfBlocks, bool decomposeSplitter)
+    DataType penaltyCoefficient, DataType resolutionCoefficient, 
+    const GmmOptions& options, int minNumOfBlocks, bool decomposeSplitter)
 {
     const unsigned mzCount = (unsigned)segment.mzs.size();
     Spectrum compressedSegment;
@@ -155,7 +155,7 @@ static DataType ComputeModelQuality(DataView intensities, DataView mixture,
 }
 
 static GaussianMixtureModel DecomposeSplitterSignal(SpectrumView original,
-    SpectrumView processed, GmmOptions& options, DataType minStd,
+    SpectrumView processed, const GmmOptions& options, DataType minStd,
     DataType penaltyCoefficient, int approxNumOfBlocks, int startNumOfBlocks)
 {
     GaussianMixtureModel bestComponents;

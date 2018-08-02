@@ -58,12 +58,13 @@ static inline Data Reconstruct(const WaveletReconstructorRef& reconstructor,
 
 Data DaubechiesFiltersDenoiser::Denoise(Data& signal) const
 {
-    const size_t signalLength = signal.size();
+    Data sig = signal;
+    const size_t signalLength = sig.size();
 
     if (signalLength < 2)
-        return signal;
+        return sig;
 
-    WaveletCoefficients coefficients = Decompose(m_Decomposer, signal);
+    WaveletCoefficients coefficients = Decompose(m_Decomposer, sig);
     coefficients = TresholdSignal(m_NoiseEstimator, coefficients, signalLength);
     Data denoisedSignal = Reconstruct(m_Reconstructor, coefficients, signalLength);
 

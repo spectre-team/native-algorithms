@@ -31,7 +31,7 @@ namespace spectre::unsupervised::gmm
 /// <param name="options">GaussianMixtureModelling options set.</param>
 /// <returns>Gaussian Mixture Model of the segment.</returns>
 inline MixtureModel DecomposeSegment(SpectrumView segment,
-    DataType resolutionCoefficient, GmmOptions& options)
+    DataType resolutionCoefficient, const GmmOptions& options)
 {
     constexpr int minNumOfBlocks = 1;
     const DataType penaltyCoefficient = options.segmentPenaltyCoefficient;

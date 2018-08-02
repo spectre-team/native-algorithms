@@ -100,7 +100,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>Spectre.libGaussianMixtureModelling.lib;Spectre.libException.lib;Spectre.libFunctional.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Spectre.libGaussianMixtureModelling.lib;Spectre.libException.lib;Spectre.libFunctional.lib;Spectre.libPeakFinder.lib;Spectre.libWavelet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -139,7 +139,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>Spectre.libGaussianMixtureModelling.lib;Spectre.libException.lib;Spectre.libFunctional.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Spectre.libGaussianMixtureModelling.lib;Spectre.libException.lib;Spectre.libFunctional.lib;Spectre.libPeakFinder.lib;Spectre.libWavelet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -173,6 +173,7 @@
     <ClCompile Include="GaussianDistributionTest.cpp" />
     <ClCompile Include="GaussianMixtureModelTest.cpp" />
     <ClCompile Include="ModelUtilsTest.cpp" />
+    <ClCompile Include="ModelWithGaussianMixtureTest.cpp" />
     <ClCompile Include="SegmentExtractorTest.cpp" />
     <ClCompile Include="SignalDecomposerTest.cpp" />
     <ClCompile Include="SplitterSegmentExtractorTest.cpp" />

@@ -59,7 +59,7 @@ static void UpdateRightSplitter(Index, Splitters&, const GaussianMixtureModel&,
 /// the signal).</param>
 /// <param name="resolutionCoefficient">Resolution coefficient.</param>
 /// <param name="options">Predefined GMM Options.</param>
-void EmergencyCorrection(Index segmentIndex, SpectrumView spectrum,
+inline void EmergencyCorrection(Index segmentIndex, SpectrumView spectrum,
     Splitters& splitters, IndicesView clearPeaksIndices,
     IndicesView peakIndices, DataType resolutionCoefficient,
     const GmmOptions& options)

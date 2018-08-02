@@ -35,6 +35,15 @@ public:
     /// <param name="signal">Signal in which minima shall be found.</param>
     /// <returns>Indices of minima in the signal.</returns>
     Indices FindValleys(const DataView& signal) const;
+
+    /// <summary>
+    /// Finds indices of minima of the signal.
+    /// </summary>
+    /// <param name="signal">Signal in which minima shall be found.</param>
+    /// <param name="peakIndices">Indices of signal peaks.</param>
+    /// <returns>Indices of minima in the signal.</returns>
+    Indices FindValleys(const DataView& signal, const IndicesView peakIndices) const;
+
     /// <summary>
     /// Finds indices of maxima of the signal.
     /// </summary>
