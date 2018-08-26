@@ -23,6 +23,11 @@ limitations under the License.
 
 namespace spectre::algorithm::peakfinder
 {
+static inline bool IsInRange(DataType begin, DataType end, DataType x)
+{
+    return begin <= x && x <= end;
+}
+
     Data FWHHCalculator::GetLeftFWHH(const DataView x, const DataView y, const IndicesView valleys, const IndicesView peaks)
     {
         Data result(peaks.size());
@@ -30,14 +35,17 @@ namespace spectre::algorithm::peakfinder
         for (int i = 0; i < peaks.size(); ++i)
         {
             const Index peakIdx = peaks[i];
-            const Index valleyIdx = valleys[i];
+            const Index valleyIdx = *(std::lower_bound(valleys.begin(), valleys.end(), peakIdx) - 1);
             const DataType peakVal = y[peakIdx];
 
             const DataView segment = y.subspan(valleyIdx, peakIdx - valleyIdx);
             const DataType lfwhhPeakVal = peakVal * 0.5;
             Data segmentNegated = spectre::core::functional::transform<DataType>(segment, [](DataType val) { return -val; });
             const Index lfwhhNearestIdx = GetClosestNeighbourIndex(segmentNegated, -lfwhhPeakVal) + valleyIdx;
-            result[i] = LinearInterpolation(y[lfwhhNearestIdx], y[lfwhhNearestIdx + 1], x[lfwhhNearestIdx], x[lfwhhNearestIdx + 1], lfwhhPeakVal);
+            const DataType begin = x[lfwhhNearestIdx];
+            const DataType end = x[lfwhhNearestIdx + 1];
+            const DataType interpolated = LinearInterpolation(y[lfwhhNearestIdx], y[lfwhhNearestIdx + 1], begin, end, lfwhhPeakVal);
+            result[i] = IsInRange(begin, end, interpolated) ? interpolated : x[valleyIdx];
         }
 
         return result;
@@ -50,13 +58,16 @@ namespace spectre::algorithm::peakfinder
         for (int i = 0; i < peaks.size(); ++i)
         {
             const Index peakIdx = peaks[i];
-            const Index valleyIdx = valleys[i + 1];
+            const Index valleyIdx = *std::upper_bound(valleys.begin(), valleys.end(), peakIdx);
             const DataType peakVal = y[peakIdx];
 
             const DataView segment = y.subspan(peakIdx, valleyIdx - peakIdx);
             const DataType rfwhhPeakVal = peakVal * 0.5;
             const Index rfwhhNearestIdx = GetClosestNeighbourIndex(segment, rfwhhPeakVal) + peakIdx;
-            result[i] = LinearInterpolation(y[rfwhhNearestIdx], y[rfwhhNearestIdx + 1], x[rfwhhNearestIdx], x[rfwhhNearestIdx + 1], rfwhhPeakVal);
+            const DataType begin = x[rfwhhNearestIdx];
+            const DataType end = x[rfwhhNearestIdx + 1];
+            const DataType interpolated = LinearInterpolation(y[rfwhhNearestIdx], y[rfwhhNearestIdx + 1], begin, end, rfwhhPeakVal);
+            result[i] = IsInRange(begin, end, interpolated) ? interpolated : x[valleyIdx - 1];
         }
 
         return result;

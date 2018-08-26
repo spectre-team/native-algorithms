@@ -66,8 +66,8 @@ static inline Index GetIntervalEnd(SpectrumView spectrum, IndicesView valleyIndi
     Index indexOfSplittingPeak, DataType resolutionCoeff, size_t peaksNum)
 {
     Index rightmostValleyIndex = std::min((unsigned)peaksNum - 1,
-        indexOfSplittingPeak + CLEAR_PEAK_SEARCH_RANGE - 1);
-    Index intervalEnd = valleyIndices(rightmostValleyIndex) - 1;
+        indexOfSplittingPeak + CLEAR_PEAK_SEARCH_RANGE);
+    Index intervalEnd = valleyIndices(rightmostValleyIndex);
 
     DataType lastMz = spectrum.mzs[intervalEnd];
     DataType splittingPeakMz = spectrum.mzs[indexOfSplittingPeak];
@@ -84,8 +84,8 @@ static inline Index GetIntervalStart(SpectrumView spectrum, IndicesView valleyIn
     Index indexOfSplittingPeak, DataType resolutionCoeff)
 {
     Index leftmostValleyIndex =
-        std::max(0, ((int)indexOfSplittingPeak - CLEAR_PEAK_SEARCH_RANGE));
-    Index intervalStart = std::max((int)valleyIndices[leftmostValleyIndex] - 1, 0);
+        std::max(0, ((int)indexOfSplittingPeak - CLEAR_PEAK_SEARCH_RANGE + 1));
+    Index intervalStart = std::max((int)valleyIndices[leftmostValleyIndex], 0);
 
     DataType startingMz = spectrum.mzs[intervalStart];
     DataType splittingPeakMz = spectrum.mzs[indexOfSplittingPeak];

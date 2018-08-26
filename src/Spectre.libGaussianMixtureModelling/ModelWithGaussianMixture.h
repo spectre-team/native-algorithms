@@ -89,7 +89,7 @@ inline GaussianMixtureModel ModelWithGaussianMixture(Spectrum& spectrum,
 
     ExtremaFinder extremaFinder;
     Indices peakIndices = extremaFinder.FindPeaks(denoised);
-    Indices valleyIndices = extremaFinder.FindValleys(spectrum.intensities, peakIndices);
+    Indices valleyIndices = extremaFinder.FindValleys(denoised);
 
     FWHHCalculator fwhhCalculator;
     Data leftFWHH = fwhhCalculator.GetLeftFWHH(spectrum.mzs,
@@ -102,14 +102,16 @@ inline GaussianMixtureModel ModelWithGaussianMixture(Spectrum& spectrum,
     peaks.intensities =
         filter(DataView(denoised), IndicesView(peakIndices));
 
+    valleyIndices =
+        extremaFinder.FindValleys(spectrum.intensities, peakIndices);
     Valleys valleys;
     valleys.intensities =
         filter(DataView(spectrum.intensities), IndicesView(valleyIndices));
 
-    const DataType resolutionCoefficient = ComputeResolutionCoefficient(
+    DataType resolutionCoefficient = ComputeResolutionCoefficient(
         options.resolution, leftFWHH, rightFWHH, peaks.mzs);
 
-    //const DataType resolutionCoefficient = 0.00214166770575118;
+    resolutionCoefficient = 0.00214166770575118;
 
     PeakQualityCalculator peakQualityCalculator;
     Data peakQualities = peakQualityCalculator.CalculatePeakQualities(

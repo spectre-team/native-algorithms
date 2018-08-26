@@ -52,13 +52,11 @@ static inline DataType CalculateDelta(GaussianMixtureModel& oldModel,
     GaussianMixtureModel& newModel)
 {
     using namespace statistics::basic_math;
-    DataType weightCorrection = 0.0, heightCorrection = 0.0,
-    varianceCorrection = 0.0, sumOfHeightDifferences = 0.0,
-    sumOfScaledVarianceDifferences = 0.0, justASum = 0.0;
+    DataType heightCorrection = 0.0, varianceCorrection = 0.0,
+    sumOfHeightDifferences = 0.0, sumOfScaledVarianceDifferences = 0.0;
 
     for (Index i = 0; i < oldModel.size(); i++)
     {
-        justASum = accurate_add(justASum, newModel[i].weight, weightCorrection);
         sumOfHeightDifferences = accurate_add(sumOfHeightDifferences,
            std::abs(newModel[i].weight - oldModel[i].weight), heightCorrection);
         sumOfScaledVarianceDifferences =

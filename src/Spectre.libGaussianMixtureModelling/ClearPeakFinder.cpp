@@ -46,16 +46,16 @@ static inline Index FindClearestPeak(unsigned currentOffset, unsigned intervalEn
     const DataView& intensities, const DataView& peakQualities,
     DataType HEIGHT_THRESHOLD, DataType QUALITY_THRESHOLD)
 {
-    DataType maxIntensity = -1.0; // intensities asssmued to be non-negative
+    DataType maxQuality = -1.0; // intensities asssmued to be non-negative
     Index bestCandidate = 0xDEADCELL;
-    for (unsigned i = currentOffset; i < intervalEnd; i++)
+    for (unsigned i = currentOffset; i <= intervalEnd; i++)
     {
         if (  intensities[i] > HEIGHT_THRESHOLD  &&
             peakQualities[i] > QUALITY_THRESHOLD &&
-              intensities[i] > maxIntensity)
+            peakQualities[i] > maxQuality)
         {
             bestCandidate = i;
-            maxIntensity = intensities[i];
+            maxQuality = peakQualities[i];
         }
     }
     return bestCandidate;

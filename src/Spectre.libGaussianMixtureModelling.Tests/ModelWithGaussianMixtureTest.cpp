@@ -5048,6 +5048,10 @@ TEST_F(ModelWithGaussianMixtureTest, check_if_integration_works)
     //spectrum.intensities.resize(spectrum.intensities.size() / 4);
     options.emEpsilon = 0.01;
     GaussianMixtureModel model = ModelWithGaussianMixture(spectrum, options);
-    printf("%llu", model.size());
+    for(auto& c : model)
+    {
+        printf("[%f, %f, %f],\n", c.mean, c.deviation, c.weight);
+    }
+    printf("%llu", model.size()); // 614 in matlab
 }
 }

@@ -79,8 +79,13 @@ static Indices FindExtrema(const DataView& signal, ComparisonOp leftComparison,
     // regular processsing for finding extrema
     for (unsigned i = 1; i < derivatives.size(); i++)
     {
-        if (leftComparison(derivatives[i - 1], 0.0) && rightComparison(derivatives[i], 0.0)
-            && std::max(signal[filteredIndices[i - 1]], signal[filteredIndices[i]]) > 0.0)
+        const bool isLeftSlopeSatisfactory = leftComparison(derivatives[i - 1], 0.0);
+        const bool isRightSlopeSatisfactory = rightComparison(derivatives[i], 0.0);
+        const bool isValuePositive =
+            std::max(signal[filteredIndices[i - 1]], signal[filteredIndices[i]]) > 0.0;
+        const bool skipPositiveCheck = !skipFirstAndLast;
+        if (isLeftSlopeSatisfactory && isRightSlopeSatisfactory
+            && (skipPositiveCheck || isValuePositive))
             extrema.push_back(filteredIndices[i]);
     }
 
@@ -103,7 +108,7 @@ Indices ExtremaFinder::FindValleys(const DataView& signal, const IndicesView pea
         const DataView block = signal.subspan(blockStart, blockLength);
         const Index minimum = (Index)(std::min_element(block.begin(), block.end()) - block.begin());
         valleys[i] = blockStart + minimum;
-    } // TOOD: fixnac bo cos tu zjebane jest i zle indexy zwraca.
+    }
     valleys.back() = (Index)(signal.size() - 1);
     return valleys;
 }
