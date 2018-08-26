@@ -98,6 +98,34 @@ static Data BinData(DataView newMzs, DataView oldMzs, DataView oldIntensities)
     return newIntensities;
 }
 
+template<class ForwardIt, class UnaryPredicate>
+ForwardIt RemoveIf(ForwardIt first_int, ForwardIt first_mz,
+    ForwardIt last, ForwardIt& result_mz, UnaryPredicate p)
+{
+    auto temp = std::find_if(first_int, last, p);
+    first_mz = first_mz + std::distance(first_int, temp);
+    first_int = temp;
+    if (first_int != last)
+        for (ForwardIt i = first_int, j = first_mz; ++j, ++i != last;)
+            if (!p(*i))
+            {
+                *first_int++ = std::move(*i);
+                *first_mz++ = std::move(*j);
+            }
+    result_mz = first_mz;
+    return first_int;
+}
+
+static void FilterNansOut(Spectrum& signal)
+{
+    Data::iterator mzEnd;
+    Data::iterator intensitiesEnd = RemoveIf(signal.intensities.begin(),
+        signal.mzs.begin(), signal.intensities.end(), mzEnd,
+        [](DataType x) -> bool { return isnan(x); });
+    signal.mzs.erase(mzEnd, signal.mzs.end());
+    signal.intensities.erase(intensitiesEnd, signal.intensities.end());
+}
+
 // It assumes that BinData returns no NaNs.
 static SpectrumView CompressSignal(SpectrumView signal,
     Spectrum& compressedSignal)
@@ -108,9 +136,9 @@ static SpectrumView CompressSignal(SpectrumView signal,
     compressedSignal.mzs = plus(DataView(compressedSignal.mzs), 0.5 * step);
     compressedSignal.intensities = BinData(compressedSignal.mzs, signal.mzs,
         signal.intensities);
+    FilterNansOut(compressedSignal);
     SpectrumView view(compressedSignal);
-    view.mzs = view.mzs.subspan(0, view.mzs.length() - 1); // Remove last mz to match 
-    return view;                                           // intensities size.
+    return view;
 }
 
 static SpectrumView CompressDataIfNecessary(SpectrumView segment,
