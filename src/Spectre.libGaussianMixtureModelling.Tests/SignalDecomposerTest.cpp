@@ -72,7 +72,9 @@ TEST_F(SignalDecomposerTest, decomposes_splitter_segment_into_splitter)
     const DataType resolutionCoefficient = 0.00214166770575118;
     const Index splittingPeak = 29;
 
-    MixtureModel components = DecomposeSplitterSegment(view, mzs[splittingPeak],
+    MixtureModel components = DecomposeSplitterSegment<DynProgInitialization,
+    ExpectationMaximization<ExpectationRunnerOpt, MaximizationRunnerOpt>>(
+        view, mzs[splittingPeak],
         resolutionCoefficient, options);
     MixtureModel validComponents = {
         /*       mean        std      weight        */
@@ -121,7 +123,9 @@ TEST_F(SignalDecomposerTest, decomposes_segment_into_gaussian_mixture_model)
     };
 
     MixtureModel components =
-        DecomposeSegment(spectrum, resolutionCoefficient, options);
+        DecomposeSegment<DynProgInitialization, ExpectationMaximization<
+        ExpectationRunnerOpt, MaximizationRunnerOpt>>(
+            spectrum, resolutionCoefficient, options);
 
     MixtureModel validComponents = {
         /*   mean        std      weight  */
@@ -184,7 +188,9 @@ TEST_F(SignalDecomposerTest, decomposes_segment_in_special_case)
     };
 
     MixtureModel components =
-        DecomposeSegment(spectrum, resolutionCoefficient, options);
+        DecomposeSegment<DynProgInitialization, ExpectationMaximization<
+        ExpectationRunnerOpt, MaximizationRunnerOpt>>(spectrum,
+            resolutionCoefficient, options);
     // TODO figure out why do these components slightly differ
     MixtureModel validComponents = {
         /*       mean               std                 weight        */
@@ -212,7 +218,9 @@ TEST_F(SignalDecomposerTest, returns_empty_gmm_on_small_signal)
     Spectrum signal;
     signal.mzs         = Data(2);
     signal.intensities = Data(2);
-    EXPECT_EQ(0, DecomposeSegment(signal, resolutionCoefficient, options).size());
+    EXPECT_EQ(0, (DecomposeSegment<DynProgInitialization,
+        ExpectationMaximization<ExpectationRunnerOpt, MaximizationRunnerOpt>>(
+            signal, resolutionCoefficient, options).size()));
 }
 
 TEST_F(SignalDecomposerTest, decomposes_signal_correctly)
@@ -224,7 +232,8 @@ TEST_F(SignalDecomposerTest, decomposes_signal_correctly)
     const int minNumOfBlocks = 2;
     const bool decomposingSplitter = true;
 
-    MixtureModel components = DecomposeSignal(view, penaltyCoefficient,
+    MixtureModel components = DecomposeSignal<DynProgInitialization, ExpectationMaximization<
+        ExpectationRunnerOpt, MaximizationRunnerOpt>>(view, penaltyCoefficient,
         resolutionCoefficient, options, minNumOfBlocks, decomposingSplitter);
     MixtureModel validComponents = {
         /*       mean        std      weight        */

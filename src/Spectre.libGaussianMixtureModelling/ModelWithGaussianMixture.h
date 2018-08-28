@@ -67,6 +67,34 @@ static inline Indices GetNonZeros(const GaussianMixtureModel& model)
 
     return indices;
 }
+using GaussianMixtureModels = std::vector<GaussianMixtureModel>;
+void CombineMixtures(GaussianMixtureModels& segmentModels, Spectrum& spectrum,
+    GaussianMixtureModels& splitters, Indices& clearPeakIndices,
+    Indices& peakIndices, DataType resolutionCoefficient,
+    const GmmOptions& options, GaussianMixtureModel& signalModel)
+{
+    for (Index i = 0; i < segmentModels.size(); i++)
+    {
+        GaussianMixtureModel& segmentModel = segmentModels[i];
+        Indices posHeightIndices = GetNonZeros(segmentModel);
+        if (posHeightIndices.empty())
+        {
+            EmergencyCorrection(i, spectrum, splitters, clearPeakIndices,
+                peakIndices, resolutionCoefficient, options);
+        }
+        else
+        {
+            signalModel.insert(
+                signalModel.end(), segmentModel.begin(), segmentModel.end());
+        }
+    }
+
+    for (Index i = 0; i < splitters.size(); i++)
+    {
+        signalModel.insert(
+            signalModel.end(), splitters[i].begin(), splitters[i].end());
+    }
+}
 
 /// <summary>
 /// TODO: write
@@ -75,6 +103,8 @@ static inline Indices GetNonZeros(const GaussianMixtureModel& model)
 /// <param name="resolutionCoefficient">Signal resolution.</param>
 /// <param name="options">GaussianMixtureModelling options set.</param>
 /// <returns>Gaussian Mixture Model of the segment.</returns>
+template<typename SplitterSegmentExtractor, typename ExpectationMaximization,
+    typename DynamicProgramming>
 inline GaussianMixtureModel ModelWithGaussianMixture(Spectrum& spectrum,
     const GmmOptions& options)
 {
@@ -82,7 +112,6 @@ inline GaussianMixtureModel ModelWithGaussianMixture(Spectrum& spectrum,
     using namespace algorithm::peakfinder;
     using namespace core::functional;
     using Valleys = Peaks;
-    using GaussianMixtureModels = std::vector<GaussianMixtureModel>;
 
     DaubechiesFiltersDenoiser denoiser;
     Data denoised = denoiser.Denoise(spectrum.intensities);
@@ -129,7 +158,7 @@ inline GaussianMixtureModel ModelWithGaussianMixture(Spectrum& spectrum,
             splitterSegmentExtractor.ExtractSplitterSegment(peaks, spectrum,
                 valleyIndices, clearPeakIndices[i], resolutionCoefficient);
         const DataType clearPeakMz = peaks.mzs[clearPeakIndices[i]];
-        splitters[i] = DecomposeSplitterSegment(
+        splitters[i] = DecomposeSplitterSegment<DynamicProgramming, ExpectationMaximization>(
             splitterSegment, clearPeakMz, resolutionCoefficient, options);
     }
 
@@ -139,34 +168,15 @@ inline GaussianMixtureModel ModelWithGaussianMixture(Spectrum& spectrum,
     {
         const Spectrum segment = ExtractSegment(
             spectrum, peakIndices, clearPeakIndices, i, splitters);
-        segmentModels[i] = DecomposeSegment(
+        segmentModels[i] = DecomposeSegment<DynamicProgramming, ExpectationMaximization>(
             segment, resolutionCoefficient, options);
     }
 
     GaussianMixtureModel signalModel;
     signalModel.reserve(splitters.size() * 3 + segmentModels.size() * 5);
 
-    for(Index i = 0; i < segmentsNum; i++)
-    {
-        GaussianMixtureModel& segmentModel = segmentModels[i];
-        Indices posHeightIndices = GetNonZeros(segmentModel);
-        if (posHeightIndices.empty())
-        {
-            EmergencyCorrection(i, spectrum, splitters, clearPeakIndices,
-                peakIndices, resolutionCoefficient, options);
-        }
-        else
-        {
-            signalModel.insert(
-                signalModel.end(), segmentModel.begin(), segmentModel.end());
-        }
-    }
-
-    for(Index i = 0; i < splitters.size(); i++)
-    {
-        signalModel.insert(
-            signalModel.end(), splitters[i].begin(), splitters[i].end());
-    }
+    CombineMixtures(segmentModels, spectrum, splitters, clearPeakIndices,
+        peakIndices, resolutionCoefficient, options, signalModel);
 
     Sort(signalModel);
 

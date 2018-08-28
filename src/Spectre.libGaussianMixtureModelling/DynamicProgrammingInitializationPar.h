@@ -120,7 +120,7 @@ inline DataType ComputeBasicQualityPar(SpectrumView blockData, DataType intensit
     std::vector<DataType> normalizedHeights(mzs.length()); // (16) in the paper
     DataType innerSum = 0;
     int i = 0;
-#pragma omp parallel for reduction(+: innerSum) 
+#pragma omp parallel for reduction(+: innerSum) schedule(static)
     for (i = 0; i < (int)mzs.length(); i++)
     {
         //printf("Thread #%d, iter #%d\n", omp_get_thread_num(), i);
@@ -129,7 +129,7 @@ inline DataType ComputeBasicQualityPar(SpectrumView blockData, DataType intensit
         innerSum += mzs[i] * normalizedHeight;
     }
     DataType quality = 0.0;
-#pragma omp parallel for reduction(+: quality) 
+#pragma omp parallel for reduction(+: quality) schedule(static)
     for (i = 0; i < (int)mzs.length(); i++)
     {
         quality += pow(mzs[i] - innerSum, 2) * normalizedHeights[i]; // (28) in the paper
@@ -266,7 +266,7 @@ inline Matrix<DataType> ComputeQualityMatrixPar(SpectrumView view, DataType delt
     Matrix<DataType> qualities(mzCount, mzCount);
     for (unsigned i = 0; i < mzCount - 1; i++)
     {
-#pragma omp parallel for
+//#pragma omp parallel for schedule(static)
         for (int j = i + 1; j < (int)mzCount; j++)
         {
             qualities[i][j] = ComputeBlockQualityPar(view.subspan(i, j - i), delta, minStd);
@@ -281,7 +281,7 @@ static MixtureModel ComputeGaussiansFromBlocksParImpl(SpectrumView spectrum,
     int numOfBlocks = (int)blockPartitions.size() - 1;
     MixtureModel components(numOfBlocks);
 
-#pragma omp parallel for
+//#pragma omp parallel for schedule(guided)
     for (int i = 0; i < numOfBlocks; i++)
     {
         Index blockStart = blockPartitions[i];
@@ -303,7 +303,7 @@ static Data InitRightmostBlockQualitiesPar(SpectrumView spectrum, DataType delta
 {
     const int mzCount = (int)spectrum.mzs.size();
     Data qualities(mzCount);
-#pragma omp parallel for
+//#pragma omp parallel for schedule(guided)
     for (int mzIndex = 0; mzIndex < mzCount; mzIndex++)
     {
         unsigned subSpanSize = mzCount - mzIndex;

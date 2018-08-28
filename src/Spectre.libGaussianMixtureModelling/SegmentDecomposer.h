@@ -30,13 +30,15 @@ namespace spectre::unsupervised::gmm
 /// <param name="resolutionCoefficient">Signal resolution.</param>
 /// <param name="options">GaussianMixtureModelling options set.</param>
 /// <returns>Gaussian Mixture Model of the segment.</returns>
+template<typename DynamicProgramming, typename ExpectationMaximization>
 inline MixtureModel DecomposeSegment(SpectrumView segment,
     DataType resolutionCoefficient, const GmmOptions& options)
 {
     constexpr int minNumOfBlocks = 1;
     const DataType penaltyCoefficient = options.segmentPenaltyCoefficient;
     const bool decomposeSplitter = false;
-    return DecomposeSignal(segment, penaltyCoefficient,
-        resolutionCoefficient, options, minNumOfBlocks, decomposeSplitter);
+    return DecomposeSignal<DynamicProgramming, ExpectationMaximization>(
+        segment, penaltyCoefficient, resolutionCoefficient, options,
+        minNumOfBlocks, decomposeSplitter);
 }
 }

@@ -150,7 +150,7 @@ static inline Data GetIntensitiesOfLeftMargin(SpectrumView spectrum, DataView ma
     const DataType mean = 0;
 
     Data marginIntensities(margin.size());
-#pragma omp parallel for
+#pragma omp parallel for schedule(guided)
     for (int i = 0; i < (int)margin.size(); i++)
     {
         marginIntensities[i] = heightScaleFactor *
@@ -171,7 +171,7 @@ static inline Data GetIntensitiesOfRightMargin(SpectrumView spectrum, DataView m
     const DataType mean = 0;
 
     Data marginIntensities(margin.size());
-#pragma omp parallel for
+#pragma omp parallel for schedule(guided)
     for (int i = 0; i < (int)margin.size(); i++)
     {
         marginIntensities[i] = heightScaleFactor *

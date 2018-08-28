@@ -16,13 +16,15 @@ static MixtureModel ExtractSplitter(MixtureModel&, DataType);
 /// <param name="resolutionCoefficient">Signal resolution.</param>
 /// <param name="options">GaussianMixtureModelling options set.</param>
 /// <returns>Gaussian Mixture Model of given splitter.</returns>
+template<typename DynamicProgramming, typename ExpectationMaximization>
 inline MixtureModel DecomposeSplitterSegment(SpectrumView segment,
     DataType splittingPeakMz, DataType resolutionCoefficient,
     const GmmOptions& options)
 {
     constexpr int minNumOfBlocks = 2;
     const DataType penaltyCoefficient = options.splittingPenaltyCoefficient;
-    MixtureModel components =  DecomposeSignal(segment, penaltyCoefficient,
+    MixtureModel components =  DecomposeSignal<DynamicProgramming,
+        ExpectationMaximization>(segment, penaltyCoefficient,
         resolutionCoefficient, options, minNumOfBlocks, true);
     return ExtractSplitter(components, splittingPeakMz);
 }

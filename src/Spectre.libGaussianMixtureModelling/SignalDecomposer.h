@@ -35,6 +35,7 @@ static GaussianMixtureModel DecomposeSegment(SpectrumView, SpectrumView,
 /// <param name="decomposeSplitter">Set to true if splitter-segment is decomposed.
 /// </param>
 /// <returns>Initial parameters in a form of Gaussian Mixture Model.</returns>
+template<typename DynamicProgramming, typename ExpectationMaximization>
 inline GaussianMixtureModel DecomposeSignal(SpectrumView segment,
     DataType penaltyCoefficient, DataType resolutionCoefficient, 
     const GmmOptions& options, int minNumOfBlocks, bool decomposeSplitter)
@@ -51,13 +52,15 @@ inline GaussianMixtureModel DecomposeSignal(SpectrumView segment,
     }
     if (decomposeSplitter)
     {
-        return DecomposeSplitterSignal(segment, processedData, options, minStd,
-            penaltyCoefficient, approxNumOfBlocks, startNumOfBlocks);
+        return DecomposeSplitterSignal<DynamicProgramming, ExpectationMaximization>(
+            segment, processedData, options, minStd, penaltyCoefficient,
+            approxNumOfBlocks, startNumOfBlocks);
     }
     else
     {
-        return DecomposeSegment(segment, processedData, options, minStd,
-            penaltyCoefficient, approxNumOfBlocks, startNumOfBlocks);
+        return DecomposeSegment<DynamicProgramming, ExpectationMaximization>(segment,
+            processedData, options, minStd, penaltyCoefficient, approxNumOfBlocks,
+            startNumOfBlocks);
     }
 }
 
@@ -182,6 +185,7 @@ static DataType ComputeModelQuality(DataView intensities, DataView mixture,
     return Sum(DataView(moduleOfErrors)) / Sum(mixture);
 }
 
+template<typename DynamicProgramming, typename ExpectationMaximization>
 static GaussianMixtureModel DecomposeSplitterSignal(SpectrumView original,
     SpectrumView processed, const GmmOptions& options, DataType minStd,
     DataType penaltyCoefficient, int approxNumOfBlocks, int startNumOfBlocks)
@@ -194,8 +198,7 @@ static GaussianMixtureModel DecomposeSplitterSignal(SpectrumView original,
     const unsigned maxViableBlocks =
         std::min(options.minComponentSearchIterations, (unsigned)approxNumOfBlocks);
     const unsigned maxNumOfBlocks = 2 * (startNumOfBlocks + maxViableBlocks);
-    auto expectationMaximization = ExpectationMaximization<ExpectationRunnerOpt,
-        MaximizationRunnerOpt>(original, maxNumOfBlocks);
+    auto expectationMaximization = ExpectationMaximization(original, maxNumOfBlocks);
     for (unsigned blockNum = startNumOfBlocks; blockNum < maxNumOfBlocks; blockNum++) 
     {
         GaussianMixtureModel components = init.Initialize(processed, blockNum);
@@ -219,6 +222,8 @@ static GaussianMixtureModel DecomposeSplitterSignal(SpectrumView original,
     ScaleComponents(bestComponents, scale);
     return bestComponents;
 }
+
+template<typename DynamicProgramming, typename ExpectationMaximization>
 static GaussianMixtureModel DecomposeSegment(SpectrumView original,
     SpectrumView processed, const GmmOptions& options, DataType minStd,
     DataType penaltyCoefficient, int approxNumOfBlocks, int startNumOfBlocks)
@@ -235,8 +240,7 @@ static GaussianMixtureModel DecomposeSegment(SpectrumView original,
     const unsigned maxViableBlocks = std::min((unsigned)original.mzs.size() / 4u,
         std::min(options.minComponentSearchIterations, (unsigned)approxNumOfBlocks));
     const unsigned maxNumOfBlocks = options.maxComponentsNumForSegment;
-    auto expectationMaximization = ExpectationMaximization<ExpectationRunnerOpt,
-        MaximizationRunnerOpt>(original, maxNumOfBlocks);
+    auto expectationMaximization = ExpectationMaximization(original, maxNumOfBlocks);
     GaussianMixtureModel components;
     for (unsigned blockNum = startNumOfBlocks; blockNum < maxNumOfBlocks; blockNum++)
     {
