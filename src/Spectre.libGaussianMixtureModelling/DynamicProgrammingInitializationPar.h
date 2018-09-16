@@ -1,5 +1,5 @@
 /*
-* DynamicProgrammingInitialization.h
+* DynamicProgrammingInitializationPar.h
 * Contains functions that implement the dynamic initialization.
 * For algorithm description, please refer to:
 * https://www.worldscientific.com/doi/pdf/10.1142/S0219876218500123
@@ -123,13 +123,12 @@ inline DataType ComputeBasicQualityPar(SpectrumView blockData, DataType intensit
 #pragma omp parallel for reduction(+: innerSum) schedule(static)
     for (i = 0; i < (int)mzs.length(); i++)
     {
-        //printf("Thread #%d, iter #%d\n", omp_get_thread_num(), i);
         DataType normalizedHeight = intensities[i] * sumInverse;
         normalizedHeights[i] = normalizedHeight;
         innerSum += mzs[i] * normalizedHeight;
     }
     DataType quality = 0.0;
-#pragma omp parallel for reduction(+: quality) schedule(static)
+#pragma omp parallel for reduction(+: quality) schedule(dynamic)
     for (i = 0; i < (int)mzs.length(); i++)
     {
         quality += pow(mzs[i] - innerSum, 2) * normalizedHeights[i]; // (28) in the paper
@@ -266,7 +265,7 @@ inline Matrix<DataType> ComputeQualityMatrixPar(SpectrumView view, DataType delt
     Matrix<DataType> qualities(mzCount, mzCount);
     for (unsigned i = 0; i < mzCount - 1; i++)
     {
-//#pragma omp parallel for schedule(static)
+#pragma omp parallel for schedule(static)
         for (int j = i + 1; j < (int)mzCount; j++)
         {
             qualities[i][j] = ComputeBlockQualityPar(view.subspan(i, j - i), delta, minStd);
@@ -281,7 +280,7 @@ static MixtureModel ComputeGaussiansFromBlocksParImpl(SpectrumView spectrum,
     int numOfBlocks = (int)blockPartitions.size() - 1;
     MixtureModel components(numOfBlocks);
 
-//#pragma omp parallel for schedule(guided)
+#pragma omp parallel for schedule(guided)
     for (int i = 0; i < numOfBlocks; i++)
     {
         Index blockStart = blockPartitions[i];
@@ -303,7 +302,7 @@ static Data InitRightmostBlockQualitiesPar(SpectrumView spectrum, DataType delta
 {
     const int mzCount = (int)spectrum.mzs.size();
     Data qualities(mzCount);
-//#pragma omp parallel for schedule(guided)
+#pragma omp parallel for schedule(dynamic)
     for (int mzIndex = 0; mzIndex < mzCount; mzIndex++)
     {
         unsigned subSpanSize = mzCount - mzIndex;

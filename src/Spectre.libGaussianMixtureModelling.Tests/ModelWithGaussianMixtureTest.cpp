@@ -5046,7 +5046,7 @@ TEST_F(ModelWithGaussianMixtureTest, check_if_integration_works)
 {
     GmmOptions options;
     options.emEpsilon = 0.01;
-    for(unsigned i = 0; i < 5; i++)
+    for(unsigned i = 0; i < 1; i++)
     {
         GaussianMixtureModel model = ModelWithGaussianMixture<SplitterSegmentExtractor, ExpectationMaximization<ExpectationRunnerOpt, MaximizationRunnerOpt>, DynProgInitialization>(spectrum, options);
     }
@@ -5055,13 +5055,14 @@ TEST_F(ModelWithGaussianMixtureTest, check_if_integration_works)
     //    printf("[%f, %f, %f],\n", c.mean, c.deviation, c.weight);
     //}
     //printf("%llu", model.size()); // 614 in matlab
+
 }
 
 TEST_F(ModelWithGaussianMixtureTest, check_if_integration_par_works)
 {
     GmmOptions options;
     options.emEpsilon = 0.01;
-    for (unsigned i = 0; i < 5; i++)
+    for (unsigned i = 0; i < 1; i++)
     {
         GaussianMixtureModel model = ModelWithGaussianMixture<SplitterSegmentExtractorPar, ExpectationMaximizationPar<ExpectationRunnerOpt, MaximizationRunnerOpt>, DynProgInitializationPar>(spectrum, options);
     }

@@ -193,7 +193,7 @@ static GaussianMixtureModel DecomposeSplitterSignal(SpectrumView original,
     GaussianMixtureModel bestComponents;
     const DataType delta = options.qualityFunctionParam;
     DataType scale = 0.0;
-    DynProgInitialization init(processed, delta, minStd);
+    DynamicProgramming init(processed, delta, minStd);
     DataType minApproximationQuality = std::numeric_limits<DataType>::infinity();
     const unsigned maxViableBlocks =
         std::min(options.minComponentSearchIterations, (unsigned)approxNumOfBlocks);
@@ -235,7 +235,7 @@ static GaussianMixtureModel DecomposeSegment(SpectrumView original,
     GaussianMixtureModel bestComponents;
     const DataType delta = options.qualityFunctionParam;
     DataType scale = 0.0;
-    DynProgInitialization init(processed, delta, minStd);
+    DynamicProgramming init(processed, delta, minStd);
     DataType minApproximationQuality = std::numeric_limits<DataType>::infinity();
     const unsigned maxViableBlocks = std::min((unsigned)original.mzs.size() / 4u,
         std::min(options.minComponentSearchIterations, (unsigned)approxNumOfBlocks));
