@@ -131,6 +131,8 @@ inline DataType ComputeBasicQuality(SpectrumView blockData, DataType intensitySu
     DataType sumInverse = 1. / intensitySum; // Since * is cheaper than /
     std::vector<DataType> normalizedHeights(mzs.length()); // (16) in the paper
     DataType innerSum = 0;
+    INIT("DynProg - Basic Quality");
+    BEGIN();
     for (unsigned i = 0; i < (unsigned)mzs.length(); i++)
     {
         DataType normalizedHeight = intensities[i] * sumInverse;
@@ -142,6 +144,7 @@ inline DataType ComputeBasicQuality(SpectrumView blockData, DataType intensitySu
     {
         quality += pow(mzs[i] - innerSum, 2) * normalizedHeights[i]; // (28) in the paper
     }
+    END();
 
     return quality;
 }
@@ -272,6 +275,8 @@ inline Matrix<DataType> ComputeQualityMatrix(SpectrumView view, DataType delta,
 {
     const unsigned mzCount = (unsigned)view.mzs.size();
     Matrix<DataType> qualities(mzCount, mzCount);
+    INIT("DynProg - Quality Matrix");
+    BEGIN();
     for (unsigned i = 0; i < mzCount - 1; i++)
     {
         for (unsigned j = i + 1; j < mzCount; j++)
@@ -279,6 +284,7 @@ inline Matrix<DataType> ComputeQualityMatrix(SpectrumView view, DataType delta,
             qualities[i][j] = ComputeBlockQuality(view.subspan(i, j - i), delta, minStd);
         }
     }
+    END();
     return qualities;
 }
 
@@ -288,6 +294,8 @@ static MixtureModel ComputeGaussiansFromBlocksImpl(SpectrumView spectrum,
     unsigned numOfBlocks = (unsigned)blockPartitions.size() - 1;
     MixtureModel components(numOfBlocks);
 
+    INIT("DynProg - Components");
+    BEGIN();
     for (unsigned i = 0; i < numOfBlocks; i++)
     {
         Index blockStart = blockPartitions[i];
@@ -300,6 +308,7 @@ static MixtureModel ComputeGaussiansFromBlocksImpl(SpectrumView spectrum,
         components[i].weight = Sum(block.intensities) / intensitySum;
         components[i].deviation = 0.5 * ComputeMzRange(block.mzs);
     }
+    END();
 
     return components;
 }
@@ -324,12 +333,15 @@ static Data InitRightmostBlockQualities(SpectrumView spectrum, DataType delta,
 {
     const unsigned mzCount = (unsigned)spectrum.mzs.size();
     Data qualities(mzCount);
+    INIT("DynProg - Initial Qualities");
+    BEGIN();
     for (unsigned mzIndex = 0; mzIndex < mzCount; mzIndex++)
     {
         unsigned subSpanSize = mzCount - mzIndex;
         qualities[mzIndex] =
             ComputeBlockQuality(spectrum.subspan(mzIndex, subSpanSize), delta, minStd);
     }
+    END();
     return qualities;
 }
 

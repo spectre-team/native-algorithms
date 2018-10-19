@@ -73,7 +73,7 @@ static inline void DecreaseScale(CoefficientsPerLevel& coefficients, unsigned le
         const unsigned startingIndex = oldSize * 2 - 1;
         for (int j = startingIndex; j >= 0; j--)
         {
-            unsigned row = j % 2 ? shift + i : i; // TODO check if this is converted to div and unroll if it is
+            unsigned row = j % 2 ? shift + i : i;
             unsigned column = j % 2 ? newRowColumn-- : oldRowColumn--;
             coefficients[i][j] = coefficients[row][column];
         }

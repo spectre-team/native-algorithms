@@ -30,11 +30,14 @@ namespace spectre::unsupervised::gmm
 {
 static inline void SetMinStdsPar(GaussianMixtureModel& components, DataType minStd)
 {
-#pragma omp parallel for
+    INIT("ExpMaxPar - Stds");
+    BEGIN();
+#pragma omp parallel for schedule(static, 16)
     for (int i = 0; i < components.size(); i++)
     {
         components[i].deviation = std::max(components[i].deviation, minStd);
     }
+    END();
 }
 
 static inline DataType CalculateDeltaPar(GaussianMixtureModel& oldModel,
@@ -43,8 +46,11 @@ static inline DataType CalculateDeltaPar(GaussianMixtureModel& oldModel,
     using namespace statistics::basic_math;
     DataType heightCorrection = 0.0, varianceCorrection = 0.0,
     sumOfHeightDifferences = 0.0, sumOfScaledVarianceDifferences = 0.0;
+    INIT("ExpMaxPar - Delta");
+    BEGIN();
 #pragma omp parallel for reduction(+: sumOfHeightDifferences, \
-                                      sumOfScaledVarianceDifferences)
+                                      sumOfScaledVarianceDifferences) \
+                     schedule(static, 32)
     for (int i = 0; i < oldModel.size(); i++)
     {
         sumOfHeightDifferences = accurate_add(sumOfHeightDifferences,
@@ -56,6 +62,7 @@ static inline DataType CalculateDeltaPar(GaussianMixtureModel& oldModel,
                       (newModel[i].deviation * newModel[i].deviation),
                 varianceCorrection);
     }
+    END();
     sumOfScaledVarianceDifferences /= (DataType)oldModel.size();
     return sumOfHeightDifferences + sumOfScaledVarianceDifferences;
 }

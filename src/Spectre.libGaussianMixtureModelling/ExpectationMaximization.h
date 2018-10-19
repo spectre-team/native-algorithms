@@ -25,15 +25,20 @@ limitations under the License.
 #include "Spectre.libGaussianMixtureModelling/DataTypes.h"
 #include "Spectre.libGaussianMixtureModelling/GaussianMixtureModel.h"
 #include "Spectre.libGaussianMixtureModelling/Matrix.h"
+#include "Spectre.libGaussianMixtureModelling/Profiler.h"
 
 namespace spectre::unsupervised::gmm
 {
+
 static inline void SetMinStds(GaussianMixtureModel& components, DataType minStd)
 {
+    INIT("ExpMax - Stds");
+    BEGIN();
     for (Index i = 0; i < components.size(); i++)
     {
         components[i].deviation = std::max(components[i].deviation, minStd);
     }
+    END();
 }
 
 static inline void FilterLowHeightComponents(GaussianMixtureModel& components)
@@ -55,6 +60,8 @@ static inline DataType CalculateDelta(GaussianMixtureModel& oldModel,
     DataType heightCorrection = 0.0, varianceCorrection = 0.0,
     sumOfHeightDifferences = 0.0, sumOfScaledVarianceDifferences = 0.0;
 
+    INIT("ExpMax - Delta");
+    BEGIN();
     for (Index i = 0; i < oldModel.size(); i++)
     {
         sumOfHeightDifferences = accurate_add(sumOfHeightDifferences,
@@ -66,6 +73,7 @@ static inline DataType CalculateDelta(GaussianMixtureModel& oldModel,
                       (newModel[i].deviation * newModel[i].deviation),
                 varianceCorrection);
     }
+    END();
     sumOfScaledVarianceDifferences /= (DataType)oldModel.size();
     return sumOfHeightDifferences + sumOfScaledVarianceDifferences;
 }

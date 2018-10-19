@@ -172,7 +172,7 @@ static void UpdateMargin(Spectrum& segment, const Splitter& splitter,
     const Index splitterIndex = segmentIndex - isLeft;
     Data splitterIntensities =
         ComputeIntensitiesFor(segment.mzs, splitter);
-    const Index peakIndex =
+    Index peakIndex =
         peakIndices[clearPeaksIndices[splitterIndex]];
 
     Data::iterator srcBeg;
@@ -181,14 +181,16 @@ static void UpdateMargin(Spectrum& segment, const Splitter& splitter,
 
     if(isLeft)
     {
-        srcBeg = splitterIntensities.begin() + boundary;
+        peakIndex -= boundary;
+        srcBeg = splitterIntensities.begin();
         srcEnd = splitterIntensities.begin() + 1 + peakIndex;
-        dstBeg = segment.intensities.begin() + boundary;
+        dstBeg = segment.intensities.begin();
     }
     else
     {
+        peakIndex -= boundary - (unsigned)segment.mzs.size();
         srcBeg = splitterIntensities.begin() + peakIndex;
-        srcEnd = splitterIntensities.begin() + boundary;
+        srcEnd = splitterIntensities.end();
         dstBeg = segment.intensities.begin() + peakIndex;
     }
 

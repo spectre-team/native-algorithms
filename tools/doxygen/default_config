@@ -758,7 +758,14 @@ WARN_LOGFILE           =
 # spaces.
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = ../src
+INPUT                  = ../src/Spectre.libGaussianMixtureModelling
+INPUT                 += ../src/Spectre.libException
+INPUT                 += ../src/Spectre.libFunctional
+INPUT                 += ../src/Spectre.libPeakFinder
+INPUT                 += ../src/Spectre.libStatistics
+INPUT                 += ../src/Spectre.libWavelet
+INPUT                 += ../src/Common
+
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses

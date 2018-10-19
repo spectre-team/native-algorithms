@@ -87,7 +87,8 @@ static inline bool IsInRange(DataType begin, DataType end, DataType x)
             // If the condition is true then we bit-and the desired index with full-set mask
             valueIdx = (i - 1) & cond;
             // If the condtion is true then the loop variable is increased so the block breaks on next check.
-            i = i + (cond & xSorted.size());
+            unsigned cond2 = unsigned((signed(valueIdx) < 0)) - 1;
+            i = i + (cond & cond2 & xSorted.size());
         }
 
         return valueIdx;

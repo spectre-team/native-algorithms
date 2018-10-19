@@ -33,7 +33,7 @@ public:
     /// <summary>
     /// Finds splitting peaks in the signal.
     /// </summary>
-    /// <param name="peakIndices">Signal in which minima shall be found.</param> // TODO Adjust this
+    /// <param name="peakIndices">Signal in which minima shall be found.</param>
     /// <param name="mzs">M/zs of the signal.</param>
     /// <param name="intensities">Intensities of the signal.</param>
     /// <param name="peakQualities">Peak qualities.</param>

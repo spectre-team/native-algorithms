@@ -31,6 +31,7 @@
     <ClInclude Include="MaximizationRunnerOpt.h" />
     <ClInclude Include="ModelUtils.h" />
     <ClInclude Include="ModelWithGaussianMixture.h" />
+    <ClInclude Include="Profiler.h" />
     <ClInclude Include="RandomInitializationRef.h" />
     <ClInclude Include="ExpectationMaximization.h" />
     <ClInclude Include="ExpectationRunnerRef.h" />
@@ -114,7 +115,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -145,7 +146,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
       <OpenMPSupport>false</OpenMPSupport>
     </ClCompile>
     <Link>

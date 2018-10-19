@@ -41,10 +41,11 @@ inline GaussianMixtureModel DecomposeSignal(SpectrumView segment,
     const GmmOptions& options, int minNumOfBlocks, bool decomposeSplitter)
 {
     const unsigned mzCount = (unsigned)segment.mzs.size();
+    if (mzCount == 0) return GaussianMixtureModel();
     Spectrum compressedSegment;
     SpectrumView processedData = CompressDataIfNecessary(segment, compressedSegment);
     DataType minStd = options.minStd * resolutionCoefficient * Mean(segment.mzs);
-    const int approxNumOfBlocks = (int)floor(ComputeMzRange(segment.mzs) / minStd);
+    const int approxNumOfBlocks = (int)floor(ComputeMzRange(segment.mzs) / minStd); // tu mi sie wypierdolilo
     int startNumOfBlocks = std::min(minNumOfBlocks, approxNumOfBlocks - 1);
     if (startNumOfBlocks <= 0)
     {

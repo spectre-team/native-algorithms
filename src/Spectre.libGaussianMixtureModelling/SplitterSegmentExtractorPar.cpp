@@ -19,6 +19,7 @@
 */
 #include "Spectre.libGaussianMixtureModelling/SplitterSegmentExtractorPar.h"
 #include "Spectre.libGaussianMixtureModelling/GaussianDistribution.h"
+#include "Profiler.h"
 
 namespace spectre::unsupervised::gmm
 {
@@ -150,12 +151,16 @@ static inline Data GetIntensitiesOfLeftMargin(SpectrumView spectrum, DataView ma
     const DataType mean = 0;
 
     Data marginIntensities(margin.size());
+
+    INIT("SplitterSegExtPar - intensities");
+    BEGIN();
 #pragma omp parallel for schedule(guided)
     for (int i = 0; i < (int)margin.size(); i++)
     {
         marginIntensities[i] = heightScaleFactor *
             Gaussian(margin[i] - mzs[intervalBegin], mean, variance);
     }
+    END();
 
     return marginIntensities;
 }

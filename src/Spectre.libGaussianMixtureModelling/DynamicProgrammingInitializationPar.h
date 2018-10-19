@@ -120,6 +120,8 @@ inline DataType ComputeBasicQualityPar(SpectrumView blockData, DataType intensit
     std::vector<DataType> normalizedHeights(mzs.length()); // (16) in the paper
     DataType innerSum = 0;
     int i = 0;
+    INIT("DynProgPar - Basic Quality");
+    BEGIN();
 #pragma omp parallel for reduction(+: innerSum) schedule(static)
     for (i = 0; i < (int)mzs.length(); i++)
     {
@@ -133,6 +135,7 @@ inline DataType ComputeBasicQualityPar(SpectrumView blockData, DataType intensit
     {
         quality += pow(mzs[i] - innerSum, 2) * normalizedHeights[i]; // (28) in the paper
     }
+    END();
 
     return quality;
 }
@@ -263,6 +266,8 @@ inline Matrix<DataType> ComputeQualityMatrixPar(SpectrumView view, DataType delt
 {
     const unsigned mzCount = (unsigned)view.mzs.size();
     Matrix<DataType> qualities(mzCount, mzCount);
+    INIT("DynProgPar - Quality Matrix");
+    BEGIN();
     for (unsigned i = 0; i < mzCount - 1; i++)
     {
 #pragma omp parallel for schedule(static)
@@ -271,6 +276,7 @@ inline Matrix<DataType> ComputeQualityMatrixPar(SpectrumView view, DataType delt
             qualities[i][j] = ComputeBlockQualityPar(view.subspan(i, j - i), delta, minStd);
         }
     }
+    END();
     return qualities;
 }
 
@@ -280,7 +286,9 @@ static MixtureModel ComputeGaussiansFromBlocksParImpl(SpectrumView spectrum,
     int numOfBlocks = (int)blockPartitions.size() - 1;
     MixtureModel components(numOfBlocks);
 
-#pragma omp parallel for schedule(guided)
+    INIT("DynProgPar - Components");
+    BEGIN();
+#pragma omp parallel for schedule(static)
     for (int i = 0; i < numOfBlocks; i++)
     {
         Index blockStart = blockPartitions[i];
@@ -293,6 +301,7 @@ static MixtureModel ComputeGaussiansFromBlocksParImpl(SpectrumView spectrum,
         components[i].weight = Sum(block.intensities) / intensitySum;
         components[i].deviation = 0.5 * ComputeMzRange(block.mzs);
     }
+    END();
 
     return components;
 }
@@ -302,6 +311,8 @@ static Data InitRightmostBlockQualitiesPar(SpectrumView spectrum, DataType delta
 {
     const int mzCount = (int)spectrum.mzs.size();
     Data qualities(mzCount);
+    INIT("DynProgPar - Initial Qualities");
+    BEGIN();
 #pragma omp parallel for schedule(dynamic)
     for (int mzIndex = 0; mzIndex < mzCount; mzIndex++)
     {
@@ -309,6 +320,7 @@ static Data InitRightmostBlockQualitiesPar(SpectrumView spectrum, DataType delta
         qualities[mzIndex] =
             ComputeBlockQualityPar(spectrum.subspan(mzIndex, subSpanSize), delta, minStd);
     }
+    END();
     return qualities;
 }
 }

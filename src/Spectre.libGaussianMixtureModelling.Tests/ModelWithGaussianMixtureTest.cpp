@@ -23,6 +23,11 @@ limitations under the License.
 #include "Spectre.libGaussianMixtureModelling/SplitterSegmentExtractorPar.h"
 #include "Spectre.libGaussianMixtureModelling/DynamicProgrammingInitializationPar.h"
 #include "Spectre.libGaussianMixtureModelling/ExpectationMaximizationPar.h"
+#include "Spectre.libGaussianMixtureModelling/Profiler.h"
+
+#include <fstream>
+#include <sstream>
+#include <string>
 
 namespace spectre::unsupervised::gmm
 {
@@ -5042,29 +5047,79 @@ protected:
     Spectrum spectrum;
 };
 
-TEST_F(ModelWithGaussianMixtureTest, check_if_integration_works)
+static void ReadInVector(const char* file, Data& out)
 {
+    std::ifstream source;
+    source.open(file, std::ios_base::in);
+    if (source.fail())
+    {
+        std::cerr << "Couldn't open file " << file << std::endl;
+        exit(-1);
+    }
+    else {
+        unsigned pointNum = 0;
+        std::string line;
+        while (std::getline(source, line))
+            ++pointNum;
+        out.reserve(pointNum);
+
+        source.clear();
+        source.seekg(0);
+
+        for (; std::getline(source, line); )
+        {
+            std::istringstream in(line);
+
+            DataType dataPoint;
+            in >> dataPoint;
+            out.push_back(dataPoint);
+        }
+
+        source.close();
+    }
+}
+
+static Spectrum ReadFromFile(const char* mzFile, const char* intFile)
+{
+    Spectrum result;
+    ReadInVector(mzFile, result.mzs);
+    ReadInVector(intFile, result.intensities);
+    return result;
+}
+
+TEST_F(ModelWithGaussianMixtureTest, DISABLED_check_if_integration_works)
+{
+    INIT("WholePipeline");
     GmmOptions options;
     options.emEpsilon = 0.01;
-    for(unsigned i = 0; i < 1; i++)
-    {
-        GaussianMixtureModel model = ModelWithGaussianMixture<SplitterSegmentExtractor, ExpectationMaximization<ExpectationRunnerOpt, MaximizationRunnerOpt>, DynProgInitialization>(spectrum, options);
-    }
-    //for(auto& c : model)
-    //{
-    //    printf("[%f, %f, %f],\n", c.mean, c.deviation, c.weight);
-    //}
-    //printf("%llu", model.size()); // 614 in matlab
+    for (unsigned i = 0; i < WARM_UP_NUM; i++)
+        ModelWithGaussianMixture<SplitterSegmentExtractor, ExpectationMaximization<ExpectationRunnerOpt, MaximizationRunnerOpt>, DynProgInitialization>(spectrum, options);
 
+    Spectrum bigSpectrum = ReadFromFile("gmm_resampled_mz.txt", "gmm_resampled_mean.txt");
+    GaussianMixtureModel model;
+    BEGIN();
+    for(unsigned i = 0; i < RUNS_NUM; i++)
+    {
+        model = ModelWithGaussianMixture<SplitterSegmentExtractor, ExpectationMaximization<ExpectationRunnerOpt, MaximizationRunnerOpt>, DynProgInitialization>(bigSpectrum, options);
+    }
+    END();
 }
 
 TEST_F(ModelWithGaussianMixtureTest, check_if_integration_par_works)
 {
     GmmOptions options;
     options.emEpsilon = 0.01;
-    for (unsigned i = 0; i < 1; i++)
+
+    Spectrum bigSpectrum = ReadFromFile("gmm_resampled_mz.txt", "gmm_resampled_mean.txt");
+    INIT("WholePipelinePar");
+    for (unsigned i = 0; i < WARM_UP_NUM; i++)
+        ModelWithGaussianMixture<SplitterSegmentExtractorPar, ExpectationMaximizationPar<ExpectationRunnerOpt, MaximizationRunnerOpt>, DynProgInitializationPar>(spectrum, options);
+
+    BEGIN();
+    for (unsigned i = 0; i < RUNS_NUM; i++)
     {
-        GaussianMixtureModel model = ModelWithGaussianMixture<SplitterSegmentExtractorPar, ExpectationMaximizationPar<ExpectationRunnerOpt, MaximizationRunnerOpt>, DynProgInitializationPar>(spectrum, options);
+        ModelWithGaussianMixture<SplitterSegmentExtractorPar, ExpectationMaximizationPar<ExpectationRunnerOpt, MaximizationRunnerOpt>, DynProgInitializationPar>(bigSpectrum, options);
     }
+    END();
 }
 }
